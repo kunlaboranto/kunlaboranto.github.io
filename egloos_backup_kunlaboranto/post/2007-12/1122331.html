@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[자] OS별 sar 사용 예 모음</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-12-11 20:10:24</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[자] OS별 sar 사용 예 모음</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>[AIX]<br>http://publib.boulder.ibm.com/infocenter/pseries/v5r3/index.jsp?topic=/com.ibm.aix.doc/infocenter/base/aix53.htm<br><br><ul><li><code>-P</code> 옵션은 모든 프로세서의 글로벌 평균 외에도, 프로세서 당 통계를 만드는데사용된다. 아래 샘플 코드는, 두 개의 명령어를 입력하여 나온, 4-way symmetric multiprocessor(SMP) 시스템의 샘플 아웃풋이다. </li><ul><li><table border="0" cellpadding="0" cellspacing="0" width="75%"><tbody><tr><td class="code-outline"><pre class="displaycode"><span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">sar</span> -o savefile 5 3 &gt; /dev/null &amp; <br></pre></td></tr></tbody></table><br><b>주</b>: 이 명령어는 5초 간격으로 데이터를 3회 모으고, 모은 데이터를 <code>savefile</code>에 저장하고, 그 리포트를 null로 리다이렉션 하여, 어떤 리포트도 터미널에 작성되지 않도록 한다. </li><li><table border="0" cellpadding="0" cellspacing="0" width="75%"><tbody><tr><td class="code-outline"><pre class="displaycode"><span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">sar</span> -P ALL -u -f savefile <br></pre></td></tr></tbody></table><br><b>주</b>: <code>-P ALL</code>은 각 개별 프로세서와 <code>-u</code> CPU 사용 데이터에 대한 프로세서 당 통계를 취합하도록 지정된다. 게다가, <code>-f savefile</code>은 <code><span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">sar</span></code>의 <code>savefile</code>에 저장된 데이터를 사용하여 리포트를 만들도록 명령한다. SMT를 실행하는 모든 논리적 프로세서의 경우, <code><span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">sar</span> -P All</code>아웃풋은 물리적 프로세서가 소비한 physc (delta PURR/delta TB)를 보여준다. 이 칼럼은 프로세서들 간 나뉜관련 SMT를 보여준다. 논리적 프로세서가 물리적 프로세서 사이클이 되는 시간의 비율을 계산한다. 할당된 용량의 사용률이 100퍼센트 미만이면, <code>U</code>로 시작하는 라인이 추가되어 사용되지 않는 용량을 나타낸다. 공유 모드에서 실행될 때, <code><span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">sar</span></code>는 소비된 할당 비율을 %entc로 표시한다. (((PPC/ENT)*100)</li></ul></ul>[ SUN ]<br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

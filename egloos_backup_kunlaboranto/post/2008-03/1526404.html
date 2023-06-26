@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>C 잡동사니.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-03-17 13:52:47</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">C 잡동사니.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>&nbsp;&nbsp;&nbsp; 132 void TrapSig()<br>&nbsp;&nbsp;&nbsp; 133 {<br>&nbsp;&nbsp;&nbsp; 134&nbsp;&nbsp;&nbsp;&nbsp; signal(SIGPIPE, SigTrap);&nbsp;&nbsp; // 13) SIGPIPE : occur when parent die<br>&nbsp;&nbsp;&nbsp; 135&nbsp;&nbsp;&nbsp;&nbsp; //signal(SIGINT,&nbsp; SigTrap);&nbsp;&nbsp; //&nbsp; 2)<br>&nbsp;&nbsp;&nbsp; 136&nbsp;&nbsp;&nbsp;&nbsp; //signal(SIGTERM, SigTrap);&nbsp;&nbsp; // 15)<br>&nbsp;&nbsp;&nbsp; 137 }<br><br>&nbsp;&nbsp;&nbsp;&nbsp; 58&nbsp;&nbsp;&nbsp;&nbsp; atexit(o2a_callback);<br><br>&nbsp;&nbsp;&nbsp;&nbsp; 99 void getStrTime(char *buf, time_t *p_time_value)<br>&nbsp;&nbsp;&nbsp; 100 {&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; 101&nbsp;&nbsp;&nbsp;&nbsp; if (p_time_value == NULL)<br>&nbsp;&nbsp;&nbsp; 102&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; 103&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; time( &amp;g_time_value );<br>&nbsp;&nbsp;&nbsp; 104&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pTM = localtime( &amp;g_time_value );<br>&nbsp;&nbsp;&nbsp; 105&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; 106&nbsp;&nbsp;&nbsp;&nbsp; else&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; 107&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; 108&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; time( p_time_value );<br>&nbsp;&nbsp;&nbsp; 109&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pTM = localtime( p_time_value );<br>&nbsp;&nbsp;&nbsp; 110&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; 111&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; 112&nbsp;&nbsp;&nbsp;&nbsp; sprintf(buf, "%d/%02d/%02d %02d:%02d:%02d", pTM-&gt;tm_year+1900, pTM-&gt;tm_mon+1, pTM-&gt;tm_mday,<br>&nbsp;&nbsp;&nbsp; 113&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pTM-&gt;tm_hour, pTM-&gt;tm_min, pTM-&gt;tm_sec);<br>&nbsp;&nbsp;&nbsp; 114 }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; 115&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; 116 int time_gap( struct timeval *start_time,<br>&nbsp;&nbsp;&nbsp; 117&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; struct timeval *end_time,<br>&nbsp;&nbsp;&nbsp; 118&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; struct timeval *elapsed_time)<br>&nbsp;&nbsp;&nbsp; 119 {<br>&nbsp;&nbsp;&nbsp; 120&nbsp;&nbsp;&nbsp;&nbsp; elapsed_time-&gt;tv_sec&nbsp; = end_time-&gt;tv_sec&nbsp; - start_time-&gt;tv_sec;<br>&nbsp;&nbsp;&nbsp; 121&nbsp;&nbsp;&nbsp;&nbsp; elapsed_time-&gt;tv_usec = end_time-&gt;tv_usec - start_time-&gt;tv_usec;<br>&nbsp;&nbsp;&nbsp; 122&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; 123&nbsp;&nbsp;&nbsp;&nbsp; if (elapsed_time-&gt;tv_usec &lt; 0)<br>&nbsp;&nbsp;&nbsp; 124&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; 125&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elapsed_time-&gt;tv_sec -= 1;<br>&nbsp;&nbsp;&nbsp; 126&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elapsed_time-&gt;tv_usec = 999999 - elapsed_time-&gt;tv_usec * (-1);<br>&nbsp;&nbsp;&nbsp; 127&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; 128 <br>&nbsp;&nbsp;&nbsp; 129&nbsp;&nbsp;&nbsp;&nbsp; return 1;<br>&nbsp;&nbsp;&nbsp; 130 }&nbsp; <br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

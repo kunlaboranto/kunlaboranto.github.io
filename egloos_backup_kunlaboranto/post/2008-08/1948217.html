@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] unix 에서 file의 시간 초단위로 얻기</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-08-14 15:29:22</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] unix 에서 file의 시간 초단위로 얻기</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">그냥 명령어가 있을듯도 하나.. 몰라서.<br><br>## 실행예<br>$ ./a.out a.out&nbsp; <br>argc=2<br>### a.out ### <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time Creation&nbsp;&nbsp;&nbsp;&nbsp; : 2008-08-14 13:50:24<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time Last Written : 2008-08-14 13:50:24<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time Last Access&nbsp; : 2008-08-14 13:51:07<br><br>## 소스<br><br>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;string.h&gt;<br>#include &lt;sys/stat.h&gt;<br>#include &lt;time.h&gt;<br>#include &lt;errno.h&gt;<br><br>char* timeToString(struct tm *t);<br><br><br>int main(int argc, char *argv[]) <br>{<br>&nbsp;&nbsp;&nbsp; struct stat buf;<br>&nbsp;&nbsp;&nbsp; char fname[1024];<br><br><br>&nbsp;&nbsp;&nbsp; fprintf(stdout, "argc=%d\n", argc);<br>&nbsp;&nbsp;&nbsp; if (argc == 2) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strcpy(fname, argv[1]);<br>&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp; if ( stat(fname, &amp;buf) != 0 ) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; switch (errno) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case ENOENT:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fprintf(stdout, "File %s not found.\n", fname); break;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case EINVAL:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fprintf(stdout, "Invalid parameter to _stat.\n"); break;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fprintf(stdout, "Unexpected error in _stat.\n");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; else {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("### %s ### \n", fname);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "\tTime Creation&nbsp;&nbsp;&nbsp;&nbsp; : %s\n", timeToString(localtime(&amp;buf.st_ctime)) );<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "\tTime Last Written : %s\n", timeToString(localtime(&amp;buf.st_mtime)) );<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "\tTime Last Access&nbsp; : %s\n", timeToString(localtime(&amp;buf.st_atime)) );<br>&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp; return 0;<br>}<br><br>char* timeToString(struct tm *t) <br>{<br>&nbsp;&nbsp;&nbsp; static char s[20];<br><br>&nbsp;&nbsp;&nbsp; sprintf(s, "%04d-%02d-%02d %02d:%02d:%02d",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t-&gt;tm_year + 1900, t-&gt;tm_mon + 1, t-&gt;tm_mday,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t-&gt;tm_hour, t-&gt;tm_min, t-&gt;tm_sec<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; );<br><br>&nbsp;&nbsp;&nbsp; return s;<br>}<br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

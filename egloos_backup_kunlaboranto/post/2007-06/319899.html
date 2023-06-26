@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>svn 의 좋은점.. </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:04:14</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">svn 의 좋은점.. </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>뭐가 있을까..</p><p>&nbsp;</p><p>1. 이진파일을 특별한 모드지정없이 checkout / checkin 가능.</p><p>2. synbolic link 도 그대로 처리됨.</p><p>3. svn merge 를 잘 사용하면 rollback 도 가능.</p><p>4. 원자성. 즉 파일단위의 커밋이 아니므로, 일부만 성공할 수 없음</p><p>5. *.sh 를 실행권한을 주고 커밋하면 유지가됨.</p><p>6. 실재 파일을 지우지 않은 상태에서 svn delete 를 수행하고 commit을 하면 현재 작업경로의</p><p>&nbsp;&nbsp; 파일이 실재로 삭제됨, 주의가 필요하나, 편리함.</p><p>&nbsp;</p><p>될까 ??</p><p>1. 2개의 svn 서버가 있고, 1개는 외부 오픈용, 1개는 내부용 (외부에서 작업시 IP가 막힘)이라고 할때. (단 내부 svn, 외부 svn은 서로간은 네트웍이됨)</p><p>한쪽에 반영하면, 둘다 동시에 sync되는 것이 가능할까?</p><p>이거 안되면 동일 소스의 버전관리가 무지 힘들어짐.</p><p>2. _failover_dsn 변수가 추가된 최초 버전을 찾고자 할때.. 어떻게??</p><p>&nbsp;</p><p>기타.</p><p>1.&nbsp; "!" 가 svn st에서 svn은 있는데 로컬에 지워진 파일을 의미함.</p><p>!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cdbc/src/Query.cpp</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

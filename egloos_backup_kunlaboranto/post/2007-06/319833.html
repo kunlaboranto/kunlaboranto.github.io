@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>mon_XX.sql - A4 모니터링 쿼리들.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:52:04</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">mon_XX.sql - A4 모니터링 쿼리들.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><p>## mon_MMTB.sql</p><p>select <br>&nbsp;&nbsp;&nbsp; a.table_name,<br>&nbsp;&nbsp;&nbsp; round((c.fixed_alloc_mem+c.var_alloc_mem)/1024/1024,3) alloc,<br>&nbsp;&nbsp;&nbsp; round((c.fixed_used_mem+c.var_used_mem)/1024/1024,3) used,<br>&nbsp;&nbsp;&nbsp; round((c.fixed_used_mem+c.var_used_mem)*100/ (c.fixed_alloc_mem+c.var_alloc_mem),2) '%USED'<br>from system_.sys_tables_ a, system_.sys_users_ b, v$memtbl_info c<br>where a.user_id = b.user_id <br>&nbsp;&nbsp;&nbsp; and a.table_oid = c.table_oid <br>&nbsp;&nbsp;&nbsp; and a.tbs_id=0 <br>&nbsp;&nbsp;&nbsp; and b.user_name = 'BOT_ADM'<br>&nbsp;&nbsp;&nbsp; and a.table_type='T'<br>order by 2 desc<br>limit 20<br>;<br>&nbsp;<br><a href='http://pds3.egloos.com/pds/200706/18/69//mon_sql-okseop7.tgz' target='_blank'>mon_sql-okseop7.tgz</a></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

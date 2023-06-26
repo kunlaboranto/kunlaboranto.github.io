@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>unix 초보 cmd, mount ..</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-02 23:41:47</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">unix 초보 cmd, mount ..</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><div class="title gray1" style="margin-bottom: auto;">## <br>From : http://judystak.tistory.com/134<br><br><a style="" href="http://judystak.tistory.com/134" onfocus="this.blur()" class="title_link">Solaris CD-ROM  Mount  하기</a></div>                          <div class="f11 title_bottom" style="margin-bottom: 35px;">                            <div id="title_bottom_tag">태그 :                                                          </div>                            카테고리 : <a href="http://judystak.tistory.com/category/Computing/OS" onfocus="this.blur()" class="title_bottom">Computing/OS</a><br>                                                      </div>                          <!--본문-->                          <p>cdrom을 driver에 삽입하면 Volume Management Daemon인 "vold" process에 의해<br>cdrom이 자동 mount 되지만, vold process가 운영 중이 아니거나 다른 이유로<br>인하여 cdrom이 자동 mount 되지 않으면 아래의 명령으로 mount 한다.<br></p><p>1. vold daemon이 운영중인 경우<br>"volcheck" 명령을 실행하여 vold daemon이<span id="callbacknestjudystaktistorycom13475" style="width: 1px; height: 1px; float: right;"><embed allowscriptaccess="always" id="bootstrapperjudystaktistorycom13475" src="http://judystak.tistory.com/plugin/CallBack_bootstrapperSrc" wmode="transparent" type="application/x-shockwave-flash" enablecontextmenu="false" flashvars="&amp;callbackId=judystaktistorycom13475&amp;host=http://judystak.tistory.com&amp;embedCodeSrc=http%3A%2F%2Fjudystak.tistory.com%2Fplugin%2FCallBack_bootstrapper%3F%26src%3Dhttp%3A%2F%2Fcfs.tistory.com%2Fblog%2Fplugins%2FCallBack%2Fcallback%26id%3D134%26callbackId%3Djudystaktistorycom13475%26destDocId%3Dcallbacknestjudystaktistorycom13475%26host%3Dhttp%3A%2F%2Fjudystak.tistory.com%26float%3Dleft" swliveconnect="true" height="1" width="1"></span> cdrom을 mount 하도록 한 후 df 명령<br>으로 cdrom이 mount 되었는지 확인한다.<br>% /bin/volcheck<br>% df -k <br></p>2. volcheck 명령으로 mount가 되지 않는경우<br>아래와 같이 "mount" 명령을 사용한다.<br># /etc/mount -F hsfs -o ro /dev/dsk/c0t6d0s0 /cdrom<br>CD Driver는 기본적으로 /dev/dsk/c0t6d0s0 device를 사용한다.<br><br><fieldset style="margin: 20px 0px; padding: 5px;"><legend><span><strong>Creative Commons License</strong></span></legend><!--Creative Commons License--><div style="float: left; width: 88px; margin-top: 3px;"><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.0/kr/" target="_blank"><img alt="Creative Commons License" style="border-width: 0pt;" src="http://i.creativecommons.org/l/by-nc-nd/2.0/kr/88x31.png"></a></div><div style="margin-left: 92px; margin-top: 3px; text-align: justify;">이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.0/kr/" target="_blank">크리에이티브 커먼즈 코리아 저작자표시-비영리-변경금지 2.0 대한민국 라이센스</a>에 따라 이용하실 수 있습니다.<!-- Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><work rdf:about=""><license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/2.0/kr/" /></work><license rdf:about="http://creativecommons.org/licenses/by-nc-nd/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><prohibits rdf:resource="http://web.resource.org/cc/CommercialUse"/></license></rdf:RDF> --></div></fieldset><span class="EolinBookmarkBtn"></span>[펌주] sol10 + x86 에서 virtualbox로 설치시에는 /dev/dsk/c1t0d0p0 를 사용했음.<br><br>-----------------<br><br>2. sol5.8 에서 디스크 경로 확인<br><br>&nbsp;&nbsp;&nbsp; 40&nbsp; more /etc/vfstab<br>&nbsp;&nbsp;&nbsp; 41&nbsp; more /etc/mnttab<br><br><br>1. CD <br>$ mkdir /mnt/cdrom<br>$ mount -t iso9660 /dev/cdrom /mnt/cdrom<br>...<br>$ umount /mnt/cdrom<br><br>From : <a href="http://www.denx.de/wiki/view/DULG/ELDKInitialInstallation">http://www.denx.de/wiki/view/DULG/ELDKInitialInstallation</a><br><br>$ sudo mount -o exec /dev/cdrom /mnt/cdrom<br><br>ELDK 포팅중.. <br>sudo mount -o exec /dev/cdrom /mnt/cdromsudo mount -o exec /dev/cdrom /mnt/cdrom<br><span style="color: rgb(0, 0, 255);">Note:</span> Make sure that the <code><span style="font-family: Courier New;">"exec"</span></code> option to the <em>mount</em> command is in effect when mounting the <a class="twikiLink" href="http://www.denx.de/wiki/DULG/ELDK">ELDK</a> ISO image. Otherwise the <code><span style="font-family: Courier New;">install</span></code> program cannot be executed. On some distributions, it may be necessary to modify the /etc/fstab file, adding the "exec" mount option to the cdrom entry - it may also be the case that other existing mount options, such as "user" prevent a particular configuration from mounting the <a class="twikiLink" href="http://www.denx.de/wiki/DULG/ELDK">ELDK</a> CD with appropriate "exec" permission. In such cases, consult your distribution documentation or mount the CD explicitly using a command such as "sudo mount -o exec /dev/cdrom /mnt/cdrom" (sudo allows regular users to run certain privileged commands but may not be configured - run the previous command as root without "sudo" in the case that "sudo" has not been setup for use on your particular GNU/Linux system).</div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

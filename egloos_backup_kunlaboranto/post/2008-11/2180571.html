@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Oracle 테이블 Synonym 설정 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-11-20 22:28:01</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Oracle 테이블 Synonym 설정 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">Synonym을 이용하여, 대용량 테이블 인덱스 작업시, 서비스 무정지에 도움 ??<br><br><br><br>From : http://icreater.springnote.com/pages/298776<br><h1 id="pageTitle">Oracle 테이블 Synonym 설정</h1><br><div class="content xhtmlEditorBody readonlyContentBody"><p>&nbsp;</p><p>출처&nbsp;<a href="http://www.oracleclub.com/oracle/dic/OracleContent.jsp" title=": http://www.oracleclub.com/oracle/dic/OracleContent.jsp" class="external">: http://www.oracleclub.com/oracle/dic/OracleContent.jsp</a></p><p>&nbsp;</p><p>시노님은 오라클 객체(테이블, 뷰, 시퀀스, 프로시저)에 대한 대체이름(Alias)를 말합니다.<br>Synonym은 실질적으로 그 자체가 Object가 아니라 Object에 대한 직접적인 참조 입니다.</p><p>&nbsp;</p><p><strong>Synonym</strong><strong>을 사용하는 이유</strong></p><ol><li>데이터베이스의 투명성을 제공하기 위해서 사용 한다고 생각하면 됩니다.&nbsp;Synonym은 다른 유저의 객체를 참조할 때 많이 사용을 합니다.</li><li>만약에 실무에서 다른 유저의 객체를 참조할 경우가 있을 때 Synonym을 생성해서 사용을 하면&nbsp;<br>추후에 참조하고 있는 오프젝트가 이름을 바꾸거나 이동할 경우 객체를 사용하는 SQL문을 모두&nbsp;다시 고치는 것이 아니라<br>Synonym만 다시 정의하면 되기 때문에 매우 편리 합니다.</li><li>객체의 긴 이름을 사용하기 편한 짧은 이름으로 해서&nbsp; SQL코딩을 단순화 시킬 수 있습니다.</li><li>또한 객체를 참조하는 사용자의 오브젝트를 감추 수 있기 때문에 이에 대한 보안을 유지할 수 있습니다.&nbsp;<br>Synonym을 사용하는 유저는 참조하고 있는 객체를에 대한 사용자의 object의 소유자, 이름, 서버이름을&nbsp; 모르고&nbsp;Synonym 이름만 알아도 사용 할 수 있습니다.</li></ol><p>&nbsp;</p><div><p style="text-align: center;">예제</p></div><p><strong>Synonyms을 사용하는 경우</strong></p><ul><li><em class="highlight" style="background-color: rgb(251, 189, 176);">오브젝트의 실제 이름과 소유자 그리고 위치를 감춤으로써 database 보안을 개선하는데 사용</em> 됩니다.</li><li><em class="highlight" style="background-color: rgb(251, 189, 176);">Object에의 Public Access를 제공</em> 합니다.</li><li><em class="highlight" style="background-color: rgb(251, 189, 176);">Remote Database의 Table, View, Program Unit를 위해 투명성을 제공</em> 합니다.</li><li><em class="highlight" style="background-color: rgb(251, 189, 176);">Database 사용자를 위해 SQL 문을 단순화</em> 할 수 있습니다.</li></ul><p>&nbsp;</p><p><strong>Synonym의 종류</strong></p><ol><li>Private Synonym<br>전용 시노님은 특정 사용자만 &nbsp;이용할수 있습니다.</li><li>Public Synonym<br>공용 시노님은 공용 사용자 그룹이 소유하며 그 Database에 있는 모든 사용자가 공유 합니다.</li></ol><p>&nbsp;</p><p><span style="font-size: 10pt;">시노님 생성 문법(Syntax)</span></p><p><img src="http://www.oracleclub.com/imgs/oracle/sql/Sysnonym.jpg" border="0"></p><p>PUBLIC : 모든 사용자가 접근 가능한 시노님을 생성 합니다. PUBLIC &nbsp;시노님의 생성 및 삭제는 DBA만이 할 수 있습니다.</p><p>&nbsp;</p><div><p><strong>※ scott USER의 emp테이블을 test USER가 사용 하는 예제.<br><br></strong>&nbsp;1.&nbsp;먼저 scott/tiger USER로 접속해서 test USER에게 emp테이블을 조작할 권한을 부여합니다.<br>&nbsp;SQL&gt;<span style="color: rgb(0, 0, 255);">GRANT</span> ALL <span style="color: rgb(0, 0, 255);">ON</span> &nbsp;emp <span style="color: rgb(0, 0, 255);">TO</span> &nbsp;test;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;권한이 부여되었습니다.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(255, 0, 0);">test user</span>에 대하여 scott의 emp테이블을 조작할 수 있는 <span style="color: rgb(255, 0, 0);">권한을 부여</span>합니다.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;권한이 있어야 select하거나 update, insert할수 있습니다.<br><br>&nbsp;2. test USER로 접속해 동의어를 생성합니다.<br>&nbsp;SQL&gt; connect test/test<br>&nbsp;SQL&gt; CREATE SYNONYM &nbsp;scott_emp FOR &nbsp;scott.emp ;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;시노님이 생성되었습니다.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em class="highlight" style="background-color: rgb(251, 189, 176);">scott USER가 소유하고 있는 emp 테이블</em>에 대해 scott_emp라는 <em class="highlight" style="background-color: rgb(251, 189, 176);">일반시노님을 생성</em>했습니다.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scott 사용자의 emp테이블을 <em class="highlight" style="background-color: rgb(251, 189, 176);">test 사용자가 scitt_emp라는 동의어로 사용</em> 합니다. .<br><br><strong>시노님을 이용한 쿼리<br></strong>&nbsp;SQL&gt; SELECT empno, &nbsp;ename FROM &nbsp;scott_emp;<br><strong>일반 테이블을 쿼리</strong><br>&nbsp;SQL&gt; SELECT empno, &nbsp;ename FROM &nbsp;scott.emp;</p><p>&nbsp;</p><p>위의&nbsp;두 쿼리의 결과는 같습니다.<br><br>&nbsp;&nbsp;&nbsp;EMPNO ENAME<br>-------- ---------<br>&nbsp;&nbsp;&nbsp;&nbsp;7369 SMITH<br>&nbsp;&nbsp;&nbsp;&nbsp;7499 ALLEN<br>&nbsp;&nbsp;&nbsp;&nbsp;7521 WARD<br>&nbsp;&nbsp;&nbsp;&nbsp;7566 JONES<br>&nbsp;&nbsp;&nbsp;&nbsp;7654 MARTIN<br>&nbsp;&nbsp;&nbsp;&nbsp;7698 BLAKE<br>15 개의 행이 선택되었습니다.<br><br><strong>동의어 삭제</strong><br>SQL&gt; <span style="color: rgb(0, 0, 255);">DROP SYNONYM &nbsp;</span> sky_prd;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;시노님이 삭제되었습니다.<br><br>SQL&gt; SELECT empno, &nbsp;ename FROM &nbsp;scott_emp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;라인 1 에 오류:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(255, 0, 0);">ORA-00942</span>: 테이블 또는 뷰가 존재하지 않습니다</p></div></div><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

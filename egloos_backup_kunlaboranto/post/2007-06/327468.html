@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] preparedStatement를 사용할때 sql 캐쉬에대해 궁금합니다.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-20 16:58:11</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] preparedStatement를 사용할때 sql 캐쉬에대해 궁금합니다.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://database.sarang.net/?inc=read&amp;aid=30456&amp;criteria=oracle&amp;subcrit=&amp;id=&amp;limit=20&amp;keyword=V%24SQLTEXT&amp;page=1">http://database.sarang.net/?inc=read&amp;aid=30456&amp;criteria=oracle&amp;subcrit=&amp;id=&amp;limit=20&amp;keyword=V%24SQLTEXT&amp;page=1</a><br><br>#SHARED_POOL 초기화<br>ALTER SYSTEM FLUSH SHARED_POOL;<br><br>#님에 쿼리문 실행<br><span style="FONT-FAMILY: 굴림"><br>select xxx&nbsp;<br>from table&nbsp;<br>where&nbsp;column1 = ?&nbsp;<br>등등<br><br>#parse여부 확인쿼리.<br><br><span style="FONT-FAMILY: 굴림">select a.*<br>from&nbsp; v$<span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">sqltext</span> a,v$sql c<br>where a.hash_value=c.hash_value<br>&nbsp;&nbsp;&nbsp; and a.address=c.address<br>&nbsp;&nbsp;&nbsp; and PARSING_USER_ID &lt;&gt; '0'<br>&nbsp;&nbsp;&nbsp; and a.COMMAND_TYPE = 3<br>&nbsp;&nbsp;&nbsp; order by a.HASH_VALUE,a.piece;<br></span><br><br>1 row로 나오면 같은걸로 인식하는걸 겁니다.</span></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

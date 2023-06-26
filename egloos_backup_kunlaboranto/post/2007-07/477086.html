@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>오늘메모</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-29 00:36:07</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">오늘메모</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">http://unix.derkeiler.com/Newsgroups/comp.unix.solaris/2003-04/2937.html<br><br><br>SELECT<br>&nbsp; base_time - decode(idle_start_time, 0, base_time, idle_start_time) idle_time,<br>&nbsp; CASE2( IDLE_START_TIME = 0, '0', <br>&nbsp;&nbsp;&nbsp; TO_CHAR(TO_DATE('1970010109','YYYYMMDDHH') + IDLE_START_TIME/60/60/24 , <br>&nbsp;&nbsp;&nbsp; 'MM/DD HH:MI:SS') )<br>&nbsp; ||', '||ID as 'idle_time (ss_id)', <br>&nbsp; substr(comm_name, 22, 20) || ' ('|| client_pid || ')' as 'IP (PID)'<br>FROM V$SESSION , v$sessionmgr<br>order by IDLE_START_TIME<br>limit 30<br>;<br><br>++++++++<br>call-stack 이 명확하지 않아 dump_stack.sh 의 원리대로 수작업으로 위치를 찾아보면...<br><br>001 0x10009b720&nbsp; .smpFixedPageList::addFreeSlotToFreeSlotList(smpFreePageHeader*,char*)<br><br>에서 core 발생한 것으로 보입니다.<br><br>nm 으로 altibase.map 에 등록되어 있는 function 들의 address 들을 altibase.map 으로 배포합니다.<br>이후 call-stack 에서 발생한 address 들을 보고 그 address 보다 가장 인접한 최소의 address 가 가장 최<br>후에 호출된 function 으로 보는 것입니다.<br><br>0x10009b720 에서 signal 발생했는데 이 address 보다 작은 가장 인접한 address 가 <br><br>...<br>0x10009b48c .smpFixedPageList::nextOIDallForRefineDB(smpPageListEntry*,char*,char**)<br>0x10009b6a0 .smpFixedPageList::addFreeSlotToFreeSlotList(smpFreePageHeader*,char*)<br>0x10009cf08 .smxTableInfoMgr::smxTableInfoMgr()<br>...<br><br>중에 <br>0x10009b6a0 .smpFixedPageList::addFreeSlotToFreeSlotList(smpFreePageHeader*,char*)<br><br>이기 때문에 이 함수 호출중에 문제가 생겼다고 판단됩니다.<br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>할일 목록을 메뉴릿으로.. </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-30 18:01:56</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">할일 목록을 메뉴릿으로.. </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">'할일' 목록을 만들었는데.<br>일반 글등록으로는 계속 밀려내려가니깐.. 메뉴릿 메뉴로 따로 뺌.<br><br>------------------------------<br>Bitnami 가 설치가 간편하다고. 좋아했는데... 필요한 여러개를 조합해서 사용할려면 손이 간다.<br>현재 단기 목표는.<br><br>MS윈도에 구축했던. redmine 환경을.. VM우분투로 옮기고. 이걸 하면서. bitnami stack 중에서 맘에 끌리는 것을<br>몽땅 설치/맛배기 해보는 것임. (환글문제 없어야 하고, 중복된 부분은 통합하면서.)<br><br><br>그 다음은.. 내 능력으로는 허접하더라도. 이슈트래킹 시스템을 손을 봐서.. '반 수제화'를 만들고자 함.<br><br><ul><li>open sw 와 친하게 지내기.<br></li><li>가급적 언어는 java 계통으로 (공부삼아서, 근데 php 구현이 많음)<br></li><li><span style="font-weight: bold; color: rgb(51, 102, 255);">개인별 Editor 선택을 임의로 할 수 있어야 한다.</span><br>&gt; 테이블에 에디터 종류 필드를 만들면 될터인데., 문제는 수정시에는 A 유저의 설정보다는 원 글 작성자 설정으로 갈수 밖에 없을듯.<br></li><li>한글깨짐</li><li>structs <br></li><li>DB는 MySQL 경험하기</li></ul><br>그 다음은,.. '다람쥐' 를 통한 Java UI 구현 경험..<br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

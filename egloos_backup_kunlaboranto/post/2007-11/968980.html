@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] How to use the ISO image format</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-11-07 23:43:06</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] How to use the ISO image format</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://h20229.www2.hp.com/downloads/iso_format.html<br><br><h1>How to use the ISO image format</h1><br><a name="jumptocontent"><img alt="Content starts here" src="http://h20229.www2.hp.com/img/s.gif" height="1" width="10"></a><!--End Gutter Cell 10px Wide--><!--startindex--><!--Start Content Area.  To increase width of content area, modify width of table cell below--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr class="decoration"><td bgcolor="#cccccc"><img alt="" src="http://h20229.www2.hp.com/img/s.gif" height="1" width="1"></td></tr><tr class="decoration"><td><img alt="" src="http://h20229.www2.hp.com/img/s.gif" height="10" width="1"></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="560"><tbody><tr><td align="left" valign="top"><p>HP OpenView has made adecision to use an ISO image format on some of our products. The ISOimage is not a new format to the industry, however, this is a newaddition to the formats that OpenView products use. Some products willcontinue to use a TAR or ZIP format. The product that you are about todownload is in an ISO image format.</p><p>Like a .zip or .tar file, anISO image encapsulates a collection of files. The main difference isthat an ISO image contains specific information about how those filesare laid out on a CD-ROM. After you have acquired an ISO image, you canaccess its files immediately, even before you burn it onto a CD-ROM.</p><p>Onthe Windows platform, to use the image directly from your hard drivewithout burning a physical disc you will need to install 3rd partysoftware that is capable of mounting ISO. Popular software programslike Roxio's Disk Image Loader, Smart-Projects IsoBuster, EZB Systems'UtraISO, MagicISO, Nero's Image Drive and Microsoft's free applicationVirtual CD-ROM Control Panel for Windows XP enable you to mount discimage files in a virtual drive as if they were physical discs in aphysical drive.</p><p>On an HP-UX/UNIX/Linux platform, to use the imagedirectly from your hard drive without burning a physical disc you willneed to do the following:</p></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="560">  <tbody><tr class="decoration"><td width="560"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="20" width="1"></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="10"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="1" width="1"></td><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="550"><tbody><tr>  <td align="left" valign="top"><h2 class="bold">HP-UX</h2>  </td></tr><tr><td align="left" valign="top">nohup pfs_mountd &amp; <br>nohup pfsd &amp; <br>pfs_mount -o xlat=UNIX <i>pathToIso mountPoint</i><br><br></td></tr></tbody></table></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="10"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="1" width="1"></td><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="550"><tbody><tr>  <td align="left" valign="top"><h2 class="bold">Linux</h2>  </td></tr><tr><td align="left" valign="top">mount -o loop <i>pathToIso mountPoint</i><br><br></td></tr></tbody></table></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="10"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="1" width="1"></td><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="550"><tbody><tr>  <td align="left" valign="top"><h2 class="bold">Solaris</h2>  </td></tr><tr><td align="left" valign="top">lofiadm -a <i>pathToIso</i><br>mount -F hsfs -o ro /dev/lofi/1 <i>mountPoint</i><br><br></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="550">  <tbody><tr class="decoration"><td width="550"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="20" width="1"></td></tr></tbody></table></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="560"><tbody><tr><td align="left" valign="top"><p>To unmount the ISO image do the following:</p></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="560">  <tbody><tr class="decoration"><td width="560"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="20" width="1"></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="10"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="1" width="1"></td><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="550"><tbody><tr>  <td align="left" valign="top"><h2 class="bold">HP-UX</h2>  </td></tr><tr><td align="left" valign="top">pfs_umount<br><br></td></tr></tbody></table></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="10"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="1" width="1"></td><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="550"><tbody><tr>  <td align="left" valign="top"><h2 class="bold">Linux</h2>  </td></tr><tr><td align="left" valign="top">umount <i>mountPoint</i><br><br></td></tr></tbody></table></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="10"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="1" width="1"></td><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="550"><tbody><tr>  <td align="left" valign="top"><h2 class="bold">Solaris</h2>  </td></tr><tr><td align="left" valign="top">umount <i>mountPoint</i><br><br></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" width="550">  <tbody><tr class="decoration"><td width="550"><img src="http://h20229.www2.hp.com/img/s.gif" alt="" height="20" width="1"></td></tr></tbody></table></td></tr></tbody></table><p>To burn the image directlyto a CD, you will need to install 3rd party software that is capable ofunderstanding and burning ISO image files. Most popular CD burningsoftware includes support for burning ISO images. Follow theinstructions that came with your CD burning application to create aphysical disc from the ISO image.</p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

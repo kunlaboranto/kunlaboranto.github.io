@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>Hint 예</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:50:07</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">Hint 예</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>/*+ temp_tbs_memory use_index_nl(a, m)&nbsp; */ </p><p>----------------</p><p>** CNF_DNF 설명</p><p>and <br>(<br>(segment_num = 0 and segment_seq &gt; 0) <br>or <br>(segment_num = 1 and segment_seq = 1)<br>) </p><p>-----------------<br>drop table t1;<br>create table t1 (i1 integer primary key, i2 integer);<br>drop sequence seq1;<br>create sequence seq1;<br>insert into t1 values (seq1.nextval, 1);<br>insert into t1 select seq1.nextval, i2 from t1;<br>/<br>..</p><p>drop table t2;<br>create table t2 (i1 integer primary key, i2 integer);<br>drop sequence seq2;<br>create sequence seq2;<br>insert into t2 values (seq2.nextval, 1);<br>insert into t2 select seq2.nextval, i2 from t2;<br>/<br>..</p><p>select <br>/*+ use_nl(t1, t2) */<br>count(*) <br>from t1 a, t2 b<br>where <br>--a.i1 = b.i1 + 1<br>a.i1 + 1 = b.i1<br>and a.i1 &lt;= 100<br>--and b.i1 &lt;= 100<br>;</p><p><br>select <br>/*+ use_hash(t1, t2) */<br>count(*) <br>from t1 a, t2 b<br>where a.i1 = b.i1<br>and a.i1 &lt;= 100<br>--and b.i1 &lt;= 100<br>;</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

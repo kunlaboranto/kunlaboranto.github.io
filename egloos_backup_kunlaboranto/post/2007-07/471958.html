@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Renaming Columns And Constraints</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-27 14:27:38</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Renaming Columns And Constraints</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><h1 style="font-weight: bold;"><font size="2"><span style="font-weight: normal;">From : http://www.oracle-base.com/articles/9i/RenamingColumnsAndConstraints9i.php</span></font></h1><br><br><h1>Renaming Columns And Constraints</h1>In addition to renaming tables and indexes Oracle9i Release 2 allows the renaming of columns and constraints on tables. In this example once the the <code>TEST1</code> table is created it is <span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">rename</span>d along with it's columns, primary key constraint and the index thatsupports the primary key:<br><br>---------<br><pre>SQL&gt; CREATE TABLE test1 (<br>  2    col1  NUMBER(10) NOT NULL, <br>  3    col2  VARCHAR2(50) NOT NULL);<br><br>Table created.<br><br>SQL&gt; ALTER TABLE test1 ADD (<br>  2    CONSTRAINT test1_pk PRIMARY KEY (col1));<br><br>Table altered.<br><br>SQL&gt; DESC test1<br> Name                 Null?    Type<br> -------------------- -------- --------------------<br> COL1                 NOT NULL NUMBER(10)<br> COL2                 NOT NULL VARCHAR2(50)<br><br>SQL&gt; SELECT constraint_name<br>  2  FROM   user_constraints<br>  3  WHERE  table_name      = 'TEST1'<br>  4  AND    constraint_type = 'P';<br><br>CONSTRAINT_NAME<br>------------------------------<br>TEST1_PK<br><br>1 row selected.<br><br>SQL&gt; SELECT index_name, column_name<br>  2  FROM   user_ind_columns<br>  3  WHERE  table_name = 'TEST1';<br><br>INDEX_NAME            COLUMN_NAME<br>--------------------  --------------------<br>TEST1_PK              COL1<br><br>1 row selected.<br><br>SQL&gt; -- <span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">Rename</span> the table, columns, primary key<br>SQL&gt; -- and supporting index.<br>SQL&gt; ALTER TABLE test1 <span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">RENAME</span> TO test;<br><br>Table altered.<br><br>SQL&gt; ALTER TABLE test <span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">RENAME</span> COLUMN col1 TO id;<br><br>Table altered.<br><br>SQL&gt; ALTER TABLE test <span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">RENAME</span> COLUMN col2 TO description;<br><br>Table altered.<br><br>SQL&gt; ALTER TABLE test <span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">RENAME</span> CONSTRAINT test1_pk TO test_pk;<br><br>Table altered.<br><br>SQL&gt; ALTER INDEX test1_pk <span id="__firefox-findbar-search-id" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">RENAME</span> TO test_pk;<br><br>Index altered.<br><br>SQL&gt; DESC test<br> Name                 Null?    Type<br> -------------------- -------- --------------------<br> ID                   NOT NULL NUMBER(10)<br> DESCRIPTION          NOT NULL VARCHAR2(50)<br><br>SQL&gt; SELECT constraint_name<br>  2  FROM   user_constraints<br>  3  WHERE  table_name      = 'TEST'<br>  4  AND    constraint_type = 'P';<br><br>CONSTRAINT_NAME<br>--------------------<br>TEST_PK<br><br>1 row selected.<br><br>SQL&gt; SELECT index_name, column_name<br>  2  FROM   user_ind_columns<br>  3  WHERE  table_name = 'TEST';<br><br>INDEX_NAME            COLUMN_NAME<br>--------------------  --------------------<br>TEST_PK               ID<br><br>1 row selected.</pre><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

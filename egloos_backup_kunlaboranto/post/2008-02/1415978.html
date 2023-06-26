@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] [AIX] Paging In/Out으로 인한 성능저하 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-14 14:40:17</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] [AIX] Paging In/Out으로 인한 성능저하 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://altibase.egloos.com/1415848" title="">[aix] maxperm, lru_file_repage, file cache, pagingIn</a><br><p:colorscheme colors="#ffffff,#000000,#808080,#000000,#00cc99,#3333cc,#ccccff,#b2b2b2"></p:colorscheme><span style="font-family: 굴림체; font-size: 12pt;" lang="EN-US"><br>From : http://whitebear.tistory.com/entry/97<br><br><span style="font-weight: bold;">[AIX] Paging In/Out으로 인한 성능저하</span></span><span style="font-weight: bold;"></span><br><br><div id="articleHead"><embed src="http://cfs.tistory.com/custom/blog/1/12711/skin/images/f_title.swf?wmode=transparent&amp;showType=subject&amp;thisSubject=%5BAIX%5D%20Paging%20In/Out%20%EC%9C%BC%EB%A1%9C%20%EC%9D%B8%ED%95%9C%20%EC%84%B1%EB%8A%A5%20%EC%A0%80%ED%95%98&amp;thisLink=/97&amp;now=2008/01/04%2014:57&amp;thisCategory=%EC%BB%B4%ED%93%A8%ED%84%B0/Operating%20System&amp;thisCatLink=/category/%EC%BB%B4%ED%93%A8%ED%84%B0/Operating%20System&amp;thisWriter=%EB%A7%A4%ED%8A%9C%EA%B9%80&amp;thisColor=0x99cc00&amp;thisTag=%3Ca%20href=%22/tag/AIX%22%20%20rel=%22tag%22%3EAIX%3C/a%3E,%3Ca%20href=%22/tag/Memory%22%20%20rel=%22tag%22%3EMemory%3C/a%3E,%3Ca%20href=%22/tag/Paging%22%20%20rel=%22tag%22%3EPaging%3C/a%3E,%3Ca%20href=%22/tag/vmo%22%20%20rel=%22tag%22%3Evmo%3C/a%3E" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" wmode="transparent" allowscriptaccess="always" height="230" width="700"></div>우영님의 블로그에 <a href="http://a-zit.tistory.com/entry/AIX-%EB%A9%94%EB%AA%A8%EB%A6%AC-swaping-%EC%9D%B4-%EC%A7%80%EC%86%8D%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%B0%9C%EC%83%9D%ED%95%98%EB%8A%94-%ED%98%84%EC%83%81" target="_blank">메모리 swaping 이 지속적으로 발생하는 현상</a>이라는 포스트가 올라왔다. 내용을 간단하게 정리하면 다음과 같다. <br><br><div style="border: 1px solid rgb(0, 0, 200); padding: 10px; background-color: rgb(200, 200, 230); font-family: 'courier new',courier,monospace;"><span style="color: rgb(0, 0, 0);">시스템의 Free Memory가 있음에도 불구하고 Paging In/Out이 빈번하게 발생한다.</span><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">Paging In/Out으로 인하여 Wait CPU 사용률이 증가하고 서비스가 지연되었다.</span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">그리하여 다음 명령어를 사용하면 해결된다.</span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><font face="'GulimChe', 'Sans-serif'"><font face="'GulimChe', 'Sans-serif'"><span style="color: rgb(0, 0, 0);"># vmo -p&nbsp; -o maxclient%=70 -o maxperm%=70 -o minperm%=30 </span><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">&nbsp; (재부팅시 반영)</span><br></font></font></div><br>이 포스트를 보면서 maxclient, maxperm, minperm이 무슨 뜻일까 하는 생각이 들었다. 각각의 용어에 대한 설명과 AIX에서 메모리 관리 방법이 들어 있는 문서를 첨부한다. <br><br>AIX5 Initial Settings for Databases Servers<br><br><div class="imageblock center" style="text-align: center; clear: both;"><a href="http://whitebear.tistory.com/attachment/fk040000000000.pdf"><img src="http://cfs.tistory.com/blog/image/extension/pdf.gif" alt="" style="vertical-align: middle;"> AIX5_Initial_Tuning.pdf</a></div><br>Performance Management Guide<br><br><div class="imageblock center" style="text-align: center; clear: both;"><a href="http://whitebear.tistory.com/attachment/gk040000000000.pdf"><img src="http://cfs.tistory.com/blog/image/extension/pdf.gif" alt="" style="vertical-align: middle;"> prftungd.pdf</a></div><br>나는 Performance Management Guide 중에 Performance Overview of the Virtual Memory Manager(VMM) 만 읽었다. 다른 부분도 읽어두면 후에 좋을 것 같다. <br><br>처음에 제시된 문제 시스템의 Free Memory가 있음에도 불구하고 Paging In/Out이 빈번하게 발생하는 문제의 해답에 대하여 다른 결과가 있어서 넣는다. <a href="http://www.aixservice.co.kr/" target="_blank">Aix Service</a>에 올라온 글로서 IBM의 이현진님이 작성한 것으로 보인다. <a href="http://www.aixservice.co.kr/zerobbs/view.php?id=general&amp;page=1&amp;sn1=on&amp;divpage=1&amp;sn=on&amp;ss=off&amp;sc=off&amp;keyword=%B1%DD%B3%E2%B8%F1%C7%A574&amp;select_arrange=headnum&amp;desc=asc&amp;no=893" target="_blank">원문링크</a><br><br><div style="border: 1px solid rgb(0, 0, 200); padding: 10px; background-color: rgb(200, 200, 230); font-family: 'courier new',courier,monospace;"><b style="color: rgb(0, 0, 0);">client page사용시 lru algorithm을 변경할 수 있는 lru_file_repage 설정 값이 생겼습니다.</b><span style="color: rgb(0, 0, 0);">&nbsp; &nbsp; &nbsp; &nbsp; </span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">아래 APAR 를 통한 새로운 메모리 설정 값이 생겼습니다. </span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">1. for AIX 5.1 : IY69789 remove repaging checks for client lru</span><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">2. for AIX 5.2 : IY62224 remove repaging checks for client lru</span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">jfs2 파일 시스템을 사용할 경우 jfs2 파일 시스템이 메모리 page 중 client page를 사용하게 되는데 AIX5.1 및 AIX 5.2 ML04 이전 버전의 경우 maxclient 기본적으로 hardlimit으로 적용이 되어 있게됩니다.따라서 numclient가 minperm과 maxclient 사이에 위치하게 되는데 이때에는 lru의 규칙이 clientpage나 computational page 중 repage rate을 따져서 우선 순위가 낮은 page를 steal하게 되어있습니다. </span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">그런데 maxclient가 hardlimit으로 되어 있음에 따라 client page가 maxclient에 도달하게 되면client page의 file repage rate이 증가하게 되어서 computational page가 상대적으로 우선순위가 낮아지기 때문에 심지어 여유 메모리가 많이 있음에도 불구하고 paging space page in/out이 계속적으로발생하는 경우를 종종 볼 수가 있었습니다.</span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">이런 현상을 방지하기 위해서 AIX 5.2 ML04 이상 버전에서는 쉽게 strict_maxclient를 0으로 설정할 수 있습니다만 strict_maxclient 설정 값 자체가 없기 때문에 어떻게 할 방법이 없었습니다.</span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">위와 같은 문제에 대한 조치로 위에 기재한 APAR가 나왔는데 이 APAR를 설치하면 lru_file_repage라는 설정 값이생깁니다. 이 설정 값은 0과 1로 설정할 수 있는데 이 값이 0으로 설정이 되면 file page가 minperm이상의 값을유지하는 이상 page steal이 우선 순위와 상관없이 항상 file page에서 발생하게 됩니다. 하지만 file page가minperm 이하로 떨어지면 예전과 같이 reference되지 않은 page를 무작위로 steal하게 되지요...</span><br style="color: rgb(0, 0, 0);"><br style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">따라서 AIX 5.2 ML04 이전 버전의 환경에서 jfs2를 사용할 때 위의 문제로 인해 paging space page in/out이 과다하게 발생하게 된다면 lru_file_repage를 0으로 설정하는 것이 좋겠습니다.</span><font face="'GulimChe', 'Sans-serif'"><font face="'GulimChe', 'Sans-serif'"></font></font></div><br>위의 설명과 같이 maxclient 값이 hardlimit으로 적용 되어 있기 때문에Free Memory가 남아도 Paging In/Out 이 빈번하게 발생할 수 있다는 애기 입니다. 그걸 방지하기 위해서lru_file_repage라는 설정이 생겼다고 하네요. 이 설정을 확인하기 위해서 AIX 5.2이후에서는 vmo 명령을이용하면 됩니다. 우영님의 포스트에 설명이 나와 있습니다.<br><span class="EolinBookmarkBtn"><a href="http://whitebear.tistory.com/entry/97#void" title="이올린에 북마크하기" onclick="bookMarkEolin(97, 'http://whitebear.tistory.com/97', 'bookmark');return false;"><img src="http://cfs.tistory.com/blog/image/plugins/myEolin/images/icoBookmark.gif" alt="" style="vertical-align: middle;" border="0"> 이올린에 북마크하기</a></span>(<span id="bookmarkEolin97" class="EolinBookmarkCount">0</span>) <span class="EolinVoteBtn"><a href="http://whitebear.tistory.com/entry/97#void" title="이올린에 추천하기" onclick="bookMarkEolin(97,'http://whitebear.tistory.com/97', 'vote');return false;"><img src="http://cfs.tistory.com/blog/image/plugins/myEolin/images/icoVote.gif" alt="" style="vertical-align: middle;" border="0"> 이올린에 추천하기</a></span>(<span id="voteEolin97" class="EolinVoteCount">0</span>)<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

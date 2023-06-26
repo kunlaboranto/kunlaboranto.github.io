@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] java Array SELECT - setFetchSize</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:13:51</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] java Array SELECT - setFetchSize</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>펌 : <a class="con_link" href="http://www.javanuri.com/devforum/boardView.jsp?menuId=10&amp;Id=290271&amp;gb=qna" target="_blank">http://www.javanuri.com/devforum/boardView.jsp?menuId=10&amp;Id=290271&amp;gb=qna</a></p><p>&nbsp;</p><p>JDBC&nbsp;Tip(setFetchSize) <br><br>JDBC를&nbsp;통해&nbsp;Oracle과&nbsp;같은&nbsp;DB의&nbsp;데이터를&nbsp;SELECT&nbsp;하는&nbsp;경우&nbsp;데이터&nbsp;양이&nbsp;적은&nbsp;경우&nbsp;별&nbsp;문제가&nbsp;없지만&nbsp;많은&nbsp; 양의&nbsp;데이터인&nbsp;경우&nbsp;속도에&nbsp;영향을&nbsp;받게&nbsp;됩니다.&nbsp;그래서&nbsp;대부분의&nbsp;회사에서&nbsp;대량의&nbsp;배치성&nbsp;작업은&nbsp;거의&nbsp;Pro*C를&nbsp;이용하는&nbsp;있는&nbsp;실 정&nbsp;입니다. <br><br>이번&nbsp;Tip에서&nbsp;알아볼&nbsp;메소드는&nbsp;자바에서&nbsp;JDBC를&nbsp;통해&nbsp;Data를&nbsp;SELECT시&nbsp;Fetch되는&nbsp;데이터의&nbsp;수를&nbsp;미리&nbsp;지정할 &nbsp;수&nbsp;있는&nbsp;setFetchSize()라는&nbsp;메소드&nbsp;입니다.&nbsp;ResultSet의&nbsp;setFetchSize(int&nbsp;rows)&nbsp;메소드는 &nbsp;JDBC&nbsp;Driver가&nbsp;ResultSet을&nbsp;통해서&nbsp;가져올&nbsp;데이터의&nbsp;fetch크기를&nbsp;결정하게&nbsp;하는&nbsp;것입니다. <br><br>아래에서&nbsp;EMP&nbsp;테이블의&nbsp;데이터&nbsp;건수가&nbsp;아주&nbsp;많다고&nbsp;할&nbsp;경우&nbsp;속도면에서&nbsp;사용&nbsp;했을&nbsp;때와&nbsp;하지&nbsp;않았을&nbsp;때는&nbsp;많은&nbsp;차이가&nbsp;있습니다. <br><br>import&nbsp;java.sql.*; <br>import&nbsp;java.io.*; <br><br>class&nbsp;FetchTest&nbsp;{ <br>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;throws&nbsp;Exception&nbsp;{ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class.forName("oracle.jdbc.driver.OracleDriver"); <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;url&nbsp;="jdbc:oracle:thin:@XXX.XXX.XXX.XXX:1521:wink"; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connection&nbsp;conn&nbsp;=&nbsp;DriverManager.getConnection(url,"scott","tiger"); <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;sql=&nbsp;"&nbsp;select&nbsp;*&nbsp;from&nbsp;emp"; <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PreparedStatement&nbsp;stmt&nbsp;=&nbsp;conn.prepareStatement(sql); <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long&nbsp;startTime&nbsp;=&nbsp;System.currentTimeMillis(); <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ResultSet&nbsp;rs&nbsp;=&nbsp;stmt.executeQuery(); <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rs.setFetchSize(100000);&nbsp;&nbsp;&lt;--&nbsp;요기 <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(rs.next())&nbsp;{ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println&nbsp;("name:"&nbsp;+&nbsp;Rs.getString&nbsp;("ename")&nbsp;+&nbsp;"&nbsp;sal:"&nbsp;+&nbsp;Rs.getLong&nbsp;("sal"));&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>} <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Time&nbsp;elapsed&nbsp;:&nbsp;"&nbsp;+&nbsp;(System.currentTimeMillis()&nbsp;-&nbsp;startTime)); <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rs.close(); <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stmt.close(); <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn.close();&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;} <br>} <br><br>from&nbsp;www.oraclejava.co.kr</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

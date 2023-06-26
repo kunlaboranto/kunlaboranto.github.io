@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] [HPUX] elfdump 로 컴파일 옵션 확인</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-23 16:09:21</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] [HPUX] elfdump 로 컴파일 옵션 확인</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://altibase.egloos.com/575363" title="">[펌] [HPUX] Linker Tools for Itanium-Based Systems</a><br><br><br><div class="comment_body" style="width: 98%;"><div style="margin: 0px; overflow: hidden; width: 100%;">=============================================<br>[2] 간단한 sample 프로그램으로 확인하는 방법<br>=============================================<br><br>다음은 간단한 sample program을 사용하여 -mt 옵션이 들어가게 archive library를 만들고 확인한 결과 입니다.<br><br>1) 두개의 sample file :<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] cat a.c<br>testAAA()<br>{<br>printf("-----testAAA----\n");<br>}<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821]<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] cat b.c<br>main()<br>{<br>testAAA();<br>}<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821]<br><br><br>2) arch로 만들고 link하기 <br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] cc -mt -c a.c<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] ar r lib-test.a a.o<br>ar: creating lib-test.a<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] cc -mt -o bb b.c lib-test.a<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] ./bb<br>-----testAAA----<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821]<br><br><br>3) elfdump 실행하여 확인 : 아래와 같이 elfdump 를 이용하여 -mt 옵션이 들어가서 compile된 것을 확인<br>할 수 있음<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] elfdump -dc bb<br><br>bb:<br><br><br>Compilation Unit Dictionary from bb:<br><br><br>Language Name<br>Product_id ; Version_id<br>Compile time; Source time<br><br>A.06.10 [Mar 22 2006] [Build N/A]<br>ecom options = -architecture 32 -ia64abi all -ext on -lang c -exception off -sysdir /usr/include<br>-inline_power<br>1 -link_type dynamic -fpeval float -tls_dyn on -mt on -target_os 11.23 -rodata cond --sys_include<br>/usr/includ &lt;-- -mt<br>e -ucode hdriver=optlevel%1% -plusolistoption -Ol06const! -plusolistoption -Ol13moderate!<br>-plusooption -Oq01,a<br>l,ag,cn,sz,ic,vo,Mf,Po,es,rs,Rf,Pr,sp,in,cl,om,vc,pi,fa,pe,rr,pa,pv,nf,cp,lx,Pg,ug,lu,lb,uj,dn,sg,pt,kt,em,np,<br>ar,rp,dl,fs,bp,wp,pc,mp,lr,cx,cr,pi,so,Rc,fa,ft,fe,ap,st,lc,Bl,sr,ib,pl,sd,ll,rl,dl,Lt,ol,fl,lm,ts,rd,dp,If!<br>SOURCE FILE INFO: b.c<br>/kbs/ktf/070805-app-core/070821<br>ANSI C 32 bits<br>A.06.10 [Mar 22 2006] [Build N/A]<br>ecom options = -architecture 32 -ia64abi all -ext on -lang c -exception off -sysdir /usr/include<br>-inline_power<br>1 -link_type dynamic -fpeval float -tls_dyn on -mt on -target_os 11.23 -rodata cond --sys_include<br>/usr/includ &lt;-- -mt<br>e -ucode hdriver=optlevel%1% -plusolistoption -Ol06const! -plusolistoption -Ol13moderate!<br>-plusooption -Oq01,a<br>l,ag,cn,sz,ic,vo,Mf,Po,es,rs,Rf,Pr,sp,in,cl,om,vc,pi,fa,pe,rr,pa,pv,nf,cp,lx,Pg,ug,lu,lb,uj,dn,sg,pt,kt,em,np,<br>ar,rp,dl,fs,bp,wp,pc,mp,lr,cx,cr,pi,so,Rc,fa,ft,fe,ap,st,lc,Bl,sr,ib,pl,sd,ll,rl,dl,Lt,ol,fl,lm,ts,rd,dp,If!<br>SOURCE FILE INFO: a.c<br>/kbs/ktf/070805-app-core/070821<br>ANSI C 32 bits<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821]<br>4) lib-test.a 에 대하여도 직접 확인이 가능합니다.<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821] elfdump -dc lib-test.a<br><br>lib-test.a:<br><br>lib-test.a[a.o]:<br><br><br>Compilation Unit Dictionary from lib-test.a[a.o]:<br><br><br>Language Name<br>Product_id ; Version_id<br>Compile time; Source time<br><br>A.06.10 [Mar 22 2006] [Build N/A]<br>ecom options = -architecture 32 -ia64abi all -ext on -lang c -exception off -sysdir /usr/include<br>-inline_power<br>1 -link_type dynamic -fpeval float -tls_dyn on -mt on -target_os 11.23 -rodata cond --sys_include<br>/usr/includ &lt;-- -mt들어감<br>e -ucode hdriver=optlevel%1% -plusolistoption -Ol06const! -plusolistoption -Ol13moderate!<br>-plusooption -Oq01,a<br>l,ag,cn,sz,ic,vo,Mf,Po,es,rs,Rf,Pr,sp,in,cl,om,vc,pi,fa,pe,rr,pa,pv,nf,cp,lx,Pg,ug,lu,lb,uj,dn,sg,pt,kt,em,np,<br>ar,rp,dl,fs,bp,wp,pc,mp,lr,cx,cr,pi,so,Rc,fa,ft,fe,ap,st,lc,Bl,sr,ib,pl,sd,ll,rl,dl,Lt,ol,fl,lm,ts,rd,dp,If!<br>SOURCE FILE INFO: a.c<br>/kbs/ktf/070805-app-core/070821<br>ANSI C 32 bits<br>[root@krcipf4a:/kbs/ktf/070805-app-core/070821]</div></div><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

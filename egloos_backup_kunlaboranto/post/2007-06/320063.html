@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>unix cmd 모음 - 차이 이주로 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:38:50</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">unix cmd 모음 - 차이 이주로 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><pre>1.<br>*Solaris 2.9*                 * AIX 5.2*<br>--------------------------------------------------------<br>pflags [-r] [pid | *core*] procflags [-r] [pid]<br>pcred [pid | *core*]         proccred [pid]<br>pmap [-rxIF] [pid | *core*] procmap [-F] [pid]<br>pldd [-F] [pid | *core*] procldd [-F] [pid]<br>pstack [-F] [pid | *core*] procstack [-F] [pid]<br>pfiles [-F] [pid]         procfiles [-*n*F] [pid]<br>ptime command [argument] *Not available*<br></pre>2.<br><pre>* 출저 : lim272<br>* 특징 : ps 옵션에 -mo 가 있다는 것을 알게됨 (AIX5.2)<br>* 적용예 : 패치후 cpu 가 높아졌다고 하여 어떤 모듈인지 1차 PBT 위해<br><br>우선 쓰레드별 CPU사용량을 따라간다.<br><br>=================================================================================================<br><br>% ps -p 602238 -mo THREAD<br>    USER    PID   PPID      TID S  CP PRI SC    WCHAN        F     TT BND COMMAND<br>  ohzzam 602238      1        - A 150  60 92        *    40001      -   -<br>/home2/ohzzam/altibase_home/bin/altiba<br>       -      -      -   843943 S   2  61  1        -   418410      -   - -<br>       -      -      -   970771 S   2  61  1        -   418410      -   - -<br>       -      -      -  1007659 S   2  61  1        -   418410      -   - -<br>       -      -      -  1130601 S   0  60  1 f100070f10011440  8410410      -   - -<br>..<br>       -      -      -  1785977 S   0  60  1        -   410410      -   - -<br>       -      -      -  1822973 S  29  74  1        -  2400400      -   - -          &lt;== 이게 미친<br>쓰레드로 의심간다. 일단.  (CP항목이 cpu 사용량인지 명확치는 않지만..)<br><br>1.  procstack으로 볼때.. 해당 tid를 가지고 보면.. .. 시스템콜인지 함수인지는 모르겠지만.. <br><br> procstack -F 602238 &gt; proc.txt<br>vi proc.t[aix53-p5:/home2/ohzzam]<br>% vi proc.txt<br>---------- tid# 1822973 ----------<br>0x090000000040f868  _usched_func() + 0xd4<br><br>0x09000000004042f4  _pthread_body(??) + 0xcc</pre><br><p>3. (aix, dec)</p><p>$ vmstat -w 1</p><p>&lt;-- "-w" 옵션은 줄을 맞추어 보여줌</p><br><p>4.</p><pre>자주 사용되는 "ipcs -a" 명령에 대해, 오늘 알게된 사실을 공유합니다. (저만 모랐을 듯)<br><br>1. 상황<br>  IPC 자원은 "ipcs -a" 로 수행하면 다른 유저의 것도 모두 확인할수 있다.<br>  저는 shm로 뭘해본적이 없이 이렇게 생각했는데 문제가 있었네요.<br>  <br>  okseop8 계정에서 만든 SHM을 okseop7에서 "ipcs -a" 로 조회가 안되어서 확인하니.<br><br>  $ ipcs -a |grep okse<br>  T ID     KEY    MODE        OWNER   GROUP CREATOR CGROUP NATTCH SEGSZ     CPID LPID<br>  m 438275 0x4971 --rw------- okseop8 other okseop8 other  0      197165080 9481 10990<br><br>  이렇게 IPC 자원도 접근 권환이 있네요. "r" 권한이 없으면 목록조회도 안되는 듯 합니다.<br><br>2. 유발할 수 있는 문제<br>  만약 TT와의 BMT에서 TT가 SHM을 22G로 잡아놓고 철수했는데.<br>  이를 파악못하고 BMT를 수행하면 들쭉날쭉한 성능을 얻게 될듯.<br></pre></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

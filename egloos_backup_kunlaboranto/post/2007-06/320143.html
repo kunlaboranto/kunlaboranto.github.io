@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] TIME_WAIT 상태가 2000개 가량 되니 서버가 block되는데요.. </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:02:02</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] TIME_WAIT 상태가 2000개 가량 되니 서버가 block되는데요.. </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">FROM : http://kldp.org/node/31379<br><h1 class="title">TIME_WAIT 상태가 2000개 가량 되니 서버가 block되는데요..</h1><!-- begin content --><div class="node"><span class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/913" target="_blank">rainblow</a> 씀 (토, 2004/02/28 - 11:04pm)</span> <span class="taxonomy"><a class="con_link" title="개발 작업 도중 일어난 문제점을 서로 상의하세요." href="http://kldp.org/forum/5" target="_blank" rel="tag">프로그래밍 QnA</a></span> <div class="content"><p>이 전 서버는 process fork 방식으로 되어있는데 성능상 문제가 생겨서, 일단 장비를 추가하기로 하면서, 문제가된 process fork방식을 thread pool로 바꿀려고 테스트 중입니다. 그런데, 부하 테스트를 하면서 문제가 되는 부분이 있어서 질문 올립니다. <br>일단 환경은 compaq Tru-64 Unix입니다. <br>실제 서버는 solaris인데 테스트장비는 저것밖에 없네요.</p><p>1. local 에서 클라이언트와 서버를 올리고, 클라이언트에서 loop돌면서 서버에 접속하여 데이터를 처리하고 recv한후 close하는 방식으로 테스트를 하면, 이상하게 FIN_WAIT_2와 CLOSE_WAIT가 생기다가 이게 10여개 이상되면 서버가 blocking 되면서 응답이 없어집니다. <br>local에서 local로 테스트 하면 생길수 있는 문제일까요?</p><p>2. 위의 문제를 해결할려고 shutdown도 해주고 close도 잘 해주었는데, 해결이 안되더니 클라이언트를 NT로 포팅해서 다른 서버에서 돌려주니 FIN_WAIT_2, CLOSE_WAIT 문제는 해결이 되네요. 왜 그런걸까요?<br>(local에서 local로 하면 너무 빨라서 그렇다고 하는 분도 있는데 그런걸까요?)</p><p>3. 위의 2번처럼 해서 스트레스(초당 30~40 개정도의 지속적인 연결)를 주면서 테스트를 하니, 서버쪽에 TIME_WAIT 이 약 2000개정도 생기다가 역시 blocking 되어버립니다. <br>여기 게시판을 많이 검색해보니 TIME_WAIT은 TCP의 설계상 아주 정상적인 것이라고 하는데 왜 이런일이 생기는 걸까요? <br>이상태가 되면 socket에서 select timeout조차도 호출이안되고 완전히 서버가 멈춰버리더군요.<br>서버에서 생성할수 있는 socket descriptor갯수의 제한때문에 그런걸까요?<br>그런 세팅등은 어디서 볼수 있을까요?</p><p>너무 많은걸 질문하네요. <br>죄송합니다. </p><p>즐거운 주말 보내세요...</p><div class="forum-topic-navigation"><a class="con_link" title="이전 글" href="http://kldp.org/node/31413" target="_blank">‹ 그래프 레이아웃 해주는 python module을 구할 수 있을까요?</a> <a class="con_link" title="다음 글" href="http://kldp.org/node/30903" target="_blank">리눅스 커널의 spin lock ›</a></div><div><fieldset><legend>Vote Result</legend><div id="nodevote result"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"></div><div id="nodevote result">Score: 0.0, Votes: 0</div></fieldset> <input id="edit-nodevote-form" type="hidden" value="nodevote_form" name="edit[form_id]"> </div></div><div class="links">» 74번 읽힘</div></div><div class="comment"><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/657" target="_blank">mushim</a> 씀 (일, 2004/02/29 - 12:51am)</div><div class="content"><p></p><div class="bb-quote">인용:<br><blockquote class="bb-quote-body">1. local 에서 클라이언트와 서버를 올리고, 클라이언트에서 loop돌면서 서버에 접속하여 데이터를 처리하고 recv한후 close하는 방식으로 테스트를 하면, 이상하게 FIN_WAIT_2와 CLOSE_WAIT가 생기다가 이게 10여개 이상되면 서버가 blocking 되면서 응답이 없어집니다. </blockquote></div><p>TCP 세션이 종료할때 passive 한쪽에서 명시적으로 close 를 해주지 않아서 그렇습니다.</p><p></p><div class="bb-quote">인용:<br><blockquote class="bb-quote-body">3. 위의 2번처럼 해서 스트레스(초당 30~40 개정도의 지속적인 연결)를 주면서 테스트를 하니, 서버쪽에 TIME_WAIT 이 약 2000개정도 생기다가 역시 blocking 되어버립니다. <br>여기 게시판을 많이 검색해보니 TIME_WAIT은 TCP의 설계상 아주 정상적인 것이라고 하는데 왜 이런일이 생기는 걸까요? </blockquote></div><p>TCP 세션이 종료할때 acitve 한쪽에서는 마지막 2MSL 기간동안 TIME_WAIT 상태에 있게 됩니다. 그 이유는 좀 긴내용이라서 다음을 참조하세요. (<a class="con_link" title="http://people.kldp.org/~kabin/doc/sockfaq2.htm" href="http://people.kldp.org/%7Ekabin/doc/sockfaq2.htm" target="_blank">http://people.kldp.org/~kabin/doc/sockfaq2.htm</a> [2.7])</p><p>대부분의 OS 에서는 2MSL 을 120초로 설정하기 때문에 초당 30-40 개정도의 연결이라면 TIME_WAIT 은 몇천개 생기게 됩니다.</p><p>제 경험으로는 저정도는 현재 OS 에서 특별한 문제를 일으키지 않는 것으로 알고 있습니다. 서버에 과부하가 생길때 그 현상으로 과다 TIME_WAIT 이 발생해서 TIME_WAIT 를 의심하는 경우가 많은데, 과다 TIME_WAIT 은 현상일뿐 그게 원인이 되지는 않습니다. </p><p>만약, 정말로 과다 TIME_WAIT 이 의심이 가신다면 socket 의 linger 옵션을 활용해 보시기 바랍니다. 이걸 사용하면 TIME_WAIT 을 거치지 않고 종료할 수 있습니다.</p><p><a class="con_link" title="http://bbs.kldp.org/viewtopic.php?t=359" href="http://bbs.kldp.org/viewtopic.php?t=359" target="_blank">http://bbs.kldp.org/viewtopic.php?t=359</a></p></div><div class="links">» <a class="con_link" href="http://kldp.org/comment/reply/31379/91429" target="_blank">답글</a></div></div><div class="comment"><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/913" target="_blank">rainblow</a> 씀 (일, 2004/02/29 - 5:28pm)</div><div class="content"><p>먼저 답변 감사합니다. </p><p>Linger옵션도 고려를 해봤습니다만, 게시판 검색해보니 그것은 클라이언트쪽에서 해야 효과가 있다고 하던데요.. 실제로 제가 서버쪽 코드에 Linger옵션을 줘봤습니다만 효과를 보긴 힘들더군요.</p><p>문제는 클라이언트쪽은 제가 코딩을 하는게 아니고 여러 업체들이 프로토콜에 맞추어 그냥 작성하는거라 그쪽 코드를 전부 수정하라고 하긴 좀 머한데요..</p><p>MSL 인가요? 이 시간을 줄이면 될까요?(어디서 세팅을 바꾸는지.. )</p><p>그리고 실제로 TIME_WAIT이 2000개 가량 되면 blocking이 될수 있나요? 아님 다른 이유때문인지 혹시 의심가는 부분이 있으면 한번 더 짚어주시면 감사하겠습니다. </p><p>즐거운 주말 되세요.</p></div><div class="links">» <a class="con_link" href="http://kldp.org/comment/reply/31379/91430" target="_blank">답글</a></div></div><div class="comment"><h3 class="title"><a class="con_link" href="http://kldp.org/node/31379#comment-91431" target="_blank">글세요..</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/1214" target="_blank">frowt</a> 씀 (일, 2004/02/29 - 7:07pm)</div><div class="content"><p>서버에서 socket close 처리를 제대로 해 주지 않으면 시간이 지나면<br>자동으로 소멸이 되기때문에 crash에 대한 원인이 아닌것 같고요,<br>select를 호출하면서 서버가 서버린다고 하셨고, thread를<br>사용하신다면, thread에서 생기는 문제일 가능성이 큽니다.<br>갑작스레 cpu 부하가 올라간다면 거의 thread 문제입니다.<br>참고로, 큰 부하를 견디려면 thread model 보다는 multi plex model 이 좋습니다.</p></div><div class="links">» <a class="con_link" href="http://kldp.org/comment/reply/31379/91431" target="_blank">답글</a></div></div><div class="picture"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/8115" target="_blank"><img title="쎄피로의 그림" alt="쎄피로의 그림" src="http://kldp.org/files/pictures/163373067641aec5094f616.gif"></a></div><h3 class="title"><a class="con_link" href="http://kldp.org/node/31379#comment-91432" target="_blank">우선 소스 부분을 조금 보구 싶네요..</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/8115" target="_blank">쎄피로</a> 씀 (일, 2004/02/29 - 7:18pm)</div><div class="content"><p>실 제.. 저 정도에서 과부하로 죽거나 하지는 않습니다.. 만약 그렇다면 웹서버들 죽어나죠 -_-;; 조금 다른 얘기입니다만, 실제 shutdown 까지 해주셨다면, 일단 정상적인 종료로 wait부분이 생기지 말아야할 것 같습니다만, 제 생각에는 다른 부분을 한 번 점검해 보세요. 꼭 통신 프로그램이라서 통신쪽에만 문제가 있는 경우는 의외로 드물기도 하니까요. 통신쪽은 flow만 정확하다면 큰 문제는 없을 듯 합니다. 정확히 주고 받고 끊어주는 부분이 아귀가 잘 맞는지 한 번 체크해 보십시오.</p></div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

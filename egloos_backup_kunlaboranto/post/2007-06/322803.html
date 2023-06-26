@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] sqlplus에서 sql문 performance 측정 방법</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-19 04:32:55</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] sqlplus에서 sql문 performance 측정 방법</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>From : <a href="http://database.sarang.net/?inc=read&amp;aid=4827&amp;criteria=oracle&amp;subcrit=&amp;id=25842&amp;limit=20&amp;keyword=v%24statement&amp;page=33">http://database.sarang.net/?inc=read&amp;aid=4827&amp;criteria=oracle&amp;subcrit=&amp;id=25842&amp;limit=20&amp;keyword=v%24statement&amp;page=33</a><br><br><table class="infotable" style="TEXT-ALIGN: left" cellspacing="0" cellpadding="3" border="0"><tbody><tr><td class="rowtitle" colspan="6">Re: sqlplus에서 sql문 performance 측정 방법</td></tr><tr><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성자</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">sllim</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성일</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">2001-06-04 19:08:26</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">조회수</div></th><td class="rowmisc" align="right"><div style="WHITE-SPACE: nowrap">925</div></td></tr></tbody></table><table class="viewtable" style="TEXT-ALIGN: left"><tbody><tr><td class="rowbody"><p>1. SQL*Plus를 실행하여 scott user로 접속한 후, plan table을 생성한다. </p><p>&nbsp;</p><p>#sqlplus scott/tiger </p><p>sql&gt;@$ORACLE_HOME/rdbms/admin/utlxplan </p><p>&nbsp;</p><p>2. 다음에 sys user에서 PLUSTRACE란 ROLE을 만든다. </p><p>&nbsp;</p><p>sqldba&gt;connect internal; </p><p>sqldba&gt;create role plustrace; </p><p>sqldba&gt;grant select on v_$sesstat to plustrace; </p><p>sqldba&gt;grant select on v_$statname to plustrace; </p><p>sqldba&gt;grant select on v_$session to plustrace; </p><p>sqldba&gt;grant plustrace to dba with admin option; </p><p>sqldba&gt;grant plustrace to scott; </p><p>&nbsp;</p><p>비고)위의 grant 문은 client에 SQL*Plus 3.3이 install되어 있는 경우</p><p>C:ORAWIN95\PLUS33\PLUSTRCE.SQL이라는 script에 기록되어 있다. </p><p>다음과 같이 실행해 주면 된다. </p><p>1&gt; connect sys/manager</p><p>2&gt; @$ORACLE_HOME/sqlplus/admin/plustrce.sql</p><p>3&gt; grant plustrace to scott;</p><p>&nbsp;</p><p>&nbsp;</p><p>3. 다음에는 scott user로 connect하여 작업한다. </p><p>#sqlplus scott/tiger </p><p>sql&gt;set autotrace on </p><p>sql&gt;select * from emp; </p><p>&nbsp;</p><p>Execution Plan </p><p>----------------------------------------------- </p><p>0 SELECT <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">STATEMENT</span> Optimizer=CHOOSE </p><p>1 0 TABLE ACCESS (FULL) OF 'EMP' </p><p>&nbsp;</p><p>Statistics </p><p>----------------------------------------------- </p><p>389 recursive calls </p><p>5 db block gets </p><p>53 consistent gets </p><p>12 physical reads </p><p>0 redo size </p><p>1049 bytes sent via SQL*Net to client </p><p>239 bytes received via SQL*Net from client </p><p>4 SQL*Net round-trips to/from client </p><p>0 sorts (memory) </p><p>0 sorts (disk) </p><p>13 rows processed </p><p>&nbsp;</p><p>&nbsp;</p><p>4. 참고로 set autotrace에는 여러가지 option을 부여해 작업할 수도 있다. </p><p>&nbsp;</p><p>예)set autotrace on =&gt; Explain plan and statistics. </p><p>set autotrace on explain =&gt; Explain plan only. </p><p>set autotrace traceonly =&gt; select된 결과는 빼고 trace만 display 시킴. </p><p>set autotrace on statistics=&gt; sql <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span> execution statistics. </p><p>&nbsp;</p><p>5. 서버 버젼과 상관없다. </p><p>Server가 7.2 version 이하 일지라도 clinet에 SQL*Plus 3.3이 install되어 있으면 client에서 sqlplus </p><p>&nbsp;</p><p>3.3을 구동시켜 server에 접속하여 위와 같이 작업하면 무리없이 작업이 가능하다.</p><p>&nbsp;</p><p>&nbsp;</p><p>&gt;&gt;cool 님께서 쓰시길&lt;&lt;</p><p>&nbsp;</p><p>:: [키워드;튜닝,tuning]</p><p>:: </p><p>:: 몇 년전에 sqlplus상에서 sql문을 실행하여,</p><p>:: 해당 sql문의 여러 통계치(튜닝에 필요한)를 낸 기억이 있는데,</p><p>:: 이 모드를 설정하는 방법을 찾을 수 없어 </p><p>:: 이렇게 질문을 올립니다.</p></td></tr></tbody></table></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

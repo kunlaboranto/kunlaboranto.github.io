@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[추천 사이트] 일본어 / 한국어 번역 사이트</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-29 09:02:43</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[추천 사이트] 일본어 / 한국어 번역 사이트</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p><br>일본어 / 한국어 번역이 가능한 사이트라고 일본에서 알려 주었습니다.</p><p>By the way, when you read our japanese mail,<br>please see follow site which is translating site. (korea ←→japanese)<br>I think there may be same site in korea also.<br><a href="http://www.excite.co.jp/world/korean/">http://www.excite.co.jp/world/korean/</a><br>or<br><a href="http://honyaku.yahoo.co.jp/">http://honyaku.yahoo.co.jp/</a><br>We often use this site.<br><br><br>--- 사용예 --<br>[ 번역후 ]<br>신세를 지고 있습니다.<br>오늘, 점심까지는 IP주소 및 접속 방법에 대해<br>연락할 수 있을 예정입니다.</p><p>준비할 수 있는 대로 곧바로 연락하겠습니다.</p><p>사이트 이거 쓸만 합니다..강추!!!!!!<br><br>[ 원문 ]<br><br>お世話になっております。<br>本日、お昼までにはIPアドレス及び接続方法について<br>ご連絡できる予定です。 <br><br>準備でき次第すぐにご連絡いたします。<br><br><br><br><br><br><br></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

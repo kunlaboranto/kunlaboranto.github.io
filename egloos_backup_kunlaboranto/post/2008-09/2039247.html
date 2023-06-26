@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>ALTIBASE + Weblogic9.2 사용기</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-09-21 15:38:14</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">ALTIBASE + Weblogic9.2 사용기</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">weblogic 을 처음 사용해 보았기 때문에, 세션된 방식이 아니라고 볼 수 있습니다.<br>단지 Altibase와 접속을 해보았다는 수준에서 의미.. <br><br># weblogic 9.2 사용기<br><br>1. 구동<br>&nbsp;+ /home3/weblogic/bea/user_projects/domains/base_domain/bin 이하에서 실행<br>&nbsp;&nbsp; start) ./startWebLogic.sh<br>&nbsp;&nbsp; stop ) ./stopWebLogic.sh<br>&nbsp;&nbsp;&nbsp; <br>2. 관련 환경변수 파일 <br>&nbsp;+ startWeblogic.sh 가 동일 경로의 ./setDomainEnv.sh 을 호출<br><br>&nbsp;+ SERVER_NAME="AdminServer"<br>&nbsp;&nbsp; 사이트 환경에서는 여러개의 Server가 있었으며, 2개의 Server를 묶어서 구성한 Cluster-Server 설정을 사용<br><br>&nbsp;+ DOMAIN_HOME="/home3/weblogic/bea/user_projects/domains/base_domain"<br><br>&nbsp;+ DEBUG_PORT="8453"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --&gt; 사용법?<br>&nbsp;+ JAVA관련 MEM 옵션<br>&nbsp;&nbsp; MEM_ARGS="-Xms256m -Xmx512m"<br>&nbsp;&nbsp; MEM_DEV_ARGS="-XX:CompileThreshold=8000 -XX:PermSize=48m "<br>&nbsp;&nbsp; MEM_ARGS="${MEM_ARGS} ${MEM_DEV_ARGS} -XX:MaxPermSize=128m"<br><br>&nbsp;+ setDomainEnv.sh가 ". ${WL_HOME}/common/bin/commEnv.sh" 을 호출<br>&nbsp;+ BEA_HOME="/home3/weblogic/bea"<br>&nbsp;+ WL_HOME="/home3/weblogic/bea/weblogic92"<br>&nbsp;+ DB 설정 : CLASSPATH에 Altibase.jar 추가<br>&nbsp;&nbsp;&nbsp; <br>&nbsp;+ 메인 환경 파일<br>&nbsp;&nbsp; $DOMAIN_HOME/config/config.xml<br>&nbsp;&nbsp;&nbsp; <br>3. 관리웹 로그인 <br>&nbsp;+ URL : http://192.168.1.35:7001/console/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ( weblogic/weblogic )<br><br>4. WAS의 docBase 경로 지정 ( docBase 용어는 Tomcat 에서 빌림 )<br>&nbsp;+ weblogic 설치 후 ex1.jsp 등을 어디 경로에 놓아야 할지 파악에 오래 걸림.<br><br>&nbsp;+ console 메뉴에서<br>&nbsp;&nbsp; [ base_domain ] - [ Deployments ] 에서 신규로 생성.<br>&nbsp;&nbsp; 예를 들어 myapp 를 " $DOMAIN_HOME/ROOT/myapp " 경로에 지정하면 hpp://../myapp/ 로 접근 가능함.<br>&nbsp;&nbsp; ROOT라는 명칭은 Tomcat 에서 따서 임의로 부여<br><br># Connection Pool 구성<br><br>1. JDBC Data Sources<br>&nbsp;+ console 메뉴<br>&nbsp;&nbsp; [ base_domain ] - [ Services ] - [ JDBC ] - [ Data Source ] 에서<br>&nbsp;&nbsp; JNDI 를 생성한다. ( ex. DB01 이라고 생성 )<br><br>2. 문제점 ( A3 Only, A4 OK - tested with 4.3.9.124 )<br>&nbsp;&nbsp; 위 JNDI 를 defualt로 생성후 아래 속성들이 문제가 됨<br><br>&nbsp;+ [ DB01 ] - [ Configuration Tab ] - [ Connection Pool ]<br>&nbsp;+ Statement Cache Size: 10<br>&nbsp;&nbsp; STMT Cache size를 0 으로 disable 해야지만 됨<br>&nbsp;&nbsp; SQLException : java.sql.SQLException: <br>&nbsp;&nbsp;&nbsp;&nbsp; Altibase JDBC $Revision: 1.24 $ <br>&nbsp;&nbsp;&nbsp;&nbsp; ERROR:Attempted to assign a value to parameter 1 when there are only 0 parameters. <br><br>&nbsp;+ Maximum Capacity: 15<br>&nbsp;&nbsp; cn.close(); 를 exception 발생시 호출하지 않아서 문제가 됨. (정상)<br>&nbsp;&nbsp; SQLException : <br>&nbsp;&nbsp;&nbsp;&nbsp; weblogic.jdbc.extensions.PoolLimitSQLException: <br>&nbsp;&nbsp;&nbsp;&nbsp; weblogic.common.resourcepool.ResourceLimitException: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No resources currently available in pool DB01 to allocate to applications, please increase the size of the pool and retry.. <br><br>3. 문제점 ( work-around 가능 )<br>&nbsp;+ [ Advanced 선택 ] 후 Test Table Name: DUAL<br>&nbsp;&nbsp; A4, A3 모두 DUAL 테이블을 명시적으로 생성해주어야 하고 "select count(*) from dual;"<br>&nbsp;&nbsp; 을 WL이 주기적으로 날린다. ( Test Frequency: 120s )<br>&nbsp;+ A5는 DUAL 이 DB 생성 초기부터 존재함.<br><br>4. 문제점 ( A4 Only, 정상이라고도 볼 수 있을듯 )<br>&nbsp;&nbsp; DataSource 생성시 아래 문제가 발생<br>&nbsp;+ 유형1<br>&nbsp;&nbsp; - 오류) <br>&nbsp;&nbsp;&nbsp;&nbsp; Altibase JDBC $Revision: 24725 $ <br>&nbsp;&nbsp;&nbsp;&nbsp; ERROR:Altibase JDBC driver unsupport this encodeASCII<br>&nbsp;&nbsp;&nbsp;&nbsp; 또는 <br>&nbsp;&nbsp;&nbsp;&nbsp; ERROR: /MANAGERInvalid user (Undefined user or incorrect password)<br>&nbsp;&nbsp; - 조치) Properties: 에 아래 넣어줌<br>&nbsp;&nbsp;&nbsp;&nbsp; user=sys<br>&nbsp;&nbsp;&nbsp;&nbsp; encoding=US7ASCII<br><br># 남은 문제.<br><br>&nbsp;&nbsp; pstmt.setFetchSize(100);<br>&nbsp;&nbsp; pstmt.setMaxRows(10);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp; 와 같이 MaxRows 보다 큰 값으로 FetchSize 를 지정시도시에 오류 ( altibase 버그임 )<br>&nbsp;<br>&nbsp;&nbsp; 그러나 setMaxRows(0) 은 언제나 가능함.<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

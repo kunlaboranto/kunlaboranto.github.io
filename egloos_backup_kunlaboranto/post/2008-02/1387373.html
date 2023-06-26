@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 오라클에서 테이블 스페이스 크기 보기</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-06 18:03:45</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 오라클에서 테이블 스페이스 크기 보기</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://cguru.spaces.live.com/Blog/cns!7303B0A11E83C10A!373.entry<br><br><span id="ctl00_MainContentPlaceholder_ctl01_ctl00_lblEntry"><h4 style="margin-bottom: 0px;" class="TextColor1" id="subjcns!7303B0A11E83C10A!373">오라클에서 테이블 스페이스 크기 보기</h4><div id="msgcns!7303B0A11E83C10A!373" class="bvMsg"><p>&nbsp; </p><p><a title="http://myweb.bcpark.net/%7Ehosuck/gnu3/?doc=bbs%2Fgnuboard.php&amp;bo_table=PG_ORACLE&amp;wr_id=92" href="http://myweb.bcpark.net/%7Ehosuck/gnu3/?doc=bbs/gnuboard.php&amp;bo_table=PG_ORACLE&amp;wr_id=92">http://myweb.bcpark.net/%7Ehosuck/gnu3/?doc=bbs%2Fgnuboard.php&amp;bo_table=PG_ORACLE&amp;wr_id=92</a> </p><p>이 스크립트는 자신의 크기(100%)의 60%를 넘는 데이터파일이나 템프파일을 갖고 있는 테이블스페이스를 보여줍니다. <br>autoextend나 maxsize unlimited인 대용량 데이터베이스에 유용할듯 합니다. <br>그리고 지난 90일동안의 증가율도 제공합니다. <br>set linesize 132 <br>define history_days=90 <br>define threshold_pct=60 <br>SELECT CONTENTS,tablespace_name, <br>&nbsp;&nbsp; CEIL(SUM(used)/POWER(1024,3)) USED_GB, <br>&nbsp;&nbsp; CEIL(SUM(total)/POWER(1024,3)) MAXSIZE_GB, <br>&nbsp;&nbsp; TO_CHAR(100*SUM(used)/SUM(total),'999')||' %' Pct_Used, <br>&nbsp;&nbsp; TO_CHAR(100*((SUM(nvl2(creation,used,0))))/SUM(total),'S99999')||'% in last &amp;&amp;history_days days' GROWTH <br>FROM ( <br>&nbsp;&nbsp;&nbsp; SELECT what,tablespace_name,file_name,bytes_used used, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CASE WHEN autoextensible='NO' THEN bytes <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN NVL(maxbytes,0) &lt; bytes THEN bytes <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ELSE maxbytes <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; END total <br>&nbsp;&nbsp;&nbsp; FROM ( <br>&nbsp;&nbsp;&nbsp;&nbsp; SELECT 'tempfile' what,file_id,tablespace_name,file_name,relative_fno,bytes,autoextensible,maxbytes,bytes_used <br>&nbsp;&nbsp;&nbsp;&nbsp; FROM V$temp_space_header s join DBA_TEMP_FILES f USING (file_id,tablespace_name,relative_fno) <br>&nbsp;&nbsp;&nbsp;&nbsp; WHERE status ='AVAILABLE' <br>&nbsp;&nbsp;&nbsp;&nbsp; UNION ALL <br>&nbsp;&nbsp;&nbsp;&nbsp; SELECT 'datafile' what,file_id,tablespace_name,file_name,relative_fno,f.bytes,autoextensible,maxbytes, <br>&nbsp;&nbsp;&nbsp;&nbsp; f.bytes-NVL(s.bytes,0) bytes_used <br>&nbsp;&nbsp;&nbsp;&nbsp; FROM DBA_DATA_FILES f left outer join ( <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SELECT file_id,tablespace_name,relative_fno,SUM(bytes) bytes <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FROM DBA_FREE_SPACE GROUP BY file_id,tablespace_name,relative_fno <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ) s USING (file_id,tablespace_name,relative_fno) <br>&nbsp;&nbsp;&nbsp;&nbsp; WHERE status ='AVAILABLE' <br>) ) join DBA_TABLESPACES USING (tablespace_name) <br>left outer join ( <br>SELECTname file_name&nbsp; , SYSDATE-creation_time creation FROM v$datafile WHEREcreation_time &gt; SYSDATE - &amp;&amp;history_days ) <br>USING (file_name) HAVING SUM(used)/SUM(total) &gt; ( &amp;&amp;threshold_pct / 100) <br>GROUP BY CONTENTS,tablespace_name ORDER BY 3 DESC; <br>&lt;결과보기&gt; <br>CONTENTS&nbsp; TABLESPACE_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USED_GB MAXSIZE_GB PCT_US&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GROWTH <br>--------- ------------------------------ ---------- ---------- ------ -------------------- <br>TEMPORARY TEMP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1152&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1152&nbsp; 100 %&nbsp;&nbsp;&nbsp;&nbsp; +0% in last 90 days <br>PERMANENT V_APPLI1_DATA_XL_01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 506&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 640&nbsp;&nbsp; 79 %&nbsp;&nbsp;&nbsp;&nbsp; +0% in last 90 days <br>PERMANENT V_APPLI2_DATA_XL_01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 504&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 640&nbsp;&nbsp; 79 %&nbsp;&nbsp;&nbsp;&nbsp; +9% in last 90 days <br>PERMANENT V_APPLI3_DATA_XL_01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 289&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 384&nbsp;&nbsp; 75 %&nbsp;&nbsp;&nbsp; +17% in last 90 days <br>PERMANENT V_INDX_M_01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 252&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 320&nbsp;&nbsp; 79 %&nbsp;&nbsp;&nbsp;&nbsp; +2% in last 90 days <br>PERMANENT V_APPLI4_DATA_XL_01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 234&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 384&nbsp;&nbsp; 61 %&nbsp;&nbsp;&nbsp;&nbsp; +1% in last 90 days</p></div></span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

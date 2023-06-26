@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>vsftpd 설정 - This FTP server is anonymous only </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:40:42</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">vsftpd 설정 - This FTP server is anonymous only </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>[root@localhost vsftpd]# ftp localhost<br>Connected to localhost.localdomain.<br>220 (vsFTPd 1.2.0)<br>530 Please login with USER and PASS.<br>530 Please login with USER and PASS.<br>KERBEROS_V4 rejected as an authentication type<br>Name (localhost:root): root<br><strong><span style="COLOR: #ff0000">530 This FTP server is anonymous only.</span><br></strong>Login failed.</p><p>&nbsp;</p><p>환경파일의 위치 찾기 (RHEL3.0에서 잘못된 경로, /etc/vsftpd/vsftpd.conf 에 위치함)</p><p>$ strings /usr/sbin/vsftpd |grep conf<br>/etc/vsftpd.conf</p><p>&nbsp;</p><p>참조링크 : </p><p><a class="con_link" href="http://coffeenix.net/board_view.php?cata_code=61&amp;bd_code=89&amp;bpage" target="_blank">http://coffeenix.net/board_view.php?cata_code=61&amp;bd_code=89&amp;bpage</a>=</p><p>&nbsp;</p><p>$ cat /etc/xinetd.d/vsftpd <br>service ftp<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; disable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = no<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flags&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = REUSE<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; socket_type&nbsp;&nbsp;&nbsp;&nbsp; = stream&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wait&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = no<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = root<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = /usr/sbin/vsftpd<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; log_on_failure&nbsp; += USERID<br>}</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

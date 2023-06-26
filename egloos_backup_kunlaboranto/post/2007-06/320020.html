@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>c++filt </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:29:36</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">c++filt </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>/opt/SUNWspro/SC5.0/bin/c++filt </p><p>&nbsp;</p><p>참조되지 않은 링크오류의 원래 함수명을 찾는데 도움을 준다.</p><p>&nbsp;</p><p>$ cat c_filt.txt <br>__1cG__CrunKvector_des6FpvIIpF1_v_v_ /altibase/lib/libodbccli.a(iduMemMgr.o)<br>__1cG__CrunKvector_con6FpvIIpF1_vp2_v_ /altibase/lib/libodbccli.a(iduMemMgr.o)</p><p><br>$ cat c_filt.txt | /opt/SUNWspro/SC5.0/bin/c++filt <br>void __Crun::vector_des(void*,unsigned,unsigned,void(*)(void*)) /altibase/lib/libodbccli.a(iduMemMgr.o)<br>void __Crun::vector_con(void*,unsigned,unsigned,void(*)(void*),void(*)(void*)) /altibase/lib/libodbccli.a(iduMemMgr.o)</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

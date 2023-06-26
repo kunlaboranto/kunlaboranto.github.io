@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] sol10 커널 설정.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-25 16:12:49</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] sol10 커널 설정.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>From : <a href="http://docs.sun.com/app/docs/doc/819-0360/6n2psglhi?l=ko&amp;a=view#whatsnew_403_da-1">http://docs.sun.com/app/docs/doc/819-0360/6n2psglhi?l=ko&amp;a=view#whatsnew_403_da-1</a><br><br><h2 class="sol">시스템 V IPC 구성</h2><p>이 기능은 Software Express 파일럿 프로그램의 새로운 기능입니다. 이 기능은 Solaris 10 3/05 릴리스에 포함되어 있습니다.</p><p>Solaris 소프트웨어에서 모든 시스템 V IPC 기능은 자동으로 구성되거나 자원 제어기로 제어할 수 있습니다. 이들 기능은 공유 메모리, 메시지 대기열 또는 세마포가 될 수 있습니다. 리로스 제어로 로컬 시스템 또는 이름 서비스 환경에서 각 프로젝트 또는 각 사용자마다 IPC를 설정할 수 있습니다. 이전 Solaris 릴리스에서 IPC 기능은 커널 조정 가능 항목으로 제어했습니다. 이들 기능의 기본값을 변경하려면 <kbd><span style="FONT-FAMILY: Courier New">/etc/system</span></kbd> 파일을 수정하고 시스템을 다시 부트해야 했습니다. 이제 자원 제어가 IPC 기능을 제어하므로 시스템이 실행되는 동안 구성을 수정할 수 있습니다. 이전에는 시스템 튜닝을 해야 기능했던 많은 응용 프로그램이 이제 기본값이 증가되고 자원이 자동으로 할당되므로 조정 없이 실행될 수 있습니다.</p><p>다음 표에는 <a href="http://docs.sun.com/app/docs/doc/817-0404?l=ko"><cite>Solaris Tunable Parameters Reference Manual</cite></a>에서 설명된 이제 더 이상 사용하지 않는 IPC 조정 가능 항목과 이에 대한 대체 리소스 제어가 있습니다.</p><a name=""></a><a name=""></a><table cellspacing="0" cellpadding="10" width="100%" border="1"><thead><tr><th valign="top" scope="col" align="left"><p>자원 제어</p></th><th valign="top" scope="col" align="left"><p>폐기된 조정 가능 항목</p></th><th valign="top" scope="col" align="left"><p>이전 기본값</p></th><th valign="top" scope="col" align="left"><p>최대값</p></th><th valign="top" scope="col" align="left"><p>새 기본값</p></th></tr></thead><tbody><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">process.max-msg-qbytes</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">msginfo_msgmnb</span></tt> </p></td><td valign="top" align="left"><p>4096</p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">ULONG_MAX</span></tt> </p></td><td valign="top" align="left"><p>65536</p></td></tr><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">process.max-msg-messages</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">msginfo_msgtql</span></tt> </p></td><td valign="top" align="left"><p>40</p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">UINT_MAX</span></tt> </p></td><td valign="top" align="left"><p>8192</p></td></tr><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">process.max-sem-ops</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">seminfo_semopm</span></tt> </p></td><td valign="top" align="left"><p>10</p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">INT_MAX</span></tt> </p></td><td valign="top" align="left"><p>512</p></td></tr><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">process.max-sem-nsems</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">seminfo_semmsl</span></tt> </p></td><td valign="top" align="left"><p>25</p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">SHRT_MAX</span></tt> </p></td><td valign="top" align="left"><p>512</p></td></tr><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">project.max-shm-memory</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">shminfo_shmmax</span></tt> </p></td><td valign="top" align="left"><p>0x800000</p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">UINT64_MAX</span></tt> </p></td><td valign="top" align="left"><p>실제 메모리의 1/4</p></td></tr><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">project.max-shm-ids</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">shminfo_shmmni</span></tt> </p></td><td valign="top" align="left"><p>100</p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">2</span></tt><sup><font size="-1">24</font></sup><tt></tt> </p></td><td valign="top" align="left"><p>128</p></td></tr><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">project.max-msg-ids</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">msginfo_msgmni</span></tt> </p></td><td valign="top" align="left"><p>50</p></td><td valign="top" align="left"><p>2<sup><font size="-1">24</font></sup> </p></td><td valign="top" align="left"><p>128</p></td></tr><tr><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">project.max-sem-ids</span></tt> </p></td><td valign="top" align="left"><p><tt><span style="FONT-FAMILY: Courier New">seminfo_semmni</span></tt> </p></td><td valign="top" align="left"><p>10</p></td><td valign="top" align="left"><p>2<sup><font size="-1">24</font></sup> </p></td><td valign="top" align="left"><p>128</p></td></tr></tbody></table><p></p><p></p><p>폐기된 매개변수는 이 Solaris 시스템의 <kbd><span style="FONT-FAMILY: Courier New">/etc/system</span></kbd> 파일에 포함될 수 있습니다. 이 경우 해당 매개변수는 이전 Solaris 릴리스에서 기본 자원 제어 값을 초기화하는데 사용됩니다. 그러나 폐기된 매개변수를 사용하는 것은 좋지 않습니다.</p><a name=""></a><p>다음의 관련 매개변수가 제거되었습니다. 이들 매개변수가 이 Solaris 시스템의 <kbd><span style="FONT-FAMILY: Courier New">/etc/system</span></kbd> 파일에 포함되는 경우 해당 매개변수는 주석으로 처리됩니다.</p><ul><li><p><tt><span style="FONT-FAMILY: Courier New">semsys:seminfo_semmns</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">semsys:seminfo_semvmx</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">semsys:seminfo_semmnu</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">semsys:seminfo_semaem</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">semsys:seminfo_semume</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">semsys:seminfo_semusz</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">semsys:seminfo_semmap</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">shmsys:shminfo_shmseg</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">shmsys:shminfo_shmmin</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">msgsys:msginfo_msgmap</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">msgsys:msginfo_msgseg</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">msgsys:msginfo_msgssz</span></tt> </p><li><p><tt><span style="FONT-FAMILY: Courier New">msgsys:msginfo_msgmax</span></tt> </p></li></ul><p>새 자원 제어를 사용하는 자세한 방법은 <a href="http://docs.sun.com/app/docs/doc/819-0360/6n2psglhk?l=ko&amp;a=view#whatsnew_403_da-2">System V IPC 및 기타 자원 제어</a>를 참조하십시오.</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

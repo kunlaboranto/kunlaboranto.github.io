@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 디버깅(Debugging) - dbx, printf</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-14 02:15:26</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 디버깅(Debugging) - dbx, printf</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://coding-free.com/c/debugger.html<br><br><center><h2>디버깅(Debugging)</h2> - 최종명</center><br>본 내용은 C 언어를 강의하면서 학생들에게 보여줄 예제 프로그램들을 작성하면서 만들어진 것입니다. 예제 프로그램들은 SUN Enterprise 3000컴퓨터와 운영체제 Solaris 2.5 환경에서 작성된 것들입니다. 따라서 다른 시스템에서는 프로그램들이 다른 결과를 내보내거나 에러 메시지를 내보낼 수도 있습니다.<u>본 내용은 저자의 동의 없이 상업적으로 사용될 수 없습니다.</u><pre><h3>1. dbx 사용하기</h3><br><br>예제: error1.c<br>     1  #include &lt;stdio.h&gt;<br>     2  #define  MAX  5<br>     3<br>     4  main() {<br>     5      char  msg[MAX];<br>     6      int   i;<br>     7<br>     8      msg[0] = "hello";<br>     9      msg[1] = "world";<br>    10      msg[2] = "How";<br>    11      msg[3] = "are";<br>    12      msg[4] = "you";<br>    13<br>    14      for(i=0; i &lt;= MAX; i++) {<br>    15          printf("%s\n", msg[i]);<br>    16      }<br>    17  }<br><br>#11 enterprise:/data1/student/c9844000% cc error1.c<br>"error1.c", line 8: warning: improper pointer/integer combination: op "="<br>"error1.c", line 9: warning: improper pointer/integer combination: op "="<br>"error1.c", line 10: warning: improper pointer/integer combination: op "="<br>"error1.c", line 11: warning: improper pointer/integer combination: op "="<br>"error1.c", line 12: warning: improper pointer/integer combination: op "="<br>#12 enterprise:/data1/student/c9844000% a.out<br>세그멘테이션 결함(Segmentation Fault)<br><br>#13 enterprise:/data1/student/c9844000% cc -g error1.c<br>"error1.c", line 8: warning: improper pointer/integer combination: op "="<br>"error1.c", line 9: warning: improper pointer/integer combination: op "="<br>"error1.c", line 10: warning: improper pointer/integer combination: op "="<br>"error1.c", line 11: warning: improper pointer/integer combination: op "="<br>"error1.c", line 12: warning: improper pointer/integer combination: op "="<br>#14 enterprise:/data1/student/c9844000% dbx a.out<br>.....<br>(dbx) stop at 10<br>(2) stop at "error1.c":10<br>(dbx) stop at 14<br>(3) stop at "error1.c":14<br>(dbx) run<br>Running: a.out <br>(process id 28073)<br>stopped in main at line 10 in file "error1.c"<br>   10           msg[2] = "How";<br>(dbx) print msg[2]<br>msg[2] = 'Ho<br>(dbx) step<br>stopped in main at line 11 in file "error1.c"<br>   11           msg[3] = "are";<br>(dbx) status<br>(2) stop at "error1.c":10<br>(3) stop at "error1.c":14<br>(dbx) list<br>   12           msg[4] = "you";<br>   13   <br>   14           for(i=0; i &lt;= MAX; i++) {   <br>   15                   printf("%s\n", msg[i]);<br>   16           }<br>   17   }<br>   18   <br>(dbx) next<br>stopped in main at line 14 in file "error1.c"<br>   14           for(i=0; i &lt;= MAX; i++) {   <br>(dbx) next<br>stopped in main at line 15 in file "error1.c"<br>   15                   printf("%s\n", msg[i]);<br>(dbx) step<br>signal SEGV (no mapping at the fault address) in strlen at 0xef5a3d50<br>strlen+0x80:    ld      [%o1], %o2<br>Current function is main<br>   15                   printf("%s\n", msg[i]);<br>(dbx) print i<br>i = 0<br>(dbx) print msg[0]<br>msg[0] = '얇<br>(dbx) quit<br><br><br><br><h3>2. gdb 사용</h3><br>#15 enterprise:/data1/student/c9844000% gdb a.out<br>(gdb)  break 10<br>Breakpoint 1 at 0x10844: file error1.c, line 10.<br>(gdb) break 14<br>Breakpoint 2 at 0x10868: file error1.c, line 14.<br>(gdb) run<br>Starting program: /data1/student/c9844000/a.out <br><br>Breakpoint 1, main () at error1.c:10<br>10              msg[2] = "How";<br>(gdb) run<br>The program being debugged has been started already.<br>Start it from the beginning? (y or n) n<br>Program not restarted.<br>(gdb) list<br>5               char  msg[MAX];<br>6               int   i;<br>7<br>8               msg[0] = "hello";<br>9               msg[1] = "world";<br>10              msg[2] = "How";<br>11              msg[3] = "are";<br>12              msg[4] = "you";<br>13<br>14              for(i=0; i &lt;= MAX; i++) {   <br>(gdb) step<br>11              msg[3] = "are";<br>(gdb) next<br>12              msg[4] = "you";<br>(gdb) next<br><br>Breakpoint 2, main () at error1.c:14<br>14              for(i=0; i &lt;= MAX; i++) {   <br>(gdb) next<br>15                      printf("%s\n", msg[i]);<br>(gdb) print i<br>$1 = 0<br>(gdb) print msg[0]<br>$2 = -64 '얇<br>(gdb) quit<br>The program is running.  Quit anyway (and kill it)? (y or n) y<br><br><br><h3>3. xdbx 사용하기</h3><br>#17 enterprise:/data1/student/c9844000% xdbx a.out<br><img src="http://coding-free.com/c/xdbx1.gif"><br><img src="http://coding-free.com/c/xdbx2.gif"><br><img src="http://coding-free.com/c/xdbx3.gif"><br><br><br><h3>4. debugger 사용하기</h3><br>#19 enterprise:/data1/student/c9844000% debugger a.out<br><img src="http://coding-free.com/c/debugger.gif"><br><br></pre><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>define 구문 예</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:12:43</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">define 구문 예</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>define은 소스의 가독성을 나쁘게 함</p><p>void * 등을 사용하여.. 피할수 있으면 피해야 ..</p><p>&nbsp;</p><p>define.txt:#define DeleteAndNULL(p);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p) { delete p; p = NULL; }<br>define.txt:#define DeleteArrayAndNULL(p);&nbsp;&nbsp;&nbsp; if (p) { delete[] p; p = NULL; }</p><p>define.c://#define Log(a,b,c)&nbsp; fprintf(a,b,c)<br>define.c://#define Log(a,b)&nbsp; fprintf(a,b)</p><p>Class.c.txt:#define WR1(a,b)&nbsp;&nbsp;&nbsp;&nbsp; a.b(&amp;a)</p><p>Class.c.txt:#define PRT_ADR(a) printf("%s:%d - %p \n", __FILE__, __LINE__, a)<br>Class.c.txt:#define PRT_LOG(a) printf("%s:%d - %s \n", __FILE__, __LINE__, a)</p><p>&nbsp;&nbsp;<br>#define INTERFACE_METHOD_START(x)&nbsp; try {<br>#define INTERFACE_METHOD_END() } catch(...) { char temp[100];sprintf(temp,"try~catched at file(%s) line(%d)",__FILE&nbsp; __,__LINE__);(void)MyReportEvent(temp); return E_ABORT; }</p><p><br>&nbsp;10 #define PROP_SET_VALUE(macro, value) \<br>&nbsp;11&nbsp;&nbsp;&nbsp;&nbsp; if ( (sVal = getValue((char *)#macro)) == NULL )\<br>&nbsp;12&nbsp;&nbsp;&nbsp;&nbsp; {\<br>&nbsp;13&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value = DEFAULT_##macro; \<br>&nbsp;14&nbsp;&nbsp;&nbsp;&nbsp; }\<br>&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp; else \<br>&nbsp;16&nbsp;&nbsp;&nbsp;&nbsp; {\<br>&nbsp;17&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value = sVal;\<br>&nbsp;18&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;19 <br>&nbsp;20 #define PROP_SET_VALUE_DIGIT(macro, value) \<br>&nbsp;21&nbsp;&nbsp;&nbsp;&nbsp; if ( getValue((char *)#macro) != NULL) \<br>&nbsp;22&nbsp;&nbsp;&nbsp;&nbsp; {\<br>&nbsp;23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value = atoi(getValue((char *)#macro)); \<br>&nbsp;24&nbsp;&nbsp;&nbsp;&nbsp; }\<br>&nbsp;25&nbsp;&nbsp;&nbsp;&nbsp; else \<br>&nbsp;26&nbsp;&nbsp;&nbsp;&nbsp; {\<br>&nbsp;27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value = DEFAULT_##macro; \<br>&nbsp;28&nbsp;&nbsp;&nbsp;&nbsp; }</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

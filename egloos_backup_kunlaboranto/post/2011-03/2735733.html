@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>할일</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-31 11:21:34</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">할일</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><span style="font-family: '돋움','Dotum';">갱신 - 2011년 3월 31일</span><br style="font-family: '돋움','Dotum';">등록<span style="font-family: '돋움','Dotum';"> - 2011년 3월 30일<br>  <br></span><span style="font-weight: bold;">할일</span><br><ol><li><span style="text-decoration: line-through;">VM에 우분투설치</span><br></li><li><span style="text-decoration: line-through;">LAMP 스택설치 </span><br style="text-decoration: line-through;"><span style="text-decoration: line-through;">MySQL에 utf8 설정을 적용. 이전 win32에서 미설정시에, dos창과 다람쥐 sql창에서 한글이 깨졌음.</span><br></li><li>roller 결합 설치<br><ul><li>설치형 블로그의 하나, wordpress (php), MT(ruby?)<br><span style="text-decoration: line-through;"></span></li><li><span style="text-decoration: line-through;">java 기반 설치형 블로그인 roller 단독 설치 (이 단계에서 한글 테스트 안함)</span><br></li><li style="color: rgb(0, 0, 0); text-decoration: line-through;">결합환경 /opt/bitnami 로 이전 후 한글이 깨짐 발견<br><span style="text-decoration: line-through;"></span>테이블 생성시에 "DEFAULT CHARSET=latin1" 구문이 있었음. MySQL 삽질한번했다는데 의의를 둠.<br></li><li><span style="text-decoration: line-through;">한글은 나두고서라도, 설치형 블로그인 roller 도 잘쓸려면 상당한 공수가 들어갈것 같음. 그리고 백조로서 '표출'하는 의안도 중요하므로, '이글루' 를 다시 사용하기로 함</span><br></li></ul></li><li><span style="text-decoration: line-through;">이글루 (여기) 에 작업 메모 환경을 시작함.</span><br></li><li>redmine 결합 설치. <br></li><li>과거 데이타 이전 (redmine)</li><li style="font-style: italic;">roller 기반으로 structs에 대한 경험을 하는 것이 좋을까 다른 주제를 시작하는 것이 좋을까 결정 필요</li><li><span style="font-style: italic;">SQuirrel SQL Client </span><br></li></ol><br>3월 14일 이후 리듬을 잃고., 한 10여일,, 사실 좀 꿀꿀했는데. 간만의 전화도 덜 반가운. 약속을 미루는.. 징후가 나타났음.<br>오늘까지로.. 정리된 것 같고. 잠적 해제함.<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

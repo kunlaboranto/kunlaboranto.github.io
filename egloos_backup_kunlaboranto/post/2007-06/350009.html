@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 자바 + DB 기초 강의</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-27 14:09:17</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 자바 + DB 기초 강의</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://database.hanbat.ac.kr/attach/DatabaseProgramming/Chapter09.pdf">http://database.hanbat.ac.kr/attach/DatabaseProgramming/Chapter09.pdf</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 자바 + DB 기초 강의<br><br>1)<br>int executeUpdate(String sql): 명령문이 영향을 끼친 row <strong>개수 </strong>(변경개수) 를 리턴<br><br>2)<br>boolean execute(String sql): 첫번째 결과가 ResultSet이면 true, 결과가 없거나 변경개수이면 false를 리턴<br>&nbsp; • ResultSet getResultSet(), int getUpdateCount(), boolean getMoreResults()&nbsp; <br><br>&nbsp; 모든 종류의 SQL 명령문<br>&nbsp; - 미리 알려지지 않은 동적 SQL문<br>&nbsp; - 여러 개의 값을 반환하는 스토어드 프로시저<br><br>3)<br>따라서, wasNull()메소드를 호출하여<br>• getFloat()의 데이터가 0인지 NULL인지 확인해야 함<br><br>4)<br>필드 최대 크기<br>– Statement 객체의 setMaxFieldSize(), getMaxFieldSize()를 사용<br>– 0을 설정하면 필드 최대 크기는 제한을 두지 않게 됨<br>– 다음의 SQL 타입에 해당하는 칼럼에 대해서만 적용가능<br>• BINARY VARBINARY LONGVARBINARY<br>• CHAR VARCHAR LONGVARCHAR<br><br>5)<br>쿼리 시간 제한<br>– Statement 객체의 setQueryTimeout(), getQueryTimeout()를 사용<br>– 시간제한 값의 단위는 초(second)임<br><br>6) 스크롤 가능한 ResultSet 객체 생성하기<br><br>전진과 읽기만 가능한 ResultSet 객체를 생성하기 위한 Statement 객체 생성<br>– Statement stmt = conn.createStatement();<br>– Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,<br>ResultSet.CONCUR_READ_ONLY);<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

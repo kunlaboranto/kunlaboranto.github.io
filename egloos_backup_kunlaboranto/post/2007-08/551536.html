@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>WBS</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-17 12:06:19</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">WBS</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>읽기 ：  더블유비에스</p><p>스펠 ：  Work Breakdown Structure</p><p id="text"> 프로젝트메니지먼트로 계획을 세울 때에 이용되는 수법의 하나로, 프로젝트 전체를 작은 작업 단위로 분할한 구성도이다. [작업분할구성], [작업분해도] 라고 불려진다.</p><p id="text"> </p><p id="text"> WBS에서는 우선 프로젝트의 성과물을 가능한 한 작은 단위로 분해한다. 그 때, 전체를 큰 단위로 분할하고 난 후, 각각의 부분에 대해 좀 더 작은 단위로 분해하여, 계층적으로 구성화 해 나간다.</p><p id="text"> </p><p id="text">성과물의 세분화가 끝나면, 각각의 부분을 구성하는데 필요한 작업(한가지 이상의 작업일 때도 있음)을 생각하여, 최하층에 배치해간다. 각각의 부분을 구성하는 일련의 작업 단위를 [워크 패키지]라고 한다. WBS의 각각의 워크패키지에 담당인원을 배치하면프로젝트를 수<a href="http://e-words.ne.kr/w/C3ADC296C289.html">행</a>하는 조직도가 생성된다. 이것을 OBS(Organization Breakdown Structure)라 한다.</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

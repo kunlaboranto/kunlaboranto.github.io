@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] [웹] 접기 태그 - this.nextSibling.style.display -</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-05 17:05:21</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] [웹] 접기 태그 - this.nextSibling.style.display -</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">( 출처 ) <a href="http://byulbada.egloos.com/2227909">http://byulbada.egloos.com/2227909</a><br><br>궁금했던 [감추기]/[보기] 태그.<br><br><blockquote>[펌] <br>여기서 주목할 것은 [ <strong>nextSibling</strong> ]입니다. 이것이 무엇인가 하고 찾아보니, <span style="font-weight: bold; font-style: italic;">동일 레벨에서 현재 노드의 다음 노드의 값</span>을 읽기 전용으로 반환해주는 것 같습니다<br><br>[소스 예]<br>&lt;a href="javascript:void(0)" onclick="this.innerHTML=(this.nextSibling.style.display=='none')?'감추기':'보기';this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';"&gt;누르세요&lt;/a&gt;&lt;div style="display:none"&gt;<br>&lt;div style="border-color:green; padding:9px; border-width:1px; border-style:dotted; background-color:#E4FFDA;"&gt;내용&lt;/div&gt;&lt;/div&gt;<br></blockquote><br><br><br><a href="javascript:void(0)" onclick="this.innerHTML=(this.nextSibling.style.display=='none')?'감추기':'보기';this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';">누르세요</a><div style="display:none"><br><div style="border-color:green; padding:9px; border-width:1px; border-style:dotted; background-color:#E4FFDA;">내용</div></div><br><br><a href="javascript:void(0)" onclick="this.innerHTML=(this.nextSibling.style.display=='none')?'감추기':'보기';this.nextSibling.style.display=(this.nextSibling.style.display=='none')?'block':'none';"><br>참조한 URL</a><div style="display:none"><br><div style="border-color:green; padding:9px; border-width:1px; border-style:dotted; background-color:#E4FFDA;"><a title="" href="http://byulbada.egloos.com/2227909">http://byulbada.egloos.com/2227909</a><br><a title="" href="http://pota.kr/blog/pota/199">http://pota.kr/blog/pota/199</a><br></div></div><br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

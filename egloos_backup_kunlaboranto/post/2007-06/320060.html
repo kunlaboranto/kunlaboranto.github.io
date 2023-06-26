@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>tusc 콜 확인예 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:38:23</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">tusc 콜 확인예 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p><strong>CASE-5424&nbsp;&nbsp;&nbsp; 프로그램 실행시 fetch 에서 멈춰있음..</strong></p><p><strong></strong>&nbsp;</p><p>tusc log의 내용으로 보아서는 User Program에서 무한정 돌고 있는 경우가 아닐까 싶습니다.<br>알티베이스 서버와의 프로토콜은 <br>Cursor Declare ==&gt;write(9, "P R E P P R O T \0\0\0\0\0\001@ "..,336)<br>Server로부터응답==&gt;read(9, "P R E P P R O T \0\0\0\0\0\0\fa8", 16)<br><br>Open Cursor ==&gt;write(9, "E X E C P R O T \0\0\0\0\0\0\00 ".., 64)<br>Server로부터응답==&gt; read(9, "E X E C P R O T \0\0\0\0\0\002&nbsp; ", 16)<br><br>write(2, "1 6 : 2 6 : 1 6 &gt;&nbsp;&nbsp; t r y&nbsp;&nbsp; t o "..,) <br>write(2, "\n")<br>이후 User Mode 수행중입니다.<br><br>만약에 위의 Write가 SQLFetch() 바로 직전이라면 SQLFetch() CLI단에서 멈추고 있을 가능성도 있습니다.<br></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

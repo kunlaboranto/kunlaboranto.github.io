@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] java에서 heap profile 결과 예 - ResultSet 의 fetch size </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:14:15</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] java에서 heap profile 결과 예 - ResultSet 의 fetch size </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>출처 : <a class="con_link" href="http://www.javaservice.com/~java/bbs/write.cgi?m=&amp;b=consult&amp;c=w_f&amp;n=1119418891&amp;p=5&amp;s=t" target="_blank">http://www.javaservice.com/~java/bbs/write.cgi?m=&amp;b=consult&amp;c=w_f&amp;n=1119418891&amp;p=5&amp;s=t</a></p><p>&nbsp;</p><p>제목 : ResultSet 의 fetch size 와 OutOfMemoryError의 관계<br>글쓴이: 댐뽀리(guest) 2005/06/15 15:25:22 조회수:897 줄수:97</p><p>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br><br>질문 : </p><p>얼토당토않은 OutOfMemoryError가 나서 힙프로파일을 떠 보았습니다.</p><p>결론은 ResultSet.setFetchSize 메소드에서의 파라미터의 크기가 문제로 보입니다.</p><p>실제 select 건수는 10 rows 정도입니다.</p><p>-----------------------------------------------------------------------------<br>1. setFetchSize(10000); 의 경우<br>-----------------------------------------------------------------------------</p><p>SITES BEGIN (ordered by live bytes) Wed Jun 15 14:58:02 2005<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; percent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; live&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alloc'ed&nbsp; stack class<br>&nbsp;rank&nbsp;&nbsp; self&nbsp; accum&nbsp;&nbsp;&nbsp; bytes objs&nbsp;&nbsp; bytes objs trace name<br>&nbsp;&nbsp;&nbsp; 1 50.26% 50.26% 45554400 949050 45554400 949050&nbsp; 6897 oracle.jdbc.ttc7.TTCItem<br>&nbsp;&nbsp;&nbsp; 2 38.00% 88.26% 34445520 949050 34445520 949050&nbsp; 6898 [B<br>&nbsp;&nbsp;&nbsp; 3&nbsp; 4.19% 92.45%&nbsp; 3801520&nbsp;&nbsp; 95 3801520&nbsp;&nbsp; 95&nbsp; 6909 oracle.jdbc.ttc7.TTCItem<br>&nbsp;&nbsp;&nbsp; 4&nbsp; 4.19% 96.64%&nbsp; 3801520&nbsp;&nbsp; 95 3801520&nbsp;&nbsp; 95&nbsp; 6896 oracle.jdbc.dbaccess.DBItem<br>&nbsp;&nbsp;&nbsp; 5&nbsp; 0.25% 96.89%&nbsp;&nbsp; 225096 1229&nbsp; 226832 1266&nbsp;&nbsp;&nbsp;&nbsp; 1 [C<br>&nbsp;&nbsp;&nbsp;&nbsp; <br>TRACE 6897:<br>&nbsp;oracle.jdbc.ttc7.TTC7Protocol.createDBItem(TTC7Protocol.java:2170)<br>&nbsp;oracle.jdbc.dbaccess.DBDataSetImpl.setBatchSize(DBDataSetImpl.java:2310)<br>&nbsp;oracle.jdbc.driver.OracleStatement.check_row_prefetch_changed(OracleStatement.java:2186)<br>&nbsp;oracle.jdbc.driver.OracleResultSetImpl.next(OracleResultSetImpl.java:259)<br>&nbsp;xxx.xxx.xxx.getList(&lt;Unknown&gt;:Unknown line)<br>&nbsp;<br>TRACE 6898:<br>&nbsp;oracle.jdbc.dbaccess.DBItem.allocBuffer(DBItem.java:197)<br>&nbsp;oracle.jdbc.dbaccess.DBDataSetImpl.setBatchSize(DBDataSetImpl.java:2315)<br>&nbsp;oracle.jdbc.driver.OracleStatement.check_row_prefetch_changed(OracleStatement.java:2186)<br>&nbsp;oracle.jdbc.driver.OracleResultSetImpl.next(OracleResultSetImpl.java:259)<br>&nbsp;xxx.xxx.xxx.getList(&lt;Unknown&gt;:Unknown line)</p><p>-----------------------------------------------------------------------------<br>2. setFetchSize(1000); 의 경우<br>-----------------------------------------------------------------------------<br>SITES BEGIN (ordered by live bytes) Wed Jun 15 15:06:45 2005<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; percent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; live&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alloc'ed&nbsp; stack class<br>&nbsp;rank&nbsp;&nbsp; self&nbsp; accum&nbsp;&nbsp;&nbsp; bytes objs&nbsp;&nbsp; bytes objs trace name<br>&nbsp;&nbsp;&nbsp; 1 38.48% 38.48%&nbsp; 4514400 94050 4514400 94050&nbsp; 6903 oracle.jdbc.ttc7.TTCItem<br>&nbsp;&nbsp;&nbsp; 2 29.10% 67.57%&nbsp; 3413520 94050 3413520 94050&nbsp; 6904 [B<br>&nbsp;&nbsp;&nbsp; 3&nbsp; 3.25% 70.83%&nbsp;&nbsp; 381520&nbsp;&nbsp; 95&nbsp; 381520&nbsp;&nbsp; 95&nbsp; 6902 oracle.jdbc.dbaccess.DBItem<br>&nbsp;&nbsp;&nbsp; 4&nbsp; 3.25% 74.08%&nbsp;&nbsp; 381520&nbsp;&nbsp; 95&nbsp; 381520&nbsp;&nbsp; 95&nbsp; 6913 oracle.jdbc.ttc7.TTCItem<br>&nbsp;&nbsp;&nbsp; 5&nbsp; 1.92% 76.00%&nbsp;&nbsp; 225152 1230&nbsp; 226888 1267&nbsp;&nbsp;&nbsp;&nbsp; 1 [C<br>&nbsp;&nbsp;&nbsp; <br>TRACE 6903:<br>&nbsp;oracle.jdbc.ttc7.TTC7Protocol.createDBItem(TTC7Protocol.java:2170)<br>&nbsp;oracle.jdbc.dbaccess.DBDataSetImpl.setBatchSize(DBDataSetImpl.java:2310)<br>&nbsp;oracle.jdbc.driver.OracleStatement.check_row_prefetch_changed(OracleStatement.java:2186)<br>&nbsp;oracle.jdbc.driver.OracleResultSetImpl.next(OracleResultSetImpl.java:259)<br>&nbsp;xxx.xxx.xxx.getList(&lt;Unknown&gt;:Unknown line)<br>&nbsp;<br>TRACE 6904:<br>&nbsp;oracle.jdbc.dbaccess.DBItem.allocBuffer(DBItem.java:197)<br>&nbsp;oracle.jdbc.dbaccess.DBDataSetImpl.setBatchSize(DBDataSetImpl.java:2315)<br>&nbsp;oracle.jdbc.driver.OracleStatement.check_row_prefetch_changed(OracleStatement.java:2186)<br>&nbsp;oracle.jdbc.driver.OracleResultSetImpl.next(OracleResultSetImpl.java:259)<br>&nbsp;xxx.xxx.xxx.getList(&lt;Unknown&gt;:Unknown line)</p><p>-----------------------------------------------------------------------------<br>3. setFetchSize(); 를 주석으로 막아버리면-_-<br>-----------------------------------------------------------------------------<br>SITES BEGIN (ordered by live bytes) Wed Jun 15 15:08:50 2005<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; percent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; live&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alloc'ed&nbsp; stack class<br>&nbsp;rank&nbsp;&nbsp; self&nbsp; accum&nbsp;&nbsp;&nbsp; bytes objs&nbsp;&nbsp; bytes objs trace name<br>&nbsp;&nbsp;&nbsp; 1&nbsp; 7.15%&nbsp; 7.15%&nbsp;&nbsp; 225152 1230&nbsp; 226888 1267&nbsp;&nbsp;&nbsp;&nbsp; 1 [C<br>&nbsp;&nbsp;&nbsp; 2&nbsp; 4.85% 11.99%&nbsp;&nbsp; 152728 2694&nbsp; 152728 2694&nbsp;&nbsp; 181 [C<br>&nbsp;&nbsp;&nbsp; 3&nbsp; 2.66% 14.66%&nbsp;&nbsp;&nbsp; 83944&nbsp; 969&nbsp;&nbsp; 83944&nbsp; 969&nbsp;&nbsp; 173 [C<br>&nbsp;&nbsp;&nbsp; 4&nbsp; 2.53% 17.19%&nbsp;&nbsp;&nbsp; 79752&nbsp;&nbsp; 68&nbsp; 150872&nbsp;&nbsp; 69&nbsp;&nbsp; 199 [B<br>&nbsp;&nbsp;&nbsp; 5&nbsp; 2.47% 19.66%&nbsp;&nbsp;&nbsp; 77856&nbsp; 701&nbsp;&nbsp; 77952&nbsp; 703&nbsp;&nbsp; 940 [C</p><p>이렇습니다.</p><p>fetch size 10000 과 1000의 차이가 거의 10배나 메모리를 먹는걸 볼 수 있습니다.<br>주석으로 막을때는 머 완젼 비교 불능입니다.</p><p>ResultSet에 fetch size 사용법에 주의사항이나 특이사항이 있는것인지요?</p><p>게다가...setFetchSize(10000);을 기존 배치에선 잘 쓰고 있거든요;;;</p><p>차이라면...요번껀 컬럼 숫자가 90개 좀 넘는다는것 뿌니 없거든요(rows는 훨씬 적고)</p><p>제가 뭔가 잘못하고(또는 알고) 있는게 있으면 지적 부탁드리겠습니다.</p><p>더불어 대량의 데이터를 select해서 처리할때의 팁이나 유용한 정보도 공유해주시면 정말 감사하겠습니다.</p><p>그럼 수고하세요....</p><p>&nbsp;</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

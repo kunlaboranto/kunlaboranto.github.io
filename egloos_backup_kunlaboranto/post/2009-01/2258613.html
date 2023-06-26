@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] vi, vim 단축키 등 팁</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2009-01-29 07:33:14</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] vi, vim 단축키 등 팁</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">간혹사용하는 팁들 몇개 모으기.<br><br><br>From : http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81<br><br><ul id="pagelocation"><a class="backlink" title="이 문서 제목이 포함된 다른 문서를 찾으시려면 여기를 누르세요" href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81?action=fullsearch&amp;value=linkto%3A%22Vim+%ED%8C%81%22&amp;context=180">Vim 팁</a></ul><span class="anchor" id="top"></span><span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><div class="table-of-contents"><p class="table-of-contents-heading">차례</p><ol><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-4e88b43d8b9235df1f5d0d8c550fa5199ce2e624">참고링크</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-093ba77a995d82fbebf8ddc5fe4e21e71a9fde58">Vim 팁 모음</a><ol><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-dc055af275fa9cd10cd2d1c588b3293a02aa26f0">치환 기능 사용하기</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-3489a19a5aa06a4fac0f272042fe7fae1c3e3444">줄바꿈 문자 변환하기</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-44e67c94ebeee7c137415415dbd4c683eb26c044">소스 코드를 html로 변환하기</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-5a1dac9303e6b89bc90812e726b82e42c24ce439">문서 암호화 하기</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-f9ea547b365188e37a1fdf8a6b5326b4281f3af3">자동들여쓰기 해제하기</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-5677b00dd97841dae93f78c566303fb0764cbee9">문법에 맞게 들여쓰기 재정렬하기</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-0765f25e5cd17c24708ee453ed8c31548a236ab3">파일 삽입하기</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-d60ba72455aa210d473da2fb88b6ae365f185522">열어본 파일 이동하기</a></li></ol></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-64f15fbbf11e09819471bb60e81b5911d6d12f53">vim 의 fold 기능</a><ol><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-609efcb27dc79125412cdc3bd3bcff8076e507bf">fold 키</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-1095604498b10679be2a6873620d840d8980a3a8">fold 기능 옵션</a></li></ol></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-8d7077bbfe3567626e182843d12a556881629611">vim 키 정리</a><ol><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-a2e7b40e754a2f1c4b152b7d8a6d2cce95e65a27">커서 이동 키</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-4f17f867ea33322408f2f20c48b0f332c6929d80">스크롤 키</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-9e9bf0ae01e7a927bca821d15577bf91809c4ca3">블럭 지정 (VISUAL 모드) 키</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-461b08b74fe568dd9b7e5b2b23cb4d3c656dd918">tags 기능</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-e315ad75e2192657033a840093ae3494b90c6f50">특수 키</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-bdb359e217d1e15122887434bbaae4e941ce35de">Function 키 정의</a></li></ol></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-4536f2cd6467f3803ea908c644a2b788e26c00bf">vim 의 프로그래밍 지원 기능</a><ol><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-33c89348ad9952b0f64833d8fbcb24c845631f7d">자동 완성 기능</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-55c20a16a2048edf116e2e231b992392cb02adf1">검색 기능</a></li><li><a href="http://www.viper.pe.kr/cgi-bin/moin.cgi/Vim_%ED%8C%81#head-1851430ba919d1bb927dbc7577fe326024dd2085">이동 기능</a></li></ol></li></ol></div><p class="line874"><span class="anchor" id="line-126"></span><span class="anchor" id="line-127"></span></p><p class="line867"></p><h3 id="head-5677b00dd97841dae93f78c566303fb0764cbee9">2.6. 문법에 맞게 들여쓰기 재정렬하기</h3><span class="anchor" id="line-128"></span><span class="anchor" id="line-129"></span><p class="line874">vim에서는 C/C++ 파일이나 기타 다른 언어의 파일들을 각각의 문법에 맞게 들여쓰기를 재정렬할 수 있다. 자동 들여쓰기는 코드입력 과정에서 사용되지만 들여쓰기 재정렬 기능은 코드가 입력된 후에 일괄 처리할 수 있어서 편리하다. <span class="anchor" id="line-130"></span><span class="anchor" id="line-131"></span></p><ul><li style="list-style-type: none;"><div><table><tbody><tr class="THEAD">  <td><p class="line862"> 키 </p></td>  <td><p class="line862"> 설명 </p></td></tr><tr>  <td><span class="anchor" id="line-132"></span><p class="line862"> =    </p></td>  <td><p class="line862"> 선택된 영역을 들여쓰기 처리 </p></td></tr><tr>  <td><span class="anchor" id="line-133"></span><p class="line862"> =a{  </p></td>  <td><p class="line862"> 현재 블럭을 들여쓰기 처리   </p></td></tr><tr>  <td><span class="anchor" id="line-134"></span><p class="line862"> gg=G </p></td>  <td><p class="line862"> 전체 내용을 들여쓰기 처리   </p></td></tr></tbody></table></div><span class="anchor" id="line-135"></span><span class="anchor" id="line-136"></span></li></ul><p class="line867"></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

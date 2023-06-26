@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[HPUX] hostid 구하는 방법 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:53:57</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[HPUX] hostid 구하는 방법 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>1.</p><div><span style="FONT-SIZE: 100%">gethostid()라는 system call이 hp에서 지원되기 때문에 아래의 프로그램을 compile해서 보내면 됩니다.</span></div><div><span style="FONT-SIZE: 100%"></span>&nbsp;</div><div><span style="FONT-SIZE: 100%">#include &lt;stdio.h&gt;<br>#include &lt;unistd.h&gt;</span></div><div>&nbsp;</div><div><span style="FONT-SIZE: 100%">int main()<br>{<br>&nbsp;&nbsp;&nbsp; long hostid;</span></div><div><span style="FONT-SIZE: 100%"><br>&nbsp;&nbsp;&nbsp; hostid = gethostid();</span></div><div><span style="FONT-SIZE: 100%">&nbsp;&nbsp;&nbsp; printf("hostid=[%x]\n", hostid );<br>}</span></div><div><span style="FONT-SIZE: 100%"></span>&nbsp;</div><div><span style="FONT-SIZE: 100%">2. </span></div><div><span style="FONT-SIZE: 100%">$ uname -a </span></div><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

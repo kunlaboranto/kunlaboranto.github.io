@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] PAE WIN32 ? PAE Linux</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-08-19 14:23:06</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] PAE WIN32 ? PAE Linux</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">HW가 지원되어야 하며, 1 process 당 addressing 측면에서는 4G 제약이 여전하다??<br><br>#1. Linux<br><br><a href="%20http://kerneltrap.org/node/2450">http://kerneltrap.org/node/2450</a><br><br><p><b>3. HIGHMEM solution for using 64 GB of memory</b></p><p>This is enabled via the <span class="__mozilla-findbar-search" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">PAE</span> (Physical Address Extension) extension of the PentiumPro processors. <span class="__mozilla-findbar-search" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">PAE</span> addresses the 4 GB physical memory limitation and is seen as Intel's answer to AMD 64-bit and AMD x86-64. <span class="__mozilla-findbar-search" style="padding: 0pt; background-color: yellow; color: black; display: inline; font-size: inherit;">PAE</span>allows processors to access physical memory up to 64 GB (36 bits ofaddress bus). However, since the virtual address space is just 32 bitswide, each process can't grow beyond 4 GB. The mechanism used to accessmemory from 4 GB to 64 GB is essentially the same as that of accessingthe 1 GB - 4 GB RAM via the HIGHMEM solution discussed above.</p><br>#2. WIN32<br><br>From : http://technet2.microsoft.com/windowsserver/ko/library/0a8f5c3b-a892-49af-bf94-7942836972391042.mspx?mfr=true<br><br><h2>Physical Address Extension(PAE) X86 개요</h2><div class="intro"><p>PAE(실제 주소 확장) X86을 사용하면 AWE(Address Windowing Extensions) API 집합을 사용하고 IntelPentium Pro 프로세서 이상, 4GB 이상의 실제 메모리가 설치된 컴퓨터에서 실행되는 소프트웨어는 응용 프로그램의 가상주소 공간에 보다 많은 실제 메모리를 매핑할 수 있습니다.</p><p>AWE API 집합을 사용하지 않는 응용 프로그램의경우에도 운영 체제가 보다 큰 실제 메모리를 사용하여 페이징을 줄이기 때문에 PAE X86으로 이익을 얻을 수 있으며 그 결과성능이 향상됩니다. 뿐만 아니라 여러 응용 프로그램을 호스팅하는 통합 서버의 이점도 얻을 수 있습니다.</p><p>많은 양의 데이터를 처리하는 응용 프로그램은 디스크가 아닌 메모리에 데이터를 유지함으로써 성능을 향상시킬 수 있습니다. 예를 들어 PAE X86은 다음과 같은 종류의 응용 프로그램 성능을 크게 향상시킬 수 있습니다.</p><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="listBullet" valign="top">•</td><td class="listItem"><p>Microsoft SQL/E7.0 이상과 같은 데이터베이스</p></td></tr><tr><td class="listBullet" valign="top">•</td><td class="listItem"><p>유체 역학 프로그램과 같은 공학용 응용 프로그램</p></td></tr><tr><td class="listBullet" valign="top">•</td><td class="listItem"><p>광범위한 데이터를 처리하는 통계 분석 응용 프로그램</p></td></tr></tbody></table></div><h3>PAE X86으로 업데이트</h3><p>다음 업데이트는 비실행 페이지 보호라고도 알려진 DEP(데이터 실행 방지) 추가를 지원하기 위한 것입니다.</p><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="listBullet" valign="top">•</td><td class="listItem"><p>프로세서가 비실행 페이지 보호 기능을 지원하는 컴퓨터에서 DEP가 사용될 경우 Windows Server 2003 서비스 팩1(SP1) 및 Windows XP 서비스 팩 2(SP2)를 실행하는 컴퓨터에서는 PAE가 자동으로 사용됩니다. </p></td></tr><tr><td class="listBullet" valign="top">•</td><td class="listItem"><p>PAE모드가 Windows Server 2003, Standard Edition SP1 및 Windows XP SP2에서 사용되면실제 주소 공간은 4GB로 제한됩니다. 실제 주소 공간을 4GB로 제한하면 PAE 모드와 드라이버의 호환성 문제를 방지할 수있습니다.</p></td></tr></tbody></table><p>특정 하드웨어에서만 PAE X86을 지원하므로 운영 체제를처음 설치할 때는 이 기능이 비활성화됩니다. PAE X86을 지원하는 하드웨어에 대한 자세한 내용은 Windows Server2003 제품군의 제품에 대한 하드웨어 호환성 정보를 참조하십시오. 이 정보는 <a target="_self" href="http://technet2.microsoft.com/WindowsServer/ko/Library/07bb2619-68b5-4a1a-825d-dbb9093559161042.mspx" logredir="CTT=InContent">지원 리소스</a><span id="E6"></span>if(typeof(IsPrinterFriendly) != "undefined"){var l = "/WindowsServer/ko/Library/07bb2619-68b5-4a1a-825d-dbb9093559161042.mspx";var nl;var c = l.charAt(0);var o = document.getElementById("E6");switch (c){case "/":nl=("&nbsp;[http://" + document.domain + l + "]");breakcase "#":nl=("");breakdefault:nl="&nbsp;[" + l + "]"}if(o != null) o.innerHTML = nl;}의 해당 링크를 클릭하여 찾을 수 있습니다. PAE X86의 사용 방법에 대한 자세한 내용은 <a target="_self" href="http://technet2.microsoft.com/WindowsServer/ko/Library/7706caae-8fc9-45b2-9d8d-7b5a6b7256491042.mspx" logredir="CTT=InContent">실제 주소 확장 사용</a><span id="EEB"></span>if(typeof(IsPrinterFriendly) != "undefined"){var l = "/WindowsServer/ko/Library/7706caae-8fc9-45b2-9d8d-7b5a6b7256491042.mspx";var nl;var c = l.charAt(0);var o = document.getElementById("EEB");switch (c){case "/":nl=("&nbsp;[http://" + document.domain + l + "]");breakcase "#":nl=("");breakdefault:nl="&nbsp;[" + l + "]"}if(o != null) o.innerHTML = nl;}을 참조하십시오. </p><p><b>참고</b></p><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="listBullet" valign="top">•</td><td class="listItem"><p>                이 항목은 Windows Server 2003, Web Edition에 적용되지 않습니다.              </p></td></tr></tbody></table><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>audit를 이용한 테이블 DIFF</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-05-16 21:31:52</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">audit를 이용한 테이블 DIFF</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>+ 버전 : ALTIBASE 4.3.9.x<br><br>$ audit -f audit.cfg<br><br>$ cat audit.cfg<br><br>DB_MASTER = "altibase://SPR:SPR@DSN=127.0.0.1;PORT_NO=20310;NLS_USE=US7ASCII"<br>DB_SLAVE = "altibase://SPR:SPR@DSN=192.168.80.198;PORT_NO=20310;NLS_USE=US7ASCII"<br><br>OPERATION&nbsp; = DIFF # SYNC/DIFF/#++MOVE<br>#CHECK_INTERVAL = 10000 # ms<br>#++CHECK_AT&nbsp;&nbsp;&nbsp;&nbsp; 19:00, 21:00, ... ;<br>#++CHECK_QUEUE&nbsp; Q_NAME;<br><br>MAX_THREAD = -1&nbsp;&nbsp; # UNLimited is -1 in this case mode 1:1<br><br>DELETE_IN_SLAVE&nbsp;&nbsp;&nbsp;&nbsp; = OFF<br>INSERT_TO_SLAVE&nbsp;&nbsp;&nbsp;&nbsp; = ON<br><br>INSERT_TO_MASTER&nbsp;&nbsp;&nbsp; = ON<br>UPDATE_TO_SLAVE&nbsp;&nbsp;&nbsp;&nbsp; = ON<br>AUTODETECT_UNIQ_INX = OFF # NOT work if INSERT_TO_MASTER or UPDATE_TO_SLAVE is ON<br>LOG_DIR = "./log"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # default crrrent dir<br>LOG_FILE = "audit.log" # default is stdout<br><br>##################################################<br>###&nbsp;&nbsp;&nbsp; TABLE Information to operate<br>###&nbsp;&nbsp;&nbsp; For example, Master Table Name<br>[ T1 ] <br>&nbsp; TABLE&nbsp;&nbsp; = T1<br>&nbsp; CHECK_QUERY = "select count(*) from T1"<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

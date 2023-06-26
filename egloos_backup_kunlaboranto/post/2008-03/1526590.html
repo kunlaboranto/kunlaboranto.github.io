@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[sqlldr] row 구분자 지정 (CR)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-03-17 15:32:18</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[sqlldr] row 구분자 지정 (CR)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">altibase 와 oracle에서 row 구분자에 CR를 주는 방법<br><br># iloader (altibase)<br>&nbsp; \n을 %n, \t를 %t 로 표시한다. 최대 10자의 조합이 가능<br><br>&nbsp; -r "%nR-r%n"<br>&nbsp; -t "^C-c^"<br><br># sqlldr<br><br>&nbsp; infile 'example.dat'&nbsp; "str '\nR-r\n'"<br>&nbsp; fields terminated by '^C-c^' <br><br><br>----------- TPC-H 데이타 로딩 예 <br>$ cat s*sh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>date<br>sqlldr mdbbmt/mdbbmt control=region.ctl data=region.tbl errors=1 log=region.log direct=true<br>sqlldr mdbbmt/mdbbmt control=supplier.ctl data=supplier.tbl errors=1 log=supplier.log direct=true<br>..<br>date<br><br>$ cat region.ctl<br>Load data<br><span style="font-weight: bold;">Infile 'region.tbl'</span><br>Insert<br>Into table region<br><span style="font-weight: bold;">Fields terminated by '|'</span><br>Trailing nullcols<br>(<br>R_REGIONKEY integer external,<br>R_NAME char,<br>R_COMMENT char<br>)<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

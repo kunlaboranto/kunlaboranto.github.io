@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 초보 Java 웹 개발자들을 위한 학습 로드맵</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-05 14:17:57</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 초보 Java 웹 개발자들을 위한 학습 로드맵</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">감사합니다. 지도 없이 맨땅에 헤딩하고 있었는데. 큰 참고가 될것 같습니다. <br>제가 용어도 낮선 형편이라서, 전체 내용은 원문을 참고하기로 하고, <br>생략... 표시하고 목차정도만 옮김.<br><br>출처:&nbsp; <a href="http://kwon37xi.egloos.com/3666564#;">http://kwon37xi.egloos.com/3666564#;</a> <br><br><br><br><font size="4"><a href="http://kwon37xi.egloos.com/3666564#;%20"><span style="font-weight: bold;">초보 Java 웹 개발자들을 위한 학습 로드맵 </span></a></font><br><ul class="post_info"><li class="post_info_author">                      <span class="by">by</span> 권남                    </li><li class="post_info_date"><abbr class="published" title="2008/03/19 00:16">2008/03/19 00:16</abbr>                    </li><li class="post_info_link"><a href="http://kwon37xi.egloos.com/3666564">kwon37xi.egloos.com/3666564</a>                    </li><li class="post_info_cmtcount">                      <span class="txt">덧글수 :</span> 55                    </li></ul><br><br style="font-weight: bold;"><span style="font-weight: bold;">1. Java5 그 자체</span><br><br><span style="font-weight: bold;">2. JSP와 Servlet 그리고 Model 1</span><br>아직도 많은 개발자들이 여기에 길들여져 있는데, 일단 JSP 자체에 대한 기본기를 익힌 뒤로는 재빨리 버려야 할 습관이다.<br><br><br><span style="font-weight: bold;">3. Model 2 - 프레임워크의 등장</span><br><br>... 디버깅 하는 일이 지옥같이 느껴지기 시작한다.<br>여기서 Model 2가 구원자로 등장한다.<br>Model 2는 말만 멋드러졌지 실제로는 간단한 개념이다.<br>JSP에서 수행하던 DB 쿼리 등의 작업을 Servlet에게 넘겨주고 JSP에서는 오로지 화면 출력만 담당하는 것이다.<br><br>..<br>Model 2의 기능을 정형화해서 쉽게 구현하게 해주는 것이 MVC Framework들의 역할이다.<br>가장 유명한 Model 2 웹 프레임워크들은 다음과 같은 것들이 있다.<br><br>* 스트럿츠 1 - Struts 1<br>* 스트럿츠 2 - Struts 2<br>* 스프링 MVC - Spring MVC<br>..<br><br><span style="font-weight: bold;">4. 퍼시스턴스 프레임워크</span> : JDBC 반복 작업에 짜증이 나기 시작하다.<br>..<br><br>이렇게 DB관련된 작업을 정형화한 것들을 Persistence Framework 라고 한다.<br><br>* 아이바티스 - iBATIS : SQL Mapper - JDBC보다 더 쉽게 배우고, 더 편하게 사용한다.<br>* 하이버네이트 - Hibernate : 객체지향을 객체지향답게, <span style="text-decoration: underline;">개발 기간을 엄청나게 단축시켜주다. </span>ORM의 한 종류<br>..<br><br><br><span style="font-weight: bold;">5. IoC와 DI</span> - 객체의 생성주기와 의존성을 관리하고 싶어지다<br>..<br>이렇게 객체의 생성/파괴 주기를 관리하고 객체간의 의존성을 관리해주는 프레임워크를 IoC 컨테이너라고 부른다.<br><br>1. Spring Framework<br><a href="http://kwon37xi.egloos.com/3666564" name="3666564" title="초보 Java 웹 개발자들을 위한 학습 로드맵"></a></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>관심 BUG, CASE ..</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-20 15:01:04</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">관심 BUG, CASE ..</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><strong>BUG-16538&nbsp; fetch방식의 변경에 따라 target절의 최상위 노드도 constant 노드로 처리할 수 있습니다. <br></strong><br>PROJ-1502를&nbsp;하면서&nbsp;4_5_2_0_branch에 <br>qtc::estimateConstExpr이라는&nbsp;함수를&nbsp;추가하였습니다. <br>이&nbsp;함수의&nbsp;용도는&nbsp;최&nbsp;상위&nbsp;노드에&nbsp;대해서&nbsp;constant&nbsp;expression으로&nbsp;바꾸는&nbsp;함수입니다. <br><br>현재는 <br>insert..&nbsp;values(&nbsp;[이부분]&nbsp;), <br>update&nbsp;set&nbsp;x&nbsp;=&nbsp;[이부분] <br>에&nbsp;대해서만&nbsp;적용이&nbsp;됩니다. PROJ-1502를&nbsp;하면서&nbsp;4_5_2_0_branch에 <br>qtc::estimateConstExpr이라는&nbsp;함수를&nbsp;추가하였습니다. <br>이&nbsp;함수의&nbsp;용도는&nbsp;최&nbsp;상위&nbsp;노드에&nbsp;대해서&nbsp;constant&nbsp;expression으로&nbsp;바꾸는&nbsp;함수입니다. <br><br>현재는 <br>insert..&nbsp;values(&nbsp;[이부분]&nbsp;), <br>update&nbsp;set&nbsp;x&nbsp;=&nbsp;[이부분] <br>에&nbsp;대해서만&nbsp;적용이&nbsp;됩니다. <br><br>--------------<br>BUG-17594&nbsp; pread, pwrite없는 OS에서는 모든 IO가 이 함수에서 하나의 Global Mutex에 대해서 경쟁합니다 <br><br>PROJ-1563 [효율성] QP - Optimization Tips <br><br>[PROJ-1469/Design] [효율성] SN - Disk Index 재구축 로깅 최소화 <br><br>BUG-17155&nbsp; Direct Path Insert를 사용하여 Load하는 direct path load기능을 iloader에서 구현해야함. <br><br>BUG-17553&nbsp; statement별 access count를 조회할 수 있는 방법을 요청함&nbsp;<br><br>BUG-17417&nbsp; V$MEMGC정보의 Add OID 개수는 실제 Ager가 해야될 작업의 갯수가 아님. <br>&nbsp;&nbsp;v$memgc에&nbsp;다음&nbsp;두&nbsp;column이&nbsp;추가되었습니다. <br>&nbsp;&nbsp;&nbsp;AGING_REQUEST_OID_CNT&nbsp;:&nbsp;Aging되어야하는&nbsp;OID갯수 <br>&nbsp;&nbsp;&nbsp;AGING_PROCESSED_OID_CNT&nbsp;:&nbsp;Aging처리된&nbsp;OID갯수. <br><br>BUG-15396&nbsp; &nbsp;Durability 정리 및 Session Level의 Durability Level의 속성 제공.</div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

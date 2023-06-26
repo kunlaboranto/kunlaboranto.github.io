@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] TIME_WAIT 를 없애는 방법 좀 알려주세요 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:01:31</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] TIME_WAIT 를 없애는 방법 좀 알려주세요 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">FROM : http://kldp.org/node/301<br><br><h1 class="title">TIME_WAIT 를 없애는 방법 좀 알려주세요</h1><!-- begin content --><div class="node"><span class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/645" target="_blank">panda9</a> 씀 (목, 2003/01/23 - 9:37am)</span> <span class="taxonomy"><a class="con_link" title="OS 및 애플리케이션 설치, 활용에 관한 질문/답변" href="http://kldp.org/forum/6" target="_blank" rel="tag">설치 및 활용 QnA</a></span> <div class="content"><p>linux(Red Hat, Kernel 2.4.9-21smp) 에서 php 4.2.2 를 사용하구요.<br>php CLI 를 이용, CRON 으로 원격에 있는 mysql 서버(mysql-3.23.54a)에 접속하는 프로그램을 실행시키고 있습니다.</p><p>그런데 원격에 있는 mysql 서버가 문제가 생겨 몇시간 동안 다운된 적이 있고 이 시간동안 로컬에 있는 php 프로그램은 CRON으로 실행하여<br>mysql 서버와 접속을 계속 시도한 것으로 보여집니다.<br>그래서 그런지 netstat -t 로 확인해 보면, 며칠째 원격에 있는 DB 서버로 수십개 이상의 TIME_WAIT 를 볼 수 있습니다.</p><p>이 수십걔의 TIME_WAIT 때문인지 실제 로컬버서 이용자가 이전에 비해 많은 않은 경우에도 cpu idle 을 거의 없고 load average 로 이전보다 높은 현상을 보입니다.</p><p>이러한 경우 TIME_WAIT 를 없앨 수는 없나요?<br>완전히 다시 리부팅을 하면 좋겠는데 현재 서비스중인 서버라 리부팅하기가<br>좀 어려운 상황이라서요.</p><p>여러분의 조언 부탁드립니다.</p><div class="forum-topic-navigation"><a class="con_link" title="이전 글" href="http://kldp.org/node/311" target="_blank">‹ cygwin root계정으로 login하는 방법?</a> <a class="con_link" title="다음 글" href="http://kldp.org/node/296" target="_blank">리눅스를 설치했는데 아무것도 할수 없네여..도움이 절실히 필요 ›</a></div><div><fieldset><legend>Vote Result</legend><div id="nodevote result"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"><img alt="-" src="http://kldp.org/modules/addon/nodevote/star_off.png"></div><div id="nodevote result">Score: 0.0, Votes: 0</div></fieldset> <input id="edit-nodevote-form" type="hidden" value="nodevote_form" name="edit[form_id]"> </div></div><div class="links">» 77번 읽힘</div></div><div class="comment"><div class="picture"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/44" target="_blank"><img title="codebank의 그림" alt="codebank의 그림" src="http://kldp.org/files/pictures/9593753723ed6f33dbbec4.gif"></a></div><h3 class="title"><a class="con_link" href="http://kldp.org/node/301#comment-801" target="_blank">TIME_WAIT</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/44" target="_blank">codebank</a> 씀 (목, 2003/01/23 - 11:07am)</div><div class="content"><p>TIME_WAIT자체를 없애는 방법은 음...</p><p>일단 TIME_WAIT가 발생하는 원인부터 보세요.</p><p><a class="con_link" title="http://kldp.org/~kabin/doc/sockfaq2.htm" href="http://kldp.org/%7Ekabin/doc/sockfaq2.htm" target="_blank">http://kldp.org/~kabin/doc/sockfaq2.htm</a></p><p>아마 2.7 에 TIME_WAIT가 발생하는 이유에 대해서 나오게 되어있네요.<br>계속 반복이라니... 쩝...<br>번역문에도 써있지만 반복주기는 2*MSL정도라고 되어있습니다.<br>문제는 어느쪽이라고 꼭집어서 말할 수 없는것 같네요. 신뢰성의 문제라...</p><p>궁금한건 TIME_WAIT가 과연 네트워크 트래픽을 올리는 원인이 된다면<br>그리고 실제로 그것이 눈에 보일정도로 심각하다면 왜 운영자에게 이야기를<br>하지 않느냐입니다. 어차피 서버라면 어느정도 속도가 중요한데 말이죠.</p><p>결론... 이라고 까지는 말할 수 없겠지만 어쨌든...<br>가장 간단한 방법은 서버를 ReBooting하는 방법입니다. &lt;-- 이건 안된다고 했으니...<br>두번째 방법은 TIME_WAIT를 일으킨 서비스를 재 실행하는겁니다.<br>경험상 서버스를 재실행하면 TIME_WAIT는 한순간 없어지더군요.</p><p>물론 위 두번째 방법은 다른 곳에서는 용이하지 않을 수도 있습니다.<br>만일 포트 관리를 다른 서비스(xinetd)가 맡고 있다면... ㅤㅉㅡㅂ...<br>아직은 이런현상을 보질못해서... 단독적인 프로그램에서 생긴 경우에만<br>해당될지 모르겠군요.</p><p>어쨌든...<br>해당 서비스에 대한 재실행이 답일 수 있습니다.<br>xinetd이 관리할 때는 어떻게 되는지 안해봐서 모르겠습니다.<br>((사장님께 건의를 드리는방법이 정신건강상 좋을것 같군요. :))</p></div><div class="links">» <a class="con_link" href="http://kldp.org/comment/reply/301/801" target="_blank">답글</a></div></div><div class="comment"><h3 class="title"><a class="con_link" href="http://kldp.org/node/301#comment-802" target="_blank">TIME_WAIT 없애는 방법</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/662" target="_blank">hakhang</a> 씀 (목, 2003/01/23 - 3:18pm)</div><div class="content"><p>codebank님이 알려주신 문서에 TIME_WAIT가 발생하는 원인은<br>잘 나와 있으므로, 없애는 방법만 간단히 소개합니다.</p><p>client application에서 socket option 중 linger option을 off 시키면,<br>client에 의한 connection close시 TIME_WAIT 상태를 거치지 않고<br>ClOSED 상태로 바뀌게 되므로, TIME_WAIT 상태가 발생하지 않습니다.</p><p>이미 발생한 TIME_WAIT 상태는 일정시간이 지나면 없어지는데,<br>client가 server 매우 빈번히 connect/disconnect를 반복한다면<br>많은 TCP port가 TIME_WAIT 상태가 되서 문제가 생길 수 있습니다.</p><p>아래 linger option을 off하는 간단한 코드 예입니다.</p><p></p><pre class="bb-code-block">    /* 중략 */<br>    int sock<br>    struct linger   ling;<br><br>    ling.l_onoff = 1;<br>    ling.l_linger = 0;      /* 0 for abortive disconnect */<br><br>    /* 중략 */<br><br>    setsockopt(sock, SOL_SOCKET, SO_LINGER, &amp;ling, sizeof(ling))<br><br></pre><p>도움이 되셨기를...[/code]</p></div><div class="links">» <a class="con_link" href="http://kldp.org/comment/reply/301/802" target="_blank">답글</a></div></div><div class="picture"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/663" target="_blank"><img title="preisner의 그림" alt="preisner의 그림" src="http://kldp.org/files/pictures/9820938424268b7a08845c.gif"></a></div><h3 class="title"><a class="con_link" href="http://kldp.org/node/301#comment-803" target="_blank">time_wait를 없애는건..</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/663" target="_blank">preisner</a> 씀 (목, 2003/01/23 - 3:54pm)</div><div class="content"><p>실제 time_wait로 인해 부하가 걸리지는 않습니다.<br>TCP/IP 통신에서 TIME_WAIT 상태를 유지하는데는 이유가 있습니다.<br>그냥 없앤다고 문제가 해결되진 않습니다.<br>오히려 통신이 불안해 질 수 있습니다.</p><p>웹서버를 운영해 보시면 TIME_WAIT 상태가 수십, 수백개가 생기기도 합니다.<br>실제로는 이것으로 인해 별 문제는 없습니다.<br>오히려 SYN_RECV가 너무 많다면 문제가 생길수도 있습니다만,<br>(DOS 공격을 받고 있을 수 있습니다.)<br>TIME_WAIT 상태가 너무 많아 문제가 생긴다고 보긴 어렵겠습니다.<br>(수천개 정도라면 좀 다르겠지만요. 수십개정도는 일반적인 수준입니다.<br>수천개가 생긴다면 TIME_WAIT으로 인해 생기는 문제 보다는 전체적으로<br>서버에 부하가 많은것이 더 큰 문제라 생각됩니다.)</p></div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

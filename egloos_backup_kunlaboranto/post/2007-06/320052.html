@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>UX 패치 등 확인 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:36:37</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">UX 패치 등 확인 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><p>참고 : <a class="con_link" href="http://bhami.com/rosetta.html" target="_blank">http://bhami.com/rosetta.html</a></p><p><br></p><p>[ SUN ]</p><p>showrev -p</p><p>      patchadd -p<br>      cat /etc/release</p><br>[ AIX ]<br>instfix -ivq<br>      oslevel -s<br><br><p>[ HP ]</p><p>swlist -l product | grep PH<i>someString</i></p><p><br></p><p>a. kmtune</p><p>b. tusc</p><p>c.</p><p>KERNEL Patch 상태<br>$ /usr/sbin/swlist -l product | grep PHKL_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / PHSS, PHCO</p><p>$ /usr/sbin/swlist -l product | grep libc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / C++</p><p>다음과 같은 컴파일러 옵션을 넣고서 만든 PKG가 성능면에서 조금 효과가 있었습니다. 약 5-10%</p><p>+Ofastaccess ; Enable fast access to global data items<br>+Omultiprocessor ; Enable multiple processor optimization<br>+Odataprefetch&nbsp; </p><p>그리고 +DS&lt;modelname&gt;을 하면 해당 모델의 CPU에 맞게 최적화되어서 코드가 만들어 진다고 하니 <br>SUPER DOME의 경우 +DSPA8600&nbsp;&nbsp; 을 넣고서 컴파일하면 효과가 있을지도 모르겠습니다.<br>HP의 모델은 /opt/langtools/lib/sched.models&nbsp; file을 보면 됩니다.</p><p>##</p><p>15개의 Insert 가 계속 발생하는 상황에서 altibase process를 tusc를 이용하여 특정 service thread( <br>THREAD 39)의 system call을 보면 아래와 같습니다.<br>1. insert문이 시작되기 전에 time()이 한번 불립니다.<br>2. executing이 들어가면 semop() 가 수행이 되고<br>3. transaction처리중에 mutex_lock이나 기타 waitcond가 되면 아마 sched_yield()가 불려지는 것 같음.<br>4. 일정시간이 지나면 ksleep()으로 빠지지 않나 싶습니다.<br>5. 중간에 kwakeup으로 깨어나는듯 하고..</p><p>추측이고.. 이런 상황에서 슈퍼돔은 sched_yield와 ksleep의 양이 많고 CPU Load에 영향이 가지 않나 싶습<br>니다. 튜닝에 참조하세요.</p><p><br>[8192] #39 semop(30746, 0x800000014f0b0d98, 1) ............................. [running]<br>[8192] #39 semop(30746, 0x800000014f0b0d98, 1) ............................. = 0<br>[8192] #39 semop(30746, 0x800000014f0b0d74, 2) ............................. ERR#11 EAGAIN<br>[8192] #39 time(NULL) ...................................................... = 1116039725<br>[8192] #39 semop(30746, 0x800000014f0b0db6, 1) ............................. = 0<br>[8192] #39 semop(30746, 0x800000014f0b0d98, 1) ............................. = 0<br>[8192] #39 semop(30746, 0x800000014f0b0d74, 2) ............................. ERR#11 EAGAIN<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 kwakeup(PTH_MUTEX_OBJECT, 0x8000000128abb220, WAKEUP_ONE, 0x800003fffe44d758) = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 time(NULL) ...................................................... = 1116039725<br>[8192] #39 semop(30746, 0x800000014f0b0db6, 1) ............................. = 0<br>[8192] #39 semop(30746, 0x800000014f0b0d98, 1) ............................. = 0<br>[8192] #39 semop(30746, 0x800000014f0b0d74, 2) ............................. ERR#11 EAGAIN<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 kwakeup(PTH_MUTEX_OBJECT, 0x8000000128abb220, WAKEUP_ONE, 0x800003fffe44d758) = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0<br>[8192] #39 sched_yield() ................................................... = 0</p><p>&nbsp;</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

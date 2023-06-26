@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[질문] 무한루핑에서 CPU를 올리지 안는법??? </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:44:05</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[질문] 무한루핑에서 CPU를 올리지 안는법??? </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p><span id="content1" style="FONT-FAMILY: true_0">From : <a class="con_link" href="http://linux.co.kr/novice/qna/read.php?table=qna2&amp;no=1118" target="_blank">http://linux.co.kr/novice/qna/read.php?table=qna2&amp;no=1118</a> <br><br>select는 블록대서 이것 때문에 프로세스가 멈춰버려서 프로그래머가<br>자유롭게 프로그램을 못하죠 만약 파일데스크립터에 일거나 쓰기가 일어<br>나지 않으면 블록되어 있습니다.<br>그래서 쓰래드와 병용하는것이 좋을것 같습니다.<br>poll은 busy wait 를 하기 때문에 않좋고<br>가장 좋은것은 인터럽터라고 하는대 방법을 아는 사람이 없어서....<br>알면좀 가를처 줘요...</span></p><p><span style="FONT-FAMILY: true_0">Sean wrote..<br>: cpu 사용율을 내리는 방법이라고 하면, cpu가 그만큼 다른 일을<br>: 할 수 있도록 해당 프로그램의 사용시간을 줄여서 time slice를 <br>: 다른 프로그램이 사용할 수 있도록 하도록 하면 될텐데요.<br>: c함수에는 님이 원하시는 기능을 할 수 있는 다음과 같은 함수가 <br>: 있습니다 <br>: <br>: unsigned int sleep(unsigned int seconds);<br>: void usleep(unsigned long usec);<br>: int usleep(unsigned long usec); /* SUSv2 */<br>: <br>: int&nbsp; select(int&nbsp; n,&nbsp; fd_set&nbsp; *readfds,&nbsp; fd_set&nbsp; *writefds,fd_set <br>: *exceptfds, struct timeval *timeout);<br>: <br>: sleep 계열의 함수는 process를 정해진 시간동안 잠을 재워버림으로 <br>: 해당 시간이 지난후 process가 다시 wakeup고 실행되기 때문에 context<br>: switching이 빈번하게 일어 날 수 있습니다. select나 poll과 같은 <br>: 함수는 cpu를 사용하면서 시간을 끌 수 있는데요. 저는 후자쪽을 추천 합<br>: 니다. <br>: <br>: 김선훈 wrote..<br>: : 데몬 프로그램일 만들고 싶은데요<br>: : while으로 무한 루핑을 돌리면서 어떤일을 처리 할려고 합니다.<br>: : 근데 CPU가 100%로 되어버리네요<br>: : usleep를 주면 CPU는 내려가는데 , 루핑 횟수가 줄어요<br>: : 1초에 50회 정도 , 저는 최소한 1000회 루핑을 돌리고 싶은데요<br>: : 혹시 방법을 없을까요??<br>: : 그럼 수고하세요 </span></p><p><span style="FONT-FAMILY: true_0"></span>&nbsp;</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 메모리 릭 관련, 참고 URL 모음</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-12-28 15:36:07</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 메모리 릭 관련, 참고 URL 모음</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">http://www.splint.org/download.html<br><br>http://altiwiki.altibase.local/wiki/index.php/ATAF_User%27s_Manual<br><br>http://monac.egloos.com/505588<br><br>http://wiki.liebmona.net/wiki.php/%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%88%84%EC%88%98%ED%83%90%EC%A7%80?action=show<br><br><br>http://kldp.org/node/26360<br><p>위의 에러는 십중 팔구는 대개 free를 두번한경우입니다.</p><p>$ export MALLOC_CHECK_<br>$ MALLOC_CHECK_=2<br>$ ./your_program</p><p>해서 잡아보시는 것이 ... 좋겠습니다.</p><br><p><br></p><p>리눅스에서 작업하시는거라면 간단하게 valgrind 한번 실행해서 잡으세요.</p><p>valgrind --leak-resolution=high --trace-malloc=yes --leak-check=yes --show-reachable=yes -v [프로그램 풀 경로]</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

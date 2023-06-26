@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] dba_extents</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-06 12:39:30</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] dba_extents</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://altibase.egloos.com/1386665" title="">[펌] alter table ... allocate extent 문 - DBA_EXTENTS</a><br><br>From : http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_extents.html<br><br><font size="6">dba_extents</font><hr color="red" size="5"><font size="4"><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/extents.html">extents</a>에 관한 정보를 담고 있다.</font><pre><br><font size="4">SQL&gt; <b>select owner, segment_name, bytes, blocks</b><br>  2&gt; <b>from dba_extents;</b><br><br>OWNER                SEGMENT_NAME   EXTENT_ID      BYTES     BLOCKS<br>-------------------- ------------- ---------- ---------- ----------<br>SYS                  _SYSSMU9$     1               65536          8<br>SYS                  _SYSSMU10$    0               65536          8<br>SYS                  _SYSSMU10$    1               65536          8<br> <br>6492 rows selected.<br> <br>SQL&gt; <br>SQL&gt; <b>select tablespace_name, count(*) segments, sum(bytes) bytes</b><br>  2  <b>from dba_segments</b><br>  3  <b>group by tablespace_name;</b><br> <br>TABLESPACE_NAME                  SEGMENTS      BYTES<br>------------------------------ ---------- ----------<br>SYSAUX                               3178  319094784<br>SYSTEM                               1147  462028800<br>UNDOTBS1                               10    4587520<br>USERS                                   9     589824<br> <br>SQL&gt; <br><br><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/statement_alter/alter_table_allocate_extent.html">alter table 문에 의한 extent할당과 해제</a></font></pre><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

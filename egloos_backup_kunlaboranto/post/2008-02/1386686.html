@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] SEGMENTS 란?</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-06 12:41:44</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] SEGMENTS 란?</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://altibase.egloos.com/1386669" title="">[펌] dba_extents</a><br><br>From : http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/segments.html<br><br><font size="5">SEGMENTS 란?</font><hr color="red" size="5"><font size="4"></font><center><font size="4"><img src="http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/database_structure.JPG"></font></center><p><font size="4">SEGMENT는 생성 될 때 적어도 하나의 EXTENT를 가진다.<br>DATA SEGMENT는 하나의 TABLESPACE에 속한 여러 file에 걸쳐 있을 수 있다<br>TABLESPACE 안에는 여러 개의 data SEGMENT와 INDEX SEGMENT, UNDO SEGMENT,TEMPORARY SEGMENT가 존재한다.<br>즉 SEGMENT는 여러 가지 data를 저장하기 위한 논리적인 구조이며, SEGMENT는 <br>생성되면서 자신이 사용할 공간으로 EXTENT를 할당 받는다.<br><br>SEGMENT의 종류<br><table bgcolor="#fafecc" border="1"><tbody><tr><td><b>TABLE SEGMENT</b></td><td><b>TABLE PARTITION SEGMENT</b></td></tr><tr><td><b>CLUSTER SEGMENT</b></td><td><b>INDEX SEGMENT</b></td></tr><tr><td><b>INDEX-ORGANIZED TABLE SEGMENT</b></td><td><b>INDEX PARTITION SEGMENT</b></td></tr><tr><td><b><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/undo_segment.html">UNDO SEGMENT</a></b></td><td><b>TEMPORARY SEGMENT</b></td></tr><tr><td><b>LOB SEGMENT</b></td><td><b>LOB INDEX SEGMENT</b></td></tr><tr><td><b>NESTED TABLE SEGMENT</b></td><td><b>Bootstrap SEGMENT</b></td></tr><tr></tr></tbody></table></font></p><pre><font size="4">SQL&gt; select count(*) segment_name from dba_extents;<br> <br>SEGMENT_NAME<br>------------<br>        6248<br> <br>SQL&gt; select segment_name, blocks from dba_extents<br>  2  where segment_name='BOOTSTRAP$';<br> <br>SEGMENT_NAME                  BLOCKS<br>----------------------------- --------------<br>BOOTSTRAP$                                 8<br> <br> <br>SQL&gt; <br></font><hr color="#0000ff" size="3"><br><font size="4"><b>TABLE SEGMENT</b><br>-- 단일 테이블의 row를 저장한다<br>-- 데이터베이스에서 일반적인 데이터 저장방법이다.<br>-- 관리자가 row data의 저장 위치를 조절할 수 없다.<br>-- 한 tablespace 내에 저장된다.<br><br><b>TABLE PARTITION SEGMENT</b><br>-- 대용량 데이터인 경우 너무 커서 관리하기 어렵기 때문에 여러 조각으로 나누어서 관리할 때 사용된다.<br>-- 단일 table의 row를 여러 PARTITION에 나누어 저장한다.<br>-- key 값의 범위 내에서 PARTITION을 나눌 수 있다.<br>-- 각각의 PARTITION은 서로 다른 TABLESPACE에 위치할 수 있다.<br>-- 단일 TABLE이라도 PARTITION 별로 각각의 storage parameter를 지정할 수 있다.<br><br><b>CLUSTER SEGMENT</b><br>-- 저장 방식이 TABLE과 다르며, 관련된 데이터 끼리 모아서 저장하는 방식의 SEGMENT이다.<br>-- 다중 TABLE을 포함하는 저장 구조이다.<br>-- 보통은 하나의 TABLE을 포함한다.<br>-- data의 key 값에 따라 저장 위치가 달라진다.<br>-- 주로 검색과 수정이 자주 발생하는 테이블에 사용된다.<br>-- JOIN 조건이 자주 발생하는 테이블을 모아서 CLUSTER SEGMENT를 구선하면 좋다.<br><br><b>INDEX SEGMENT</b><br>-- data 검색 기능을 향상 시키기 위해 table의 하나 이상의 column에 생성된 INDEX를 포함한다.<br>-- 데이터와 인덱스는 서로 다른 segment에 저장된다.<br>-- 각 row는 유일한 <a href="http://radiocom.kunsan.ac.kr/lecture/oracle/function/ROWID.html">rowid</a>를 가지고 있는데, INDEX SEGMENT는 rowid의 정보를 가지고 해당 row에 직접 접근이 가능하다.<br> <br><b>INDEX-ORGANIZED TABLE SEGMENT</b><br>-- key 값에 기초하여 INDEX 내에 데이터를 저장한다.<br>-- IOT SEGMENT라고도 불린다.<br>-- 테이블의 데이터가 INDEX tree내에서 존재하기 때문에 데이터를 직접 읽어 올 수 있다.<br><br><b>INDEX PARTITION SEGMENT</b><br>-- TABLE과 같이 INDEX 또한 PARTITION으로 나누어 사용할 수 있다.<br>-- 분할된 INDEX는 I/O를 분산시키며, 성능향상이 된다.<br><br><b><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/undo_segment.html">UNDO SEGMENT</a></b><br>-- 데이터가 변경되었을 때 변경전 image를 저장하기 위한 object로 DATABASE에 변경을 가하는 transaction에 의해 사용된다.<br>-- 데이터나 인덱스등의 BLOCK이 변경되기 전의 값을 undo segment에 저장한다.<br>-- undo segment에 저장된 값을 사용하여 실행을 취소할 수 있다.<br>-- READ-consistent(읽기 일관성), recovery, ROLLBACK을 위하여 사용된다.<br>-- <a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_rollback_segs.html">DBA_ROLLBACK_SEGS</a>뷰로 정보를 알 수 있음<br>-- undo segment는 manual,auto 두 방식으로 있으며, auto를 권장한다.<br><br>SQL&gt; <b>show parameter undo_management;</b><br> <br>NAME                                 TYPE        VALUE<br>------------------------------------ ----------- ------------------------------<br>undo_management                      string      AUTO<br>SQL&gt;<br><br><b>TEMPORARY SEGMENT</b><br>-- JOIN, GROUP BY, ORDER BY, INDEX 생성등과 같은 작업을 할 때 발생하는 sorting 연산을 수행하기 위하여 사용된다.<br>-- 오라클은 먼저 memory를 사용하고, memory 공간이 부족한 경우에 TEMPORARY SEGMENT를 사용하여 작업을 수행한다.<br>-- 영구적인 TABLESPACE에 생성이 가능하지만, 별도로 TEMPORARY TABLESPACE를 만들어 사용한다.<br><br><b>LOB SEGMENT</b><br>-- TABLE에 하나 이상의 컬럼이 LOB column을 사용할 때 사용된다.<br>-- LOB는 텍스트 문서, image, 또는 Video file과 같은 큰 object를 의미한다.<br>-- TABLE은 이러한 LOB column이 매우 크게 되면, 별도의 SEGMENT에 저장한다.<br>-- TABLE에 단지 이러한 LOB 데이터의 위치에 대한 값만 가지고 있게 된다.<br>-- LOB Type은 최대 4GB까지 저장할 수 있다.<br><br><b>LOB INDEX SEGMENT</b><br>-- LOB SEGMENT가 생성될 때 암시적으로 생성된다.<br>-- 특정 LOB Column을 참조할 때 LOB INDEX SEGMENT를 사용하면 검색이 향상된다.<br><br><b>NESTED TABLE SEGMENT</b><br>-- 다른 하나의 TABLE을 포함하는 Column을 갖는 TABLE을 Nested TABLE이라 한다.<br>-- 이러한 nested TABLE은 별도의 SEGMENT에 저장된다.<br><br><b>Bootstrap SEGMENT</b><br>-- INSTANCE가 DATABASE를 OPEN 시, Dictionary Cache 초기화를 하는데 사용한다.<br>-- 이러한 SEGMENT는 관리자의 관리가 필요 없으며, 질의나 갱신이 불가능하다.<br>-- DATABASE 생성시 sql.bsq에 의해 생성된다.<br>-- Cache SEGMENT라고도 한다.<br><br></font></pre><hr color="#0000ff" size="3"><font size="4"><font color="#0000ff" size="+2"><b>SEGMENTS에 대한 정보 조회</b></font></font><table bgcolor="#fafecc" border="1"><tbody><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/user_segments.html">user_segments</a></td><td>세그먼트를 구성하는 설정에 대한 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_segments.html">dba_segments</a></td><td>세그먼트를 구성하는 설정에 대한 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/user_tablespaces.html">user_tablespaces</a></td><td>storage에 대한 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_tablespaces.html">dba_tablespaces</a></td><td>storage에 대한 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/user_free_space.html">user_free_space</a></td><td>남은 공간에 대한 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_free_space.html">dba_free_space</a></td><td>남은 공간 에 대한 정보</td></tr></tbody></table><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>CASE-4893    HP에서 SYNC_CREATE_=0 일 경우에 성능이 더 느립니다.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-10-14 18:28:14</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">CASE-4893    HP에서 SYNC_CREATE_=0 일 경우에 성능이 더 느립니다.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">KTF 지능망에서도 30%정도의 성능저하<br><br>---------------<br>CASE-4893&nbsp;&nbsp;&nbsp; HP에서 SYNC_CREATE_=0 일 경우에 성능이 더 느립니다.<br><br>오늘 테스트하면서...이 프로퍼티(SYNC_CREATE_) 때문에...<br>테스트에 혼동을 빚었습니다. 일단 예상하기로는 SYNC_CREATE_=0으로<br>셋팅하면 성능이 올라가리라고 생각했는데...이것은 거의 의심하지<br>않고 함께 프로퍼티를 변경했던...<br><br>GC_WAIT_MINIMUM(20에서 50으로 변경)와, DATABASE_IO_TYPE(0에서 1로 변경)<br>을 의심하여 1개씩 원본해 본 결과 결국 SYNC_CREATE_=0 이 성능을 떨어뜨린<br>것으로 확인되었습니다.<br><br>정말 이해가 안되는 상황입니다. 소스를 찾아봐도 SYNC_CREATE_가 0일때와 1일때 <br>처리하는 길이부터 다른데..<br><br>한가지 의심해 볼수 있는 것은 HP에서는 Create할때 비용보다 명시적으로 NULL로 <br>할당되지 않은 영역에 로그를 Write하는 비용이 더 크다는 것 뿐입니다.<br>-----------<br><br>역시 HP에서는 로그파일생성할때 SYNC 해야 하는 것 같네요...<br><br>============<br><br>CASE-827 AIX4.3<br><br>4. 결정적으로 logfile size을 크게만들고 prepare log thread의 wakeup시간을 단축시키고 <br>&nbsp;&nbsp; sync_create_ property를 setting한 결과 insert의 경우 20000 tps가 넘게 나왔고 <br>&nbsp;&nbsp; Update도 15000 tps정도로 많이 향상되었음. &nbsp;<br>&nbsp;&nbsp; Logfile prepare가 실제로 logfile이 쌓이는 것을 못 따라가서 생긴 문제로 보임.<br>&nbsp; &nbsp;<br>&nbsp; &nbsp;<br>BUG-13353 &nbsp;&nbsp;&nbsp; &nbsp;[LFG] SYNC_CREATE_=0일때 invalid log읽을 확률을 0에 가깝게 낮추어야 함<br>2006-04-21<br><br>------<br>wrote at 2005/11/15 11:40:27 ,&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; 제품 BMT &nbsp;&nbsp;&nbsp; &nbsp;<br><br>화요일 상황<br>1. 마지막 성능 테스트 결과 SYNC_CREATE_가 많은 영향을 미치는 것으로 밝혀짐. SYNC_CREATE_=0으로 <br>Setting되었을 경우 1000개 세션이 2991초 만에 Dequeue까지 끝남.(기존 3456초에 끝남.)<br>즉, 그동안 많은 트랜잭션이 LOGFILE Creation부분에서 멈추어 있었을 가능성이 있음.<br><br>2. SYNC_CREATE_=0으로 맞추고서도 Recovery에 문제가 없도록 김강모씨가 작업을 하기로 함.<br><br>3. Recovery Test시 Recovery가 안되는 경우가 발생하여 현재 김강모씨가 Verify하고 있음.<br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

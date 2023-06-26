@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>이중화 환경에서 1건만 차이나는 경우 찾기. </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-27 09:26:24</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">이중화 환경에서 1건만 차이나는 경우 찾기. </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">1)<br>PK가 1건 틀린경우 찾기..<br>"<br>39 장비 패치전, 양쪽 data를 조회 했는데, <br>UCS_SUBS_GSM /UCS_SUBS_SVC_FEATURE 테이블의 건수가 37이 39보다 1건 많았음.<br><br>select sum(pk) from table; 한 후<br>sum(pk37) - sum(pk39) = 37 서버가 1건 많은 record의 PK 값임.&nbsp; &lt;- thx khc<br>"<br>&lt;-- 시간이 얼마나 걸릴지 모르지만 놀라운 꽁수임<br><br>2)<br>만약 저라면..<br>range를 나누어 가면서 count(*) 하여 범위를 좁혀 갔을듯.</div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

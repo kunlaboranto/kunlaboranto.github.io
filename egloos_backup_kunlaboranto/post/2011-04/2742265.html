@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[ubuntu] single mode 로 들어가기 (passwd 분실등에서)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-17 02:42:14</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[ubuntu] single mode 로 들어가기 (passwd 분실등에서)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">기존 이글루에서 wordpress로 이사짐을 정리하지 못했는데. 기한이 걸린 숙제가 생겼다. 일단 보류<p>( egloos2ttxml (<a href="http://nosyu.pe.kr/">NoSyu</a>님)로 추출을 하고 <a href="http://ani2life.com/wp/">A2</a>님의 wp-ttxml_2.2.zip 을 이용했음 )<br><br><br></p><p>15일 한일.</p><p><br>전날 ubuntu 셋팅을 하고, 집중좀 해볼려고 일찍 하루를 시작했더만. <br>아침에 재부팅했더만 sudoer 계정 (ubuntu의 사실상 root 계정이라고 보면됨)이 sudo 권한이 없어졌다.</p><p><br></p><blockquote>ubuntu 설치시 최초로 생성하는 계정은 /etc/sudoers 에 기술되어 있지 않아도 sudo가 허용이 된다. <br>이걸 어디서 관장하는지 모르겠지만. 수행한 의심스러운 작업은 <br>$ sudo usermod -G root &lt;계정명&gt;<br>을 수행했었음. 이걸 테스트할려면 다시 설치를 해야하니.. 참음</blockquote><br>root 계정을 풀어둔 것도 아니고, 별도의 sudoer 계정을 백업으로 만들어 둔 상태도 아니어서… single mode로 부팅을 해서 변경을 해야만 했는데.. 이게 삽질이었음.<p></p><p><br></p><p>삽질1. single mode 접근법을 서핑하니. ‘Grub boot menu’ 화면이 나오면, &lt;ESC&gt; 키를 눌러서 들어가라고 했는데, 왠걸 내 ubuntu 10.04 버전에서는, 구동시에 보이질 않음</p><p><br></p><p>삽질2. Live CD로 부팅을 해서 , 기존 파티션을 mount 후 /etc/sudoers 파일을 직접 변경을 할려고 했는데. /dev/sda1 에 잡은 /boot 영역이나, /dev/sdb1 에 잡은 /data01 영역은 mount가 되는데 , 정작 필요한 /dev/sda2 영역이 mount하면 오류가 났다. 추측컨데. 다른 파티션과 달리 LVM 로 설정을 한 것이 차이점이 아닐까 생각을 하고 포기</p><p><br></p><p>해결1. 다시 구글링을 통해 아래 문구를 발견.<br></p><blockquote>1. Boot up your Linux system and wait for the Grub boot menu. <span style="font-weight: bold;">If you have it turned off, you can hold down the Shift key during boot-up.</span><br>( http://techcolleague.com/2011/03/boot-to-single-user-mode-in-ubuntu-10-04-lucid-lynx/ )</blockquote><br><br>총 3시간 정도를 날렸는데 . Shift key를 누르면 “Grub .. ” 글자가 나오는데. &lt;ESC&gt; 누르는 타이밍을 못맞춰서 또 시간을 많이 날림. cpu clock 이 높아서 인가 내 손이 문제인가..<p></p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

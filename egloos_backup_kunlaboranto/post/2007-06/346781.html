@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[미완] TEMP_TBS_MEMORY</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-26 14:33:50</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[미완] TEMP_TBS_MEMORY</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>CASE-8842<br><br><pre>2. 또 한가지, 튜닝에 적절한 방법이 temp_tbs_memory외 없다면 (저는 이것밖에 모르겠습니다.)<br>&nbsp;&nbsp; 소량의 temp를 쓰는 경우 아예 자동적으로 메모리를 쓰도록 옵션널한 프로퍼티를 제공하는것은<br>&nbsp;&nbsp; 어떨지 기능개선안으로 고려가 가능한지 궁금합니다.</pre><pre><br>아예 temp tablespace를 안쓰면 좋겠습니다. 대부분 사이트의 쿼리튜닝은 쿼리자체를<br>튜닝한경우보다 temp_tbs_memory쓰는게 더 많다는 여태까지의 현실적인 결과들을 볼때에....</pre></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

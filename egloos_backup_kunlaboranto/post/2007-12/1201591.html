@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] valgrind - memory leak GNU checker</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-12-28 15:20:13</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] valgrind - memory leak GNU checker</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://programmer.egloos.com/459194<br><br><h3 class="posttitle"><a name="459194" title="Linux Auditing Tool">Linux Auditing Tool</a></h3><br><p>코드 checking tool에는 크게 static과 dynamic checking tool이 있습니다.<br>Statictool은 코드를 실행하지 않고 버그를 잡아주는 방법을 채택하고 있으며, 여기에는 lint, coverity 그리고 서울대에서개발한 airac등이 있습니다.&nbsp; 이에 반해 Dynamic tool은 코드를 실행시키면서 버그를 잡아주는 방법을 사용합니다.&nbsp;여기에는 purify, boundschecker, insure++ 등이 있습니다.<br><br></p><p>Valgrind는이중 dynamic tool에 해당하며 run-time상에 발생하는 Memory관련 버그를 잡아 줍니다.&nbsp; Valgrind가다른 tool과 다른 점은 Open-source이며 무료라는 점입니다.&nbsp; Linux관련 code의 품질에 많은 도움이 될 것으로예상됩니다.&nbsp; Valgrind가 잡아주는 버그들은 이런 것 들입니다.<br><br></p><p>Use of uninitialized memory : 초기화 되지 않은 memory를 사용하는 것<br>Reading/writing memory after it has been free'd : free한 이후의 memory를 access하는 것<br>Reading/writing off the end of malloc'd blocks : malloc한 memory의 범위를 넘어서 access하는 것<br>Memory leak : 잃어버린 malloc된 memory<br></p><p><br>사용방법은 간단합니다.&nbsp; main이 실행 file이라고 하면, 아래와 같이 실행시키면 됩니다.</p><p>valgrind main</p><p>Error message를 이해하기가 조금 어려울 수도 있으나 끈기 있게 따라가면 버그가 보입니다.<br><br><a href="http://valgrind.org/"><span style="color: rgb(11, 42, 74);"><span style="color: rgb(255, 255, 102);">http://valgrind.org/</span></span></a><br><br>이곳에 가셔서, download받으신 후 compile 하고 install하시면 됩니다.&nbsp; 막히시면 말씀하시고요.</p><p>참고로, valgrind의 구현 방법은 CPU instruction을 emulation하는 engine인 virtualmachine을 사용하고 있습니다.&nbsp; 따라서 CPU마다 instruction이 다르기 때문에 관련 부분을 새로 작성해야합니다.&nbsp; 현재까지 지원되는 platform은 X86/Linux, AMD64/Linux, PPC32/Linux,PPC64/Linux이며, 향후 지원계획은 official web site에 가시면 보실 수 있습니다.</p><p>그리고,virtual machine을 이용한 emulation덕분에 코드는 10배정도 느리게 동작 합니다.&nbsp; 일반적으로 CPU가 워낙빨라서 약간 느려지는 정도이지만, Timing critical한 경우에는 emulation의 수행 때문에 영향을 받을 수도 있는것을 염두에 두십시오.</p><p><br>Valgrind와 함께 즐거운 소프트웨어가 되시길 바라면서…</p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

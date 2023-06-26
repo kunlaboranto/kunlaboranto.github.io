@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] MERGE Statement Enhancements in Oracle Database 10g</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-11 15:07:08</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] MERGE Statement Enhancements in Oracle Database 10g</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p><br>From : <a href="http://www.oracle-base.com/articles/10g/MergeEnhancements10g.php">http://www.oracle-base.com/articles/10g/MergeEnhancements10g.php</a><br></p><p><span style="FONT-SIZE: 130%"><strong>MERGE Statement Enhancements in Oracle Database 10g<br></strong></span></p><p>Oracle 10g includes a number of amendments to the <code><span style="FONT-FAMILY: Courier New">MERGE</span></code> statement making it more flexible.<br></p><ul><li><a href="http://www.oracle-base.com/articles/10g/MergeEnhancements10g.php#test_table">Test Table</a></li><li><a href="http://www.oracle-base.com/articles/10g/MergeEnhancements10g.php#optional_clauses">Optional Clauses</a></li><li><a href="http://www.oracle-base.com/articles/10g/MergeEnhancements10g.php#conditional_operations">Conditional Operations</a></li><li><a href="http://www.oracle-base.com/articles/10g/MergeEnhancements10g.php#delete_clause">DELETE Clause</a></li></ul><a id="test_table"></a><h2><span style="FONT-SIZE: 100%">Test Table</span></h2><p>The following examples use the table defined below.<br></p><p>&nbsp;&nbsp;&nbsp; CREATE TABLE test1 AS<br>&nbsp;&nbsp;&nbsp; SELECT *<br>&nbsp;&nbsp;&nbsp; FROM&nbsp;&nbsp; all_objects<br>&nbsp;&nbsp;&nbsp; WHERE&nbsp; 1=2;</p><p><br><strong>Optional Clauses<br></strong></p><p>The <code><span style="FONT-FAMILY: Courier New">MATCHED</span></code> and <code><span style="FONT-FAMILY: Courier New">NOT MATCHED</span></code> clauses are now optional making all of the following examples valid.<br></p><p>&nbsp;&nbsp;&nbsp; -- Both clauses present.<br>&nbsp;&nbsp;&nbsp; MERGE INTO test1 a<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USING all_objects b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ON (a.object_id = b.object_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UPDATE SET a.status = b.status<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN NOT MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INSERT (object_id, status)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VALUES (b.object_id, b.status);</p><p>&nbsp;&nbsp;&nbsp; -- No matched clause, insert only.<br>&nbsp;&nbsp;&nbsp; MERGE INTO test1 a<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USING all_objects b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ON (a.object_id = b.object_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN NOT MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INSERT (object_id, status)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VALUES (b.object_id, b.status);</p><p>&nbsp;&nbsp;&nbsp; -- No not-matched clause, update only.<br>&nbsp;&nbsp;&nbsp; MERGE INTO test1 a<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USING all_objects b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ON (a.object_id = b.object_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UPDATE SET a.status = b.status;</p><p><br><span style="FONT-SIZE: 130%"><strong>Conditional Operations<br></strong></span></p><p>Conditional inserts and updates are now possible by using a <code><span style="FONT-FAMILY: Courier New">WHERE</span></code> clause on these statements.<br></p><p>&nbsp;&nbsp;&nbsp; -- Both clauses present.<br>&nbsp;&nbsp;&nbsp; MERGE INTO test1 a<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USING all_objects b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ON (a.object_id = b.object_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UPDATE SET a.status = b.status<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHERE&nbsp; b.status != 'VALID'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN NOT MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INSERT (object_id, status)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VALUES (b.object_id, b.status)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHERE&nbsp; b.status != 'VALID';</p><p>&nbsp;&nbsp;&nbsp; -- No matched clause, insert only.<br>&nbsp;&nbsp;&nbsp; MERGE INTO test1 a<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USING all_objects b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ON (a.object_id = b.object_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN NOT MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INSERT (object_id, status)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VALUES (b.object_id, b.status)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHERE&nbsp; b.status != 'VALID';</p><p>&nbsp;&nbsp;&nbsp; -- No not-matched clause, update only.<br>&nbsp;&nbsp;&nbsp; MERGE INTO test1 a<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USING all_objects b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ON (a.object_id = b.object_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UPDATE SET a.status = b.status<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHERE&nbsp; b.status != 'VALID';</p><p><br><strong><span style="FONT-SIZE: 130%">DELETE Clause<br></span></strong></p><p>An optional <code><span style="FONT-FAMILY: Courier New">DELETE WHERE</span></code> clause can be used to clean up after a merge operation. Only those rows which match both the <code><span style="FONT-FAMILY: Courier New">ON</span></code> clause and the <code><span style="FONT-FAMILY: Courier New">DELETE WHERE</span></code> clause are deleted.<br></p><p>&nbsp;&nbsp;&nbsp; MERGE INTO test1 a<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; USING all_objects b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ON (a.object_id = b.object_id)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHEN MATCHED THEN<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UPDATE SET a.status = b.status<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WHERE&nbsp; b.status != 'VALID'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DELETE WHERE (b.status = 'VALID');</p><p><br><br>For further information see:</p><ul><li><a href="http://oraclesvca2.oracle.com/docs/cd/B14117_01/server.101/b10759/statements_9016.htm">MERGE</a></li></ul><p>Hope this helps. Regards Tim...<br><br><a href="http://www.oracle-base.com/articles/10g/MergeEnhancements10g.php#Top">Back to the Top.</a></p><p>&nbsp;</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

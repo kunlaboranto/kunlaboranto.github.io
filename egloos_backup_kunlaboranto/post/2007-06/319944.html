@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>C 문자열 - strtok, strstr, strchr</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:13:12</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">C 문자열 - strtok, strstr, strchr</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>$ cat strtok.c<br>/* STRTOK.C: In this program, a loop uses strtok<br>&nbsp;* to print all the tokens (separated by commas<br>&nbsp;* or blanks) in the string named "string".<br>&nbsp;*/</p><p>#include &lt;string.h&gt;<br>#include &lt;stdio.h&gt;</p><p>char string[] = "A string\tof ,,tokens\nand some&nbsp; more tokens";<br>char seps[]&nbsp;&nbsp; = " ,\t\n";<br>char *token;</p><p>void main( void )<br>{<br>&nbsp;&nbsp; printf( "%s\n\nTokens:\n", string );<br>&nbsp;&nbsp; /* Establish string and get the first token: */<br>&nbsp;&nbsp; token = strtok( string, seps );<br>&nbsp;&nbsp; while( token != NULL )<br>&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* While there are tokens in "string" */<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( " %s\n", token );<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Get next token: */<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; token = strtok( NULL, seps );<br>&nbsp;&nbsp; }<br>}</p><p>v880: /user3/okseop7/MAN/osl/tip/ctip<br>$ cat strstr.c <br>/* STRSTR.C */</p><p>#include &lt;string.h&gt;<br>#include &lt;stdio.h&gt;</p><p>char str[] =&nbsp;&nbsp;&nbsp; "lazy";<br>//char string[] = "The quick brown dog jumps over the lazy fox";<br>char string[] = "The lazy brown dog jumps over the lazy fox";<br>char fmt1[] =&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5";<br>char fmt2[] =&nbsp;&nbsp; "12345678901234567890123456789012345678901234567890";</p><p>void main( void )<br>{<br>&nbsp;&nbsp;&nbsp; char *pdest;<br>&nbsp;&nbsp;&nbsp; int&nbsp; result;</p><p>&nbsp;&nbsp;&nbsp; printf( "String to be searched:\n\t%s\n", string );<br>&nbsp;&nbsp;&nbsp; printf( "\t%s\n\t%s\n\n", fmt1, fmt2 );</p><p>&nbsp;&nbsp;&nbsp; pdest = strstr( string, str );</p><p>&nbsp;&nbsp;&nbsp; printf("[%x %X %d]\n", pdest, string, pdest - string);<br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; result = pdest - string + 1;<br>&nbsp;&nbsp;&nbsp; if( pdest != NULL )<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "%s found at position %d\n\n", str, result );<br>&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "%s not found\n", str );<br>}</p><p><br>v880: /user3/okseop7/MAN/osl/tip/ctip<br>$ cat strchr.c <br>/* STRCHR.C: This program illustrates searching for a character<br>&nbsp;* with strchr (search forward) or strrchr (search backward).<br>&nbsp;*/</p><p>#include &lt;string.h&gt;<br>#include &lt;stdio.h&gt;</p><p>int&nbsp; ch = 'r';</p><p>char string[] = "The quick brown dog jumps over the lazy fox";<br>char fmt1[] =&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5";<br>char fmt2[] =&nbsp;&nbsp; "12345678901234567890123456789012345678901234567890";</p><p>void main( void )<br>{<br>&nbsp;&nbsp; char *pdest;<br>&nbsp;&nbsp; int result;</p><p>&nbsp;&nbsp; printf( "String to be searched: \n\t\t%s\n", string );<br>&nbsp;&nbsp; printf( "\t\t%s\n\t\t%s\n\n", fmt1, fmt2 );<br>&nbsp;&nbsp; printf( "Search char:\t%c\n", ch );</p><p>&nbsp;&nbsp; /* Search forward. */<br>&nbsp;&nbsp; pdest = strchr( string, ch );<br>&nbsp;&nbsp; result = pdest - string + 1;<br>&nbsp;&nbsp; if( pdest != NULL )<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "Result:\tfirst %c found at position %d\n\n", <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ch, result );<br>&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "Result:\t%c not found\n" );</p><p>&nbsp;&nbsp; /* Search backward. */<br>&nbsp;&nbsp; pdest = strrchr( string, ch );<br>&nbsp;&nbsp; result = pdest - string + 1;<br>&nbsp;&nbsp; if( pdest != NULL )<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "Result:\tlast %c found at position %d\n\n", ch, result );<br>&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "Result:\t%c not found\n" );<br>}<br></p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

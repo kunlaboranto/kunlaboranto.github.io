@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>2011년 3월 31일</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-01 13:52:37</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">2011년 3월 31일</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">'2011년 3월 31일' , 기억할만한 날이다. <br>알티에서 마지막 업무였던 모사이트에서 문자가 왔다. 연중 최번시기인 3월업무가 잘 마무리되었다는..<br>물론 문자가 도망친 제게 온건 아니고 ^^<br><br>이 소식을 처음 알려준 사람이, 내 맨티여서 더 고마웠다. 간만에 님들과 한잔도 좋았고..<br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

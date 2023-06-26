@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[roller] 어디가 진입점인가. </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-31 17:52:33</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[roller] 어디가 진입점인가. </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">MySQL과 roller 사이의 한글깨짐은, 삽질로 판명됨.<br>mysqldump 를 받아 생성한 sql 파일의 테이블 생성 구문에. " ) ENGINE=InnoDB DEFAULT CHARSET=latin1; " 이 원인임.<br><br>문제는<br>(1) dump() 함수를 쉽게 찾을 줄 알았는데 헤맴. -- 함수 하나의 있고 없고에 당황하는 꼴이란..<br>(2) 처음엔 roller 쪽에 이슈라 생각했는데.. ( T1 테이블 만들어서 되는 것 확인했으니.. 쩝 )<br>&nbsp;&nbsp;&nbsp;&nbsp; 문제는 roller 쏘스를 쫓아갈 시작점을 찾을수가 없었음.<br><br>난감 만땅..<br><br>2가지 유형..<br>/roller/kun/entry/1st_entry_test<br>/roller/roller-ui/authoring/entryAdd<span style="font-weight: bold;">.rol</span>?weblog=kun<br><br>내일은 이걸 쫓아갈 것인가.. 물러설것인가?<br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

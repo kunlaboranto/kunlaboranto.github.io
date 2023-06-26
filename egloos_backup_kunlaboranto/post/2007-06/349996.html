@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] ResultSet.absolute</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-27 14:04:32</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] ResultSet.absolute</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://www.aboutjsp.com/zeroboard/zboard.php?id=aboutjsp_tip&amp;page=7&amp;sn1=&amp;divpage=1&amp;sn=off&amp;ss=on&amp;sc=on&amp;select_arrange=headnum&amp;desc=asc&amp;no=99">http://www.aboutjsp.com/zeroboard/zboard.php?id=aboutjsp_tip&amp;page=7&amp;sn1=&amp;divpage=1&amp;sn=off&amp;ss=on&amp;sc=on&amp;select_arrange=headnum&amp;desc=asc&amp;no=99</a><br><table cellspacing="0" cellpadding="0" width="95%" border="0"><tbody><tr><td style="PADDING-RIGHT: 0pt; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 20px"><b>[JDBC] [re] ResultSet.absolute(숫자) 에 관한 질문임다</b></td></tr><tr><td valign="top" height="100"><span style="LINE-HEIGHT: 160%"><p align="justify"><table style="TABLE-LAYOUT: fixed" cellspacing="0" cellpadding="0" width="100%" border="0"><colgroup><col width="100%"><tbody><tr><td valign="top">* Q&amp;A 게시판에서 Tip 으로 옮겨둡니다. (좋은 내용은 공유 해야죠 ^^)<br><br>NiCebLue&nbsp;&nbsp;(homepage)님께서 남기신 글&nbsp;&nbsp;&nbsp;&nbsp; <br><br>[re] ResultSet.absolute(숫자) 에 관한 질문임다. <br>Oracle 에서 absolute function 을 사용중입니다.. <br>jdbc 드라이버는 8월말에 오라클에서 나온 ojdbc.jar 파일을 사용하고 있습니다. <br>한가지 덧붙일것은 stmt 생성시에 디폴트값으로 그냥 하면 이 함수를 사용할 수 없더군요. stmt 생성시에 아규먼트를 사용해서 생성하세요. <br><br>제 코드의 예를 아래 넣습니다.. <br><br>stmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); <br><br>위 예에서 TYPE_SCROLL_INSENSITIVE 라는 것은 resultset이 현재 DB값의 변경에 상관없이 쿼리 당시 시점으로 가져온 값들을 사용하는거고요..(그렇담 TYPE_SCROLL_SENSITIVE 라는건 반대의 개념이겠죠^^) <br>ResultSet.CONCUR_UPDATABLE 라는 것이 커서를 전후로 자유롭게 이동가능하게 합니다. 디폴트값으로는 오직 전방향으로만 커서가 움직이게 되있던거 같더라구요.. <br><br>그럼 도움이 조금이나마 되셨길~ <br><br>&gt;ResultSet.absolute(숫자) <br>&gt;이걸 쓰면 absolute(숫자)는 원하는 위치로 로우를 찾아가게 하는 메소드입니다... <br>&gt;근데 mssql에선 잘 안 되네여.. mysql에선 잘 된다고 하던데.. <br>&gt;무슨 jdbc 차이가 있어서 그런건지... 아님 mssql에서는 지원이 안되는 메소드인지 궁금해서 올렸습니다.. <br>&gt;꼭 가르쳐 주세요... <br>&gt; </td></tr></tbody></table><br></p></span></td></tr></tbody></table><!-- 간단한 답글 시작하는 부분 --><table cellspacing="0" cellpadding="3" width="95%" border="0"><tbody><tr onmouseover="this.style.backgroundColor='#EFF3FF'" onmouseout="this.style.backgroundColor=''" valign="top"><td style="PADDING-RIGHT: 0pt; PADDING-LEFT: 15px; PADDING-BOTTOM: 3px; PADDING-TOP: 6px" noWrap width="80"><div>정상국</div></td><td style="PADDING-RIGHT: 0pt; PADDING-LEFT: 5px; PADDING-BOTTOM: 3px; PADDING-TOP: 6px"><p align="justify">Scrollable ResultSet을 선언하시면 사용할수 있는 함수 입니다. 그러나 ResultSet에서 원하는 위치까지 커서를 이동하는 것으로 데이터가 많으면 ResultSet 에 담고 있는 결과가 많아 짐으로 Oracle이면 rownum을 Mssql이면 top을 Mysql이면 limit를 사용하는 것이 데이터가 많아질수록 효과적이겠지요. ^-^</p></td></tr></tbody></table><br><br>--------<br>From : <a href="http://www.javastudy.co.kr/api/api1.4/java/sql/ResultSet.html">http://www.javastudy.co.kr/api/api1.4/java/sql/ResultSet.html</a><br><br><p>JDBC 2.0 API (Java<sup><font size="-2">TM</font></sup> 2 SDK, Standard Edition, 버젼 1.2)로, updater 메소드세트가 추가되었습니다. getter 메소드의 파라미터에 관한 코멘트는, updater 메소드의 파라미터에도 적용됩니다. </p><p>updater 메소드는, 다음의 2 개의 방법으로 사용할 수 있습니다. </p><ol><li>현재의 행의 렬치를 갱신합니다. 스크롤 가능한 <code><span style="FONT-FAMILY: Courier New">ResultSet</span></code> 오브젝트에서는, 커서를 순서 방향 및 역방향으로 작동시켜 절대 위치 또는 현재의 행과의 상대적인 위치에 가지고 갈 수가 있습니다. 다음의 코드 fragment는,<code><span style="FONT-FAMILY: Courier New">ResultSet</span></code> 오브젝트 <code><span style="FONT-FAMILY: Courier New">rs</span></code> 의 5 행 째에 있는 <code><span style="FONT-FAMILY: Courier New">NAME</span></code> 열을 갱신해, 계속되어 메소드 <code><span style="FONT-FAMILY: Courier New">updateRow</span></code> 를 사용해,<code><span style="FONT-FAMILY: Courier New">rs</span></code> 를 취득한 데이터 소스 테이블을 갱신합니다. <pre>       rs.absolute(5); // moves the cursor to the fifth row of rs       rs.updateString("NAME", "AINSWORTH"); // updates the           // <code>NAME</code> column of row 5 to be <code>AINSWORTH</code>       rs.updateRow(); // updates the row in the data source </pre></li><li>렬치를 삽입행에 삽입합니다. 갱신 가능한<code><span style="FONT-FAMILY: Courier New">ResultSet</span></code> 오브젝트에는, 이 오브젝트에 관련한 특수한 행이 있습니다. 이 행은, 삽입하는 행을 작성하는 집결지의 역할을 합니다. 다음의 코드 fragment는, 커서를 삽입행에 이동시켜, 3 열의 행을 작성해, 메소드 <code><span style="FONT-FAMILY: Courier New">insertRow</span></code> 를 사용해 그 행을 <code><span style="FONT-FAMILY: Courier New">rs</span></code> 및 데이터 소스 테이블에 삽입합니다. <pre>       rs.moveToInsertRow(); // moves cursor to the insert row       rs.updateString(1, "AINSWORTH"); // updates the           // first column of the insert row to be <code>AINSWORTH</code>       rs.updateInt(2,35); // updates the second column to be <code>35</code>       rs.updateBoolean(3, true); // updates the third row to <code>true</code>       rs.insertRow();       rs.moveToCurrentRow()</pre></li></ol></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] HP에서 Java사용할때의 OS Patch와 Kernel Parameter</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-24 12:48:29</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] HP에서 Java사용할때의 OS Patch와 Kernel Parameter</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://minho.egloos.com/2941777">http://minho.egloos.com/2941777</a><br><br><h3 class="posttitle"><a title="HP에서 Java사용할때의 OS Patch와 Kernel Parameter" name="2941777">HP에서 Java사용할때의 OS Patch와 Kernel Parameter</a></h3><p class="postadmin"></p><div class="content">HP에서 Java를 사용할때 적용해야 하는 OS Patch및<br>Recommend Kernel Parameter값들이 있다.<br><br>이런 값들을 하나하나 찾아 비교한다는것은<br>상당히 귀찮은 작업중에 하나이다.<br><br>이때 사용할 수 있는 것이 HPjconfig라는 Tool이다.<br><br>다음의 위치에서 다운받을 수 있다.<br><a href="http://www.hp.com/products1/unix/java/java2/hpjconfig/downloads/license_hpjconfig.html" target="_blank">http://www.hp.com/products1/unix/java/java2/hpjconfig/downloads/license_hpjconfig.html</a><br><br>다운받은 후 HP서버의 아마 디렉토리에나 넣고, 다음의 명령어로<br>적용해야 하는 OS Patch와 Recommend하는 Kernel Parameter등을<br>확인할 수 있다.<br><br>OS Patch 확인 : java -jar ./HPjconfig.jar -nogui -patches -listmis<br>Kernel Parameter : java -jar ./HPjconfig.jar -nogui -tunables -listmis<br><br>위의 명령어는 모든 Patch나 Kernel Parameter를 확인하는 것이 아닌,<br>현재 적용되지 않은 list를 보는것이다.<br><br>Help는 다음과 같이 확인할 수 있다.<br>java -jar ./HPjconfig.jar -nogui -help<br><br>usage:<br>&nbsp;&nbsp; HPjconfig [ options ] -gui<br>&nbsp;&nbsp; HPjconfig [ options ] &lt;object&gt; &lt;action&gt;<br>objects: -patches &amp;| -tunables<br>actions: -listreq | -listmis | -listpres | -apply<br>options:<br>&nbsp;&nbsp; -patches&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; operate on java-specific patches<br>&nbsp;&nbsp; -tunables&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; operate on java-specific tunables<br>&nbsp;&nbsp; -listreq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list all java required patches or tunables that are applicable to this system<br>&nbsp;&nbsp; -listmis&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list missing java-specific patches or tunables on the system<br>&nbsp;&nbsp; -listpres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list applied (installed) java-specific patches or tunables on the system<br>&nbsp;&nbsp; -apply&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; apply (install) missing java-specific patches or tunables on the system<br>&nbsp;&nbsp; -javavers s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; java versions for selecting patches e.g 1.2, 1.3, 1.4, 5.0<br>&nbsp;&nbsp; -[no]gui&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; run in GUI mode<br>&nbsp;&nbsp; -logfile s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name of log file<br>&nbsp;&nbsp; -proxyhost s&nbsp;&nbsp;&nbsp;&nbsp; HTTP proxy host name for accessing live data<br>&nbsp;&nbsp; -proxyport s&nbsp;&nbsp;&nbsp;&nbsp; HTTP proxy port for accessing live data<br>&nbsp;&nbsp; -help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; show help string and exit<br>&nbsp;&nbsp; -version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; show version string<br><br>꽤 쓸만한 tool인듯.</div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

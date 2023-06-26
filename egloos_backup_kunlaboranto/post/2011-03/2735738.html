@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>찜</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-31 11:28:18</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">찜</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">다시 보고픈 글들. 링크<br><br><span style="font-weight: bold;">2011년</span><br><ul><li><a href="http://hook.hani.co.kr/archives/24738">훅 필진열전 ⑮ 청년 논객 홍명교</a><br>&gt; 월간 '<a target="_blank" href="http://www.inmul.co.kr">인물과 사상</a>' , http://www.inmul.co.kr<br></li><li><a href="http://www.hani.co.kr/arti/sports/baseball/470842.html">[이사람] 야구에 가슴 뛰던 소년 ‘구단주’ 되다</a><br>&gt; &lt;거인의 꿈&gt;<br>&gt;  “기업의 목적은 새로운 사회적 <a style="text-decoration:underline;color:#173F8D;font-weight:normal;letter-spacing:normal;cursor:pointer;font-family:Gulim;font-size:15px" id="KL_POP_ID0">가치</a> 창출이 최우선 목적이어야 하고, 기업으로서의 사회적 책임을 다해야 한다”<br>&gt; 끌린다. NC소프트, 지금 동료들과 추구하는 도전이 아니라면. 한번 참여하고 싶다. 이번 지진에 대한 동참도 그렇고<br></li><li><br></li></ul><br><span style="font-weight: bold;">ToDo:</span><br><ul><li><a href="http://theeye.pe.kr/entry/how-to-block-apache-with-proxy-remote-request">ProxyAJP를 이용한 Apache2 + Tomcat 연동시 중대한 보안 문제</a><br></li><li>웹상에서 소스를 편하게, 예쁘게 예제들 <a target="_blank" href="http://www.coderanch.com/t/461079/Struts/Failed-load-or-instantiate-TagExtraInfo">(1)</a> <br></li><li><br></li></ul><br><span style="font-weight: bold;">Book</span> (볼책)<br><ul><li><a href="http://www.ohmynews.com/NWS_Web/view/at_pg.aspx?CNTN_CD=A0001545438" class="subtitle">[서평] &lt;아깝다, 학원비!&gt;를 보고</a><br><span style="font-weight: bold;"></span></li><li>[동참] 울지마 톤즈</li><li><a href="http://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0001514701&amp;PAGE_CD=N0000&amp;BLCK_NO=3&amp;CMPT_CD=M0009">[아프리카] 꾸준함을 이길 그 어떤 재주도 없다.</a></li><li><br></li></ul><br><span style="font-weight: bold;">Agenda</span><br><ul><li><a target="_blank" href="http://blog.ohmynews.com/yookyung/321973">ESOP</a><br></li><li><br></li></ul><br><br><br><span style="font-weight: bold;"></span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

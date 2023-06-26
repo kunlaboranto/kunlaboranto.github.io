@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] ctags 설정 및 사용법  </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-12 17:41:47</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] ctags 설정 및 사용법  </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>by jdlee (thx)<br><br>(1)<br>$ find . \( -name "*.[chi]" -o -name "*.cpp" \)&nbsp;-exec grep -n "FD_SETSIZE" {} \; -ls<br>$ find . \( -name "*.[chi]" -o -name "*.cpp" \)&nbsp;| ctags -L - --language-force=C++ --extra=+q<br><br>&nbsp;&nbsp;&nbsp; *.i : inline code<br>&nbsp;&nbsp;&nbsp; <strong>Exuberant</strong> Ctags 5.4 ( linux )<br><br>(2) vi tip<br>$ vi +5471 include/OS.i<br><br>+++++++<br><br>From : <a href="http://vsjun.tistory.com/5">http://vsjun.tistory.com/5</a><br></p><p><span style="FONT-SIZE: 130%"><strong>ctags 설정 및 사용법</strong></span>&nbsp; </p><p><br>설치는 간단하게 yum install ctags를 하면 되고</p><p>태그 생성 역시 소스가 있는 디렉토리에서 </p><p>ctags -R 하면 된다.</p><p>정의로 이동하고 싶으면 Ctrl + ] <br>확인하고 이전으로 돌아가고 싶으면 Ctrl + t</p><p>주요 ctag 명령어<br>------------------------------------------------------------------------------------------<br>:ta [tag] or Ctrl + ] <br>:ts [tag] or :tj [tag]<br>=&gt; tag가 정의된 위치를 나열하고 선택한 위치로 점프. 현재 위치는 stack에 push</p><p>:po or Ctrl + t<br>=&gt;stack top에 저장된 위치를 pop하고 그 위치로 점프</p><p>:sts [tag]<br>:stj [tag]<br>=&gt; [tag]가 정의된 위치를 나열하고 선택한 위치로 창을 수평 분할하여 새로 생성된 창에 표시<br>------------------------------------------------------------------------------------------</p><p>vim 내장 스크립트 이용(vimrc 파일에 추가)<br>------------------------------------------------------------------------------------------<br>func! Sts()<br>let st = expand("")<br>exe "sts ".st<br>endfunc<br>nmap ,st :call Sts()</p><p>func! Tj()<br>let st = expand("")<br>exe "tj ".st<br>endfunc<br>nmap ,tj :call Tj()<br>------------------------------------------------------------------------------------------<br>추가한다음 ",st ", ",tj" 등으로 사용</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

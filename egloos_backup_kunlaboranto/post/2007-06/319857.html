@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] SVN Repository 세팅하기 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:58:01</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] SVN Repository 세팅하기 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><div class="htitle"><table class="post-top"><tbody><tr><td valign="bottom"><div class="htitle"><span class="pcol1 itemSubjectBoldfont"><strong>SVN Repository 세팅하기</strong></span> <span class="cate pcol2"><img class="pcol2b fil3" height="11" alt="" src="http://blogimgs.naver.com/imgs/nblog/spc.gif" width="1"><!-- badtag filtered --><a><span style="COLOR: #8a837e">subversion 사용기</span></a><span style="COLOR: #8a837e"><img height="1" alt="" src="http://blogimgs.naver.com/imgs/nblog/spc.gif" width="105"></span></span> </div><p class="date fil5 pcol2">2005/11/25 15:06</p><p class="fil3 dline"></p><p class="url"><a class="con_link" href="http://blog.naver.com/lxtxl/100019866611" target="_blank">http://blog.naver.com/lxtxl/100019866611</a></p></td></tr></tbody></table><div class="post-view pcol2"><!-- 포스팅 --><p><br>1. Creating The Repository With TortoiseSVN<br>&nbsp;&nbsp; A. Tortoise SVN으로 Create Repository 생성 -&gt; BDB 형식</p><p>&nbsp;</p><p>2. 접근<br>svn://IP/path</p><p>&nbsp;</p><p>4. 처음에는 읽기 권한도 없으므로 기본 권한 세팅<br>&lt;Repository&gt;\conf\svnserve.conf 파일에 아래 내용을 주석 제거해야 함 </p><p>&nbsp;[general]<br>&nbsp;anon-access = write </p><p>&nbsp;</p><p>5. Auth 권한 주기</p><p>&nbsp;[general]<br>&nbsp;anon-access = none<br>&nbsp;auth-access = write<br>&nbsp;password-db = password.conf</p><p>&nbsp;</p><p>6. password.conf 파일<br>&nbsp;[users]<br>&nbsp;username = password</p></div><a class="con_link" href="http://blog.naver.com/lxtxl/100019866611" target="_blank"></a></div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] C++ DEV 추천 URL </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:07:36</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] C++ DEV 추천 URL </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>1. Comparison of Solaris OS and Linux for Application Developers<br><a class="con_link" href="http://developers.sun.com/solaris/articles/solaris_linux_app.html" target="_blank">http://developers.sun.com/solaris/articles/solaris_linux_app.html</a><br><a class="con_link" href="http://kr.sun.com/developers/solaris/techdocs/solaris_linux_app.html" target="_blank">http://kr.sun.com/developers/solaris/techdocs/solaris_linux_app.html</a> (한글)<br></p><p>솔라리스에서 프로세스가 사용하는 가상 주소 공간에 대한 정보는 <code><span style="FONT-FAMILY: 굴림체">pmap(1)</span></code> 을 사용하여 얻을 수 있고 리눅스에서는 <code><span style="FONT-FAMILY: 굴림체">/proc/<i>pid</i>/maps</span></code> 파일을 봄으로써 얻을 수 있습니다. 솔라리스의 <code><span style="FONT-FAMILY: 굴림체">pmap(1)</span></code> 과 리눅스의<code><span style="FONT-FAMILY: 굴림체">proc(5)</span></code> 맨페이지를 참고 하시기 바랍니다.</p><p>...</p><p>POSIC 쓰레드에 덧붙여서 솔라리스는 "솔라리스 쓰레드"를 제공합니다. <code><span style="FONT-FAMILY: 굴림체">threads(5)</span></code> 맨 페이지는 POSIX 쓰레드 라이브러와 솔라리스 쓰레드 라이브러리의 유사점과 차이점에 대해 설명하고 있습니다. 구현은 상호 운용이 가능하고 동일한 어플리케이션에서 조금의 주의를 기울이면 같이 사용할 수 있습니다. 다음의 내용은 맨 페이지에서 바로 가져온 것입니다.</p><div><b class="dkgrey">동일점</b> </div><p>libpthread 와 libthread 라이브러리에 존재하는 대부분의 함수들은 각각의 라이브러리에 동일한 역할을 하는 함수를 가지고 있습니다. 세마포어 이름을 제외한 POSIX 함수의 이름은 "pthread" 프리픽스를 가지고 있습니다. POSIX와 솔라리스의 비슷한 함수 들은 유사한 끝부분을 가지고 있습니다. 전형적으로 POSIX 함수와 솔라리스 함수들은 같은 숫자의 인수들을 가지고 있습니다.</p><div><b class="dkgrey">차이점</b> </div><ul><li>POSIX 쓰레드가 좀더 포팅이 용이 합니다. <li>POSIX 쓰레드는 설정이 가능한 속성 오브젝트에 따라 각 쓰레드에 특성을 가진 쓰레드를 만드는 것이 가능합니다. <li>POSIX 쓰레드는 쓰레드 취소를 구현하고 있습니다. <li>POSIX 쓰레드는 스케쥴링 알고리즘을 준수하고 있습니다. <li>POSIX pthreads 는 <code><span style="FONT-FAMILY: 굴림체">fork(2)</span></code> 콜을 위한 클린-업 핸들러를 허용하고 있습니다. <li>솔라리스 쓰레드는 중지/재개가 가능합니다. <li>솔라리스 쓰레드는 견고한 뮤텍스 락을 가진 인터프로세스를 구현하고 있습니다. <li>솔라리스 쓰레드는 데몬 쓰레드를 구현하여 프로세스를 종료할때 대기하지 않아도 됩니다.</li></ul><p>..</p><p>&nbsp;솔라리스 쓰레드는 기본적으로 유저 스택 사이즈를 1MB로 지정 합니다. 리눅스에서는 <span id="__firefox-findbar-search-id" style="PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; COLOR: black; PADDING-TOP: 0pt; BACKGROUND-COLOR: yellow">2M</span>B 입니다.(수세 9.1)</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

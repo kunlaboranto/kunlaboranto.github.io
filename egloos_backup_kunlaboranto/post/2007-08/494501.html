@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] select() / thread lock in HP11.23 vs 11.31</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-02 14:33:28</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] select() / thread lock in HP11.23 vs 11.31</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">Thanks for ChenFeng's kiparse data,&nbsp; but we definitely need BOTH spinwatch and kitrace data on 11.31<br>so that<br>we can tell which spinlocks are being contended for.<br><br>Based on kiparse data,&nbsp; please find action plan and in-depth explaination from WTEC:<br>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br><br><br>** The way how select() works on 11.23:<br><br>1. False wakeup:<br><br>In this case we have many different threads which all operate on the many different socket FD's.&nbsp; If<br>a thread selects on FD 100 one time, the kernel builds a poll structure associating this socket with<br>the thread.&nbsp; If a different thread selects or polls on that same socket at some point in the future,<br>select/poll will have both threads associated with the socket.&nbsp; Then when a packet arrives for the<br>socket, we wake all threads that have an association with this socket regardless of whether it is<br>included in the threads current select mask.&nbsp; Once the threads resume running they check to see if<br>the any of the FD's they are selecting on have an event for them to handle.&nbsp; If they find no events<br>for the their particular FD's set in the select masks, they simply context switch back out without<br>completing the syscall.&nbsp; This is true for parent/child processes as well.&nbsp;&nbsp; In the KI data for your<br>case we can see threads switching out in select in the kernel ~2200 times yet only complete ~1600<br>select() syscalls.&nbsp; Currently this 'false wakeup' is deemed a necessary design feature of the<br>select/poll wakeup mechanism.<br><br>2. Per process 'thread lock':<br><br>On 11.23 there is only one lock (called the 'thread lock' unfortunately...it should have been called<br>the 'process lock') for the entire process which is used for thread scheduling purposes.&nbsp;&nbsp; It is<br>this thread lock which is generating the spinlock contention.&nbsp; Every time any of the 32 threads is<br>being placed onto or removed from a runq, the one and only lock for the entire process is required<br>to be held.&nbsp; Each of the three switch locations above only adds to the contention. <br><br>3.&nbsp; When threads on 11.23 sleep, the shortest period of time they can sleep is dictated by the<br>callout or timer based interupts that occur in the OS.&nbsp; Currently the callout/timer based<br>granularity is 10ms.&nbsp; If a thread uses a select(), poll(), or nanosleep() syscall asking for a 5ms<br>sleep or timeout, we will see how close we can get based on the next 10ms clock tick.&nbsp; We will never<br>allow the syscall to return early so we are forced to wait for the next clock tick that is at least<br>as far away as your timeout.&nbsp; In the 5ms case we would be forced to round it up to 10ms and the<br>schedule the wakeup on the next clock tick.&nbsp; This usually results in a sleep time of 10-15ms.&nbsp; One<br>11.31 there is a higher resulution callout mechanism available which can attain 1ms granularity<br>quite reliably....but this feature is not enabled by default on 11.31.<br><br>There is also another aspect of the 10ms clock callout mechanism to consider.&nbsp; If we have 32 threads<br>calling select with a 5ms timeout, we will end up waking many of them together on the same clock<br>tick.&nbsp; This clock tick wakeup tends to syncronize threads waking them all together....and this only<br>aggrevates the threadlock contention.&nbsp; In your case I see 5-8 threads at a time all being placed<br>onto runqs in sync, adding to the concurrency and pressure to acquire the thread lock.<br><br>** The way how select() works on 11.31:<br><br>1. No more false wakeup.<br>&nbsp;<br>Seems it may have removed poll structure on 11.31 which don't use false wakeup mechanism anymore.<br>&gt;From kiparse, we can see:<br>&nbsp;<br>On 11.23 we saw 180K select() syscalls, but 330K switchouts in select.&nbsp; --- so many false wakeup .<br>On 11.31 we see 601K select syscalls complete but only 68K switchouts in select.....this is very<br>different behavior.<br><br>2.&nbsp; True per-thread threadlock:<br><br>Second, we see only very minor signs of spinlock contention, but without spinwatcher output I cannot<br>tell which spinlocks are being contended for. <br><br>I suspect between the different select behavior and the true per-thread threadlock in 11.31 we are<br>avoiding the contention we see on 11.23.<br><br>Based on above analysis, WTEC gives out suggestion on 11.23:<br><br>1. Normally reducing the thread count is a good approach to reducing the contention.&nbsp; In your case<br>however it may not have been sufficient.&nbsp; Also by reducing the thread count you do lose the benefit<br>of parallelism in other non-contending portions of the application.&nbsp; It would be good to have<br>spinwatcher data for the tests with fewer threads since it _should_ show a measurable reduction in<br>the thread lock contention.<br><br>2.&nbsp; I have one other suggestion which may help the overall application performance.&nbsp; Due to the high<br>context switch rates and 'grouped' wakes occuring I see some amount of runq wait time which we might<br>be able to reduce by tuning the aggresiveness of thread stealing code in the HP-UX scheduler.&nbsp; This<br>will have the effect of allowing threads to resume execution more quickly, but it can degrade CPU<br>cache locality.....so it can be an unpredictable change.&nbsp; It's easy enough to try ans test however.<br>&nbsp;The kctunable controlling this is sched_thread_affinity.&nbsp; The default setting is 6.&nbsp; The most<br>aggressive value is 1.&nbsp; You might consider tuning this to see how it affects performance.<br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

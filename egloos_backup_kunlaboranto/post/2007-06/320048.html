@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>psig </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:36:10</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">psig </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>$ psig 14104 |c++filt<br>14104:&nbsp; /export/home/okseop7/altibase_home/bin/altibase -p boot from admin<br>HUP&nbsp;&nbsp;&nbsp;&nbsp; blocked,ignored<br>INT&nbsp;&nbsp;&nbsp;&nbsp; blocked,caught&nbsp; void altibase_exit_handler(int) RESTART<br>QUIT&nbsp;&nbsp;&nbsp; default<br>ILL&nbsp;&nbsp;&nbsp;&nbsp; caught&nbsp; void problem_signal_handler(int,siginfo*,ucontext*)&nbsp;&nbsp;&nbsp;&nbsp; RESTART,SIGINFO<br>TRAP&nbsp;&nbsp;&nbsp; caught&nbsp; void problem_signal_handler(int,siginfo*,ucontext*)&nbsp;&nbsp;&nbsp;&nbsp; RESTART,SIGINFO<br>ABRT&nbsp;&nbsp;&nbsp; blocked,default<br>EMT&nbsp;&nbsp;&nbsp;&nbsp; blocked,default<br>FPE&nbsp;&nbsp;&nbsp;&nbsp; caught&nbsp; void problem_signal_handler(int,siginfo*,ucontext*)&nbsp;&nbsp;&nbsp;&nbsp; RESTART,SIGINFO<br>KILL&nbsp;&nbsp;&nbsp; default<br>BUS&nbsp;&nbsp;&nbsp;&nbsp; caught&nbsp; void problem_signal_handler(int,siginfo*,ucontext*)&nbsp;&nbsp;&nbsp;&nbsp; RESTART,SIGINFO<br>SEGV&nbsp;&nbsp;&nbsp; caught&nbsp; void problem_signal_handler(int,siginfo*,ucontext*)&nbsp;&nbsp;&nbsp;&nbsp; RESTART,SIGINFO<br>SYS&nbsp;&nbsp;&nbsp;&nbsp; blocked,default<br>PIPE&nbsp;&nbsp;&nbsp; blocked,ignored<br>ALRM&nbsp;&nbsp;&nbsp; blocked,default<br>TERM&nbsp;&nbsp;&nbsp; blocked,default<br>USR1&nbsp;&nbsp;&nbsp; blocked,default<br>USR2&nbsp;&nbsp;&nbsp; caught&nbsp; void thread_null_handler(int)&nbsp;&nbsp; RESTART<br>CLD&nbsp;&nbsp;&nbsp;&nbsp; blocked,default&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NOCLDSTOP<br>PWR&nbsp;&nbsp;&nbsp;&nbsp; blocked,default<br>WINCH&nbsp;&nbsp; blocked,default<br>URG&nbsp;&nbsp;&nbsp;&nbsp; blocked,default<br>POLL&nbsp;&nbsp;&nbsp; blocked,default<br>STOP&nbsp;&nbsp;&nbsp; default<br>TSTP&nbsp;&nbsp;&nbsp; blocked,ignored<br>CONT&nbsp;&nbsp;&nbsp; blocked,default<br>TTIN&nbsp;&nbsp;&nbsp; blocked,default<br>TTOU&nbsp;&nbsp;&nbsp; blocked,default<br>VTALRM&nbsp; blocked,default<br>PROF&nbsp;&nbsp;&nbsp; blocked,default<br>XCPU&nbsp;&nbsp;&nbsp; blocked,default<br>XFSZ&nbsp;&nbsp;&nbsp; blocked,default<br>WAITING blocked,default<br>LWP&nbsp;&nbsp;&nbsp;&nbsp; blocked,default<br>FREEZE&nbsp; blocked,default<br>THAW&nbsp;&nbsp;&nbsp; blocked,default<br>CANCEL&nbsp; default<br>LOST&nbsp;&nbsp;&nbsp; blocked,default<br>XRES&nbsp;&nbsp;&nbsp; blocked,default<br>JVM1&nbsp;&nbsp;&nbsp; blocked,default<br>JVM2&nbsp;&nbsp;&nbsp; blocked,default<br>RTMIN&nbsp;&nbsp; blocked,default<br>RTMIN+1 blocked,default<br>RTMIN+2 blocked,default<br>RTMIN+3 blocked,default<br>RTMAX-3 blocked,default<br>RTMAX-2 blocked,default<br>RTMAX-1 blocked,default<br>RTMAX&nbsp;&nbsp; blocked,default <!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

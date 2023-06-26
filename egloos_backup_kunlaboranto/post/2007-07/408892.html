@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Vim Cscope Tutorial</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-12 17:32:47</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Vim Cscope Tutorial</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://wiki.kldp.org/wiki.php/VimCscopeTutorial">http://wiki.kldp.org/wiki.php/VimCscopeTutorial</a><br><br><span class="wikiTitle"><a href="http://wiki.kldp.org/wiki.php/VimCscopeTutorial?action=fullsearch&amp;value=VimCscopeTutorial"><strong><span style="FONT-SIZE: 130%">Vim Cscope Tutorial</span></strong></a></span><br><br>This is a Korean Translation of <a class="externalLink" href="http://cscope.sourceforge.net/cscope_vim_tutorial.html">The Vim/Cscope Tutorial</a> in <a class="externalLink" href="http://cscope.sourceforge.net/">the Cscope hompage</a>.<br><div></div><br><div>Vim/Cscope 강좌<br></div><br><div>Cscope 는 그 자체로도 아주 편리한 도구지만, 가장 즐겨 쓰는 에디터(이를테면 Vim)의 안락함에서 벗어나지 않을 수 있다면 더욱 좋다. 다행히 Vim 은 Cscope 지원이 들어가 있다.<br></div><div>이 강좌는 Vim 내장 Cscope 지원과 검색을 더 편리하게 해주는 맵을 소개한다.<br></div><div>vi 형식의 에디터에 대한 기본에 대해 알고 있다고 가정하지만 Vim 에 특화된 지식은 필요치 않다. (다중 창 등과 같은 Vim 고유의 기능이 사용되며, 이러한 기능의 사용법은 간략한 소개하겠다.) Cscope 에 대해서는 아무것도 몰라도 되며, 기초적인 것들을 소개하며 진행한다.<br></div><div>간단히 말해서, Vim 의 Cscope 지원은 Vim 의 <a href="http://www.egloos.com/wiki.php/ctags">ctags</a> 기능과 매우 유사하다. 그러나 Cscope 는 ctags 보다 더 많은 검색 기능이 있기 때문에 몇 가지 차이점이 있다.<br></div><br><div>이것은 손수 따라올 수 있는 강좌이니 쉘을 열고 다음 단계들을 따라하라.</div><div><ol type="1"><li>아직 Cscope 이 당신의 기계에 설치되어 있지 않다면 받아서 깔아라. Vim 6.x 가 이상적이지만 Vim 5 의 후기 버전으로 대부분의 기능이 가능하다. (세로 분리는 안 되겠지만 파일 주석에 나온 대로 맵을 수정하면 가로분리는 동작할 것이다.)<br><br>&nbsp;주의: Vim 이 --enable-cscope 로 컴파일되지 않았다면 그 플래그를 주어 Vim 을 다시 설정해서 컴파일해야 한다. 리눅스에 따라오는 대부분의 Vim 바이너리는 Cscope 플러그을 쓸 수 있게 되어 있다.<br></li><li><a class="externalLink" href="http://cscope.sourceforge.net/cscope_maps.vim">cscope_maps.vim</a> 파일을 내려받아서 Vim 이 시작할 때 읽힐 수 있도록 하라. Vim 6.x 를 쓴다면 $HOME/.vim/plugin 디렉토리 (혹은 runtimepath 의 plugin 하위 디렉토리 등) 에다 붙여 넣는다. Vim 5.x 를 사용한다면 $HOME/.vimrc 에 cscope_map 파일의 내용을 통째로 붙여넣든가, 따로 저장한 후 .vimrc 에 "source cscope_maps.vim" 라고 써 넣으면 된다.</li><br><li>C 코드가 있는 디렉토리로 가서 'cscope -R' 을 실행한다. ('-R' 은 Cscope 가 현재 디렉토리 뿐 아니라 모든 하위 디렉토리에 대해 구문 분석을 하도록 한다.) '-b' 플래그(데이터베이스만 생성하고 빠져나가게 한다)를 주지 않았으므로 Cscope 의 curses 기반의 GUI 로 들어오게 될 것이다. 검색을 몇 개 해 보라. (요령: 방향키로 검색 종류를 고르고 탭으로 검색 종류와 검색 결과 사이를 이동한다.) 검색 결과의 가장 왼쪽에 있는 숫자를 입력하면 Cscope 는 해당 위치로 Vim 을 열어 줄 것이다. (EDITOR 환경변수를 Vim 이 아닌 다른 것으로 설정하지 않은 이상 말이다.) Vim 을 나가면 다시 바로 직전의 Cscope GUI 로 돌아올 것이다. 멋지게도.<br><br>아, 그런데 Cscope 인터페이스는 큰 문제가 있다. 새로 검색을 할 때마다 Vim 을 빠져나가야 한다. 그래서 Vim 플러그인이 나온 것이다. CTRL-D 로 Cscope 를 빠져나가라.</li><br><li>Vim 을 시작하라. 원한다면 C 이름으로 (보기: 'vim -t main') 시작할 수 있으며, 그러면 그 이름이 정의된 곳으로 바로 갈 수 있다.<br></li><li>커서를 C 이름이 있는 여러 군데 놓고 "CTRL-\ s" (컨트롤-역슬래시, 그리고 그냥 s) 를 빠르게 이어 치면 바로 그것을 사용하는 곳으로 갈 것이다. ctags 에서처럼 "CTRL-t" 를 누르면 원래의 검색 전의 원래 위치로 돌아갈 것이다. (그리고 여러 겹으로 검색해 들어갔다면 CTRL-t 를 누를 때마다 하나씩 되돌아 올 것이다.)<br><br>기억하기: '\' 는 ctags 검색에 쓰는 ']' 바로 옆에 있다.<br></li><li>같은 검색을 이번에는 "CTRL-spacebar s" 로 해보라. 이번에는 두 개의 Vim 창이 가로로 갈라져서 Cscope 검색 결과가 새 창에 나오게 될 것이다. [ Vim에서 여러 개의 창을 한번도 써본 적이 없다면 다음과 같이 하라. "CTRL-W w" (또는 CTRL-W 방향키, 또는 CTRL-W h/j/k/l 로 왼쪽/위/아래/오른쪽) 로 창을 옮기고, 'CTRL-W c' (또는 아름다운 옛 시절의 ':q') 로 창을 닫고, 'CTRL-W s' 로 (또는 'CTRL-W v'로 세로로) 창을 나누고, ':spl<a class="nonexistent" href="http://www.egloos.com/wiki.php/It%5DFilename%27%C0%B8%B7%CE%C6%C4%C0%CF%C0%BB%BB%F5%C3%A2%BF%A1%BC%AD%BF%AC%B4%D9.">i</a>t] filename' 으로 파일을 새 창에서 연다. <br><br>기억하기: 큰 spacebar 처럼 생긴 가로막대가 스크린 가운데 나타나 Vim 창을 나눈다.</li><br><li>이번엔 같은 검색을 "CTRL-spacebar CTRL-spacebar s" (그냥 CTRL 을 누른 채로 spacebar 를 두 번 치라) 로 해 보라. 만일 작동하기에 충분할 만큼 빠른 속도로 치는 것이 버겁다면 cscpoe_maps.vim 스크립트에서 Vim 타임아웃 설정을 [ 사실 나는 Vim 타임아웃 설정을 끄는 것을 대개의 경우 추천한다. ] 이제 두 개로 Vim 창이 세로로 나뉠 것이다. (주의: Vim 5.x 에는 동작하지 않는다. 세로 분리는 Vim 6.0에서 새로 나왔다.)<br></li><li>지금까지는 cscope_maps.vim 의 키 맵만을 써서 Vim 에서 커서 바로 아래 있는 단어에 대한 검색만을 했다. 전통적인 방법으로 (Vim 의 내장 Cscope 지원을 통해) Cscope 검색을 하려면, ":cscope find symbol foo" (또는 간단히 ":cs f s foo") 라고 입력한다. 가로 분리된 창으로 검색하려면 ":scscope" (또는 그냥 ":scs") 라고 입력한다. (Vim 6.x 에서만 가능). 맵을 사용하는 것이 커서 아래에 있는 단어를 검색하기는 더 쉽지만, 명령줄 인터페이스는 쳐 넣는 어떤 이름으로든지 찾아갈 수 있으므로 가끔씩 쓸 있을 분명 있을 것이다.</li><br><li>지금까지 's' 를 이용한 'X 라는 단어의 모든 쓰임새'를 찾는 한 가지 종류의 검색만을 살펴보았다. 다른 글자로 다른 종류의 Cscope 검색을 해보라. 'g' 는 전역으로 정의된 이름들을, 'c' 는 함수 호출을, 'f' 는 커서가 놓은 파일 이름을 (주의: Cscope 는 기본적으로 /usr/include 아래 헤더 파일을 모두 구문 분석하므로, 이 방법을 통해 대부분의 표준 인클루드 파일들을 열 수 있다.) 이들이 내가 가장 자주 사용하는 것들이지만, 다른 종류들도 있다. (cscope_maps.vim 와 Cscope 맨페이지를 중 하나 또는 두 곳 모두에서 찾아보라.)<br></li><li>Cscope 는 본래 C 코드에 쓸 목적이었지만, 매우 유연한 도구이기 때문에 C++ 이나 Java 와 같은 언어에 대해서도 잘 동작한다. 이것은 함수 호출이나 변수 정의와 같은 몇 가지 구조를 추가로 인식할 수 있는 일반적인 'grep' 데이터베이스라고 볼 수 있다. 기본적으로 Cscope 는 C, lex, yacc 파일만을 (.c, .h, .l, .y) 현재 디렉토리에 대해서 (하위 디렉토리는 '-R' 플래그를 줄 때) 구문 분석하며, 현재로서는 구문 분석 대상 확장자 목록을 바꿀 방법이 없다. 그래서 대신에 구문분석하고자 하는 파일 목록을 'cscope.files' 라는 이름의 ㅇ파일을 만든다. (다른 이름을 붙이고 'cscope -i foofile' 이라고 해도 된다.) 파일 목록을 만드는 쉬운 (그리고 유연한) 방법은 믿음직한 다음과 같이 유닉스 'find' 유틸리티를 쓰는 것이다.<br><br><pre class="quote"> find . -name '*.java' &gt; cscope.files<br> <br>이제 cscope -b 로 데이터베이스를 다시 만들면 ('-b' 는 데이터메이스를 만들기만 하고 Cscope GUI 를 시작하지 않는다.) 모든 Java 파일에 대한 이름들을 탐색할 수 있게 된다. <br>큰 규모의 문서 파일들을 탐색하고 편집하는 데 cscope 를 쓰는 친구들이 있다는 이야기도 있을 정도로 Cscope 구문 분석기는 유연하다.<br><br><br><br><br>더 큰 프로젝트에는 추가로 '-q' 플래그나 더 복잡한 'find' 명령어를 쓸 필요가 있을지 모른다. 더 많은 정보를 얻으려면 <br><a class="externalLink" href="http://cscope.sourceforge.net/large_projects.html">큰 프로젝트에서 Cscope 사용에 대한 강좌</a>를 보라.<br></pre></li><li>$CSCOPE_DB 환경변수를 만들어진 Cscope 데이터베이스를 가리키게 해보라. 그러면 매번 Vim 을 똑같은 디렉토리로 찾아가 띄울 필요가 없다. 이것은 특히 프로젝트가 여러 개의 하위 디렉토리로 나뉘어 있을 때 유용하다.<br>&nbsp;주의: 이것이 동작하기 위해서는 데이터베이스를 다음과 같이 절대 경로로 생성해야 한다.<br><br><pre class="quote"> find /my/project/dir -name '*.c' -o -name '*.h' &gt; /foo/cscope.files<br> <br><br>그리고 Cscope 를 cscope.files 가 있는 디렉토리로 가서 실행하고 (또는 'cscope -i /foo/cscope.files'), $CSCOPE_DB 변수를 cscope.out 결과 파일을 가리키도록 <br>다음과 같이 설정하고 export 하라.<br> cd /foo<br><br> cscope -b<br> CSCOPE_DB=/foo/cscope.out; export CSCOPE_DB   <br> <br>(마지막 명령은 Bourne/Korn/Bash 쉘을 위한 것이다. 나는 csh 기반 쉘을 전염병 피하듯 하기 때문에 거기서는 어떻게 export 하는지 잊어버렸다.)<br><br><br><br><br>이제 기계의 어떤 디렉토리에서든지 'vim -t foo' 라고 실행하면 'foo' 가 정의된 곳으로 바로 이동한다. 나는 프로젝트별로 작은 쉘 스크립트를 만들어 <br>(CSCOPE_DB 를 설정하고 export 하기만 하도록) 'source projectA' 라는 명령으로 프로젝트간에 작업 전환할 때마다 실행하곤 한다.<br><br><br><br><br>벌레: Cscope 15.4 이전의 판에는, 데이터베이스 이름을 기본설정인 'cscope.out' 이외에 다른 것으로 하지 않으면 Vim 이 멈춰버릴 수도 있는 바보 같은 벌레가 있다. <br>Cscope 를 부를 때 '-f foo' 로 데이터베이스 이름을 'foo.out' 로 대체하면 괜찮다.<br><br></pre></li><li>이게 끝이다. 궁금한 것이 있다면 ":help cscope" (Vim에서) 와 "man cscope" (쉘에서) 중 하나 또는 두 개 다 해보아서 세세한 점들을 찾아보라.</li></ol><br>Vim 에 Cscope 지원을 추가 - Andy Kahn<br></div><div>강좌와 cscope_maps.vim - Jason Duell <br></div><br><div>Cscope 삽화 - Petr Sorfa <br></div><br><div>강좌를 한국어로 번역 - 안기영</div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

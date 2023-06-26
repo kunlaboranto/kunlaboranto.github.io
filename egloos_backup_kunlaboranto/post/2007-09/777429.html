@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>각 OS별 커널 설정값 조회, (&quot;sysdef -i&quot;, ..)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-09-21 14:36:09</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">각 OS별 커널 설정값 조회, (&quot;sysdef -i&quot;, ..)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">얼마전 사이트에서. sun5.9 에서 semaphore 관련 오류로 보이는데.<br><br>썬에선 /etc/system에 커널설정만 했지, 조회를 해본적이 없음.<br>때문에 구글 서핑을 시도했으나, 서핑 검색어가 어렸워 헤멤.. 이참에 정리<br><br><br>1. Solaris<br><br>$ sysdef -i |grep MNI<br>&nbsp;&nbsp; 127&nbsp; message queue identifiers (MSGMNI)<br>&nbsp; 2000&nbsp; semaphore identifiers (SEMMNI)<br>&nbsp; 2048&nbsp; shared memory identifiers (SHMMNI)<br><br>2. HPUX <br>+ <br>&nbsp;&nbsp;&nbsp; $ kmtune <br><br>+ 11.23 이후<br>&nbsp;&nbsp;&nbsp; $ kctune<br><br>3. <br>...<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

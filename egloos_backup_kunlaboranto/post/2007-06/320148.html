@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 오류: 10054, ErrorMessage: &quot;TCP 공급자: 현재 연결은 원격 호스트에 의해 강제로 끊겼습니다.&quot; </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:03:25</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 오류: 10054, ErrorMessage: &quot;TCP 공급자: 현재 연결은 원격 호스트에 의해 강제로 끊겼습니다.&quot; </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><h3 class="subHeading" xmlns=""><a class="con_link" href="http://download.microsoft.com/download/5/f/f/5fff7d8a-b10c-41d5-89f5-b295afa71c8f/ReadmeSQLEXP2005.htm" target="_blank"><span style="FONT-SIZE: 100%">출저 : http://download.microsoft.com/download/5/f/f/5fff7d8a-b10c-41d5-89f5-b295afa71c8f/ReadmeSQLEXP2005.htm</span></a></h3><h3 class="subHeading" xmlns="">5.1 Windows Server 2003 SP1에서 실행할 경우 연결이 강제로 끊어질 수 있음</h3><div class="subSection" xmlns=""><content xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"></content><p xmlns="">TCP/IP 네트워킹이 설정되어 있는 경우 Windows Server 2003 서비스 팩 1에서 실행되는 SQL Server Express 데이터베이스 엔진 인스턴스에 대한 클라이언트 연결은 다음 오류를 나타내며 실패할 수 있습니다. "ProviderNum: 7, 오류: 10054, ErrorMessage: "TCP 공급자: 현재 연결은 원격 호스트에 의해 강제로 끊겼습니다."</p><p xmlns="">이 오류는 많은 수의 클라이언트 연결을 시도하여 확장성을 테스트할 때 발생할 수 있습니다. 이 문제를 해결하려면 regedit.exe 유틸리티를 사용하여 데이터 값이 00000000인 레지스트리 키 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\에 SynAttackProtect라는 새 DWORD 값을 추가하십시오. </p><div class="alert" xmlns=""><table cellspacing="0" cellpadding="0" width="100%"><tbody><tr><th align="left">보안 정보: </th></tr><tr><td>이 레지스트리 키를 설정하면 서버가 SYN 초과 서비스 거부 공격에 노출될 수 있습니다. 테스트가 끝나면 이 레지스트리 값을 제거하십시오. <p></p></td></tr></tbody></table><p></p></div><div class="alert" xmlns=""><table cellspacing="0" cellpadding="0" width="100%"><tbody><tr><th align="left">주의: </th></tr><tr><td>레지스트리를 잘못 편집하면 운영 체제를 다시 설치해야 하는 심각한 문제가 발생할 수 있습니다. 레지스트리를 잘못 편집하여 발생하는 문제를 해결할 수 있다고 보장할 수 없습니다. 따라서 레지스트리를 편집하기 전에 중요한 데이터를 백업하십시오. 레지스트리를 백업, 복원 및 편집하는 방법은 Microsoft 기술 자료 문서 <a class="con_link" href="http://support.microsoft.com/kb/256986" target="_blank" alt=""><!-- % wrong tag % -->256986<!-- % wrong tag % --></a>을 참조하십시오.</td></tr></tbody></table></div></div><p>&nbsp;</p><p>&nbsp;</p><p><a class="con_link" href="http://msdn2.microsoft.com/ko-kr/library/ms166044.aspx" target="_blank">http://msdn2.microsoft.com/ko-kr/library/ms166044.aspx</a></p><p>&nbsp;</p><div class="title"><span style="FONT-SIZE: 130%"><strong>라우팅 및 메시지 배달 문제 해결</strong>&nbsp; </span></div><!--Content type: DocStudio. Transform: devdiv2mtps.xslt.--><div id="mainSection"><div id="mainBody"><p><span id="changeHistory"></span></p><p>이 섹션에서는 라우팅과 메시지 배달에 관련된 일반적인 문제를 해결하기 위한 제안 사항을 설명합니다.</p><div class="MTPS_CollapsibleRegion"><!-- badtag var ExpCollDivStr = ExpCollDivStr;ExpCollDivStr = ExpCollDivStr + "ctl00_LibFrame_ctl0243e2343,";var ExpCollImgStr = ExpCollImgStr; ExpCollImgStr = ExpCollImgStr + "ctl00_LibFrame_ctl02img,"; :badtag --><a class="CollapseRegionLink" onclick="ShowHideCollapsibleArea('ctl00_LibFrame_ctl0243e2343','ctl00_LibFrame_ctl02img');" href="http://msdn2.microsoft.com/ko-kr/library/ms166044.aspx#"><img class="CollapseRegionImg" id="ctl00_LibFrame_ctl02img" alt="증상: 전송 큐에 메시지가 남아 있음" src="http://msdn2.microsoft.com/msdn/Controls/CollapsibleArea/en-us/minus.gif" align="middle">증상: 전송 큐에 메시지가 남아 있음</a><br><div class="section" id="ctl00_LibFrame_ctl0243e2343" style="DISPLAY: block"><div id="ctl00_LibFrame_ctl02"><p>Service Broker 메시지 배달이 데이터베이스에서 활성화되었는지 확인합니다. <b>sys.databases</b>의 <b>is_broker_enabled</b> 열은 아래 예제에 있는 것처럼 broker 메시지 배달이 활성화되었는지 여부를 보여 줍니다.</p><div class="code" id="ctl00_LibFrame_ctl03_other"><div class="CodeSnippetTitleBar"><div class="CodeDisplayLanguage"></div></div><pre class="code" id="ctl00_LibFrame_ctl03other" space="preserve">SELECT is_broker_enabled FROM sys.databasesWHERE database_id = DB_ID() ;</pre></div><p>메시지가 잘못된 데이터베이스로 배달되는 것을 방지하기 위해 Broker 메시지 배달을 비활성화할 수 있습니다. Service Broker 메시지 배달에 대한 자세한 내용은 <!-- badtag filtered --><a>Service Broker ID 관리</a>를 참조하십시오. Service Broker 메시지 배달을 활성화하는 방법은 <!-- badtag filtered --><a>방법: 데이터베이스에서 Service Broker 메시지 배달 활성화(Transact-SQL)</a>를 참조하십시오.</p><p>Service Broker 메시지 배달이 활성화되어 있으면 메시지의 <b>transmission_status</b> 열을 확인합니다. 일반적인 오류 메시지는 다음과 같습니다.</p><h3 class="subHeading"><!----></h3><table style="BACKGROUND-COLOR: rgb(204,204,204)" cellspacing="0" cellpadding="0" width="100%" border="1"><tbody><tr><th>메시지 </th><th>설명 </th></tr><tr><td><p>서비스에 대한 경로가 없습니다.</p></td><td><p>Service Broker가 지정된 서비스에 대한 경로를 찾을 수 없습니다.</p></td></tr><tr><td><p>대상 Service Broker에 연결할 수 없습니다.</p></td><td><p>Service Broker가 대상 Service Broker로 메시지를 배달할 수 없습니다.</p></td></tr><tr><td><p>전송 계층을 사용할 수 없습니다.</p></td><td><p>인스턴스에 Service Broker 끝점이 없거나 Service Broker 끝점이 제대로 시작되지 않았습니다.</p></td></tr><tr><td><p>대상 큐가 비활성화되었습니다.</p></td><td><p>대상 서비스가 사용하는 큐의 STATUS 옵션이 OFF로 설정되었습니다. Service Broker는 STATUS가 OFF인 큐에 새 메시지를 추가하지 않습니다.</p></td></tr><tr><td><p>데이터를 받는 동안 오류가 발생했습니다: '10054(현재 연결은 원격 호스트에 의해 강제로 끊겼습니다.)'.</p></td><td><p>대화의 원격측에서 TCP/IP 연결을 수락했지만 메시지 전송을 허용하기 전에 연결을 닫았습니다.</p></td></tr><tr><td><p>(없음)</p></td><td><p>Service Broker가 아직 메시지 보내기를 시도하지 않았습니다. 이 경우 Service Broker 메시지 배달이 데이터베이스에서 활성화되지 않았음을 의미할 수 있습니다.</p></td></tr></tbody></table></div></div></div></div></div><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

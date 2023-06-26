@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] CONNECT BY ... START WITH ... (순환 관계의 처리)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:43:31</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] CONNECT BY ... START WITH ... (순환 관계의 처리)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><table cellspacing="0" cellpadding="0" width="100%" border="0"><tbody><tr valign="bottom"><td style="PADDING-LEFT: 8px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px; TEXT-ALIGN: justify" valign="center" height="28"><a class="con_link" href="http://eroom.korea.com/eroom/default.aspx?bid=tab_292525&amp;pid=250971" target="_blank"><span class="Ttitle1_content">CONNECT BY ... START WITH ... (순환 관계의 처리)</span></a> <a class="con_link" href="http://eroom.korea.com/eroom/default.aspx?bid=tab_292525&amp;cate=1553491" target="_blank"><span class="Ttitle2_content">[Oracle ]</span></a></td><td style="PADDING-RIGHT: 2px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 3px" valign="center" align="right" width="90">&nbsp;<!-- badtag filtered --><a>DejavuEffect</a></td></tr><tr><td background="/images/dotline_536.gif" colspan="2" height="3"></td></tr><tr valign="top" align="left"><td style="PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-TOP: 4px" colspan="2" height="12"></td></tr><tr valign="top"><td id="_ctl0_rptList__ctl1_tdCommonInfo" style="PADDING-RIGHT: 2px; PADDING-BOTTOM: 4px; PADDING-TOP: 0px" align="right" colspan="2" height="12"><b>스크랩</b> : 0&nbsp;&nbsp; <b>조회수</b> : 222 </td></tr></tbody></table><!--컨텐트 내용보여주기--><table cellspacing="0" cellpadding="0" width="100%" border="0"><tbody><tr><td><span style="TEXT-ALIGN: justify"><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">오라클에서는 타 데이터베이스와는 달리 순환 관계라는 기능을 제공합니다<span lang="EN-US">. 예를 들어 생산 공정에 소모되는 부품들을 조립 단계에 맞추어 각 단계별로 독립적인 테이블들로 구성하는 것이 아니라, 한 개의 테이블에 모든 부품 관련 정보들을 입력한 후, 조회 시 내부적으로 정의한 순서에 의해 읽어올 수 있는 방법을 말합니다. 즉, 순환 관계란 부모와 자식의 관계처럼 계층적 구조의 자료를 하나의 ENTITY 내에 구조화 하여 기술한 것입니다. <?xml:namespace prefix = o /><o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><o:p><span style="FONT-SIZE: 100%">&nbsp;</span></o:p></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">일반적으로 이와 같은 계층적 구조의 자료 형태의 단점은 하나의 레벨에 대한 데이터의 변경 시<span lang="EN-US">, 부모의 식별자가 바뀜으로서 자식의 식별자도 모두 바뀌어야 한다는 것입니다. 물론 이러한 것은 해당 테이블의 컬럼에 REVERSE 값을 주어서 보다 효과적으로 사용할 수 있습니다. 하지만 이와 같은 모든 레벨에 해당하는 값들을 단일 테이블에 저장하는 방식을 사용하였을 경우 DB BUFFER 및, 디스크 용량 그리고 DISK I/O와 MEMORY I/O 등 시스템의 전반적인 모든 튜닝 관련 사항들에 대해 보다 효과적으로 대처할 수 있습니다. 하지만 이러한 순환 관계 모델이 현업에서 사용되는 것은 드뭅니다. 그 이유는 해당 모델에 대해 이해가 부족하여 사용하기 어렵고, 그리하여 처리 속도가 느려지기 때문입니다. <o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><o:p><span style="FONT-SIZE: 100%">&nbsp;</span></o:p></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">이러한 순환관계로 테이블을 설계한다면 부모 및 자식 관계에 있는 모든 로우들이 단일 테이블내에 모두 저장이 됩니다<span lang="EN-US">. 그리고 이러한 순환 관계 테이블을 처리하기 위해서는 CONNECT BY ... START WITH ... 라는 구문을 사용하여 처리할 수 있어야 합니다. 이러한 기능을 제공하지 않는 데이터베이스의 경우에는 직접 순환 구조로 데이터를 추출할 수 있게 매우 복잡한 단계의 프로그래밍을 구현해야 합니다. 그리고 이러한 문장은 일반 SQL과는 다르게 구성되는 만큼 처리 구조도 독특한 특성을 가지고 있습니다.<o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><o:p><span style="FONT-SIZE: 100%">&nbsp;</span></o:p></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">where<span>&nbsp;&nbsp;&nbsp; </span>sal &gt; 500<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>- CHECK 조건<o:p></o:p></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">connect by prior empno = ‘mgr’<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>- JOIN 조건<o:p></o:p></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">start with mgr is null<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>- DRIVING 조건 <o:p></o:p></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><o:p><span style="FONT-SIZE: 100%">&nbsp;</span></o:p></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">순환 구조<span lang="EN-US"> SQL 을 작성하고 실행할 때 중요한 부분은 일반 SQL과는 달리 WHERE 절이 처리 범위를 줄여주는 선행 조건이 아니라는 것입니다. 순환 전개 방식의 선행 처리 조건은 START WITH 절로 순환 구조 처리의 가장 중요한 부분입니다. WHERE 절은 단지 체크 조건으로 결과값에 대해 단순한 필터로만 작용을 합니다. 이리하여 순환 구조 SQL의 튜닝을 위해서는 START WITH 절에 사용되는 컬럼에 대해 인덱스를 생성해야 합니다. 만약 START WITH 의 처리 범위가 넓다면 이를 해당 쿼리 내의 WHERE 절 혹은 START WITH 의 해당 컬럼의 비교값에서 INLINE VIEW를 사용해서 범위를 줄여줘야 합니다. <o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><o:p><span style="FONT-SIZE: 100%">&nbsp;</span></o:p></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">그 다음으로 중요한 부분은<span lang="EN-US"> PRIOR 절입니다. 오라클 매뉴얼을 보거나 모든 책을 보더라도 CONNECT BY PRIOR a = b 라고 기술되어 있습니다. 마치 항상 저렇게 사용해야만 하는 것 처럼 느낄 수도 있습니다. 하지만 PRIOR 절은 반대편에 기술해도 되고 SELECT 절에 기술해도 됩니다. PRIOR의 의미는 실제로는 최초 시작한 노드의 PRIOR 절에 기술되는 컬럼 (a) 값을 읽어 PRIOR 절 내 = 의 반대편 컬럼(b) 에 상수를 제공하겠다는 의미입니다. 그렇다면 PROIR 로 읽은 컬럼 값을 제공받는 반대편 컬럼에도 튜닝을 위해서는 인덱스가 존재해야만 빠른 성능을 보장받을 수 있다는 것입니다.</span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%"><span lang="EN-US"></span></span></span>&nbsp;</p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%"><span lang="EN-US">어렵군...쩝...</span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%"><span lang="EN-US"></span></span></span>&nbsp;</p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%"><span lang="EN-US">출처: <a class="con_link" href="http://cafe.naver.com/marinebang.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=1253" target="_blank">http://cafe.naver.com/marinebang.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=1253</a></span></span></span></p></span></td></tr></tbody></table></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

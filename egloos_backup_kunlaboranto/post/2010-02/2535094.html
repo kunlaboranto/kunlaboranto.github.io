@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] AIX5L , RT_GRQ 란?</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2010-02-04 22:16:07</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] AIX5L , RT_GRQ 란?</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">RT_GRQ ( Real-Time Global Run Queue) 를 ON 하는 경우 altibase 성능 영향도가 있을까? <br>잠깐의 서핑으로는 (Busy한) 동시 세션의 수와, CPU개수에 장/단이 있는 속성으로 보인다.. <br><br>그런데, AIX4.3 이후 쭉 있었던 속성인데 ALTRA에는 이에 대한 기록이 없다 ? 몰라서 ? 해봤는데 효과가 미미해서 ?<br><br>from : <a target="_blank" href="http://www.ibm.com/developerworks/kr/library/aix5_cpu/index.html">http://www.ibm.com/developerworks/kr/library/aix5_cpu/index.html (CPU 모니터링과 튜닝)</a><br><br><br>...<br><br><p>AIX 5L은 각 CPU에 대해 하나의 실행 큐와 글로벌 큐를 구현한다. 예를 들어, eServer pSeries®  p590 머신에는 32개의 실행 큐와 한 개의 글로벌 큐가 있다. CPU 당 실행 큐로 인해 쓰레드는 선점 후에 같은 CPU로 돌아갈 더 나은 기회를 갖는다. 이것은 유사성 향상이다. 또한, 실행 큐 구조를 잠그기 위한 CPU들 간 경쟁도 훨씬 줄어들었다. 다중 실행 큐 덕분이다. </p><p>하지만 어떤 경우는 다중 실행 큐 구조가 바람직하지 않다. 시스템 환경 변수 RT_GRQ=ON를 반출하면 이것이 실행 가능한 상태가 될 때 쓰레드가 글로벌 실행 큐에 놓일 수 있다. 이것은 인터럽트 중심 쓰레드와 SCHED_OTHER를 실행하는 쓰레드의 퍼포먼스를 높인다. <code>schedo –o fixed_pri_global =1</code>이 AIX 5L Version 5.2 및 이후 버전에서 실행되면 고정된 우선순위를 실행하는 쓰레드들은 글로벌 실행 큐에 놓이게 된다.  </p><p>로컬 실행 큐의 경우, 이 디스패쳐는 CPU를 사용할 수 있을 때 실행 큐에서 최상의 우선순위 쓰레드를 고른다. 쓰레드가 CPU에서 실행될 때 이것은 CPU의 실행 큐에 머무르게 된다. 그 CPU가 분주할 경우 쓰레드는 또 다른 유휴 CPU로 디스패치 되고 그 CPU의 실행 큐로 할당된다. </p><br><br><br><br>참고 :<br>* SCHED_OTHER<br>* 10ms 의 스케줄린 시간.<br>&nbsp;&nbsp; Local RQ 에 대기하는 놈이 없고 다른 RQ에 대기가 있을때 10ms 의 Jitter가 발생할 수도 있다..<br>&nbsp;&nbsp; GRQ는 이를 해소하는 대안이고 특정 process 만 선택적으로 적용해야 한다<br><br><font size="2">* 주제를 벋어나지만. AIXTHREAD_MUTEX_FAST=ON 는 효과 있음.</font><br>* AIX가 NUMA에 덜민감한 것으로 보인 원인인가?<br>*&nbsp; mnpark 말씀으로는 RT_GRQ=ON 시에 idle 이 높아졌다고함. (동일 성능인데)<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

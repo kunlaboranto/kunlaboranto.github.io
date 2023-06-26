@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] [websphere] Linux 성능 조정 - tcp </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:18:26</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] [websphere] Linux 성능 조정 - tcp </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">출처 : http://publib.boulder.ibm.com/wasce/V1.0.1/ko/Tasks/Tuning/Linux.html<br><br><h2>Linux 성능 조정</h2><p>서버의 성능을 향상시키기 위해 Linux 시스템을 사용자 정의해야 할 수 있습니다. 구성을 조정하는 데 필요한 팁이 아래에 나와 있습니다. 이러한 시스템이 변경되어 다음 제안을 사용하지 못하게 될 수 있으며 결과가 다를 수 있습니다. </p><p>성능 향상을 위해 변경사항을 작성하기 전에 현재 성능을 측정했는지 확인하십시오. 트랜잭션 비율, 응답 시간, 최대 동시 사용자 수 또는 몇몇 기타 성능 기준에 관심이 있는지 여부에 관계없이 변경사항 작성 전후에 성능 조정 매개변수 변경으로 인해 차이가 발생했는지 여부를 알 수 있을 정도로 정확하게 측정해야 합니다. </p><div class="subsection"><a class="con_link" target="_blank" name="timeout_timewait_매개변수"></a><h3>timeout_timewait 매개변수</h3><p><kbd><span style="FONT-FAMILY: Courier New">timeout_timewait</span></kbd> 값은 TCP/IP가 닫힌 연결을 해제하여 자원을 다시 사용하기 전에 경과되어야 하는 시간을 결정합니다. 닫기와 해제 사이의 이 간격은 <kbd><span style="FONT-FAMILY: Courier New">TIME_WAIT</span></kbd> 상태 또는 최대 세그먼트 지속 시간의 두배(2MSL) 상태로 알려져 있습니다. 이 시간 동안 클라이언트 및 서버로의 연결을 다시 여는 것이 새 연결을 설정하는 것보다 비용이 적게 듭니다. 이 항목의 값을 줄이면 TCP/IP는 닫힌 연결을 더욱 빨리 해제할 수 있으며 새 연결에 더 많은 자원을 제공합니다. TIME_WAIT 상태에 있는 여러 연결로 인해 발생한 낮은 처리량 때문에 실행 중인 응용프로그램에 빠른 해제, 새 연결 작성 또는 조정이 필요할 경우 이 매개변수를 조정하십시오. </p><p>기본값은 240초(4분)입니다. </p><p>최소 권장 값은 30초입니다. 다음 프로시저를 사용하여 값을 보거나 사용자 정의하십시오. </p><div class="source"><pre>echo <var>X</var> &gt; /proc/sys/net/ipv4/tcp_fin_timeout<br></pre></div><p>여기서 <var>X</var>는 필요한 시간(초)으로 바뀝니다. </p></div><div class="subsection"><a class="con_link" target="_blank" name="연결_백로그"></a><h3>연결 백로그</h3><p>수신 연결 요청의 버스트를 승인하기 위해 연결 백로그 값을 늘려야 할 수 있습니다. 동시에 많은 연결 요청이 수신될 경우 더 큰 값을 사용하면 지원될 수 있는 보류 연결 수가 증가되어 연결 장애를 줄일 수 있습니다. </p><p>다음 프로시저를 사용하여 값을 보거나 사용자 정의하십시오. </p><div class="source"><pre>echo <var>X</var> &gt; /proc/sys/net/core/netdev_max_backlog<br>echo <var>X</var> &gt; /proc/sys/net/core/somaxconn<br></pre></div><p>여기서 <var>X</var>는 버스트에서 예상되는 연결 요청 수보다 큽니다. </p></div><div class="subsection"><a class="con_link" target="_blank" name="tcp_keepalive_time"></a><h3>tcp_keepalive_time</h3><p><kbd><span style="FONT-FAMILY: Courier New">tcp_keepalive_time</span></kbd> 값은 TCP/IP가 대기 연결이 계속 원래 상태를 유지하는지 확인을 시도하는 빈도를 제어합니다. 이 시간 동안 활동이 없었을 경우 활성화 상태 지속 전송이 제출됩니다. 네트워크가 원래 상태를 유지하며 상대가 활성 상태일 경우 상대가 응답합니다. 손실된 상대에 대해 민감하게 되려는 경우(즉, 상대가 손실되었음을 더 빨리 인식해야할 경우) 이 값을 줄여 보십시오. 오랜 기간 동안 비활성 상태를 유지하는 연결은 공통이고 손실된 상대는 공통이 아닐 경우 이 값을 늘려 오버헤드를 줄여도 됩니다. </p><p>7,200초(2시간) 동안 대기 연결이 비활성 상태일 경우 Linux에서는 활성화 상태 지속 메시지를 전송하는 것이 기본값입니다. 종종 값에 1,800초를 선택하여 반쯤 닫힌 연결을 30분마다 감지합니다. </p><p>다음 프로시저를 사용하여 값을 보거나 사용자 정의하십시오. </p><div class="source"><pre>echo <var>X</var> &gt; /proc/sys/net/ipv4/tcp_keepalive_time<br></pre></div><p>여기서 <var>X</var>는 필요한 시간(초)으로 바뀝니다. </p></div><div class="subsection"><a class="con_link" target="_blank" name="tcp_keepalive_intvl_값"></a><h3>tcp_keepalive_intvl 값</h3><p><kbd><span style="FONT-FAMILY: Courier New">tcp_keepalive_intvl</span></kbd> 값은 상대로부터 활성화 상태 지속 응답이 수신되지 않을 경우 TCP/IP에서 활성화 상태 지속 전송을 반복하는 빈도를 결정합니다. 응답이 없는 연속적인 활성화 상태 지속 전송 수가 <kbd><span style="FONT-FAMILY: Courier New">tcp_keepalive_probes</span></kbd>의 값을 초과할 경우 연결이 중단됩니다. 응답 시간이 길 것으로 예상될 경우 이 값을 늘려 오버헤드를 줄여야 할 수 있습니다. 상대가 손실되었는지 확인하는 데 소비되는 시간을 줄여야 할 경우 이 값 또는 <kbd><span style="FONT-FAMILY: Courier New">tcp_keepalive_probes</span></kbd> 값을 줄여 보십시오. </p><p>Linux에서는 활성화 상태 지속 메시지를 재전송하기 전에 75초 동안 활성화 상태 지속 응답을 대기하는 것이 기본값입니다. 종종 값에 15초를 선택하여 손실된 상대를 더 빨리 감지합니다. </p><p>다음 프로시저를 사용하여 값을 보거나 사용자 정의하십시오. </p><div class="source"><pre>echo <var>X</var> &gt; /proc/sys/net/ipv4/tcp_keepalive_intvl<br></pre></div><p>여기서 <var>X</var>는 필요한 시간(초)으로 바뀝니다. </p></div><div class="subsection"><a class="con_link" target="_blank" name="tcp_keepalive_probes_값"></a><h3>tcp_keepalive_probes 값</h3><p><kbd><span style="FONT-FAMILY: Courier New">tcp_keepalive_probes</span></kbd> 값은 TCP/IP가 기존 연결에 대한 수신확인되지 않은 활성화 상태 지속 메시지를 재전송하는 횟수를 결정합니다. 네트워크 품질이 낮을 경우 이 값을 늘려 효과적인 통신을 유지해야 할 수 있습니다. 네트워크 품질이 높을 경우 이 값을 줄여 상대가 손실되었는지 확인하는 데 걸리는 시간을 줄여도 됩니다. </p><p>Linux에서는 연결 중단을 결정하기 전에 9개의 수신확인되지 않은 활성화 상태 지속 메시지를 전송하는 것이 기본값입니다. 종종 값에 5를 선택하여 손실된 상대를 더 빨리 감지합니다. </p><p>다음 프로시저를 사용하여 값을 보거나 사용자 정의하십시오. </p><div class="source"><pre>echo <var>X</var> &gt; /proc/sys/net/ipv4/tcp_keepalive_probes<br></pre></div><p>여기서 <var>X</var>는 필요한 수신확인되지 않은 활성화 상태 지속 재전송 수로 바뀝니다. </p></div><div class="subsection"><a class="con_link" target="_blank" name="대용량_페이지_지원"></a><h3>대용량 페이지 지원</h3><p>가상 기억장치를 관리하기 위해 대용량 페이지 지원을 사용하면 JVM(Java Virtual Machine)에서 대용량 힙을 관리하는 CPU 오버헤드를 줄일 수 있습니다. 이 지원을 사용하려면 대용량 페이지를 사용 가능하도록 시스템을 구성하고 가상 시스템을 시작할 때 <kbd><span style="FONT-FAMILY: Courier New">-Xlp</span></kbd> JVM 옵션을 지정해야 합니다. </p><p>대용량 페이지 지원을 사용 가능하게 하는 단계는 사용하는 Linux 분배에 따라 다릅니다. 일반적으로 <kbd><span style="FONT-FAMILY: Courier New">sysctl.conf</span></kbd> 파일을 편집하여 다음을 수행합니다. </p><ul><li>최대 Java 힙을 보유하는 데 필요한 대용량 페이지의 수 설정 <li>최대 Java 힙을 보유하도록 최대 공유 세그먼트 설정 <li>최대 Java 힙을 보유하도록 공유 메모리 총량 설정 </li></ul><p>그런 다음 프로그램을 낮은 가상 메모리 주소로 재배치하여 더 큰 힙에 더 많은 주소 공간을 제공하십시오. </p><p>대용량 페이지에 대한 지원 구성에 대한 자세한 정보는 Linux 문서를 참조하십시오. </p></div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>C++ 짧은 잡동사니 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:45:01</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">C++ 짧은 잡동사니 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>## 짧은 잡동사니</p><p>&nbsp;</p><p>1. 전역함수 호출</p><p>&nbsp;&nbsp; ::connect(..)</p><p>&nbsp;&nbsp; --&gt; WSAGetLastError() vs errno ? in WIN32</p><p>&nbsp;</p><p>2. managed C++ ??</p><p>&nbsp;</p><p>3. 참조호출</p><p>int&nbsp;CContextWalker::Walk(CContext &amp;Cntx,CContextProcessor *pPrcrt)<br>{<br>&nbsp;return Walk(&amp;Cntx,pPrcrt);<br>}<br>int&nbsp;CContextWalker::Walk(CContext *pCntx,CContextProcessor *pPrcr)<br>{</p><p>..</p><p>&nbsp;</p><p>4. 당연한데 이렇게 사용한 적이 없음</p><p>&nbsp;&nbsp;&nbsp;FILE *fp=fopen("file.dat","rb");<br>&nbsp;&nbsp;&nbsp;fscanf(fp,"m_total_cnt=%d,ft=%ld,fut=%ld\n", &amp;total_cnt, &amp;totalTm.tv_sec, &amp;totalTm.tv_usec);<br></p><p>&nbsp;</p><p>5. fork</p><p>&nbsp;m_nCurProcID=0;<br>&nbsp;pid_t tPid;<br>&nbsp;for(int n=1;n&lt;m_nProcCnt;n++)<br>&nbsp;{<br>&nbsp;&nbsp;tPid=fork();<br>&nbsp;&nbsp;if(tPid==0)<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;m_nCurProcID=n;<br>&nbsp;&nbsp;&nbsp;break;<br>&nbsp;&nbsp;}<br>&nbsp;}</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[Apache Tomcat] 관련 jar 파일들.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-07 15:15:01</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[Apache Tomcat] 관련 jar 파일들.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">라이브러리의 집합체인 java에 친해지기 위해서.. jar 눈에 익히기.<br><br><blockquote><span style="font-weight: bold;"> <span style="font-style: italic;">Server version: Apache Tomcat/5.5.25</span></span><br></blockquote><br><pre>[ubuntu-x32:kun:/opt/bitnami/apache-tomcat] ls common/lib/-.jar server/lib/-.jar bin/-.jar<br><br>    bin/bootstrap.jar                               server/lib/catalina-ant-jmx.jar<br>    bin/commons-daemon.jar                          server/lib/catalina-ant.jar<br>    bin/commons-logging-api.jar                     server/lib/catalina-cluster.jar<br>    bin/tomcat-juli.jar                             server/lib/catalina-optional.jar<br>    common/lib/activation.jar                       server/lib/catalina-storeconfig.jar<br>    common/lib/commons-el.jar                       server/lib/catalina.jar<br>    common/lib/<span style="text-decoration: underline;">jasper</span>-compiler-jdt.jar              server/lib/commons-modeler-2.0.1.jar<br>    common/lib/jasper-compiler.jar                  server/lib/servlets-default.jar<br>    common/lib/jasper-runtime.jar                   server/lib/servlets-invoker.jar<br>    common/lib/<span style="text-decoration: underline;">jsp-api.jar</span>                          server/lib/servlets-webdav.jar<br>    common/lib/mail.jar                             server/lib/tomcat-ajp.jar<br>    common/lib/mysql-connector-java-3.1.12-bin.jar  server/lib/tomcat-apr.jar<br>    common/lib/naming-factory-dbcp.jar              server/lib/tomcat-<span style="text-decoration: underline;">coyote</span>.jar<br>    common/lib/naming-factory.jar                   server/lib/tomcat-http.jar<br>    common/lib/naming-resources.jar                 server/lib/tomcat-jkstatus-ant.jar<br>    common/lib/<span style="text-decoration: underline;">servlet-api.jar</span>                      server/lib/tomcat-util.jar<br>    common/lib/<span style="text-decoration: underline;">struts-taglib</span>-1.3.5.jar<br></pre><br><br>./common/i18n/tomcat-i18n-en.jar 파일과 server/webapps , webapps 에 있는 파일 제외.(출처) http://en.wikipedia.org/wiki/Apache_Tomcat<p>Tomcat version 4.x was released with <span style="font-weight: bold;">Catalina </span>(a servlet container), <span style="font-weight: bold;">Coyote </span>(an <a href="http://en.wikipedia.org/w/index.php?title=HTTP_connector&amp;action=edit&amp;redlink=1" class="new" title="HTTP connector (page does not exist)">HTTP connector</a>) and <span style="font-weight: bold;">Jasper </span>(a <a href="http://en.wikipedia.org/wiki/JSP_engine" class="mw-redirect" title="JSP engine">JSP engine</a>).</p><h4><span class="mw-headline" id="Jasper_2">Jasper 2 (Tomcat 5.x)</span></h4><p>From Jasper to Jasper 2, important features were added:</p><ul><li>JSP Tag library pooling - <br></li><li>Background JSP compilation - <br></li><li>Recompile JSP when included page changes - <br></li><li>JDT Java compiler - use the Eclipse JDT (Java Development Tools) Java compiler instead of <a href="http://en.wikipedia.org/wiki/Apache_Ant" title="Apache Ant">Ant</a> and <code><a href="http://en.wikipedia.org/wiki/Javac">javac</a></code>.</li></ul>그럼 순서를 따라가면 (그냥 내맘대로)<ol><li>localhost:8080/myStruts/ 라는 요청을 HTTP1.1 protocol에 부합하는 Coyote라는 Connector가 받으면</li><li>Catalina 라는 Servlet Container가 , conf/Catalina/localhost/myStruts.xml 파일에서 docBase 경로를 찾고</li><li>docBase 아래에 WEB-INF 라는 약속된 폴더에서 web.xml 파일 내용을 참조하고</li><li>URL이 'Directory' 까지이므로, &lt;welcome-file&gt; 태그에 정의한 파일(index.jsp)로 접근하고</li><li>index.jsp 내에서 "<span style="font-style: italic;">&lt;logic:redirect forward="welcome"/&gt;</span>" 에 의해 Welcome.do 가 호출되고: &lt;web.xml&gt; 파일내의 &lt;servlet-name&gt;action 에 &lt;url-pattern&gt;*.do 가 연결되어있기 때문</li><li>web.xml 파일에서 &lt;init-param&gt;&lt;param-name&gt;config 에 선언된 struts-config.xml 파일내에서&lt;global-forwards&gt;&lt;forward name="welcom" path="/Welcome.do" /&gt; 에 의해서&lt;action-mapping&gt;&lt;action path="/Welcome" forward="/pages/Welcome.jsp" /&gt; 가 호출이됨.</li><li>위의 단계5,6 에서 *.jsp 파일이 호출될때, Jasper라는 JSP Engine이 validation을 하고, 이것저것을 함.</li></ol></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

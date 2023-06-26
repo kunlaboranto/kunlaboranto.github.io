@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[...] A4 Admin View</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-23 16:53:57</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[...] A4 Admin View</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><pre>unixODBC의 isql에서도 select * from tab;을 원해서 해당 기능이 isql만의 기능임을<br>설명하고<br>아래와 같이 view -&gt; public synonym 으로 만드는 예를 전달함.<br><br>#1.<br><br>create or replace view tab ( uname, tname, tabtype )<br>as<br>select <br>rpad(trim(u.user_name), 15, ' '),<br>rpad(trim(t.table_name), 30, ' '),<br>--(m.fixed_alloc_mem + m.var_alloc_mem)/1024/1024 size <br>decode(t.table_type, 'T', 'TABLE', 'V', 'VIEW', ' ')<br>from <br>system_.sys_tables_ t,<br>system_.sys_users_ u,<br>v$memtbl_info m <br>where <br>t.table_oid = m.table_oid<br>and t.user_id = u.user_id<br>and t.table_type in ('T', 'V')<br>and u.user_name not in ('SYSTEM_')<br>order by u.user_name, t.table_name<br>;<br><br>create public synonym tab for sys.tab;<br>grant select on tab to public;<br><br>#2. 실행예<br>$ isql -v aipsi1db<br>SQL&gt; select * from tab;<br>+----------------+-------------------------------+--------+<br>| UNAME          | TNAME                         | TABTYPE|<br>+----------------+-------------------------------+--------+<br>| SYS            | DUAL                          | TABLE  |<br>| SYS            | TAB                           | VIEW   |<br>| TEST           | DUAL                          | TABLE  |<br>| TEST           | TBS_APPLY                     | TABLE  |<br>| TEST           | TBS_APPLYUNIT                 | TABLE  |<br>| TEST           | TBS_GRADUATE                  | TABLE  |<br>| TEST           | TBS_PARENT                    | TABLE  |<br>| TEST           | TBS_PERSON                    | TABLE  |<br>| TEST           | USER_INFO                     | TABLE  |<br>+----------------+-------------------------------+--------+<br>SQLRowCount returns 9<br>9 rows fetched<br></pre><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

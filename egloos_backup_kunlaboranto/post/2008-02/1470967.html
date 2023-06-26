@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[oracle] alter session의 이상한 정책..</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-29 09:18:05</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[oracle] alter session의 이상한 정책..</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">oracle에 비해 altibase의 alter session 정책이 불편하다는 생각에 테스트를 진행함..<br><br><font color="#000080" size="2">altibase version : 4.3.9.100<br><br>isql&gt; autocommit off;<br>isql&gt; insert into demo_plan values (6000,1,1);<br>1 row inserted.<br>iSQL&gt; alter session set explain plan=only;<br>[ERR-41047 : The transaction is already active.]</font><br><br><br><img src='./1470967/e0040769_47c74e27a992e.jpg'>이를 oracle에서 테스트 해보니.<br>commit 여부와 alter session은 전혀 관련이 없음.<br><br>-- 1건 넣고 커밋 안된 상태에서..<br>SQL&gt; ALTER SESSION SET SQL_TRACE = TRUE;<br>Session altered.<br><br>SQL&gt; set autocommit on;<br>SQL&gt;&nbsp; commit;<br>Commit complete.&nbsp;&nbsp;&nbsp; --&gt; 신기한 것은 autocommit ON 상태에서 commit도, 이전 off에서 insert 한게 진짜로 commit 됨<br>SQL&gt; set autocommit off;<br>SQL&gt; insert into ok1 values (1);<br>1 row created.<br>SQL&gt; set autocommit on;<br>SQL&gt; rollback;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; --&gt; 역시 rollback도 잘 동작함.<br>Rollback complete.<br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

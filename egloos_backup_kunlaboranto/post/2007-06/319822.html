@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>거절의 기술이 필요하다</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:49:01</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">거절의 기술이 필요하다</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>기분을 망치다.</p><p>&nbsp;</p><p>오늘은 기분을 망친날이다.. </p><p>자칭 PBT (문제추적) 팀, 즉 지원실에 있는 나로서는 </p><p>우리쪽 지연이 겹쳐 상황이 나빠진 고객에게 주로 사용하는 맨트가. </p><p>"해결될때 까지 계속 오겠다" </p><p>보통 이런 표현을 자주한다.</p><p>&nbsp;</p><p>사실 문제를 찾는다는 것은 주로 X File 성이 많고, 책임의 소재도 어디에 있는지 발견하기 전까지는 불분명하다.. </p><p>그런 상황에서 할수있는 말은 "해결될때까지 하겠다"</p><p>정도의 말이 최선인듯 하였는데...</p><p>&nbsp;</p><p>내가 대리일때는 이말이 적절한 말이었다..</p><p>내가 초기 과장일때는 이말이 별문제는 없었다.. </p><p>그러나 지금.. 이 말이 나에 대한 족쇄만이 아니라.</p><p>회사에 되한 족쇄, 일진행에 대한 방해가 되는 경우가 생기고 있다..</p><p>&nbsp;</p><p>앞으르는</p><p>"해결될때까지 하겠다"는 사용하지 않겠다.</p><p>&nbsp;</p><p>혼자서 일하는 방식은 통하지 않는다.</p><p>혼자서 할때나 위의 표현을 쓸 수 있다..</p><p>회사안에서 일을 분배 + 협업 하는게 필요하듯이, </p><p>회사밖에서도 협업을 위한 적절한 거절과 이를 통한 일 범위의 제한이 </p><p>필요하다.</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

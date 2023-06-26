@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] GCJ - Gnu Compiler for Java </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:12:31</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] GCJ - Gnu Compiler for Java </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>출처 : <a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ" target="_blank">http://wiki.kldp.org/wiki.php/GCJ</a></p><p>&nbsp;</p><div><ul><li>Gnu Compiler for <span class="searchword1">Java</span>의 약자. <span class="searchword1">java</span>로 씌여진 코드를 Native Code로 바꿔주는 컴파일러 </li></ul></div><div class="separator"><hr></div><div><!-- badtag  :badtag --><div id="toc"><div id="toctitle"><h2 style="DISPLAY: inline">Contents</h2><span class="toctoggle"><!-- badtag filtered --><a><span id="hidetoc"><img title="[-]" alt="[-]" src="http://wiki.kldp.org/imgs/plugin/arrup.png" width="10" border="0"></span><span id="showtoc" style="DISPLAY: none"><img title="[+]" alt="[+]" src="http://wiki.kldp.org/imgs/plugin/arrdown.png" width="10" border="0"></span></a></span></div><a class="con_link" target="_blank" name="toc"></a><dl><dd><dl><dt><a class="con_link" id="toc-1" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-1" target="_blank">1 기본적인 사용 </a><dd><dl><dt><a class="con_link" id="toc-1.1" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-1.1" target="_blank">1.1 사용환경 </a><dt><a class="con_link" id="toc-1.2" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-1.2" target="_blank">1.2 간단한 예제 </a><dt><a class="con_link" id="toc-1.3" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-1.3" target="_blank">1.3 두개 이상의 클래스로 이루어진 코드 컴파일 </a><dt><a class="con_link" id="toc-1.4" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-1.4" target="_blank">1.4 바이트코드로부터 컴파일 </a><dt><a class="con_link" id="toc-1.5" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-1.5" target="_blank">1.5 라이브러리로 묶어서 사용하기 </a></dt></dl><dt><a class="con_link" id="toc-2" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-2" target="_blank">2 패키지를 라이브러리화 하기 </a><dd><dl><dt><a class="con_link" id="toc-2.1" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-2.1" target="_blank">2.1 패키지 안의 오브젝트코드의 이름은 어떻게 정해지는가? </a><dt><a class="con_link" id="toc-2.2" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-2.2" target="_blank">2.2 간단한 예제를 통해서 이해하기 </a><dt><a class="con_link" id="toc-2.3" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-2.3" target="_blank">2.3 라이브러리를 사용한 간단한 예제 </a></dt></dl><dt><a class="con_link" id="toc-3" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-3" target="_blank">3 Class.forName를 사용할때 </a><dd><dl><dt><a class="con_link" id="toc-3.1" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-3.1" target="_blank">3.1 <span class="searchword0">GCJ</span>로 프로그래밍 할때 Class.forName메소드 </a><dt><a class="con_link" id="toc-3.2" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-3.2" target="_blank">3.2 간단한 예를 통해 알아보기 </a></dt></dl><dt><a class="con_link" id="toc-4" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-4" target="_blank">4 <span class="searchword0">GCJ</span>에서 GUI 하기 </a><dd><dl><dt><a class="con_link" id="toc-4.1" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-4.1" target="_blank">4.1 SWT를 빌드하기 </a><dt><a class="con_link" id="toc-4.2" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-4.2" target="_blank">4.2 SWT를 사용한 간단한 예제 </a></dt></dl><dt><a class="con_link" id="toc-5" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-5" target="_blank">5 <span class="searchword0">GCJ</span>에서 <span class="searchword1">Java</span> Native Interface사용하기 </a><dd><dl><dt><a class="con_link" id="toc-5.1" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-5.1" target="_blank">5.1 JNI를 위한 기초 </a><dt><a class="con_link" id="toc-5.2" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-5.2" target="_blank">5.2 간단한 예제 </a></dt></dl><dt><a class="con_link" id="toc-6" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-6" target="_blank">6 최적화로 성능 향상시키기 </a><dt><a class="con_link" id="toc-7" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-7" target="_blank">7 실행 파일 크기 줄이기 </a><dd><dl><dt><a class="con_link" id="toc-7.1" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-7.1" target="_blank">7.1 srtip을 이용한 방법 </a><dt><a class="con_link" id="toc-7.2" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-7.2" target="_blank">7.2 <span class="searchword0">gcj</span>의 옵션을 이용한 방법 </a><dt><a class="con_link" id="toc-7.3" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-7.3" target="_blank">7.3 라이브러리 사용하기 </a><dt><a class="con_link" id="toc-7.4" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-7.4" target="_blank">7.4 lib<span class="searchword0">gcj</span>.dll 만들기 </a><dt><a class="con_link" id="toc-7.5" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-7.5" target="_blank">7.5 UPX를 이용한 방법 </a></dt></dl><dt><a class="con_link" id="toc-8" target="_blank"></a><a class="con_link" href="http://wiki.kldp.org/wiki.php/GCJ#s-8" target="_blank">8 <span class="searchword0">GCJ</span> Bug &amp; Patch </a></dt></dl></dd></dl></div></div><p>&nbsp;</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

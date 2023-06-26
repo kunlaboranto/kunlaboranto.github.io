@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] [MS SQL] MS SQL과 Sybase에서 공유읽기락(Shared Lock) 없는 Select문 사용하기</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2010-01-29 16:27:13</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] [MS SQL] MS SQL과 Sybase에서 공유읽기락(Shared Lock) 없는 Select문 사용하기</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">from : http://www.nicklib.com/bbs/board.php?bo_table=bbs_dbms&amp;wr_id=11<br><br><table width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 5px 0pt;" bgcolor="#f8f8f9" height="30"><table width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td style="">&nbsp;&nbsp;<strong><span style="font-size: 12px;" id="writeSubject">[MS SQL] MS SQL과 Sybase에서 공유읽기락(Shared Lock) 없는 Select문 사용하기</span></strong></td>    <td width="50"><a href="javascript:scaleFont(+1);"><img src="http://www.nicklib.com/skin/board/basic/img/icon_zoomin.gif" title="글자 확대" border="0"></a>             <a href="javascript:scaleFont(-1);"><img src="http://www.nicklib.com/skin/board/basic/img/icon_zoomout.gif" title="글자 축소" border="0"></a></td>    </tr>    </tbody></table></td></tr><tr><td height="30">&nbsp;&nbsp;<font color="#7a8fdb">글쓴이</font> : <span class="member">푸우</span>&nbsp;&nbsp;&nbsp;&nbsp;    <font color="#7a8fdb">날짜</font> : 09-02-13 20:18&nbsp;&nbsp;&nbsp;&nbsp;    <font color="#7a8fdb">조회</font> : 1127&nbsp;&nbsp;&nbsp;&nbsp;                </td></tr><tr><td bgcolor="#e7e7e7" height="1"><br></td></tr><tr><td bgcolor="#e7e7e7" height="1"><br></td></tr><tr>     <td style="padding: 5px; border: 1px solid rgb(187, 187, 187); background: none repeat scroll 0% 0% rgb(248, 248, 249);" height="150">        <span style="font-size: 12px;" id="writeContents" class="ct lh">                <!-- 내용 출력 -->        <div><br><br>MS SQL Server의&nbsp;Transaction 기본 격리 수준(isolation level)이 read commiteted입니다. 그래다 보니&nbsp;MS SQL에 특별한 처리를 해 주지 않으면 Select문 수행시 Shared Lock이 설정되어 해당 테이블에 insert나 update와 같은 작업이 block되게 됩니다.</div><div>이와 같은 행동을 취하는 것은 데이터의 안전한 열람을 위해서 이죠. 즉, 읽고 있는 동안 데이터가 변경되는 것을 막기 위한 것인데...</div><div>은행의 계좌 정보와 같이 실시간성이 중요시되는 데이터가 아닌 일반적인 경우에는 데이터를 읽는 중 좀 수정되더라도 크게 문제가 되질 않는 경우가 많습니다.</div><div>이런 경우라면 insert나 update와 같은 작업이 Block되지 않게 하기 위해 select문 수행시 락을 걸지 말라는 힌트를 MS SQL에 줄 수 있습니다.</div><div>&nbsp;</div><div>방법은 from절의 테이블 뒤에 "WITH (NOLOCK)" 과 같은 문장을 덧 붙여 주면 되는데...</div><div>WITH를 생략해도 상관없습니다. 예를 들면 다음과 같습니다.</div><div>&nbsp;</div><div>select * from T1 A <font color="#ff0000">(NOLOCK)</font> LEFT OUTER JOIN T2 B <font color="#ff0000">(NOLOCK)</font> ON A.KEY=B.KEY<br></div><div>프로시져같은 경우 프로시져의 도입부분에 다음과 같은 문장을 입력하면 된다고 하는데....</div><div>이것은 저도 해보질 않아서... ^^;</div><div>&nbsp;</div><div><font color="#ff0000">set transaction isolation level read uncommitted</font></div><div>&nbsp;</div><div>&nbsp;</div><div>WITH (NOLOCK) 외에도 NOLOCK 대신에 ROWLOCK, UPDLOCK을 사용할 수 있습니다.</div><div>&nbsp;</div><div>MS SQL은 기본적으로 행단위 Lock이 걸리는데 필요시 페이지, 테이블 락으로 승격되어 사용되게 되는데 이럴 때 ROWLOCK을 사용하면 승격되지 않도록 합니다. 즉,&nbsp;ROWLOCK은 행단위 락으로 고정한다는 의미입니다.</div><div>&nbsp;</div><div>UPDLOCK은 대상 테이블에 배타적락(Exclusive Lock)을 설정하도록 합니다.</div><div>일반적으로 select를 하고 바로 update를 하고 싶은 경우 다른 사용자의 update문에 의해 간섭받지 않도록 하고 싶은 경우 사용합니다.</div><div>&nbsp;</div><div>다음을 참고하세요.</div><div><a href="http://www.dbguide.net/dbqa/dbqa111003.jsp?catenum=null&amp;page=1&amp;idx=8594">http://www.dbguide.net/dbqa/dbqa111003.jsp?catenum=null&amp;page=1&amp;idx=8594</a></div><div>&nbsp;</div><div>&nbsp;</div><div>그리고 한가지 더... Sybase와 MS SQL이 출신이 같은건 아시죠?</div><div>그런 이유로 Sybase도 Select문 수행시 Shared Lock이 걸리게 되는데...</div><div>Sybase의 경우는 Select문 제일 뒤에 "isolation 0" 을 적어 주시면 됩니다.</div><div>&nbsp;</div><div>select * from T1 <font color="#ff0000">isolation 0</font></div><div>&nbsp;</div><div>이런식이죠... 뭐...</div><div>도움이 되셨길... ^^;<br><br><br><fieldset><legend>Creative Commons License</legend><table><tbody><tr><td><a href="http://creativecommons.org/licenses/by-nc-sa/2.0/kr/" rel="license"><img name="target_resize_image[]" onclick="image_window(this)" style="cursor: pointer;" alt="Creative Commons License" src="http://i.creativecommons.org/l/by-nc-sa/2.0/kr/88x31.png"> </a></td><td>이 저작물은 <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/kr/" rel="license">크리에이티브 커먼즈 코리아 저작자표시-비영리-동일조건변경허락 2.0 대한민국 라이센스</a>에 따라 이용하실 수 있습니다. </td></tr><tr><td colspan="2" align="middle">Copyright <a href="mailto:nicholas@naver.com">조희창(Nicholas Jo)</a>. Some rights reserved. <a href="http://www.nicklib.com/">http://www.nicklib.com</a></td></tr></tbody></table></fieldset> </div><div><br></div></span>                        <!-- 테러 태그 방지용 -->                </td></tr></tbody></table><br> var md5_norobot_key = 'd7264104673c2480812c46b1af9875bd'; // 글자수 제한var char_min = parseInt(0); // 최소var char_max = parseInt(0); // 최대<!-- 코멘트 리스트 --><a name="c_12"></a>    <table width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td><br></td>    <td width="100%">        <table width="100%" cellpadding="0" cellspacing="0">        <tbody><tr>            <!-- 이름, 아이피 -->            <td><strong><span class="member">푸우</span></strong></td>            <!-- 링크 버튼, 코멘트 작성시간 -->            <td align="right">                                                                &nbsp;&nbsp;09-02-13 20:46</td>        </tr>        </tbody></table>        <table style="border: 1px solid rgb(187, 187, 187); background: none repeat scroll 0% 0% rgb(248, 248, 249);" width="100%" cellpadding="0" cellspacing="0">        <tbody><tr>                                        <td colspan="2" style="line-height: 150%; padding: 7px;">                <!-- 코멘트 출력 -->                <div style="font-size: 12px;"><span class="ct lh">HOLDLOCK : 필요한 테이블, 행 또는 데이터 페이지가 더 이상 필요 없게 되자마자<br><br>&nbsp;해제하지 않고 트랜잭션이 완료될 때까지 공유 잠금을 보유한다. HOLDLOCK은 SERIALIZABLE과 같은 의미. <br><br>NOLOCK : 공유 잠금을 실행하거나 단독 잠금을 유지하지 않음. 이 옵션을 적용하면 커밋되지 않은 트랜잭션이나 읽는 중 롤백된 페이지 집합을 읽을 수 있음. 커밋되지 않은 읽기가 가능합니다. SELECT 명령문에만 적용됨.. <br><br>PAGLOCK 주로 단일 테이블 잠금이 취해지는 곳에서 페이지 잠금을 사용함. <br><br>READCOMMITTED : READ COMMITTED 격리 수준에서 실행되는 트랜잭션과 같은 잠금 방법을 사용하여 스캔을 수행함. 기본적으로, SQL Server 2000은 이 격리 수준에서 실행됨<br><br>READPAST : 잠겨 있는 행을 건너뜀 이 옵션을 사용하면 다른 트랜잭션이 이러한 행에 대해 잠금을 해제할 때까지 기다리지 않고 다른 트랜잭션에 의해 잠겨 있는 행을 건너뜀. 그렇지 않으면 일반적으로 결과 집합에 나타남. READPAST 잠금 참고는 READ COMMITTED 격리 수준에서 작동하는 트랜잭션에만 적용되며 행 수준 잠금 뒤만 읽음. SELECT 문에만 적용됨<br><br>READUNCOMMITTED == NOLOCK<br><br>REPEATABLEREAD : REPEATABLE READ 격리 수준에서 실행되는 트랜잭션과 같은 잠금 방법으로 스캔을 수행함. <br><br>ROWLOCK : 성긴 페이지 잠금 및 테이블 수준의 잠금 대신 행 수준 잠금을 사용함<br><br>RERIALIZABLE : SERIALIZABLE 격리 수준에서 실행되는 트랜잭션과 같은 잠금 방법으로 스캔을 수행함. HOLDLOCK과 같음<br><br>TABLOCK : 세부적인 행 또는 페이지 수준 잠금 대신 테이블 잠금을 사용함. SQL Server는 명령문이 끝날 때까지 이 잠금을 보유함. 그러나 HOLDLOCK을 함께 지정했으면 트랜잭션이 끝날 때까지 잠금이 보유됨. <br><br>TABLOCKX : 테이블에 대해 단독 잠금을 사용함. 이 잠금을 사용하면 다른 트랜잭션이 테이블을 읽거나 업데이트할 수 없고 명령문이나 트랜잭션이 끝날 때까지 보유됨<br><br>UPDLOCK : 테이블을 읽는 중 공유 잠금 대신 업데이트 잠금을 사용하며 명령문이나 트랜잭션이 끝날 때까지 보유됩니다. UPDLOCK을 사용하면 다른 트랜잭션이 읽는 것을 차단하지 않고 데이터를 읽을 수 있고 마지막으로 읽은 후 데이터가 변경되지 않으며 나중에 업데이트할 수 있습니다. <br><br>XLOCK : 명령문에 의해 처리되는 모든 데이터에 대해 트랜잭션이 끝날 때까지 보유될 단독 잠금을 사용합니다. 이 잠금은 PAGLOCK 또는 TABLOCK으로 지정할 수 있으며 이 경우 단독 잠금이 해당 세부성 수준에 적용됩니다. <br><br>&nbsp;<br><br>&nbsp;<br><br>PS) nolock에 대한 추가 설명<br><br>NOLOCK 힌트에 대해 설명해보겠습니다. NOLOCK힌트는 자주 사용될 만한 힌트입니다.<br>SQL Server의 트랜잭션의 고립화 수준(ISOLATION LEVEL)에는 4가지가 있습니다.<br>그 중에 SQL Server의 기본 고립화 수준은 READ COMMITTED 수준입니다.<br>READ COMMITTED 는 어느 한쪽에서 데이터에 대해 업데이트를 수행하고 완료(커밋)를 하기 전까지는 다른 한쪽에서 해당 데이터에 대해 SELECT를 할 수 없음을 뜻합니다.<br>반면 고립화 수준중에 가장 낮은 READ UNCOMMITTED 는 다른 트랜잭션에서 업데이트 하고 있는 데이터를 읽을 수 있는 고립화 수준입니다.<br>NOLOCK이란, 해당 SELECT문을 READ UNCOMMITTED 수준으로 읽겠다는 것입니다.<br>SQL Server의 기본이 READ COMMITTED 이므로 어느 한쪽에서 트랜잭션을 오래 가지고 간다면(해당 트랜잭션은 데이터 변경을 수행합니다.) 다른 세션들은 데이터를 읽지 못하는 현상이 발생 될 수 있습니다. 이럴 경우, 해당 데이터의 중요도에 따라, NOLOCK을 지정해서 데이터가 커밋되지 않은채로 읽을 수 있는 것이죠.<br><br>출처: <a href="http://www.dbguide.net/dbqa/dbqa111003.jsp?catenum=null&amp;page=1&amp;idx=8594" target="_blank">http://www.dbguide.net/dbqa/dbqa111003.jsp?catenum=null&amp;page=1&amp;idx=8594</a></span></div></td></tr></tbody></table></td></tr></tbody></table><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

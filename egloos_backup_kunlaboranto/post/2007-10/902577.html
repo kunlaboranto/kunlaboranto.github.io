@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] [ORACLE 관련] 부팅시 오라클 자동 실행 방법</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-10-23 02:24:26</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] [ORACLE 관련] 부팅시 오라클 자동 실행 방법</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://www.e-server.co.kr/gzboard.php?code=techqna&amp;mode=gz_read&amp;Page=9&amp;no=142<br><br>리눅스에서 <font style="line-height: 150%;">/var/lock/subsys 경로가 없으면 안되는 듯 합니다.</font><br><br><table bordercolordark="white" bordercolorlight="#CCCCCC" border="1" cellspacing="0" width="95%"><tbody><tr><td class="txt" align="center" bgcolor="WHITE" height="25" width="70"><b>제목</b></td><td colspan="5" class="txt" bgcolor="WHITE" height="25" width="380">&nbsp;&nbsp;<b>[ORACLE 관련] 부팅시 오라클 자동 실행 방법</b></td></tr><!--TR HEIGHT=22--><tr><td class="txt" align="center" bgcolor="WHITE" width="90"><b>아이디</b></td><td class="txt" align="center" bgcolor="WHITE" width="100">if (1 < 5) document.write("<b>itmoa</b>");else document.write("itmoa");<b>itmoa</b>&nbsp;</td><td class="txt" align="center" bgcolor="WHITE" width="70"><b>등록일</b></td><td class="comment" align="center" bgcolor="WHITE" width="105">2005/11/03 09:15</td><td class="txt" align="center" bgcolor="WHITE" width="55"><b>조회</b></td><td class="comment" align="center" bgcolor="WHITE" width="40">334</td><!--<tr><td height="25" align="center" bgcolor="'WHITE'" class="txt"><b>홈페이지</b></td><td colspan="5" height="25" bgcolor="'WHITE'" class="txt">&nbsp;&nbsp;<a href="''" target="'_blank'"></a></td></tr>--><!--<tr><td height="25" align="center" bgcolor="'WHITE'" class="txt"><b>Link</b></td><td colspan="5" height="25" bgcolor="'WHITE'" class="txt">&nbsp;&nbsp;<a href="''" target="'_blank'"></a></td></tr>--></tr><tr><td colspan="6" bgcolor="WHITE" height="300" valign="top"><table border="0" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td align="center"><br></td><td><br></td></tr><tr><td class="txt" height="300" valign="top"><br><font style="line-height: 150%;">제가 쓰고 있는 설정 file입니다.<br><br>/etc/rc.d/init.d 밑에 두고 ntsysv로 설정해서 쓰세요.<br><br> <br><br>#!/bin/sh<br>#<br># Startup script for oracle<br>#<br><br># Source function library.<br>. /etc/rc.d/init.d/functions<br><br># See how we were called.<br>case "$1" in<br>start)<br>echo "Starting oraHFC"<br>echo "==============="<br>su - oracle -c "svrmgrl &lt;&lt; __EOF__<br>connect internal<br>startup<br>__EOF__"<br><br>echo ""<br>echo "Starting TNS listener"<br>echo "====================="<br>su - oracle -c "lsnrctl start"<br>touch /var/lock/subsys/oraHFC<br>;;<br><br>stop)<br>echo ""<br>echo "Shutting down TNS listener"<br>echo "=========================="<br>su - oracle -c "lsnrctl stop"<br><br>echo ""<br>echo "Shutting down oraHFC"<br>echo "===================="<br>su - oracle -c "svrmgrl &lt;&lt; __EOF__<br>connect internal<br>shutdown immediate<br>__EOF__"<br>rm -f /var/lock/subsys/oraHFC<br>;;<br><br>restart)<br>$0 stop<br>$0 start<br>;;<br><br>*)<br>echo "Usage: $0 {start|stop|restart}"<br>exit 1<br>esac<br>exit 0<br><br>출처 : 데이터베이스사랑넷</font></td></tr></tbody></table></td></tr></tbody></table><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 솔라리스에서 fuser 사용하기</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-11-27 02:10:43</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 솔라리스에서 fuser 사용하기</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">AIX에서도 가능<br>$ fuser /home2/altibase/altibase_home/logs/logfile0<br>/home2/altibase/altibase_home/logs/logfile0:&nbsp; 1290354<br><br><font color="#474747">주: 어떤 파일이든 제거에 앞서, 파일이 현재 활동중인 사용자 프로세스에 의해 사용 중에 있는지 확인한다. 파일이 사용자 프로세스에 의해 현재 사용중인지 확인하기 위해서는 다음 명령을 실행한다.<br># fuser &lt; filename &gt; <br>여기서 &lt; filename &gt;은 제거하고자 하는 파일 이름이다. <br><br></font><font color="#474747">파일이 제거시 "open" 상태인 경우에는, <span style="font-weight: bold;">디렉토리 리스팅으로부터만 제거됩니다. 즉 파일에 할당된 블록은 파일을 열고 있는 프로세스가 kill되고 나서야만 비워진다.</span></font><br><br><br>From : http://www.inet.co.kr/faq/stories.php?story=03/11/07/8169274<br><font size="2" color="white"><b>솔라리스에서 fuser  사용하기</b></font><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td background="http://www.inet.co.kr/faq/backend/template/shanked/images/shadow.gif"><img src="http://www.inet.co.kr/faq/backend/template/shanked/images/speck.gif" width="1" height="3"></td></tr></tbody></table><font size="2">분류 : <a href="http://www.inet.co.kr/faq/stories.php?topic=10">UNIX System</a> <a target="_BLANK" href="http://www.inet.co.kr/faq/print.php?story=03/11/07/8169274"><img src="http://www.inet.co.kr/faq/images.d/print.gif" alt="인쇄용 페이지" width="15" border="0" height="11" hspace="3"></a> <a href="http://www.inet.co.kr/faq/friend.php?story=03/11/07/8169274"><img src="http://www.inet.co.kr/faq/images.d/friend.gif" alt="본문 email로 보내기" width="15" border="0" height="11" hspace="3"></a> 글쓴이 : <a href="http://www.inet.co.kr/faq/profiles.php?Author=%B0%FC%B8%AE%C0%DA&amp;AuthorEmail=vasb@varg.pb.xe&amp;AuthorURL=http%3A%2F%2Fwww.inet.co.kr">관리자</a> 글쓴날 : 2003년 11월 07일 오후 03:56</font><font size="2"> <br><br>fuser라는 명령어는 주로 많이 사용하지는 않지만<br>아주 유용하다...<br><br>fuser은 예를 들어서 설명하겠다...<br> /var 라는 디렉토리에 현재 어떤 데몬이나 유저가 접근해 있는지<br>알고 싶을때, 또는 nfs로 마운트 되어 있는 디렉토리를 umount하고<br>싶은데 umount가 안될때 사용하면 좋다..<br>사용밥법은 다음과 같다.<br><br>fuser -cu /var 하면 현재 /var라는 디렉토리를 사용하고 있는<br>유저나 데몬의  process가 열거된다... 그 열거된 pid를 보고<br>어떤 데몬이 사용하고 있고 어떤 유저가 사용하고있는지 알수 있다.<br><br>fuser -ck /var 하면 /var라는 디렉토리를 사용하고 있는<br>유저나 데몬의 process id 를 모두 'kill -9' 와 같은 행동을 하게 된다.<br>그래서, 솔라리스 2.7이하의 os 에서는 매우 유용하다.<br>솔라리스 8,9 에서는 umount -f하면 되지만 그이하버전에서는<br>-f옵션이 없기 때문에 fuser를 이용하면 좋다.</font><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

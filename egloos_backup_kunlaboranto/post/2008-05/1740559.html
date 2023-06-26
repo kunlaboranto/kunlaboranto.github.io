@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>AIX 사이트 모음.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-05-29 06:15:15</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">AIX 사이트 모음.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">+ IBM WiKi<br>http://www-941.ibm.com/collaboration/wiki/display/WikiPtype/Home<br><br>+ AIX Mon Tool<br>http://www.ibm.com/developerworks/forums/forum.jspa?forumID=749<br>http://www.ibm.com/developerworks/views/aix/libraryview.jsp?search_by=Performance<br><br>+<br>http://www-128.ibm.com/developerworks/kr/aix/newto/<br><br>From : http://www.ibm.com/developerworks/kr/library/au-unix-sysadmin1.html (초급)<br><br><span style="font-weight: bold;">시스템 관리 툴킷: 프로세스 관리 기법</span><br><br>...<br>RSS(Resident Set Size)<br>...<br><br><p>예를 들어 <a href="http://www.ibm.com/developerworks/kr/library/au-unix-sysadmin1.html#listing14">Listing 14</a>는 <code>bash</code> 프로세스가 사용하는 물리적 메모리 양과 가상 메모리 양을 합한 결과다.</p>            <br><a name="listing14"><b>Listing 14. <code>ps</code>와 <code>awk</code>로 메모리 사용량 계산하기</b></a><br><table style="width: 624px; height: 88px;" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code-outline"><pre class="displaycode"><font size="2">                <br><span style="background-color: rgb(192, 192, 192);">$ ps -A -o rss,vsz,command|grep bash | \</span><br style="background-color: rgb(192, 192, 192);"><span style="background-color: rgb(192, 192, 192);">     awk '{rss += $1; vsz += $2 } END { print "Real: ",rss, "Virtual: ",vsz }'</span><br style="background-color: rgb(192, 192, 192);"><span style="background-color: rgb(192, 192, 192);">Real:  4004 Virtual:  305624</span></font><br></pre></td></tr></tbody></table>위와 같은 정보는 메모리 사용량 문제와 스왑 공간 사용량 문제를 진단할 때 특히 유용하다.<br><br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>getTimeDiff 함수 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:45:37</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">getTimeDiff 함수 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>struct timeval g_rec_Start,g_rec_End;<br>struct timezone g_tz;<br>int g_time_flag=0;<br>char g_tmp_buf[80];<br>char *getTimeDiff()<br>{<br>&nbsp;&nbsp;&nbsp;gettimeofday(&amp;g_rec_End, &amp;g_tz);<br>&nbsp;&nbsp;if(g_time_flag==0)<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;strcpy(g_tmp_buf,"Start");<br>&nbsp;&nbsp;&nbsp;g_time_flag=1;<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;else <br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;g_rec_Start.tv_sec=g_rec_End.tv_sec-g_rec_Start.tv_sec;<br>&nbsp;&nbsp;&nbsp;g_rec_Start.tv_usec=g_rec_End.tv_usec-g_rec_Start.tv_usec;<br>&nbsp;&nbsp;&nbsp;&nbsp; if(g_rec_Start.tv_usec&lt;0) <br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;g_rec_Start.tv_usec+=1000000l;<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;g_rec_Start.tv_sec--;<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;} <br>&nbsp;&nbsp;sprintf(g_tmp_buf,":%4ld:%2ld.%ld",<br>&nbsp;&nbsp;g_rec_Start.tv_sec/60,g_rec_Start.tv_sec%60,g_rec_Start.tv_usec);&nbsp;<br>&nbsp;&nbsp;} <br>&nbsp;&nbsp;g_rec_Start=g_rec_End; <br>&nbsp;return g_tmp_buf;&nbsp;<br>}&nbsp;&nbsp;<br>#include "../public/PubTools.h"<br>char *Tools::GetDateTime(char *str_date_time,time_t *pCnvtTime)<br>{<br>&nbsp;char buf[256];<br>&nbsp;time_t the_time;<br>&nbsp;struct tm tm_time;<br>&nbsp;if(pCnvtTime==NULL)<br>&nbsp;{<br>&nbsp;&nbsp;time(&amp;the_time);<br>&nbsp;&nbsp;pCnvtTime=&amp;the_time;<br>&nbsp;}<br>&nbsp;localtime_r(pCnvtTime,&amp;tm_time);<br>&nbsp;<br>&nbsp;strftime(buf,256,"%Y-%m-%d %H:%M:%S",&amp;tm_time);<br>&nbsp;/*printf("%s \n",buf); */<br>&nbsp;strcpy(str_date_time,buf);<br>&nbsp;return str_date_time;</p><p>}</p><p><br>std::string &amp;Tools::Replace(const char *pStr,const char *pSStr,const char *pRStr,std::string &amp;tStr)<br>{<br>&nbsp;tStr="";<br>&nbsp;<br>&nbsp;if(pSStr==NULL||pStr==NULL)<br>&nbsp;{&nbsp;<br>&nbsp;&nbsp;if(pStr!=NULL)<br>&nbsp;&nbsp;tStr=pStr;<br>&nbsp;&nbsp;return tStr;<br>&nbsp;}<br>&nbsp;<br>&nbsp;return tStr;<br>}</p><p>char *Tools::Replace(char *pStr,const char *pSStr,const char *pRStr,int nBufSize)<br>{<br>&nbsp;if(pSStr==NULL||pStr==NULL||pSStr==pRStr)<br>&nbsp;&nbsp;return pStr;<br>&nbsp;int sLen=(int)strlen(pSStr);<br>&nbsp;if(sLen==0)<br>&nbsp;&nbsp;return pStr;<br>&nbsp;int rLen=0;<br>&nbsp;if(pRStr!=NULL)<br>&nbsp;{&nbsp;<br>&nbsp;&nbsp;rLen=(int)strlen(pRStr);<br>&nbsp;&nbsp;if(strcmp(pSStr,pRStr)==0)<br>&nbsp;&nbsp;&nbsp;return pStr;<br>&nbsp;}<br>&nbsp;int nCurSize=strlen(pStr),tPos;<br>&nbsp;char *Strp=pStr,*fndp;<br>&nbsp;do<br>&nbsp;{<br>&nbsp;&nbsp;fndp=strstr(Strp,pSStr);<br>&nbsp;&nbsp;if(fndp!=NULL)<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;tPos=(int)(fndp-pStr);<br>&nbsp;&nbsp;&nbsp;if(rLen&gt;sLen)<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;//int i=0;<br>&nbsp;&nbsp;&nbsp;&nbsp;if(nBufSize&gt;0&amp;&amp;nCurSize+rLen-sLen&gt;=nBufSize)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return NULL;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;for(int i=nCurSize;i&gt;=(tPos+sLen);i--)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pStr[i+rLen-sLen]=pStr[i];<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;if(rLen&gt;0)<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;memcpy(fndp,pRStr,rLen);<br>&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;if(rLen&lt;sLen)<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;for(int i=tPos+sLen;i&lt;=nCurSize;i++)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pStr[i-sLen+rLen]=pStr[i];<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;nCurSize=nCurSize-sLen+rLen;<br>&nbsp;&nbsp;&nbsp;Strp=fndp+rLen;<br>&nbsp;&nbsp;}<br>&nbsp;}<br>&nbsp;while(fndp!=NULL);<br>&nbsp;return pStr;<br>}</p><p>&nbsp;</p><p>int Tools::GetSubStr(const char *&amp;pSrc,char ch,char *pBuf,int nBufSize)<br>{<br>&nbsp;if(pBuf==NULL||pSrc==NULL)<br>&nbsp;&nbsp;return -1;<br>&nbsp;const char *pStr=strchr(pSrc,ch);<br>&nbsp;<br>&nbsp;int sSize=0;<br>&nbsp;if(pStr==NULL)<br>&nbsp;{<br>&nbsp;&nbsp;sSize=strlen(pSrc);<br>&nbsp;}<br>&nbsp;else<br>&nbsp;{<br>&nbsp;&nbsp;sSize=pStr-pSrc;<br>&nbsp;}<br>&nbsp;if(sSize&gt;=nBufSize&amp;&amp;nBufSize&gt;0)<br>&nbsp;{<br>&nbsp;&nbsp;return -2;<br>&nbsp;}<br>&nbsp;&nbsp;strncpy(pBuf,pSrc,sSize);<br>&nbsp;&nbsp;pBuf[sSize]=0;<br>&nbsp;if(pStr!=NULL)<br>&nbsp;{<br>&nbsp;&nbsp;pSrc=pStr+1;<br>&nbsp;}<br>&nbsp;else<br>&nbsp;&nbsp;pSrc+=sSize;</p><p>&nbsp;if(sSize==0&amp;&amp;pStr==NULL)<br>&nbsp;&nbsp;return 0;<br>&nbsp;return 1;<br>}</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

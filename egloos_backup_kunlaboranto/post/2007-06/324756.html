@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[HPUX] 커널 권장 설정</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-19 19:50:18</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[HPUX] 커널 권장 설정</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>알티베이스 관련 커널 파라미터 설정 권장 값입니다.</p><p>&lt; HP 커널 파리미터 설정 &gt;<br>shmmax 2G <br>shmmni 500 <br>shmseg 200<br>semmap semmni + 1<br>semmni 1000<br>semmns 4096<br>semmnu semmni <br>semume semmni<br>max_thread_proc 600 <br>maxusers 64<br>maxdsiz 1G<br>maxdsiz_64bit : 최대 알티베이스 프로세스 사이즈(memory db size + a)보다 크게 설정. 권장 값은 시스템 메모리의 80% 이상<br>dbc_max_pct : 10 미만</p><p>[ CASE-6411 ]</p><p>HP 환경변수관련해서 정리합니다. InstallShield에서 참조하십시오.<br>결론적으로 인스톨시에는 PTHREAD_DISABLE_HANDOFF=ON 만 셋팅하면 될 것 같습니다.</p><p>PTHREAD_SHARED_MUTEX_OLDSPIN = 1 <br>-이 값은 hp-ux 11i v2( 11.23 이상 )에만 해당되는 값입니다.<br>&nbsp;저 값을 셋팅함으로써 특정패치( PHCO-33675, PHCO-34718 )가 적용되었을 때 공유 MUTX관련해서<br>쓰레드 프로그램의 성능을 높인다고 합니다.</p><p>PERF_ENABLE=1<br>PTHREAD_FORCE_SCOPE_SYSTEM=1<br>- 이 두 값은 쓰레드 프로그램에서 1X1 쓰레드를 이용하게 한다고 하는군요.<br>&nbsp; 알티베이스는 내부적으로 SYSTEM SCOPE로 쓰레드를 생성할 것이기 때문에 따로 할 필요는 없어보입니다.<br>&nbsp; 이 값이 셋팅될 경우 pthread_suspend()가 불려지면 hang이 발생한다는 hp bug가 있습니다.<br>&nbsp; 따라서, 운영중에서 사용할 필요가 없을 듯 합니다.(JVM에서 pthread_suspend가 불려집니다. )</p><p>PTHREAD_DISABLE_HANDOFF=ON <br>- Multi CPU 환경에서 쓰레드 프로그램의 성능을 높이기 위한 값입니다. <br>&nbsp; 셋팅해서 손해볼 것은 없을 듯하니 Default로 Setting하면 좋을 듯.</p><p>_M_ARENA_OPTS 20:32<br>이 값에 대한 Man내용은 아래와 같습니다.<br>_M_ARENA_OPTS can be used to tune the number of arenas and the arena expansion factor. In general, <br>the more threads in an application, the more arenas should be used for better performance. <br>Expansion factor controls how many pages to expand each time, assuming the page size is 4096 bytes. <br>The number of arenas can be from 4 to 64 for threaded applications. For non-threaded <br>applications, only one arena is used. If the environment variable is not set, or the number of <br>arenas is set to be out of the range, the default number of 8 will be used. The expansion factor is <br>from 1 to 4096, default value is 32. Again, if the factor is out of the range, the default value <br>will be used. To use _M_ARENA_OPTS, $ export _M_ARENA_OPTS=8:32 This means the number of arenas is <br>8, and the expansion size is 32*4096 bytes. In general, the more arenas you use, the smaller the <br>expansion factor should be, and vice versa.</p><p>즉, Arena는 heap 메모리 관리 공간인데 Multi로 가져간다는 거고 Default는 8개입니다.<br>뒤의 숫자는 Application에서 malloc()이 발생하고 Arena에 free공간이 없을 때 시스템이 활당을 받는 단위<br>입니다. <br>20:32의 값은 특정 사이트에서 확인한 후 얻은 값인데 당시 수행된 PROCESS갯수나 CPU갯수등과 밀접한 관<br>련이 있습니다. <br>따라서 일반적인 상황에서는 Default값을 사용하고 성능이 문제가 된다면 이 값들을 변경 <br>시켜가면서 해당 시스템에서 얻어야 할 값으로 보입니다.때에....</p><p>&nbsp;</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

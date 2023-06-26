@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Table Schema Size를 구하는 SQL 은 없는지요?</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-27 23:35:24</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Table Schema Size를 구하는 SQL 은 없는지요?</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://altibase.egloos.com/593971" title="">[펌] 테이블 크기 계산과 관련한 의문점</a><br><br>From : http://database.sarang.net/?inc=read&amp;aid=21059&amp;criteria=oracle&amp;subcrit=&amp;id=&amp;limit=20&amp;keyword=dba_tables&amp;page=3<br><br>## Table Schema Size를 구하는 SQL 은 없는지요?<br><br><p>예를 들어 설명하겠습니다.<br><br>Table Name : AAA<br>Column&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : A1 NUMBER(10)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A2 CHAR(4)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A3 VARCHAR2(125)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A4 DATE<br><br>위와 같이 설정된 Table 이 있을 경우,<br><br>각 컬럼의 합 = A1(10) + A2(4) + A4(125) + A4(7)<br>(VARCHAR2 는 그냥 처음 설정한 값으로 함)</p><p><br>이와 같이, 각 컬럼의 합을 구할 수 있는 SQL 문이 있는지 알고 싶습니다.<br>(사용되는 Table 의 크기를 구하는 SQL 은 인터넷을 통해 보았으나..<br>그것을 찾는 것은 아닙니다.)<br><br>답변 부탁드립니다..수고하세요^^</p><div class="commenttitle">이 글에 대한 댓글이 총 4건 있습니다.</div><div class="commentrow"><div class="commentbody"><p>정확히 어떤 용도로 사용하시려고 table size를 구하지는 잘모르겠지만</p><p>아래의 답변이 도움이 되셨으면 좋겠네요..^^</p><p>설명하신 size 구하는데 있어서...</p><p>varchar2 같은 같은 경우 가변길이여서 실제 데이타가 들어 가는 만큼</p><p>사이즈가 잡힌다는 건 아실겁니다.</p><p>그래서 row별로 합산한 사이즈가 서로 상이하게 되죠..</p><p>만약 서로 다른 row size의 평균 길이를 원하신다면</p><p>user_tables / all_tables / <span style="color: brown; background-color: yellow; font-weight: bold;">dba_tables</span> 중 하나를 조회 해 보시면 됩니다</p><p>-----------------------------------------------------------</p><p>select avg_row_len from user_tables where table_name = '테이블명';</p><p>------------------------------------------------------------</p><p>위 쿼리를 조회 해보면 해당 값이 나올 수 도 있고 안날올 수도 있습니다</p><p>안나오는 경우는 해당 테이블이 대해 analyze하면 해당 값이 조회될 겁니다</p><p>&nbsp;</p><p>&nbsp;</p></div><div class="commentinfo">박승무님이 2004-12-14 18:02:11에 작성한 댓글입니다.<br>이 댓글은 2004-12-14 18:03:21에 마지막으로 수정되었습니다. <a href="'javascript:doReply(""html/getpasswd.php?inc="edit&iscomment=1&pid=21059&cid=32774&page=3"")' title="이 댓글을 수정합니다." class="minitexticon"> Edit</a> <a href="'javascript:getpasswd(""delcomment", "32774")' title="이 댓글을 삭제합니다." class="minitexticon">Ｘ</a></div></div><div class="commentrow"><div class="commentbody"><p>단순히 칼럼길이의 합을 구하는 것이라면 아래 쿼리 사용해 보세요</p><p>----------------------------------------------------------</p><p>select max(table_name), sum(data_length)<br>from user_tab_columns<br>group by table_name</p><p>----------------------------------------------------------</p><p>참고로, user_tab_columns는 오라클에 접속한 계정이 접근할 수 있는 권한을 갖고 있는 테이블들의 칼럼에 대한 정보를 갖고 있는 오라클 객체 입니다</p></div><div class="commentinfo">박승무님이 2004-12-14 18:30:09에 작성한 댓글입니다.<br>이 댓글은 2004-12-14 18:42:57에 마지막으로 수정되었습니다. <a href="'javascript:doReply(""html/getpasswd.php?inc="edit&iscomment=1&pid=21059&cid=32778&page=3"")' title="이 댓글을 수정합니다." class="minitexticon"> Edit</a> <a href="'javascript:getpasswd(""delcomment", "32778")' title="이 댓글을 삭제합니다." class="minitexticon">Ｘ</a></div></div><p>-- 테이블 사이즈 DDL기준</p><p>Select /*+ CHOOSE */ cols.column_name as Name, nullable,<br>&nbsp;data_type as Type,<br>&nbsp;Decode( data_type, 'NUMBER', data_precision + data_scale, data_length ) Length,<br>&nbsp;data_precision Precision, data_scale Scale, data_length dlength <br>, ' ' comments <br>&nbsp;FROM <br>&nbsp;user_tab_columns cols<br>&nbsp;where <br>&nbsp;cols.table_name =&nbsp;'테이블명'<br>&nbsp;order by column_id</p><p>&nbsp;</p><p>&nbsp;</p><p>-- index 사이즈 DDL 기준</p><p>&nbsp; select sum(decode(data_type, 'DATE',&nbsp;&nbsp;&nbsp;&nbsp; 7,<br>&nbsp; 'CHAR',&nbsp; data_length,&nbsp; 'VARCHAR2', decode(sign(data_length)-250,<br>&nbsp; -1, .7*data_length+3,&nbsp; .7*data_length+1),<br>&nbsp; 'NUMBER',&nbsp;&nbsp; floor(nvl(data_precision,38)/2)+2 )&nbsp; )<br>&nbsp;&nbsp;&nbsp; from all_tab_columns xxx<br>&nbsp;&nbsp;&nbsp; where owner = :tabowner and table_name = :tabname <br>&nbsp;&nbsp; and exists (select 1 from all_ind_columns yyy<br>&nbsp; where index_owner = :idxowner and index_name = :idxname <br>&nbsp; and table_owner = :tabOwner and table_name = :tabname <br>&nbsp; and xxx.column_name = yyy.column_name&nbsp;&nbsp; )</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>pctused,pctfree 값음 고려되지 않은 사이즈 입니다.</p><p>&nbsp;</p><p>pctused 값이 60%라면, 계산값/(60/100) 을 한 값이 실제 차지하는 사이즈 일것입니다. 더세세하게 가면 한없이 고려사항이 많으니 대략 이렇게 가시면 될것입니다.</p><p>&nbsp;</p><p>참 위의 sql은 토드를 사용해서 뽑은것입니다.</p><p>spool sql을 on으로 해놓은 상태해서 원하는것을 해보면 해당 sql을 알수 있습니다.</p><p>&nbsp;</p><p>데이터 사이즈관련 산출물 만들때 저는 주로 이것을 사용합니다. 물론 erwin 같은 툴을 이용하기도 하지만</p><p>&nbsp;</p><p>틀린것이 있으면 언제나 리플주세요.</p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

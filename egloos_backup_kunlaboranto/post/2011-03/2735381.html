@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>@임옥섭</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-30 13:48:45</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">@임옥섭</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><span style="font-family: '돋움','Dotum';">갱신 - 2011년 3월 30일</span><br style="font-family: '돋움','Dotum';">등록<span style="font-family: '돋움','Dotum';"> - 2011년 3월 30일</span><br><br><img src='./2735381/e0040769_4d92bfc101867.jpg'><br style="font-family: '돋움','Dotum';"><span style="font-family: '돋움','Dotum';">* 오늘</span><br style="font-family: '돋움','Dotum';"><span style="font-family: '돋움','Dotum';">&nbsp;&nbsp; 나의 추도사 만들기, 동료와 FSA, 집에서 약간만 더 부지런하기</span><br style="font-family: '돋움','Dotum';"><br style="font-family: '돋움','Dotum';"><span style="font-family: '돋움','Dotum';">* 연락처</span><br style="font-family: '돋움','Dotum';"><span style="font-family: '돋움','Dotum';">&nbsp; okseop7_AT_gmail / kunlaboranto_AT_gmail</span><br style="font-family: '돋움','Dotum';"><br style="font-family: '돋움','Dotum';"><span style="font-family: '돋움','Dotum';">* 위치</span><br style="font-family: '돋움','Dotum';"><span style="font-family: '돋움','Dotum';">&nbsp;&nbsp; (잠) 문래역 1번출구</span><br style="font-family: '돋움','Dotum';"><span style="font-family: '돋움','Dotum';">&nbsp;&nbsp; (일) 3월 현재 여의도 출근아닌 출석.</span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

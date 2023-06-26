@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] HPUX - Attaching to a Running Process to Perform Precise Measurements (chatr)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-24 15:44:44</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] HPUX - Attaching to a Running Process to Perform Precise Measurements (chatr)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a title="" href="http://altibase.egloos.com/340349">[펌] [HPUX] shared library in use possible resolution ( chatr dbg enable ..)</a><br><br>From : <a href="http://docs.hp.com/en/5991-7421/ch13s02.html">http://docs.hp.com/en/5991-7421/ch13s02.html</a><br><br><h1><span style="FONT-SIZE: 100%">Attaching to a Running Process to Perform Precise Measurements (HP-UX only)<br><br><table cellspacing="0" cellpadding="0" width="560" border="0"><tbody><tr><td class="color666666bg" align="middle"><h2 class="colorFFFFFFbld" title="Table of Contents">&nbsp;»&nbsp;<a class="colorFFFFFFbld" href="http://docs.hp.com/en/5991-7421/index.html">Table of Contents</a></h2></td><td class="color666666bg" valign="top" width="5"><img height="23" alt="" src="http://docs.hp.com/img/hpweb_1-2_tab_right.gif" width="5" border="0"></td><td width="2"><img class="decoration" height="1" alt="" src="http://docs.hp.com/img/s.gif" width="2"></td><td class="color666666bg" align="middle"><h2 class="colorFFFFFFbld" title="Glossary">&nbsp;»&nbsp;<a class="colorFFFFFFbld" href="http://docs.hp.com/en/5991-7421/go01.html">Glossary</a></h2></td><td class="color666666bg" valign="top" width="5"><img height="23" alt="" src="http://docs.hp.com/img/hpweb_1-2_tab_right.gif" width="5" border="0"></td><td width="2"><img class="decoration" height="1" alt="" src="http://docs.hp.com/img/s.gif" width="2"></td><td class="color666666bg" align="middle"><h2 class="colorFFFFFFbld" title="Index">&nbsp;»&nbsp;<a class="colorFFFFFFbld" href="http://docs.hp.com/en/5991-7421/ix01.html">Index</a></h2></td><td class="color666666bg" valign="top" width="5"><img height="23" alt="" src="http://docs.hp.com/img/hpweb_1-2_tab_right.gif" width="5" border="0"></td><td><img class="decoration" height="1" alt="" src="http://docs.hp.com/img/s.gif" width="10"></td></tr></tbody></table><div class="navheader"><table cellspacing="0" cellpadding="0" width="540" summary="Navigation header" border="0"><tbody><tr><td><img height="1" alt="spacer" src="http://docs.hp.com/img/s.gif" width="1"></td><td><img height="1" alt="spacer" src="http://docs.hp.com/img/s.gif" width="1"></td><td><img height="1" alt="spacer" src="http://docs.hp.com/img/s.gif" width="1"></td></tr><tr class="decoration"><td bgcolor="#cccccc" colspan="3" height="1"><img height="1" alt="spacer" src="http://docs.hp.com/img/s.gif" width="1"></td></tr><tr class="decoration"><td bgcolor="#ffffff" colspan="3" height="4"><img height="4" alt="spacer" src="http://docs.hp.com/img/s.gif" width="1"></td></tr><tr><td valign="top" align="left" width="40%"><input class="primButton" type="submit" value="«&nbsp;prev" name="btnPrev">&nbsp; </td><th align="middle" width="20%">&nbsp; </th><td valign="top" align="right" width="40%"><input class="primButton" type="submit" value="next&nbsp;»" name="btnNext">&nbsp; </td></tr></tbody></table></div><div class="section" lang="en"><div class="titlepage"><div><div></div></div><div></div></div><a class="indexterm" name="v983744"></a><a class="indexterm" name="v983745"></a><a class="indexterm" name="v983746"></a><p><a name="v983747"></a>You can attach to a running process for precise measurements (which use dynamic instrumentation) until the process ends. The dependent shared libraries of the program must be mapped as private before you can attach to the process to add instrumentation.</p><p><a name="v983748"></a><a class="indexterm" name="d0e13897"></a>Enable private mapping of the shared libraries by using the <span><b class="command">chatr(1)</b></span> command with the <tt class="option"><span style="FONT-FAMILY: Courier New">+dbg enable</span></tt> option on the program file.</p><p><a name="v983749"></a>You can attach to the process for these measurements:</p><div><a name="v983750"></a><ul class="primarybullet" compact><li><div class="listitembody"><p class="list-compact"><tt class="filename"><span style="FONT-FAMILY: Courier New">acount</span></tt></p></div></li><li><div class="listitembody"><p class="list-compact"><tt class="filename"><span style="FONT-FAMILY: Courier New">cgprof</span></tt></p></div></li><li><div class="listitembody"><p class="list-compact"><tt class="filename"><span style="FONT-FAMILY: Courier New">fcount</span></tt></p></div></li><li><div class="listitembody"><p class="list-compact"><tt class="filename"><span style="FONT-FAMILY: Courier New">fcover</span></tt></p></div></li></ul></div><p><a name="v983761"></a>To attach to a process, you must specify the process ID (PID). The syntax is:</p><p><a name="v983762"></a><span><b class="command"><a name="v983763"></a>caliper <i class="replaceable"><tt><span style="FONT-FAMILY: Courier New">measurement</span></tt></i> [<i class="replaceable"><tt><span style="FONT-FAMILY: Courier New">options</span></tt></i>] <i class="replaceable"><tt><span style="FONT-FAMILY: Courier New">pid</span></tt></i></b></span></p><p><a name="v983764"></a>For example:</p><a name="v983765"></a><table><tbody><tr><td><img height="2" alt="" src="http://docs.hp.com/img/s.gif" width="1"></td></tr></tbody></table><table width="100%" bgcolor="#e0e0e0" border="0"><tbody><tr><td><pre class="screen"><tt class="computeroutput">$</tt> <b><span class="userinput">caliper cgprof -t 7654</span></b></pre></td></tr></tbody></table><table><tbody><tr><td><img height="2" alt="" src="http://docs.hp.com/img/s.gif" width="1"></td></tr></tbody></table><p><a name="v983766"></a>To perform precise measurements of a process:</p><div class="procedure"><a name="v983767"></a><ol type="1"><li><a name="v983768"></a><p><a name="v983769"></a>Run <span><b class="command">chatr(1)</b></span> with the <tt class="option"><span style="FONT-FAMILY: Courier New">+dbg enable</span></tt> option on the program you want to measure. For example: </p><a name="v983770"></a><table><tbody><tr><td><img height="2" alt="" src="http://docs.hp.com/img/s.gif" width="1"></td></tr></tbody></table><table width="100%" bgcolor="#e0e0e0" border="0"><tbody><tr><td><pre class="screen"><tt class="computeroutput">$</tt> <b><span class="userinput">chatr +dbg enable ./myprog</span></b></pre></td></tr></tbody></table><table><tbody><tr><td><img height="2" alt="" src="http://docs.hp.com/img/s.gif" width="1"></td></tr></tbody></table></li><li><a name="v983771"></a><p><a name="v983772"></a>Run <tt class="filename"><span style="FONT-FAMILY: Courier New">./myprog</span></tt> and find the process ID of the process.</p></li><li><a name="v983773"></a><p><a name="v983774"></a>Specify the process you want to measure. For example: </p><a name="v983775"></a><table><tbody><tr><td><img height="2" alt="" src="http://docs.hp.com/img/s.gif" width="1"></td></tr></tbody></table><table width="100%" bgcolor="#e0e0e0" border="0"><tbody><tr><td><pre class="screen"><tt class="computeroutput">$</tt> <b><span class="userinput">caliper fprof 7654</span></b></pre></td></tr></tbody></table><table><tbody><tr><td><img height="2" alt="" src="http://docs.hp.com/img/s.gif" width="1"></td></tr></tbody></table><p><a name="v983776"></a>HP Caliper remains attached to the target process until it ends or you type <span class="userinput">Ctrl-C</span>. If you type <span class="userinput">Ctrl-C</span> to stop HP Caliper and generate a report, HP Caliper forcibly terminates all processes that are being measured.</p></li></ol></div></div></span></h1></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

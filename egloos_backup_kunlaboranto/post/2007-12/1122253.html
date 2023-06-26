@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] [리눅스] sar 이용하여 시스템 모니터링하기 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-12-11 19:54:44</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] [리눅스] sar 이용하여 시스템 모니터링하기 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://tunelinux.pe.kr/wikix/index.php?display=Sar<br><br><h1 class="title"><a accesskey="z" class="general" href="http://tunelinux.pe.kr/wikix/index.php?links2=Sar">Sar</a><a href="http://tunelinux.pe.kr/wikix/index.php?:display=Sar">&nbsp;</a></h1><hr size="1"><!--<div align="right"><a href="index.php?edit=Sar">수정</a><br><table cellspacing="1" cellpadding="1" bgcolor="lightgrey"><tr bgcolor="yellow"><td><a href="index.php?WelcomeTune"><b>WelcomeTune</b></a></td></tr></table></div><hr size="0" />--><p class="p" style="margin: 0px;"></p><h1 class="heading">sar  이용하여 시스템 모니터링하기&nbsp;</h1><p class="p"></p><ul class="ul"><li>sysstat 웹 사이트 (<a class="netlink" href="http://perso.wanadoo.fr/sebastien.godard/%29">http://perso.wanadoo.fr/sebastien.godard/)</a></li></ul><p class="p"></p><ul class="ul"><li>sar는 redhat 7.x 에 기본 들어있는 sysstat 패키지에 있는 프로그램이다. sar 프로그램은 시스템의다양한 활동에 대하여 모니터링을 할 수 있는데 모니터링 대상이 상당히 넓은 편이다. 기본값은 CPU 활동에 대한 통계를출력한다. sar는 각종 활동에 대한 통계를 다른 프로그램을 이용하여 파일로 저장하고 통계치를 출력할 수 있는 기능을 제공한다.</li></ul><p class="p"></p><ul class="ul"><li>sar에서 모니터링 가능한 항목은 다음과 같다.<pre class="pre"> - I/O 전송량<br> - 페이징<br> - 프로세스 생성 숫자<br> - 블락 디바이스 활동<br> - 인터럽트<br> - 네트워크 통계<br> - run 큐 및 시스템 부하 평균<br> - 메모리와 스왑 공간 활용 통계<br> - 메모리 통계<br> - CPU 이용도<br> - 특정 프로세스에 대한 CPU 이용도<br> - inode, 파일, 기타 커널 테이블에 대한 상태<br> - 시스템 스위칭 활동(context switch)<br> - 스와핑 통계<br> - 특정 프로세스 통계<br> - 특정 프로세스의 자식 프로세스 통계<br> - TTY 디바이스 활동<br></pre></li></ul><p class="p"></p><ul class="ul"><li>sar 설정하기<pre class="pre"> # cat /etc/cron.d/sysstat <br> # run system activity accounting tool every 10 minutes<br> */10 * * * * root /usr/lib/sa/sa1 1 1<br> # generate a daily summary of process accounting at 23:53<br> 53 23 * * * root /usr/lib/sa/sa2 -A<br></pre></li></ul><p class="p">sa1 는 매10분마다 시스템모니터링한 결과를 /var/log/sa/saxx 파일에 바이너리 형태로 기록한다. xx는 기록하는날짜이다. sa2 -A 는 23시 53분에 바이너리 파일을 읽어서 사람이 편하게 볼 수 있도록 보고서를 만든다./var/log/sa/sarxx 형태로 기록된다. sa1 에서 5 3 이라고 해놓으면 매 10분마다 실행을 하면서 5초동안3번을 기록한다는 뜻이다. 그러면 매10분마다 15번의 기록이 남는다. sa2 에서 -A는 모든 데이터를 보는 것인데 실제로는자신에게 필요한 내용만 옵션을 이용하여 뽑아서 보는 것이 편할 것이다.</p><p class="p">man 페이지의 예를 참고하면 된다.</p><pre class="pre"> <br> # 8am-7pm activity reports every 10 minutes during weekdays.<br> 0 8-18 * * 1-5 /usr/lib/sa/sa1 600 6 &amp; <br> # 7pm-8am activity reports every an hour during weekdays.<br> 0 19-7 * * 1-5 /usr/lib/sa/sa1 &amp;<br> # Activity reports every an hour on Saturday and Sunday.<br> 0 * * * 0,6 /usr/lib/sa/sa1 &amp;<br> # Daily summary prepared at 19:05<br> 5 19 * * * /usr/lib/sa/sa2 -A &amp;<br> <br></pre>서비스에 따라 다르겠지만 sa2 에서 자세히 보아야 할 부분들은 다음과 같다. -r 메모리 및 스왑 스페이스 사용현황, -u CPU 활용량, -W 스와핑 상황. -q load average<p class="p"></p><pre class="pre"> # sar -<a class="wikiword_goto" href="http://tunelinux.pe.kr/wikix/index.php?goto=ruW">r</a>uW -f sa27 3600  -&gt; 메모리, cpu, 스왑 레포트를 sa27에서 만들며 3600초(1시간) 기준으로 만든다.<br> # sar -r -f sa25 1800 -s 08:00:00 -e 19:00:00 -&gt; 오전 8시부터 저녁 19시가지 30분간격으로 메모리 모니터링<br></pre><p class="p"></p><ul class="ul"><ul class="ul"><ul class="ul"><li><a class="netlink" href="http://tunelinux.pe.kr/wikix/file/Sar/sar.txt">명령어&nbsp;예제</a> </li></ul></ul></ul><p class="p"></p><ul class="ul"><ul class="ul"><ul class="ul"><li>시스템상에서 실제 사용하는 메모리는 used-buffer-cache 임. 이에 대한 전체 사용량을 출력하고 스왑 메모리가 사용되는지 확인함</li></ul></ul></ul><p class="p"></p><ul class="ul"><ul class="ul"><ul class="ul"><li>redhat 의 sysstat 패키지는 sar 자료를 일주일치만 보관한다. 이는 /usr/lib/sa/sa2 의 파일을보면 7일전 이상에 변경된것은 지우도록 되어있기 때문이다. 용량이 많지 않으므로 좀 더 오랫동안 보관해두면 간혹 가다 참고할일이 있을 것이다.</li><li>SUSE 는 이런 설정이 없기 때문에 계속 파일이 쌓이므로 자동으로 지워주는 스크립트를 하나 짜는게 좋을 것이다.</li></ul></ul></ul><p class="p">시스템 모니터링 관련한 전반적인 내용은 아래의 링크 참고하자. 아래 일부 내용을 옮겼다.<a class="netlink" href="http://tunelinux.pe.kr/tune/tunning-pse/pse-01.html">http://tunelinux.pe.kr/tune/tunning-pse/pse-01.html</a></p><p class="p"></p><h2 class="heading">정보 정확하게 판별하기&nbsp;</h2><ul class="ul"><li>vmstat를 이용하여 CPU와 I/O 활동을 모니터링할 수 있는데 vmstat에서 나오는 첫 줄은 부팅 이후의 각통계치에 대한 평균값을 보여주므로 무시하고 두 번째 줄부터 통계를 보면 된다. vmstat에서 중요한 것은 procs 영역의 b필드이다. r은 현재 실행중인 프로세스 수이고 b는 인터럽트가 불가능한 sleep 상태에 있는 프로세스로 I/O 처리를 하는동안 블럭 처리된 프로세스이며 w는 강제로 스왑아웃된 프로세스 수이다. si와 so는 스왑인, 스왑아웃을 말한다. </li><li>스왑아웃이 지속적으로 발생한다면 메모리가 부족한 것이다. 그러나 일정 간격을 두고 주기적으로 스왑아웃이 발생하는 것은정상적인 일이다. BSD 시스템에서는 비상호 대화적인 작업을 스왑아웃 한다. 현재 실행하고 있는 프로그램에서 스왑아웃이 계속발생한다면 프로그램이 멈출 수도 있으며 심각하게 메모리가 부족하다는 것을 의미한다. 스왑아웃필드(so)는 항상 0에 가까워야한다. 그렇지 않다면 프로세스들은 가상 메모리를 놓고 경쟁하게 되며 시스템은 페이징 상태가 된다. 페이징 활동은 심각한 가용메모리(free)의 부족과 직접적인 관련을 가지며 간접적으로는 시스템의 높은 CPU 사용 시간 비율(sy)과 관련이 있다.프로세스가 시작할 때 항상 이미지와 데이터를 page-in 해야 하므로 page-in 열에서 높은 숫자가 항상 심각한 것은아니라는 사실은 기억하고 있어야 한다.</li><li>시스템에서 사용하는 시간이 지나치고 높으면(50퍼센트 이상) 디스크 I/O에서 문제가 있을 가능성이 크다. 시스템 전체의부하가 높은데 CPU에서 휴지시간(idle time, id 항목)이 일반적으로 10퍼센트를 넘는다면 I/O나 메모리에 문제가있을 가능성이 크다. 휴지시간(id)이 항상 0이라면 CPU를 100퍼센트 사용하고 있는 상태이다. CPU의 기능을 최대한활용하는 것은 좋은 현상이다. 그런데 항상 100퍼센트로 활용중인 상태라면 어떤 작업이 계속 축적되고 있다는 것이며 CPU가과부하를 가진다는 의미한다. 이 때는 CPU를 계속 사용하고 있는 프로세스를 찾아야 하며 디스크의 활동이 분산되지 않았다면I/O 작업을 효율적으로 분산시켜야 한다. </li><li>대부분의 사용자가 vmstat에서 si, so(스왑인, 스왑 아웃)를 주로 보고 id가 넉넉하면 시스템에 무리가 없는것으로 생각한다. 이는 시스템의 상황에 대해서 잘못 파악할 가능성이 많은 것으로 b의 수치가 높은 경우 I/O작업을 위해CPU가 계속 대기 상태로 있는 경우이다. 이런 경우에는 디스크 I/O 문제를 확인해야 한다. </li><li><a class="netlink" href="http://tunelinux.pe.kr/zboard/view.php?id=tip&amp;no=64">참고-load&nbsp;average&nbsp;와&nbsp;인터럽트가&nbsp;불가능한&nbsp;sleep&nbsp;프로세스</a> <ul class="ul"><li>cpu 자원은 놀고있는데 load average 가 무척 높아지는 증상이 있었다. 순간순간 vmstat 에서block되는 프로세스가 발생하였습니다. 알고보니 클러스터링 파일 시스템솔루션을 썼는데 여기에서 인터럽트가 불가능한 sleep 을 쓰는것때문에 발생한 문제였습니다. load average 가 run queue (실행하기 위하여 cpu 자원을 기다리고 있는프로세스) 에 있는것말고 block되는 프로세서도 포함하기 때문에 CPU 자원은 거의 놀고있지만 load average는 계속높게 나왔던 것이지요.</li></ul></li></ul><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

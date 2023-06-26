@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] doxygen의 사용 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:05:13</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] doxygen의 사용 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>From : <a class="con_link" href="http://blog.naver.com/kimsk99?Redirect=Log&amp;logNo=50014122752" target="_blank">http://blog.naver.com/kimsk99?Redirect=Log&amp;logNo=50014122752</a></p><p>&nbsp;</p><p>doxygen을 사용하고 있는데 아주 만족한다.</p><p>그동안 부족했던 C++ 소스 문서화가 깔끔하게 해결되고 있다.</p><p>doxygen을 사용하면서 자주 쓰는 기능들을 모아 두었다.</p><p>&nbsp;</p><p>1. Confige 파일 설정</p><p>한국 사람이기 때문에 언어를 한국어로 맞춘다.</p><p>이거 안해 주면 한글&nbsp;주석이 모두 깨지는 경우가 있다. (요새는 괜찮을 지도 모르겠다.)</p><p><span style="FONT-FAMILY: 굴림체">OUTPUT_LANGUAGE</span>&nbsp; = Korean-en</p><p>&nbsp;</p><p>개인적으로 주석에서 자동으로 brief가 생기는 것이 편한데 기본 설정이 아니라서 다시 설정해 준다.</p><p><span style="FONT-FAMILY: 굴림체">JAVADOC_AUTOBRIEF</span>&nbsp;= YES</p><p>&nbsp;</p><p>doxygen에서 바로 소스를 열람하기를 원하기 때문에 </p><p><span style="FONT-FAMILY: 굴림체">SOURCE_BROWSER</span> = YES</p><p>&nbsp;</p><p>가끔 매크로 expand가 되어야 클래스, 함수 등이 doxygen에 보이는 경우가 있다.</p><p>매크로로 클래스 정의가 되는 경우가 있기 때문이다.</p><p>이럴 경우 아래의 두가지를 정의하여 해결한다.</p><p><span style="FONT-FAMILY: 굴림체"></span>&nbsp;</p><p><span style="FONT-FAMILY: 굴림체">MACRO_EXPANSION</span> = YES</p><p><span style="FONT-FAMILY: 굴림체">EXPAND_ONLY_PREDEF</span>&nbsp;= YES</p><p>&nbsp;</p><p>위의 두가지가 정의되면 predefine에 들어있는 매크로 들만 expand하게 된다.</p><p>꼭 확장해야 하는 매크로들은 아래 처럼 설정한다.</p><p><span style="FONT-FAMILY: 굴림체"></span>&nbsp;</p><p><span style="FONT-FAMILY: 굴림체">EXPAND_AS_DEFINED = DEFINE_CLASS</span></p><p><span style="FONT-FAMILY: 굴림체"></span>&nbsp;</p><p><span style="FONT-FAMILY: 굴림체">컴파일러 종속적인 코드(예:__declspec(dll)같은 것)때문에 doxygen이 이상해지는 경우가 있다.</span></p><p><span style="FONT-FAMILY: 굴림체">이럴 때는 이것을 아래와 같이 정의하면 된다.</span></p><p><span style="FONT-FAMILY: 굴림체"></span>&nbsp;</p><p><span style="FONT-FAMILY: 굴림체">PREDEFINED</span>&nbsp; = __declsepc(x):=</p><p>&nbsp;</p><p>위에서 ':='를 쓴 이유는 공백으로 치환해야 하기 때문이다.</p><p>딴 것으로 치환하려면 '='를 쓰고 치환될 것을 적는다.</p><p>&nbsp;</p><p>VC의 경우 하나의 솔루션에 여러 개의 프로젝트가 존재할 경우가 많다.</p><p>이럴 때는 대부분의 설정이 들어 있는 Main config 파일과 이것을 include 해서 프로젝트별 종속 자료를 가지고 있는 project config로 분리해서 사용하는 것이 편하다.</p><p>솔루션 디렉토리에 Main config 파일을 만들고, 프로젝트 디렉토리에 sub config파일을 만든다.</p><p>그리고 sub의 첫줄에서 </p><p>&nbsp;</p><p>@include = ../MainConfig</p><p>&nbsp;</p><p>하면 된다.</p><p>&nbsp;</p><p>2. 주석 명령</p><p>클래스 주석, 함수 주석, 변수 주석은 javadoc처럼 자동으로 인식된다.</p><p>굳이 "/** @class Name */" 을 넣을 필요는 없다. (강제 지정할 필요가 없다는 말이다.)</p><p>강제로 설정할 경우는 파일에 대한 주석을 달기 위한 @file 밖에 없을 듯 하다.</p><p>&nbsp;</p><p>예외 문자로 사용되는 것은 !, @, \ 세가지가 있다.</p><p>이중에서 개인적으로 가장 선호하는 것은 @이다.</p><p>일단 타이핑하기 가장 좋은 위치에 있고, 이쁘다.</p><p>&nbsp;</p><p>2.1. 기본 명령</p><p>함수의 설명에는 아래와 같은 두가지 기능을 자주 사용한다.</p><p>&nbsp;</p><p>@param p1&nbsp;&lt;description&gt;</p><p>@return &lt;description&gt;</p><p>&nbsp;</p><p>말 그대로 인자 설명과 리턴값 설명이다.</p><p>이때 인자 설명은 모든 인자에 대해서 사용하지 않을 경우 doxygen compile시 에러를 출력하기 때문에 주의해서 사용한다.</p><p>&nbsp;</p><p>@param 의 경우 함수 뿐 아니라 template 등에서 공통적으로 사용된다.</p><p>&nbsp;</p><p>2.2. 그룹 명령</p><p>자주 사용하는 특별한 기능은 @name 과 @{, @}를 통한 그룹이다.</p><p>보통 함수나 클래스의 경우 몇가지가 비슷한 기능을 하기 때문에 주석을 한꺼번에 다는 것이</p><p>편할 때가 있다.</p><p>이때 좋은 것이 그룹이다.</p><p>&nbsp;</p><p>/**</p><p>@name brief description</p><p>description</p><p>@{</p><p>*/</p><p>void Fn1();</p><p>void Fn2();</p><p>/**</p><p>@}</p><p>*/</p><p>&nbsp;</p><p>이렇게 사용하면 Fn1, Fn2 가 하나의 그룹으로 묶이고 공통 주석이 달리게 된다.</p><p>&nbsp;</p><p>2.3. 기타 명령</p><p>&nbsp;</p><p>@note &lt;desc&gt;</p><p>개인적으로 함수나 클래스 설명중 특별히 주의해야 할 점이 있을 경우 사용한다.</p><p>다음 명령이 나오기 전까지 모든 내용이 note로 인식된다.</p><p>&nbsp;</p><p>@see &lt;name&gt;</p><p>&lt;name&gt; 에 대한 see also 가 자동으로 달린다.</p><p>특적한 클래스/함수에 대해서 연관된 클래스/함수를 만들 때 유용하다</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

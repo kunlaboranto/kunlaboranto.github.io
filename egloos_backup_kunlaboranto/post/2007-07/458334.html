@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] HP에서 Java사용할때의 OS Patch와 Kernel Parameter (2)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-24 12:49:38</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] HP에서 Java사용할때의 OS Patch와 Kernel Parameter (2)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a title="" href="http://altibase.egloos.com/458331">[펌] HP에서 Java사용할때의 OS Patch와 Kernel Parameter</a><br><br>From : <a href="http://minho.egloos.com/2946929">http://minho.egloos.com/2946929</a><br><br><h3 class="posttitle"><a title="HP에서 Java사용할때의 OS Patch와 Kernel Parameter (2)" name="2946929">HP에서 Java사용할때의 OS Patch와 Kernel Parameter (2)</a></h3><p class="postadmin"></p><div class="content">HPjconfig를 통해 필요한 OS Patch를 알아낼 수 있다는것을 이전에 알아봤는데..<br><br>좀 더 깊숙이 들어가보면 또 다른 얘기가 있다.<br><br>일단. 특정 issue에 대한 Patch는 한번 나오고 마는것이 아니다.<br>patch에 또 patch가 있고 그런 Patch들은 연관관계를 갖는다.<br><br>예를 들어<br>HPjconfig를 통하여 확인한 patch중에는 <br>"s700_800 11.23 pthread library cumulative patch"가 있다.<br>이것을 HPjconfig의 경우 "PHCO_31553(2004/09/22)"으로 Patch할 것을 보여주는데.<br>실제 우리 개발서버에 해당 내용으로 Patch된 것은 <br>"PHCO_34718(2006/06/05)" 이었다.<br>즉 좀 더 이후에 나온 Patch가 적용되어 있는것이다.<br><br>여기서 좀 더 들어가면.. ^^<br>"PHCO_34718(2006/06/05)"은 warning patch이다.<br>즉 무슨 문제가 있어 다시 Patch가 된것으로 이것을 다시<br>"PHCO_34944(2006/12/21)"로 Patch해야 한다.<br><br>또한 Patch중에는<br>Critical Fix를 한 Patch가 있고, Patch후 Reboot을 해야 하는 patch도 있다.<br><br>정리하면.<br>- 항상 특정 문제에 대한 Patch는 여러가지가 있을 수 있음으로 이를 잘 확인해야 한다.<br>- Patch중에는 warning Patch도 있음으로 이 또한 잘 확인해야 한다.<br>- Patch후에 rebooting을 요하는 patch가 따로 있음으로 확인해야 한다.<br><br>그렇게 upgrade된 version으로 patch를 했다고 해도 HPjconfig로 다시 확인해 보면,<br>해당 Patch가 적용이 안되어 있다고 -listmis에서 List를 보여준다.<br>따라서 HPjconfig로만 확인해서는 안된다.<br><br>위의 Patch의 경우 다음과 같은 명령어로 확인할 수 있다.<br><br>swlist -l product | grep pthread<br>PHCO_31679 1.0 Japanese pthread manpages <br>PHCO_34944 1.0 pthread library cumulative patch <br>PHKL_34118 1.0 pthread_cond_timedwait(3T) sleeps too long <br><br>즉 요청한 "PHCO_31553(2004/09/22)" 보다 더 높은 버전의 Patch가 적용되어 있는것이다.<br>(날짜는 정확히 모르나 patch버전이 이후니깐.. ^^)</div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

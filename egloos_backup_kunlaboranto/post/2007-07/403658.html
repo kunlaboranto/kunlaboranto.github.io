@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] (ORACLE 8I) COMPRESS INDEX 사용 방법 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-11 14:14:21</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] (ORACLE 8I) COMPRESS INDEX 사용 방법 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://forums.oracle.com/forums/thread.jspa?messageID=1661442">http://forums.oracle.com/forums/thread.jspa?messageID=1661442</a><br><br><tr valign="top"><td width="98%"><span class="jive-subject">&nbsp;(ORACLE 8I) COMPRESS INDEX 사용 방법 </span><br><span class="jive-description">Posted: Jan 29, 2007 2:37 AM </span></td><td width="1%"><div class="jive-buttons"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td>&nbsp;</td><td class="jive-icon"><a title="Click to reply to this thread" href="http://forums.oracle.com/forums/post%21reply.jspa?messageID=1661442"><img height="16" alt="Click to reply to this thread" src="http://forums.oracle.com/forums/images/reply-16x16.gif" width="16" border="0"></a> </td><td class="jive-icon-label"><a title="Click to reply to this thread" href="http://forums.oracle.com/forums/post%21reply.jspa?messageID=1661442">Reply</a> </td></tr></tbody></table></div></td></tr><tr><td style="BORDER-TOP: rgb(204,204,204) 1px solid" colspan="3"><br>제품 : ORACLE SERVER<br><br>작성날짜 : 2004-04-19<br><br><br>(ORACLE 8I) COMPRESS INDEX 사용 방법<br>====================================<br><br>Oracle 8i 이후부터는 인덱스 생성시에 COMPRESS OPTION 을 사용할 수 있게 되었습니다. <br>이 COMPRESS OPTION 은 인덱스 키 컬럼의 중복을 방지해서 저장 공간의 낭비<br>를 막아 줍니다. <br><br>제한사항:<br>- COMPRESS INDEX는 B*TREE 인덱스와 IOT 에 대해서 적용 가능 합니다. <br>- COMPRESS INDEX는 NON-PARTITIONED INDEX 에 대해서만 적용 가능합니다. <br>- COMPRESS INDEX는 UNIQUE 인 경우에는 컬럼이 2개 이상 이어야 하며,<br>NON-UNIQUE 인 경우에는 1개의 컬럼에 대해서도 적용 가능 합니다. <br><br>인덱스 키에 대해 압축이 이루어지는 원리는 다음과 같습니다. <br><br>인덱스를 PREFIX 와 SUFFIX 두 부분으로 나누어 저장합니다. 이 때, PREFIX 의 길이 <br>를 정수로 표시하고 이 길이는 압축될 PREFIX 컬럼의 갯수가 됩니다. 만일 COMPRESS<br>옵션을 줄때 범위를 명시하지 않으면, 마지막 컬럼을 제외한 모든 컬럼에 대해 압축<br>을 하게 됩니다. <br><br>PREFIX 대상으로 선택할 컬럼은 최대한 다음과 같이 할 수 있습니다:<br><br>- 인덱스가 NON-UNIQUE 인덱스라면 모든 컬럼을 대상으로<br>- 인덱스가 UNIQUE 인덱스라면 한 컬럼을 제외한 모든 컬럼<br><br>PREFIX 부분은 공통 부분으로 선택이 되며, SUFFIX 부분은 UNIQUE KEY 로 사용이<br>됩니다. 각각의 PREFIX 부분은 모든 SUFFIX 부분에 의해서 공유가 됩니다. 이는<br>각각의 저장 공간에 보다 많은 KEY 값을 저장한다는 것을 의미 하며 이는 압축을 <br>하기 전보다 더 적은 블럭을 읽고도 INDEX RANGE SCAN 을 할 수 있도록 해줍니다. <br><br>이러한 KEY 압축은 블럭 단위로 이루어 지며 LEAF BLOCK 에 대해서만 이루어 집니다.<br>반면에 &lt;PREFIX, SUFFIX&gt; 를 해석하기 위해서 인덱스 SCAN 자체의 성능은 약간 저하<br>될 수 있습니다. <br><br>예제 <br>====<br><br>1. UNIQUE KEY 에 대한 INDEX 압축<br><br>샘플 테이블 생성 <br><br>CREATE TABLE EMP<br>(EMPNO NUMBER UNIQUE,<br>ENAME VARCHAR2(10),<br>JOB VARCHAR2(9),<br>MGR NUMBER(4),<br>HIREDATE DATE,<br>SAL NUMBER(7,2),<br>COMM NUMBER(7,2),<br>DEPTNO NUMBER);<br><br>CREATE UNIQUE INDEX COMPRESS_UNIQUE_EMP ON EMP(ENAME, EMPNO)<br>COMPRESS 1;<br><br>COMPRESS_UNIQUE_EMP 인덱스에서 prefix part 는 ENAME KEY 입니다. 그리고 suffix <br>part 는 EMPNO 입니다. 각각의 블럭에서 ENAME은 EMPNO 항목에 의해서 공유 됩니다. <br>즉, 중복된 ENAME 은 한번만 저정한다는 의미 입니다. <br><br>2. NON-UNIQUE KEY 에 대한 INDEX 압축<br><br>NON-UNIQUE KEY 에 대한 INDEX 압축을 하면 오라클이 자동으로 row id 컬럼을 생성 <br>합니다. 이 row id 컬럼이 바로 SUFFIX 부분이 되고 NON-UNIQUE 컬럼의 값이 PREFIX<br>부분이 됩니다. <br><br>다음 명령으로 NON-UNIQUE COMPRESS INDEX를 만들수 있습니다. <br><br>CREATE INDEX COMPRESS_NON_UNIQUE_EMP on EMP (DEPTNO) COMPRESS;<br><br>여기서는 DEPTNO 가 PREFIX 부분이 됩니다. <br><br>위에서 만든 인덱스에 대한 정보는 아래와 같습니다. <br><br>SQL&gt; select index_name, uniqueness, compression from user_indexes;<br><br>INDEX_NAME UNIQUENES COMPRESS<br>------------------------------ --------- --------<br>COMPRESS_NON_UNIQUE_EMP NONUNIQUE ENABLED<br>COMPRESS_UNIQUE_EMP UNIQUE ENABLED<br>SYS_C001259 UNIQUE DISABLED<br><br>COMPRESS_NON_UNIQUE_EMP의 정보를 INDEX_STATS 에서 조회 할 수도 있습니다. <br><br>SQL&gt; analyze index COMPRESS_NON_UNIQUE_EMP validate structure;<br><br>SQL&gt; select * from index_stats<br>2 where name like '%NON_UNIQUE_EMP';<br><br>BLOCKS NAME PARTITION_NAME LF_ROWS<br>------ ------------------------- ------------------------------ ---------<br>LF_BLKS LF_ROWS_LEN LF_BLK_LEN BR_BLKS BR_ROWS_LEN BR_BLK_LEN DEL_LF_ROWS<br>-------- ----------- ---------- --------- ----------- ---------- -----------<br>DEL_LF_ROWS_ DISTINCT_KEYS MOST_REPEATED_KEY BTREE_SPACE USED_SPACE PCT_USED <br>------------ ------------- ----------------- ----------- ---------- -------- <br>ROWS_PER_KEY BLKS_GETS_PER_ACCESS PRE_ROWS PRE_ROWS_LEN<br>------------ -------------------- --------- ------------<br>5 COMPRESS_NON_UNIQUE_EMP 39<br>1 429 1852 0 0 0 0<br>0 43 21 1852 429 24 <br>,90697674 1,9534884 4 36<br><br>without compress option:<br><br>BLOCKS NAME PARTITION_NAME LF_ROWS<br>------ ------------------------- ------------------------------ ---------<br>LF_BLKS LF_ROWS_LEN LF_BLK_LEN BR_BLKS BR_ROWS_LEN BR_BLK_LEN DEL_LF_ROWS<br>-------- ----------- ---------- --------- ----------- --------- ----------<br>DEL_LF_ROWS_ DISTINCT_KEYS MOST_REPEATED_KEY BTREE_SPACE USED_SPACE PCT_USED<br>------------ ------------- ----------------- ----------- ---------- -------- <br>ROWS_PER_KEY BLKS_GETS_PER_ACCESS PRE_ROWS PRE_ROWS_LEN<br>------------ -------------------- --------- ------------<br>5 NON_UNIQUE_EMP 39<br>1 546 1856 0 0 0 0<br>0 4 21 1856 546 30<br>9,75 6,375 0 0<br><br><br>위의 결과에 따르면 COMPRESS MODE의 USED_SPACE가 압축되지 않은 상태 보다 6% 정도<br>절약 됨을 알 수 있습니다. 또한 압축된 경우의 PREFIXED ROW 의 갯수(PRE_ROWS) 와 사용된 공간 (PRE_ROWS_LEN) 까지도 볼 수 있습니다. <br><br>3. 아래와 같이 COMPRESS 상태를 전환 할 수도 있습니다. <br><br>SQL&gt; ALTER INDEX NON_UNIQUE_EMP REBUILD NOCOMPRESS;<br><br>4. Index Only Table 을 COMPRESS OPTION 을 사용해서 생성하는 예제 <br><br>CREATE TABLE EMP_IOT<br>(EMPNO NUMBER UNIQUE,<br>ENAME VARCHAR2(10),<br>JOB VARCHAR2(9),<br>MGR NUMBER(4),<br>HIREDATE DATE,<br>SAL NUMBER(7,2),<br>COMM NUMBER(7,2),<br>DEPTNO NUMBER,<br>PRIMARY KEY (ENAME, EMPNO))<br>ORGANIZATION INDEX COMPRESS;<br><br>여기서는 첫번째 컬럼인 ENAME 이 PREFIX 부분으로 잡힙니다. <br>첫번째 컬럼이 PREFIX 부분으로 잡히는 것은 DEFAULT 입니다.<br><br>INDEX_NAME INDEX_TYPE COMPRESS PREFIX_LENGTH<br>------------------------- ----------------- -------- -------------<br>SYS_IOT_TOP_12299 IOT - TOP ENABLED 1<br><br>UNCOMPRESS 할 수 도 있습니다. <br><br>SQL&gt; ALTER TABLE EMP_IOT MOVE NOCOMPRESS;<br><br>INDEX_NAME INDEX_TYPE COMPRESS PREFIX_LENGTH<br>------------------------- ----------------- -------- -------------<br>SYS_IOT_TOP_12299 IOT - TOP DISABLED<br><br>이상입니다. </td></tr></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

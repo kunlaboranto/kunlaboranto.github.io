@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>altibase online backup cron 예</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-05-20 23:59:55</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">altibase online backup cron 예</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">0 1 * * * /export/home/altibase/script/online_backup.sh &gt; /dev/null 2&gt;&amp;1<br><br>$ cat /export/home/altibase/script/online_backup.sql<br>alter system checkpoint;<br>alter system checkpoint;<br>alter database backup database to '/bizmmslog/ALTI_BACKUP/ALTI_BCK';<br><br>$ cat /export/home/altibase/script/online_backup.sh <br>#!/bin/sh<br># ALTIBASE ONLINE BACKUP SCRIPT : daily job<br># 2006. 06. 19.<br># <br><br>PATH=.:$HOME/script:/export/home/altibase/altibase_home/bin:/usr/bin:/usr/lbin:<br>&nbsp;<br>ALTIBASE_HOME=/export/home/altibase/altibase_home<br>BACKUP_DIR=/bizmmslog/ALTI_BACKUP<br>ISQL_CONNECTION=UNIX<br>OLD_DATE=`TZ=KST+15 date +%Y%m%d`<br><br>export ALTIBASE_HOME BACKUP_DIR ISQL_CONNECTION OLD_DATE<br><br>cd $BACKUP_DIR<br><br>#########################<br># altibase online-backup<br>#########################<br>#find $BACKUP_DIR -type f -name 'ALTI_BCK*.tar.gz' -mtime +0 -exec rm -f {} \;<br>rm -f ALTI_BCK_*.tar.gz<br><br>if [ -d ALTI_BCK ]<br>then<br>&nbsp; mv ALTI_BCK ALTI_BCK_$OLD_DATE<br>&nbsp; tar -cf - ALTI_BCK_$OLD_DATE | gzip -c - &gt; ALTI_BCK_$OLD_DATE.tar.gz<br>&nbsp; rm -rf ALTI_BCK_$OLD_DATE<br>fi<br><br>mkdir ALTI_BCK<br><br>${ALTIBASE_HOME}/bin/isql -silent -u sys -p manager -sysdba -f /export/home/altibase/script/online_backup.sql &gt; ${BACKUP_DIR}/online_backup.log<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

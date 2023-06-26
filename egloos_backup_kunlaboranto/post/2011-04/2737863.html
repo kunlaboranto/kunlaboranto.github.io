@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[roller] 포함된 jar 들.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-05 15:52:40</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[roller] 포함된 jar 들.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">아래 학습로드맵 글을 보고.<br>처음에 목표로했던. roller 에 사용된 것을 찾아봄. 이름 들어본것에 밑줄..<br>iBATIS 랑 Hibernate 말고는 다 있는데. 쩝. SQL만 만지다가.. 어려움.<br><br>아무튼 struts 는 2.x 버전대임.<br><pre><br>   [ubuntu-x32:kun:/opt/bitnami/apache-tomcat/webapps/roller] ls WEB-INF/lib<br>   acegi-security-1.0.3.jar                    openjpa-0.9.7-incubating.jar<br>   antlr-2.7.2.jar                             oro-2.0.8.jar<br>   commons-beanutils-1.6.jar                   <span style="text-decoration: underline; color: rgb(255, 0, 0);">roller</span>-business.jar<br>   commons-chain-1.1.jar                       roller-core.jar<br>   commons-codec-1.3.jar                       roller-planet-business.jar<br>   commons-collections-3.2.jar                 roller-web.jar<br>   commons-digester-1.6.jar                    rome-0.9.jar<br>   commons-fileupload-1.2.jar                  rome-fetcher-0.9.jar<br>   commons-httpclient-2.0.2.jar                saxpath.jar<br>   commons-id-0.1-SNAPSHOT.jar                 serializer.jar<br>   commons-io-1.3.1.jar                        serp-1.11.0.jar<br>   commons-lang-2.1.jar                        <span style="text-decoration: underline;">spring.jar</span><br>   commons-logging-1.0.4.jar                   standard.jar<br>   commons-validator-1.3.0.jar                 <span style="text-decoration: underline;">struts2-core-2.0.9.jar</span><br>   concurrent-1.3.2.jar                        <span style="text-decoration: underline;">struts2-spring-plugin-2.0.9.jar</span><br>   <span style="color: rgb(51, 102, 255);">ehcache-1.1.jar</span>                             <span style="text-decoration: underline;">struts2-tiles-plugin-2.0.9.jar</span><br>   <span style="text-decoration: underline;">freemarker-2.3.8.jar</span>                        <span style="text-decoration: underline;">taglibs-string.jar</span><br style="text-decoration: underline;">   geronimo-j2ee-connector_1.5_spec-1.0.1.jar  <span style="text-decoration: underline;">tiles</span>-api-2.0.4.jar<br>   geronimo-jpa_3.0_spec-1.0.jar               tiles-core-2.0.4.jar<br>   geronimo-jta_1.0.1B_spec-1.0.1.jar          tiles-jsp-2.0.4.jar<br>   guice-1.0.jar                               <span style="text-decoration: underline;">velocity</span>-1.5.jar<br>   jaxen-full.jar                              ws-commons-util-1.0.1.jar<br>   <span style="text-decoration: underline;">jdom.jar</span>                                    xalan.jar<br>   <span style="text-decoration: underline;">jstl.jar</span>                                    xmlrpc-client-3.0.jar<br>   <span style="color: rgb(51, 102, 255);">log4j-1.2.11.jar</span>                            xmlrpc-common-3.0.jar<br>   lucene-1.4.3.jar                            xmlrpc-server-3.0.jar<br>   ognl-2.6.11.jar                             xwork-2.0.4.jar<br></pre><br>% 줄맞추기 위해서.. <br>&nbsp;&nbsp;&nbsp; <a href="http://kwon37xi.egloos.com/2509906">Egloos 블로그에 글올릴 때 소스코드 인용하기</a> 를 참고해서. gvim 에서 :TOhtml 명령으로 바꿈.<br>&nbsp;&nbsp;&nbsp; 그래도 별로 안예쁜데, 일단 만족.<br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[ING..] 잡동사니. </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-06-21 16:43:03</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[ING..] 잡동사니. </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><p>오늘 작업한 OS 설정 부분에 대해 적습니다.<br>&nbsp;금일 썬 엔지니어가 작업한 내용은 disk cache를 enable로 바꾼것임<br><br>disk cache는 default로 disable로 설정이 되어있으면<br>wirte시 SYNC 모드가 SYNC이면 내부적으로 enable로 바꾸어 주는데 O_SYNC 모드는 그렇지 않음<br>(알티베이스에서 truss로 확인했을때 O_SYNC를 이용)<br>따라서 disk cache를 enable로 설정함<br>해당 내용은 썬 엔지니어가 설명한 것임<br><br><br>disk cache를 바꾸는 방법<br>solaris의 # format 유틸리티 이용<br><br>앞으로 solaris에서 disk IO 속도가 안나올 경우 해당부분을 참고 하시면 도움이 될 듯 합니다.<br>&nbsp;</p><p>---------------------------</p><p>위 타임쉬트에 있는 항목에 다음의 내용들이 추가되었으면 합니다. <br><br>1. memory gc를 잡고 있는 쿼리 조회<br><br>&nbsp;&nbsp;&nbsp;&nbsp; select to_char(sysdate, 'YYYY/MM/DD HH:MI:SS') , query, tx_id, total_time/1000000 tot, execute_time/1000000 exec <br>&nbsp;&nbsp;&nbsp;&nbsp; from v$statement <br>&nbsp;&nbsp;&nbsp;&nbsp; where tx_id in ( select id from v$transaction<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; where memory_view_scn = <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (select MINMEMSCNINTXS from v$memgc limit 1) ) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; order by 2 limit 1;<br><br>2. disk gc를 잡고 있는 쿼리 조회<br><br>&nbsp;&nbsp;&nbsp;&nbsp; select to_char(sysdate, 'YYYY/MM/DD HH:MI:SS'), query, tx_id, total_time/1000000 tot, execute_time/1000000 exec <br>&nbsp;&nbsp;&nbsp;&nbsp; from v$statement <br>&nbsp;&nbsp;&nbsp;&nbsp; where tx_id in ( select id from v$transaction<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; where disk_view_scn = (select MINDISKSCN_INTXS from v$diskgc limit 1) ) <br>&nbsp;&nbsp;&nbsp;&nbsp; order by 2<br>&nbsp;&nbsp;&nbsp;&nbsp; limit 1;<br><br>3. logfile open에서 병목인지 조회<br><br>&nbsp;&nbsp;&nbsp;&nbsp; select to_char(sysdate, 'YYYY/MM/DD HH:MI:SS'), LF_PREPARE_WAIT_COUNT, LF_PREPARE_COUNT, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LF_OPEN_COUNT, CUR_WRITE_LF_NO, LST_PREPARE_LF_NO <br>&nbsp;&nbsp;&nbsp;&nbsp; from v$lfg;<br><br>4. full scan query 조회<br><br>&nbsp;&nbsp;&nbsp;&nbsp; select sid, stmt_id from v$plantext where text like '%FULL%';<br><br>5. lock wait 정보 조회<br><br>&nbsp;&nbsp;&nbsp;&nbsp; select * from v$lock_wait;<br><br>6.&nbsp; ADM_INDEX: 테이블별 인덱스 조회 ( CASE-6507 참조함)<br><br>&nbsp;&nbsp;&nbsp;&nbsp; create or replace view adm_index as<br>&nbsp;&nbsp;&nbsp;&nbsp; select a.index_id, c.user_name||'.'||b.table_name tablename,<br>&nbsp;&nbsp;&nbsp;&nbsp; a.index_name index_name,<br>&nbsp;&nbsp;&nbsp;&nbsp; nvl(d.name,'MEMORY') tbs,<br>&nbsp;&nbsp;&nbsp;&nbsp; decode(is_unique,'T','UNIQUE','NONUIQUE') UNIQUENESS,<br>&nbsp;&nbsp;&nbsp;&nbsp; a.column_cnt columnCnt<br>&nbsp;&nbsp;&nbsp;&nbsp; from system_.sys_indices_ a left outer join v$tablespaces d<br>&nbsp;&nbsp;&nbsp;&nbsp; on a.tbs_id = d.id<br>&nbsp;&nbsp;&nbsp;&nbsp; , system_.sys_tables_ b, system_.sys_users_ c<br>&nbsp;&nbsp;&nbsp;&nbsp; where a.table_id = b.table_id<br>&nbsp;&nbsp;&nbsp;&nbsp; and a.user_id = c.user_id<br>&nbsp;&nbsp;&nbsp;&nbsp; and c.user_id != 1<br>&nbsp;&nbsp;&nbsp;&nbsp; order by tablename, index_name ;<br><br>7.&nbsp; ADM_IND_COLUMN( INDEXING COlumn명을 테이블별로 쉽게 조회 )(CASE-6507 참조)<br><br>&nbsp;&nbsp;&nbsp;&nbsp; create or replace view adm_ind_column as<br>&nbsp;&nbsp;&nbsp;&nbsp; select d.user_name||'.'||c.table_name tablename,<br>&nbsp;&nbsp;&nbsp;&nbsp; b.index_name, e.column_name,<br>&nbsp;&nbsp;&nbsp;&nbsp; decode(sort_order,'A','ASC','D','DESC') COL_ORDER<br>&nbsp;&nbsp;&nbsp;&nbsp; from system_.sys_index_columns_ a, system_.sys_indices_ b,<br>&nbsp;&nbsp;&nbsp;&nbsp; system_.sys_tables_ c, system_.sys_users_ d,<br>&nbsp;&nbsp;&nbsp;&nbsp; system_.sys_columns_ e<br>&nbsp;&nbsp;&nbsp;&nbsp; where a.index_id = b.index_id and<br>&nbsp;&nbsp;&nbsp;&nbsp; a.table_id = c.table_id and<br>&nbsp;&nbsp;&nbsp;&nbsp; a.user_id = d.user_id and<br>&nbsp;&nbsp;&nbsp;&nbsp; a.column_id = e.column_id and<br>&nbsp;&nbsp;&nbsp;&nbsp; d.user_id != 1<br>&nbsp;&nbsp;&nbsp;&nbsp; order by tablename, index_name, index_col_order;<br><br><br>8.&nbsp; 문제 시점에 모든 performance view를 백업하기<br><br>&nbsp;&nbsp;&nbsp;&nbsp; : Altibase에 문제가 발생한 시점의 모든 performance view를 disk table에 저장할 수 있는 기능을 추가하였으면 합니다. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (단, 양이 많은 v$mutex, v$latch, v$allcolumn 은 제외)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 이 부분은&nbsp; CASE-11446을 참조할 수 있습니다. <br><br>9.&nbsp; 아마 altibase main 버전에 있는 것 같은데, <br>&nbsp;&nbsp;&nbsp;&nbsp; 인덱스 정보 획득을 위한 D$ 테이블들에 대한 조회도 필요합니다. </p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

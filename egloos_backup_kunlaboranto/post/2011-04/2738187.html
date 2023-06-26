@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[웹] [egloos] Code 붙이기, Syntax highlight - 11년 4월 현재, 뽀족한 방법 없는듯 -</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-06 11:17:25</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[웹] [egloos] Code 붙이기, Syntax highlight - 11년 4월 현재, 뽀족한 방법 없는듯 -</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>프로그램 관련 블로깅에서 Source Code를 이쁘게 + 편하게 붙여놓고 싶은 욕심은 당연..<br>그런데 egloos 에서는 방법이 없는 것 같다..<br><br>:TOhtml <br>를 해서 붙여넣는 수준에서 참아야할듯..<br><br>이글루에서 <예쁘고> + <펼치고/접고> + <쓰기편한> Syntax highlighter 가 지원되길 희망.<br><br><br>아쉬운점을 생각하다가.. 문득 또 '이사병'을 잠깐 생각하였다. 공부도 안하면서 튈 생각만하는 병.<br>근데. 백업은 이라는 불안한 생각이 들어 검색하니.. 백업이 가능은 한가보다.. 이사도 안할 거면서 백업 걱정하는.. 나.</div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

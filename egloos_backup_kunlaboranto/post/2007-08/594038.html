@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] A index 가 extent가 많이 되었을 때 extent 없애기</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-27 23:38:57</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] A index 가 extent가 많이 되었을 때 extent 없애기</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://database.sarang.net/?inc=read&amp;aid=17946&amp;criteria=oracle&amp;subcrit=&amp;id=&amp;limit=20&amp;keyword=dba_tables&amp;page=4<br><br>## A index 가 extent가 많이 되었을 때 extent 없애기<br><br><p>A index 가 extent가 많이 되었습니다.</p><p>그래서 A index를 드롭시키고 A index 의 initial&nbsp;의 initial 값을 현재의 사이즈 만큼으로 늘려서 새로 만들었는데도..</p><p>extent 값이&nbsp;예전 그대롭니다.</p><p>extent값이 줄어들어야 되는거 아닌가요&nbsp;</p><p>&nbsp;</p><p>B란 테이블도 extent 가 많이 되어서 initial 값을 300메가로 줘서 새로 만들었는데도</p><p>extent 값이&nbsp;예전 그대롭니다.</p><p>&nbsp;</p><div class="commenttitle">이 글에 대한 댓글이 총 4건 있습니다.</div><div class="commentrow"><div class="commentbody"><p>사용하시는 오라클 버젼이 어떻게 되시는지요?</p><p>&nbsp;</p><p>만약 Locally Managed Tablespace를 사용중이라면 extent size와 갯수를 오라클이 자동으로관리하거나(autoallocate 옵션 사용시), 일정한 사이즈의 extents(Uniform 옵션 사용시)로 관리하게 됩니다.</p><p>&nbsp;</p><p>아래 쿼리를 실행하셔서 어떠한 모드로 사용중인지 확인 바랍니다.</p><p>&nbsp;</p><p>SELECT tablespace_name, extent_management, allocation_type<br>&nbsp; FROM <span style="color: brown; background-color: yellow; font-weight: bold;">dba_tables</span>paces</p><p>&nbsp;</p><p>extent_management "Local"이면 LMT 이고...</p><p>allocation_type 은 "autoallocate" 이거나 "uniform"입니다.</p><p>&nbsp;</p><p>autoallocate는 오라클이 자동으로 extents 사이즈를 결정하므로 DBA가 전혀 개입할 수가 없습니다.</p><p>&nbsp;</p><p>uniform은&nbsp; extents를 항상 일정 크기의 사이즈로 조정합니다.</p><p>&nbsp;</p><p>&nbsp;</p><p>그리고 이제는 LMT 가 일반화되었으므로 extents 사이즈나 갯수 때문에 고민하는게 불필요하다는 생각을 많이 합니다.</p><p>&nbsp;</p><p>항상...LMT가 아니더라도&nbsp;initial = next and pct_increase=0 으로 사용하시기 바랍니다. 그래야 불필요한 공간 낭비와 단편화를 막을 수 있습니다.</p><p>&nbsp;</p><p>대개 DBA들이 extents 를 모아서 1개의 통짜로 가져가려는 이유는... </p><p>첫째로... 파일이 연속된 공간에 쓰여져서... 물리적 디스크 엑세스 속도를 향상하기 위함입니다.&nbsp; 그런데... 요즘은단일 디스크를 쓰는게 아니라... Disk Array로 여러개의 Disk를 묶어서 쓰게 되므로 현대적인 관점에서 의미가없습니다. 또한.... 동시접속이 많게 되므로 한 세션이 이 블록을 요청하면... 디스크는 그걸 읽기 위해 헤드를 움직일것이고... 또 다른 세션이 다른 블록을 요청하면 또 헤드가 움직여야 합니다... 즉..... 랜덤 엑세스가 굉장히많으므로... 굳이 연속된 공간에 두려고 노력하실 필요가 없습니다. 벤치마크를 해봐도 성능 차이 거의 나지 않으며 오차범위이내입니다.</p><p>&nbsp;</p><p>둘째로...&nbsp; 하나의 세그먼트가 너무 많은 Extent 갯수로 쪼개지면... 오버헤드 때문에 그렇게 하는데...LMT에서는..... bitmap으로 관리하게 되므로... extent 할당 해제시 데이타 딕셔너리에 대한 엑세스로 인한 부하는전혀 없습니다.</p><p>&nbsp;</p><p>오라클 8i 이상이면... LMT로 전환하실 것을 권해드립니다.</p><p>&nbsp;</p><p>그리고 말씀하시는 작업은 </p><p>drop index &amp; create 말고...</p><p>index rebuild 를 써보실 것을 추천드립니다. online 옵션을 쓰시면 운영중에도 rebuild가 가능합니다.</p></div><div class="commentinfo">김주현님이 2004-03-29 14:19:44에 작성한 댓글입니다.<br>이 댓글은 2004-03-29 14:24:10에 마지막으로 수정되었습니다. <a href="'javascript:doReply(""html/getpasswd.php?inc="edit&iscomment=1&pid=17946&cid=22966&page=4"")' title="이 댓글을 수정합니다." class="minitexticon"> Edit</a> <a href="'javascript:getpasswd(""delcomment", "22966")' title="이 댓글을 삭제합니다." class="minitexticon">Ｘ</a></div></div><div class="commentrow"><div class="commentbody"><p>oracle 9i를 사용중이며</p><p>주신 query문으로 해보니 extent_management =LOCAL,이고,</p><p>ALLOCATION_TYPE=SYSTEM으로 되어있습니다.</p><p>이렇게 되어 있으면 DBA가 전혀 EXTENT에 신경을 안써도 된다는 말씀이신지요...</p><p>&nbsp;</p><p>제가 자꾸 이상하게 느끼는것은 </p><p>index 나 테이블을 특별한 storage option을 주지 않은 상태로 </p><p>만들면, 이것들은 extent가 발생했을 때 rebuild 또는 truncate 했을 때</p><p>extent가 0으로 되는데,</p><p>제가 storage option에 initial 값을 크게 주고 table/index 를 만들면</p><p>rebuilde또는 truncate , 또는 drop /recreate 해도 extent수가 그대로입니다.</p><p>&nbsp;</p></div><div class="commentinfo">궁금한사람님이 2004-03-29 14:40:13에 작성한 댓글입니다. <a href="'javascript:doReply(""html/getpasswd.php?inc="edit&iscomment=1&pid=17946&cid=22967&page=4"")' title="이 댓글을 수정합니다." class="minitexticon"> Edit</a> <a href="'javascript:getpasswd(""delcomment", "22967")' title="이 댓글을 삭제합니다." class="minitexticon">Ｘ</a></div></div><p>extent_management =LOCAL</p><p>ALLOCATION_TYPE=SYSTEM</p><p>&nbsp;</p><p>이면&nbsp; LMT에..... autoallocate 를 쓰시는게 맞습니다.</p><p>따라서 오라클이 extent size는 내부적으로 복잡한 공식을 거쳐서 자동으로 관리하게 됩니다. DBA는 전혀 개입할 수가 없습니다.</p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

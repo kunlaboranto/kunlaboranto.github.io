@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] IOT - oracle 8i, index oragized table</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-11 14:09:50</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] IOT - oracle 8i, index oragized table</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://www.okjsp.pe.kr/seq/18584">http://www.okjsp.pe.kr/seq/18584</a><br><br><tr><td class="td"><b>ORACLE 8.0의 IOT(INDEX ORGANIZED TABLE) <br></b></td></tr><tr><td class="td" valign="top" height="80"><div class="wrap" id="centent"><p><br>ORACLE 8.0의 IOT(INDEX ORGANIZED TABLE)<br>=======================================<br><br>Index Organized Talbe(IOT)는 Oracle 8에서 처음 소개된 새로운 object이다.<br>IOT에 대한 소개 및 특징, 사용 방법에 대하여 설명을 한다.<br><br>[특징]<br>- IOT는 table data를 primary key에 대한 B*Tree index에 적재하는 구조를 갖는다.<br>- IOT의 index row들은 인덱스 키 값과 non-key 값을 포한한다.<br>- IOT의 index에는 ROWID 정보가 없다.<br><br>[장점]<br>- range search, exact match를 수행하는 경우 일반적인 table보다 빠른 <br>&nbsp; key-based access가 가능하다.<br>- full table scan 시 primary key에 대한 full index scan이 이루어지므로 <br>&nbsp; 자동적인 ordering이 이루어진다.<br>- index key column과 rowid에 대한 storage 중복을 피할 수 있어 storage가 <br>&nbsp; 절약된다.<br><br>[제약사항]<br>- 추가적인 index 생성이 불가능(IOT는 오직 primary key에 대한 indexing만 가능)<br>- cluster table로 이용되지 못함.<br>- 병렬 작업이 불가능<br>- 분산, 복제, 분할이 불가능<br>- long, long raw, lob이 지원이 안 됨.<br><br><br>[IOT 생성 구문의 예 및 이에 대한 설명]<br><br>SQL&gt; CREATE TABLE IOTAB <br>2&gt;&nbsp;&nbsp; (COL_PK NUMBER PRIMARY KEY,<br>3&gt;&nbsp;&nbsp; COL2 VARCHAR2(500),<br>4&gt;&nbsp;&nbsp; COL3 NUMBER,<br>5&gt;&nbsp;&nbsp; COL4 VARCHAR2(1000))<br>6&gt;&nbsp;&nbsp; ORGANIZATION INDEX TABLESPACE USERS<br>7&gt;&nbsp;&nbsp; PCTTHRESHOLD 10 INCLUDING COL2<br>8&gt;&nbsp;&nbsp; OVERFLOW TABLESPACE USERS;<br><br>- ORGANIZATION INDEX : IOT를 생성함을 정의하는 keyword <br><br>- PCTTHRESHOLD : IOT의 단일 row가 (PCTTHRESHOLD / 100) * DB_BLOCK_SIZE<br>보다 크다면 INCLUDING column 이후의 column data는 OVERFLOW table에 저장된다.<br><br>- INCLUDING : IOT의 단일 row size가 (PCTTHRESHOLD / 100) * DB_BLOCK_SIZE<br>보다 큰 경우 INCLUDING column 이후의 row data는 overflow table에 저장이 된다. <br>만일 including column이 지정이 되어 있지 않다면 pramary key column 이외의<br>column data가 overflow table에 저장된다. <br><br>- OVERFLOW TABLESPACE : 만일 overflow tablespace option을 주지 않고 생성된<br>IOT에 대하여 (PCTTHRESHOLD / 100) * DB_BLOCK_SIZE보다 큰 row가 발생한다면<br>ORA-1429와 같은 오류를 만나게 된다.<br><br><br>[IOT의 chained rows 확인]<br>- IOT의 chained rows 수를 확인하는 방법은 다음과 같이 IOT를 위한 <br>chained_rows table을 생성한 후 anlyze command를 이용하여 가능하다.<br><br>procedure BUILD_CHAIN_ROWS_TABLE(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; owner in varchar2,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iot_name in varchar2,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chainrow_table_name in varchar2 default 'IOT_CHAINED_ROWS');<br><br><br>- DBMS_IOT package는 $ORACLE_HOME/rdbms/admin/dbmsiotc.sql에 정의되어 있다.<br><br>- 다음은 IOT의 chained row 확인 절차에 대한 보기이다.<br><br>SQL&gt; EXECUTE DBMS_IOT.BUILD_CHAIN_ROWS_TABLE('SCOTT','IOTAB');<br>SQL&gt; ANALYZE TABLE IOTAB LIST CHAINED ROWS INTO IOT_CHAINED_ROWS;<br></p><p>from oracle.com</p></div></td></tr></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

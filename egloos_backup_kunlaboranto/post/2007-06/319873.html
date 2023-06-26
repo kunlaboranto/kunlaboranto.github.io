@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 젠투에서 Subversion 설치하고 윈도에서 사용하기 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:00:23</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 젠투에서 Subversion 설치하고 윈도에서 사용하기 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><h1 class="title">젠투에서 Subversion 설치하고 윈도에서 사용하기..</h1><div class="tabs"></div><div class="messages error">The image verification code you entered is incorrect.</div><!-- begin content --><div class="node"><div class="picture"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/6566" target="_blank"><img title="tinywolf의 그림" alt="tinywolf의 그림" src="http://kldp.org/files/pictures/121946162342ac08a61367e.png"></a></div><span class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/6566" target="_blank">tinywolf</a> 씀 (수, 2005/04/13 - 2:36am)</span> <span class="taxonomy"><a class="con_link" title="내가 아는 것을 다른 사람들과 나누고 싶을때... " href="http://kldp.org/forum/2797" target="_blank" rel="tag">강좌</a></span> <div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>크아... 정말 삽질의 하루였습니다..<br>Subversion.. 설치도 쉽고 사용도 쉬운 아주 좋은 도구더군요.. 만족입니다.<br>svn+ssh하는 부분에서 삽질을 좀 많이 했습니다.. 휴우..<br>오늘 결과물을 여기에 기록해 두려 합니다..</p><p>우선 젠투에 Subversion을 설치합니다. (실험은 2005.0에서 수행되었습니다.)<br>websvn은 웹으로 subversion의 내용을 볼 수 있게 하는 것인데..<br>설치후 나오는 메세지대로 생성시켜주면 됩니다.</p><pre class="bb-code-block"># USE="apache2" emerge subversion# ACCEPT_KEYWORDS="~x86" USE="enscript vhosts" emerge websvn# webapp-config -I -h localhost -d websvn websvn 1.61</pre><p>기본적인 저장소를 생성합니다. (/home아래에 두기로 했습니다. 이름은 test입니다.)<br>소유권을 변경하는 이유는 설정이 기본으로 apache 계정으로 접근할 수 있게 되어 있기 때문입니다.<br>(기본 설정은 왠만하면 안고치는게 심적 안정을 찾을 수 있을 것같아서..)</p><pre class="bb-code-block"># svnadmin create /home/svn/test# chown -R apache:apache /home/svn</pre><p>websvn에도 저장소를 등록시켜 줍니다.<br>설정파일에는 표시 언어에 대한 내용도 있는데 한글도 있습니다! (기쁘다!)</p><pre class="bb-code-block"># nano -w /var/www/localhost/htdocs/websvn/include/config.inc  - 다음과 같은 줄을 찾아서 주석을 해제 시키고 내용을 바꿔줍니다. -$config-&gt;addRepository("test","/home/svn/test");</pre><p>일단 웹브라우져로 제대로 나오는지 확인해 볼까요..<br><span style="FONT-FAMILY: Courier New"><code class="bb-code">http://localhost/websvn</code><br></span>자신의 웹환경에 맞도록 vhosts를 구성해도 좋구요..<br>템플릿에 대한 내용도 있는 것으로 봐서 보기 좋게 내용을 바꾸는 것도 쉬울 것같습니다.<br>인증과 같은 여러가지 추가적인 설정은 아파치 하기 나름입니다. (실험은 apache2에서 수행되었습니다.)</p><p>자 이제 윈도로 돌아옵니다.<br>TortoiseSVN을 설치합니다.<br><span style="FONT-FAMILY: Courier New"><code class="bb-code">http://tortoisesvn.tigris.org/download.html</code><br></span>이 곳에서 한글 언어팩도 다운로드 받을 수 있습니다.<br><code class="bb-code"><span style="FONT-FAMILY: 굴림체">http://tortoisesvn.berlios.de/l10n</span></code></p><p>윈도우 탐색기의 아무 곳에서나 오른쪽 클릭하고 "TortoiseSVN"-&gt;"Settings(설정)"을 선택합니다.<br>"Network"탭에서 "SSH"설정을 바꿔줘야 원하는 계정으로 svn+ssh를 사용할 수 있습니다.<br>(요기서 엄청난 삽질을 했습니다.. 뭘 어떻게 해도 "Connection closed unexpectedly"만 메세지만 잔뜩.. ㅠㅁㅠ)<br>"SSH"항목에 다음과 같은 내용을 자신의 환경에 맞도록 입력합니다.<br><span style="FONT-FAMILY: Courier New"><code class="bb-code">"D:\Program Files\TortoiseSVN\bin\TortoisePlink.exe" -l 계정 -pw 암호</code><br></span>-pw 암호 옵션은 안 줄 경우 매번 접속시 입력해야 합니다.<br>그리고 계정과 암호는 반드시 subversion이 설치된 리눅스 머신에 있는 계정이어야 합니다.<br>사실 svn+ssh라는 것이 ssh로 터널링하는 것이라 ssh로 접속할 수 있는 계정이라고 하는 것이 맞을 것같습니다.</p><p>자 이제 설정을 테스트하기 위해 저장소를 브라우징해 보겠습니다.<br>역시 윈도우 탐색기의 아무 곳에서나 오른쪽 클릭하고 "TortoiseSVN"-&gt;"Repo-Browser(저장소 브라우저)"를 선택합니다.<br>그러면 URL을 물어오는데 여기서 다음과 같이 subversion이 설치된 머신의 경로를 줍니다.<br><span style="FONT-FAMILY: Courier New"><code class="bb-code">svn+ssh://192.168.100.10/home/svn/test</code><br></span>그러면 폴더뷰어와 같은 형태가 나타납니다.<br>가장 하단의 "test"를 오른쪽 클릭해서 "새로 고침"을 하면 기존의 내용이 나오게 됩니다.</p><p>그러면 작동을 시험하기 위해 새 폴더를 한번 만들어 보겠습니다.<br>test라는 폴더에서 오른쪽 클릭하고 "폴더 생성"을 선택합니다.<br>대충 폴더의 이름을 적어주고 로그 정보는 옵션으로 주고 확인을 하면 폴더가 추가됩니다.<br>(물론 -pw옵션이 빠져있다면 위의 모든 행동들에서 암호를 물어옵니다.)</p><p>아쉽게도 svn+ssh모드에서는 루트 위치를 지정해 줄수가 없기때문에 모든 경로를 다 적어야 합니다. (/home/svn같은..)<br>보안 터널이 필요없다면 정말 쉽게 svnserve를 사용하는 방법이 있습니다. (젠투에선 init.d에 데몬으로 제공됩니다.. 정말 좋다..)<br>빠르고 기본 루트 위치도 정할 수 있고.. 따로 관리되는 passwd파일을 통한 인증도 할 수 있습니다.<br>너무도 간단하기 때문에 생략하겠습니다.</p><p>참고한 문서는 KLDP 위키에 있는 문서입니다.</p></div></div><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

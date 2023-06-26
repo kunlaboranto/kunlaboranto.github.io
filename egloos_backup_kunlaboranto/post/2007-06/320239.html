@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>신기한 popup 광고 ?? ( 케이스툴에 활용 ?? )</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:21:34</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">신기한 popup 광고 ?? ( 케이스툴에 활용 ?? )</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><p>From : <a class="con_link" href="http://www.dbforums.com/archive/index.php/t-1011812.html" target="_blank">http://www.dbforums.com/archive/index.php/t-1011812.html</a></p><p>&nbsp;</p><p>신기한 popup 광고 ?? ( 케이스툴에 활용 ?? )</p><p>&nbsp;</p><p>if(undefined==itxtInProg){<br>var itxtInProg=1;<br>function gIT(o){if(o.nodeType==3)return o.nodeValue;if('SCRIPT'==o.tagName)return '';var t='';var cn=o.childNodes;for(var i=0;i&lt;cn.l<br>ength;i++)t+=gIT(cn[i]);return t;}<br>function itxtbtl(){if(document.body.innerText!=undefined)return itxtsW(document.body.innerText).length;return gIT(document.body).len<br>gth;}<br>function itxtsW(x){var r=x;var v=/\s/g;if(x.search(v)!=-1){r=x.replace(v, '');}return r;}<br>var itxturl='http://dbforums.us.intellitxt.com/v3/door.jsp?ts='+(new Date()).getTime()+'&amp;pagecl='+itxtbtl()+'&amp;ipid=3576&amp;refurl='+doc<br>ument.location.href.replace(/\&amp;/g,'%26').replace(/\'/g, '%27').replace(/\"/g, '%22');<br>try {<br>document.write('&lt;s'+'cript language="javascript" src="'+itxturl+'"&gt;&lt;/s'+'cript&gt;');<br>}catch(e){}<br>}</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

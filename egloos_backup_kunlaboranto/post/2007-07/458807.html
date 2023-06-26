@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>Altibase 속성들.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-24 15:12:43</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">Altibase 속성들.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><p class="11" style="MARGIN: 12pt 0cm 6pt"><span lang="EN-US"><strong><span style="FONT-SIZE: 100%; FONT-FAMILY: 바탕"><span style="FONT-FAMILY: '굴림','Gulim'">SYNC_CREATE_</span></span></strong></span></p><p class="MsoNormal" style="MARGIN: 3pt 0cm"><span style="FONT-SIZE: 100%; FONT-FAMILY: 바탕"><span style="FONT-FAMILY: '굴림','Gulim'">데이터 타입<br>&nbsp;&nbsp;&nbsp; Unsigned integer<br>기본값<br>&nbsp;&nbsp;&nbsp; 1<br>속성<br>&nbsp;&nbsp;&nbsp; 읽기 전용, 단일 값<br>값의 범위<br>&nbsp;&nbsp;&nbsp; [0, 1]<br>설명<br>&nbsp;&nbsp;&nbsp; Logfile 생성시 화일의 sync 유무를 나타낸다. <br>&nbsp;&nbsp;&nbsp; 이 값이 0이면 sync를 수행하지 않고, 1이면 sync를 수행한다. <br>&nbsp;&nbsp;&nbsp; 내부적으로만 사용되는 속성이며, Default는 1의 값을 가짐</span></span></p><p class="MsoNormal" style="MARGIN: 3pt 0cm"><span style="FONT-SIZE: 100%; FONT-FAMILY: 바탕"></span>&nbsp;</p><p class="MsoBodyText" style="MARGIN: 3pt 0cm 6pt"><span style="FONT-SIZE: 100%"><span style="FONT-FAMILY: 바탕"></span></span></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

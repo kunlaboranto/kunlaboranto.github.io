@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>skin 을 바꾸다</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-29 11:56:08</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">skin 을 바꾸다</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">막연히 티스토리가 좋아보여서. 초대장 받을려고 한시간 넘게 F5만 누르다가.<br>이곳 이글루의 스킨을 바꾸었다.<br><br>내 이글루홈의 태생이. 단순한 서핑중 창고였지만.<br>그래도 2007년 부터, (의도는 아니었지만) 외부에 흔적을 남긴 것으로는 거의 유일해서..<br>요즈음 하고싶은 '표출'을 여기서 하고 싶다.<br><br>생각을 나누겠다는 의미가 아니고, 단지 날위한 표출을 원한다.<br><br><br>&gt; 창조성은 Zero라서. 스킨 하나도. 주체적으로 결정못하고.<br>&nbsp;&nbsp; 문득 어느 블로그 보다가.. 홈쳐왔다. 사실 홈치고 싶은 것은 스킨이 아니라. 그분의 내면이었겠지만..<br><br>&nbsp;&nbsp; 이렇게 적으니, 내가 나에게 불만이 만땅인 것 같지만. 장점은 있다. 문제는 내가 그걸 나에게 표출한 적이 없다는 것이고.<br>&nbsp;&nbsp; 나의 사고가 정리되지 않으니, 동료를 공감, 감염 시키지 못한다는데 있다.. 혼자 일하는 것은 싫다. 동료와 함께하고 싶다.<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

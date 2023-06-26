@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] DB2 CLI 함수들.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-06-30 22:21:29</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] DB2 CLI 함수들.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://publib.boulder.ibm.com/infocenter/db2v7luw/index.jsp?topic=/com.ibm.db2v7.doc/db2l0/odbcfun.htm<br><br><h1>Call Level Interface Guide and Reference</h1><p></p><h2><a name="HDRFNNUMP"><span><span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;"><span><span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;">SQLNumParam</span>s</span></span> - Get Number of Parameters in A SQL Statement</span></a></h2><p><strong>Purpose</strong><a name="IDX2112"></a><a name="IDX2113"></a></p><p><br><table border="1"><tbody><tr><td align="left" valign="top" width="25%"><b>Specification:</b></td><td align="left" valign="top" width="25%"><b>DB2 CLI</b> 2.1</td><td align="left" valign="top" width="25%"><b>ODBC</b> 1.0</td><td align="left" valign="top" width="25%">&nbsp;</td></tr></tbody></table></p><p><tt><span><span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;"><span><span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;">SQLNumParam</span>s</span></span>()</span></tt> returns the number of parameter markers in an SQLstatement.</p><p><strong>Syntax</strong></p><p></p><pre><span>SQLRETURN   <span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;"><span><span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;">SQLNumParam</span>s</span></span>     (SQLHSTMT          StatementHandle,<br>                              SQLSMALLINT  </span><var>FAR</var>  *ParameterCountPtr);<br></pre><p><strong>Function Arguments</strong></p><p><br></p><p><b><a name="Table_128"><span>Table 128. <span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;"><span><span style="background: highlight none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: highlighttext;">SQLNumParam</span>s</span></span> Arguments</span></a></b><br><table border="1" width="100%"><tbody><tr><th align="left" valign="bottom" width="18%">Data Type</th><th align="left" valign="bottom" width="24%">Argument</th><th align="left" valign="bottom" width="12%">Use</th><th align="left" valign="bottom" width="47%">Description</th></tr><tr><td align="left" valign="top" width="18%">SQLHSTMT</td><td align="left" valign="top" width="24%">StatementHandle</td><td align="left" valign="top" width="12%">Input</td><td align="left" valign="top" width="47%">Statement handle.</td></tr><tr><td align="left" valign="top" width="18%">SQLSMALLINT *</td><td align="left" valign="top" width="24%">ParameterCountPtr</td><td align="left" valign="top" width="12%">Output</td><td align="left" valign="top" width="47%">Number of parameters in the statement.</td></tr></tbody></table></p><p><strong>Usage</strong></p><p>This function can only be called after the statement associated with<var>StatementHandle</var> has been prepared. If the statement does notcontain any parameter markers, <var>ParameterCountPtr</var> is set to 0.</p><p>An application can call this function to determine how many <tt><a href="http://publib.boulder.ibm.com/infocenter/db2v7luw/topic/com.ibm.db2v7.doc/db2l0/sqll1307.htm#HDRFNBNDPA">SQLBindParameter()</a></tt> (or <tt><a href="http://publib.boulder.ibm.com/infocenter/db2v7luw/topic/com.ibm.db2v7.doc/db2l0/sqll1306.htm#HDRFNBNDFP">SQLBindFileToParam()</a></tt>) calls are necessary for the SQLstatement associated with the statement handle.</p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

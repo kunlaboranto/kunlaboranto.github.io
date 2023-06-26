@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Run Level</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-10-23 02:29:35</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Run Level</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://altibase.egloos.com/902577" title="">[펌] [ORACLE 관련] 부팅시 오라클 자동 실행 방법</a><br><br>From : http://www.redhat.com/docs/manuals/enterprise/RHEL-4-Manual/sysadmin-guide/ch-services.html<br><br><table summary="Header navigation table" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><th colspan="3" align="center">Red Hat Enterprise Linux 4: System Administration Guide</th></tr><tr><td align="left" valign="bottom" width="10%"><a href="http://www.redhat.com/docs/manuals/enterprise/RHEL-4-Manual/sysadmin-guide/s1-basic-firewall-activate-iptables.html" accesskey="P">Prev</a></td><td align="center" valign="bottom" width="80%"><br></td><td align="right" valign="bottom" width="10%"><a href="http://www.redhat.com/docs/manuals/enterprise/RHEL-4-Manual/sysadmin-guide/s1-services-tcp-wrappers.html" accesskey="N">Next</a></td></tr></tbody></table><hr align="left" width="100%"><div class="CHAPTER"><h1><a name="CH-SERVICES"></a>Chapter 20. Controlling Access to Services</h1><p>      Maintaining security on your system is extremely important, and one      approach for this task is to manage access to system services carefully.      Your system may need to provide open access to particular services (for      example, <tt class="COMMAND">httpd</tt> if you are running a Web server).      However, if you do not need to provide a service, you should turn it off      to minimize your exposure to possible bug exploits.    </p><p>      There are several different methods for managing access to system      services.  Decide which method of management to use based on the      service, your system's configuration, and your level of Linux expertise.    </p><p>      The easiest way to deny access to a service is to turn it off.  Both the      services managed by <tt class="COMMAND">xinetd</tt> and the services in the      <tt class="FILENAME">/etc/rc.d/init.d</tt> hierarchy (also known as SysV      services) can be configured to start or stop using three different      applications:    </p><ul><li><p><b class="APPLICATION">Services Configuration Tool</b> — a graphical application  that displays a description of each service, displays whether each  service is started at boot time (for runlevels 3, 4, and 5), and  allows services to be started, stopped, and restarted.</p></li><li><p><b class="APPLICATION">ntsysv</b> — a text-based application  that allows you to configure which services are started at boot time  for each runlevel. Non-<tt class="COMMAND">xinetd</tt> services can not be  started, stopped, or restarted using this program.</p></li><li><p><tt class="COMMAND">chkconfig</tt> — a command line utility that  allows you to turn services on and off for the different  runlevels. Non-<tt class="COMMAND">xinetd</tt> services can not be started,  stopped, or restarted using this utility.</p></li></ul><p>      You may find that these tools are easier to use than the alternatives      — editing the numerous symbolic links located in the directories      below <tt class="FILENAME">/etc/rc.d</tt> by hand or editing the      <tt class="COMMAND">xinetd</tt> configuration files in      <tt class="FILENAME">/etc/xinetd.d</tt>.    </p><p>      Another way to manage access to system services is by using      <tt class="COMMAND">iptables</tt> to configure an IP firewall.  If you are a new      Linux user, please realize that <tt class="COMMAND">iptables</tt> may not be the      best solution for you.  Setting up <tt class="COMMAND">iptables</tt> can be      complicated and is best tackled by experienced Linux system      administrators.      </p><p>      On the other hand, the benefit of using <tt class="COMMAND">iptables</tt> is      flexibility.  For example, if you need a customized solution which      provides certain hosts access to certain services,      <tt class="COMMAND">iptables</tt> can provide it for you.  Refer to the      <i class="CITETITLE">Red Hat Enterprise Linux Reference Guide</i> and the <i class="CITETITLE">Red Hat Enterprise Linux Security Guide</i> for more      information about <tt class="COMMAND">iptables</tt>.    </p><p>      Alternatively, if you are looking for a utility to set general access      rules for your home machine, and/or if you are new to Linux, try the      <b class="APPLICATION">Security Level Configuration Tool</b>      (<tt class="COMMAND">system-config-securitylevel</tt>), which allows you to      select the security level for your system, similar to the      <b class="GUILABEL">Firewall Configuration</b> screen in the installation      program.     </p><p>      Refer to <a href="http://www.redhat.com/docs/manuals/enterprise/RHEL-4-Manual/sysadmin-guide/ch-basic-firewall.html">Chapter 19 <i>Basic Firewall Configuration</i></a> for more information.      If you need more specific firewall rules, refer to the      <tt class="COMMAND">iptables</tt> chapter in the      <i class="CITETITLE">Red Hat Enterprise Linux Reference Guide</i>.    </p><div class="SECT1"><h1 class="SECT1"><a name="S1-SERVICES-RUNLEVELS">20.1. Runlevels</a></h1><p>Before you can configure access to services, you must understand Linuxrunlevels. A runlevel is a state, or <i class="FIRSTTERM">mode</i>, thatis defined by the services listed in the directory<tt class="FILENAME">/etc/rc.d/rc<var class="REPLACEABLE">&lt;x&gt;</var>.d</tt>,where <var class="REPLACEABLE">&lt;x&gt;</var> is the number of therunlevel.      </p><p>The following runlevels exist:      </p><ul><li><p>0 — Halt</p></li><li><p>1 — Single-user mode</p></li><li><p>2 — Not used (user-definable)</p></li><li><p>3 — Full multi-user mode</p></li><li><p>4 — Not used (user-definable)</p></li><li><p>5 — Full multi-user mode (with an X-based login screen)</p></li><li><p>6 — Reboot</p></li></ul><p>If you use a text login screen, you are operating in runlevel 3. If youuse a graphical login screen, you are operating in runlevel 5.      </p><p>The default runlevel can be changed by modifying the<tt class="FILENAME">/etc/inittab</tt> file, which contains a line near the topof the file similar to the following:      </p><table class="SCREEN" bgcolor="#dcdcdc" width="100%"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">id:5:initdefault:</samp></pre></td></tr></tbody></table><p>Change the number in this line to the desired runlevel. The change doesnot take effect until you reboot the system.      </p><p>To change the runlevel immediately, use the command<tt class="COMMAND">telinit</tt> followed by the runlevel number. You must beroot to use this command. The <tt class="COMMAND">telinit</tt> command doesnot change the <tt class="FILENAME">/etc/inittab</tt> file; it only changesthe runlevel currently running. When the system is rebooted, itcontinues to boot the runlevel as specified in<tt class="FILENAME">/etc/inittab</tt>.      </p></div></div><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>HP ARENA 문제 - mallinfo </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:53:30</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">HP ARENA 문제 - mallinfo </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">[</span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">참고<span lang="EN-US">: HP Specific Issues]<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt; TEXT-INDENT: -18pt; mso-list: l0 level1 lfo1"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림"><span style="mso-list: Ignore">-<span style="FONT-SIZE: 85%; FONT-FAMILY: Times New Roman"><span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span></span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림">A3 </span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">최신버젼<span lang="EN-US">(3.5.3p5 for HP11.11)</span>에서 </span></span><span style="FONT-FAMILY: Arial"><span lang="EN-US" style="FONT-FAMILY: Arial">“</span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림">check mallinfo</span></span><span style="FONT-FAMILY: Arial"><span lang="EN-US" style="FONT-FAMILY: Arial">”</span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림"></span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">명령이 추가되어 있음<span lang="EN-US">.<o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt; TEXT-INDENT: -18pt; mso-list: l0 level1 lfo1"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림"><span style="mso-list: Ignore">-<span style="FONT-SIZE: 85%; FONT-FAMILY: Times New Roman"><span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span></span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림">HP</span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">의 경우<span lang="EN-US">(</span>다른 플랫폼은 확인하지 못했음<span lang="EN-US">) malloc </span>등의 명령에 의해 즉각적인 <span lang="EN-US">Heap </span>크기의 증가가 일어나지 않음<span lang="EN-US">, </span>이것은 <span lang="EN-US">ARENA</span>라고 하는 일종의 <span lang="EN-US">Memory Pool</span>에 의해 메모리 관련 <span lang="EN-US">Allocator </span>들이 동작하기 때문에의 이 때문에 <span lang="EN-US">PS</span>혹은 <span lang="EN-US">Glance </span>등의 명령으로 프로세스 메모리 증가를 추정하기 어려운 점이 있음<span lang="EN-US">. </span>이 때문에 <span lang="EN-US">check mallinfo </span>등의 명령에 의해 얻어지는 정보를 추가로 포함해 판단할 필요가 있음<span lang="EN-US">.<o:p></o:p></span></span></span></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Oracle Performance Tuning</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-19 04:49:20</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Oracle Performance Tuning</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://database.sarang.net/?inc=read&amp;aid=9031&amp;criteria=oracle&amp;subcrit=&amp;id=112&amp;limit=20&amp;keyword=v%24statement&amp;page=29">http://database.sarang.net/?inc=read&amp;aid=9031&amp;criteria=oracle&amp;subcrit=&amp;id=112&amp;limit=20&amp;keyword=v%24statement&amp;page=29</a><br><br><table class="infotable" style="TEXT-ALIGN: left" cellspacing="0" cellpadding="3" border="0"><tbody><tr><td class="rowtitle" colspan="6">오라클 Performance Tuning Scripts</td></tr><tr><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성자</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">정재익(advance)</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성일</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">2001-12-25 12:54:12</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">조회수</div></th><td class="rowmisc" align="right"><div style="WHITE-SPACE: nowrap">1,097</div></td></tr></tbody></table><table class="viewtable" style="TEXT-ALIGN: left"><tbody><tr><td class="rowbody"><p><b><span style="COLOR: #008000">Oracle Performance Tuning</span></b></p><p>&nbsp;</p><p><b><span style="COLOR: #0000ff">Name: DB Block Efficiency </span></b></p><p>&nbsp;</p><p>select round((1-(pr.value/(bg.value+cg.value)))*100,2) </p><p>from v$sysstat pr, v$sysstat bg, v$sysstat cg </p><p>where pr.name = 'physical reads' </p><p>and bg.name = 'db block gets' </p><p>and cg.name = 'consistent gets' </p><p>&nbsp;</p><p>The init.ora parameter: DB_BLOCK_BUFFERS controls </p><p>the amount of memory allocated for the data cache. </p><p>When an application requests data, Oracle first </p><p>attempts to find it in the data cache. </p><p>The more often Oracle finds requested data in memory </p><p>a physical IO is avoided, and thus overall performance </p><p>is better. Under normal circumstances this ratio </p><p>should be greater than or equal to 95%. Initially </p><p>set the DB_BLOCK_BUFFERS size to be 20 - 50% the </p><p>size of the SGA. </p><p>&nbsp;</p><p><b><span style="COLOR: #0000ff">Name: Dictionary Cache Efficiency </span></b></p><p>&nbsp;</p><p>select round(sum(gets)/(sum(gets)+sum(getmisses)) * 100,2) </p><p>from v$rowcache; </p><p>&nbsp;</p><p>The init.ora parameter: SHARED_POOL_SIZE controls the amount of </p><p>memory allocated for the shared buffer pool. </p><p>The shared buffer pool contains SQL and PL/SQL <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>s </p><p>(library cache), the data dictionary cache, </p><p>and information on data base sessions. </p><p>This percentage will never equal 100 because the cache </p><p>must perform an initial load when Oracle first starts up. </p><p>The percentage, therefore, should continually get closer </p><p>to 100 as the system stays "up." </p><p>&nbsp;</p><p>Ideally, the entire data dictionary would be cached in memory. </p><p>Initially set the SHARED_POOL_SIZE to be 50-100% the size of </p><p>the init.ora parameter: DB_BLOCK_BUFFERS - then fine tune the </p><p>parameter. </p><p>&nbsp;</p><p><b><span style="COLOR: #0000ff">Name: Disk Reads Max SQL </span></b></p><p>&nbsp;</p><p>select sql_text </p><p>from v$sqlarea, v$session </p><p>where address = sql_address </p><p>and username is not null </p><p>and disk_reads/executions = </p><p>(select max(disk_reads/executions) </p><p>from v$sqlarea, v$session </p><p>where address = sql_address </p><p>and username is not null) </p><p>&nbsp;</p><p>This query returns the first 1000 bytes of the SQL <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span> </p><p>having the highest number of disk reads per execution. </p><p>This query is designed to help determine the user generated </p><p>SQL causing a large number of disk reads per <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span> execution. </p><p>&nbsp;</p><p><b><span style="COLOR: #0000ff">Name: Disk Reads Max User </span></b></p><p>&nbsp;</p><p>select username </p><p>from v$sqlarea, v$session </p><p>where address = sql_address </p><p>and username is not null </p><p>and disk_reads/executions = </p><p>(select max(disk_reads/executions) </p><p>from v$sqlarea, v$session </p><p>where address = sql_address </p><p>and username is not null) </p><p>&nbsp;</p><p>This query returns the username associated with the SQL </p><p><span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span> having the highest number of disk reads per execution. </p><p>This query is designed to help determine the user causing </p><p>a large number of disk reads per <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span> execution.</p></td></tr></tbody></table></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

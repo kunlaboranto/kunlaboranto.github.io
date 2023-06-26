@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>윈도에서 DB관련 CLASS 예</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:10:44</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">윈도에서 DB관련 CLASS 예</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>윈도 프로그래밍에 맹 인 쥔장으로서는.. </p><p>여러 다양한 DB관련 윈도 컴포넌트 (CLASS)들이 혼동 스럽기 짝이 없음.</p><p>&nbsp;</p><p>때문에.. 명칭 및 접속 사용예 + 오류처리예 정도로 수집시작함.</p><p>&nbsp;</p><p>#1. C#에서 CDatabase</p><p>&nbsp;CDatabase database;<br>&nbsp;CString sDsn;</p><p>&nbsp;CString SqlString;&nbsp;<br>&nbsp;<br>&nbsp;SqlString.Format("INSERT INTO test3 VALUES ('MFC', '%d')", thr_no);<br>&nbsp;sDsn.Format(_T("ODBC;DSN=A4;UID=SYS;PASSWORD=MANAGER")); </p><p>&nbsp;</p><p>&nbsp;TRY<br>&nbsp;{<br>&nbsp;&nbsp;database.Open(NULL, false, false, sDsn);<br>&nbsp;&nbsp;while(1)<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;Sleep(100);<br>&nbsp;&nbsp;&nbsp;database.ExecuteSQL(SqlString);<br>&nbsp;&nbsp;}</p><p>&nbsp;}<br>&nbsp;CATCH(CDBException, e)<br>&nbsp;{<br>&nbsp;&nbsp;AfxMessageBox("Database error: "+e-&gt;m_strError);<br>&nbsp;&nbsp;//AfxMessageBox("_OK_01 : " + e-&gt;m_nRetCode);<br>&nbsp;&nbsp;AfxMessageBox("_OK_01 : " + e-&gt;m_strStateNativeOrigin);</p><p>&nbsp;}</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

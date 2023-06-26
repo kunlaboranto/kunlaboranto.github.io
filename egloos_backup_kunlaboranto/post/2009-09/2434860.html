@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] DB2 9.7의 오라클 호환성 테스트 수행기</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2009-09-10 10:50:32</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] DB2 9.7의 오라클 호환성 테스트 수행기</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From: http://www.dbguide.net/know/know101003.jsp?IDX=1556&amp;catenum=14<br><br><p class="sub1"><a href="http://www.kdug.kr/" target="_blank"><b><font color="midnightblue">출처 : KDUG (http://www.kdug.kr/) </font></b></a></p><p><a href="http://www.dbguide.net/" target="_blank"><b><font color="midnightblue">제공 : DB포탈사이트 DBguide.net </font></b></a></p><br><br><p class="title1"><strong>DB2 9.7의 오라클 호환성 테스트 수행기<br></strong></p><p class="sub1"><a name="n10069">“Recursive Query와 dictionary view 호환성 비교”</a><br></p><p class="contentsbox">DB2 9.7 LUW(이하 DB2)는 오라클의 Syntax 특징을 거의 대부분 수용하여오라클 사용 경험자가 DB2에 손쉽게 적응할 수 있도록 많은 부분이 개선되었다. 물론 오라클 코드에 대한 호환성은 9.5버전부터등장했으나 9.7버전에 이르러서는 오라클과의 경계가 더욱 희미해졌다는 평가를 받고 있다.<br>이러한 부분에 대하여 Syntax적 특징의 수용 외에도 그것이 과연 오라클에서와 같은 성능을 발휘하거나 혹은 더 나은 성능을 낼 수 있는지에 대해 살펴보는 것은 매우 큰 의미를 갖는다. <br>오라클과의 비교를 통해 DB2에 대한 호감도나 신뢰도를 향상시킬 수도 있고, 오라클과의 호환에 있어서 어떠한 한계가 있다면 그한계를 명확하게 파악하고 대안을 찾음으로써 DB2를 사용하고자 하는 사람들에게 보다 큰 확신을 줄 수 있을 것이다. 이와 같은의도에서 현재 다양한 테스트를 진행하고 있는데, 그 중 몇 가지를 소개하고자 한다. </p><p class="sub1"><br><a name="N10069"><strong>Recursive Query 비교</strong></a><br></p>db2_compatibility_vector설정을 통해 오라클에서 사용하는 recursive query를 그대로 수용할 수 있다. 이것은 9.5버전에서부터 수용된특징으로, 9.7버전에서 테스트해 본 결과 알고리즘의 수정 없이 9.7버전에도 그대로 적용된 것으로 보인다. 그러나 DB2가recursive query를 수용하는 방식은 내부적인 처리에 있어서 오라클과 약간의 차이가 있다. 아래 &lt;예문1&gt;은 오라클에서 sample로 사용되는 emp 테이블의 구조와 데이터를 그대로 DB2로 옮겨서 테스트 한 것이다.(테스트에 사용한 오라클 버전은 10.2.0.1.0 이다.)<br><br><table width="580" bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0"><tbody><tr><td><xmp>select empno, ename, mgr from emp &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;start with mgr is null &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;connect by prior empno = mgr;</xmp></td></tr></tbody></table><br><strong>&lt;예문 1&gt; emp 테이블에 대한 recursive query</strong><br><br>&lt;예문 1&gt;의 문장은 오라클에서도 동일하게 사용된다. 그러나 오라클이 3, 4번 라인의 구문 위치를 바꾸어도 아무런 문제없이실행되는데 반해 DB2에서는 반드시 예문과 같은 순서로 사용해야 하는 차이가 발견되었다. 이것은 오라클의 recursivequery를 DB2로 옮길 때 주의해야 할 사항이며, 향후에는 모두 수용될 것으로 기대된다. <br>&lt;예문 1&gt;의 출력 결과는 오라클과 DB2에서 모두 동일했다. 그러나 실행계획을 통해 확인한 내부 처리 과정은 상당한 차이를 보였다. <br>오라클에서의 실행계획을 보면 mgr 컬럼에 인덱스가 없기 때문에 &lt;그림 1&gt;에서 보는 바와 같이 connect by 절의 처리가 hash join을 통해 연속적으로 처리되고 있다.<br><br><table width="580" bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0"><tbody><tr><td><xmp>SELECT STATEMENT Hint=ALL_ROWS CONNECT BY WITH FILTERING FILTER &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;    TABLE ACCESS FULL EMP HASH JOIN CONNECT &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;    BY PUMP TABLE ACCESS FULL EMP TABLE ACCESS FULL EMP </xmp></td></tr></tbody></table><br><strong>&lt;그림 1&gt; recursive query에 대한 오라클 실행계획</strong> <br><br>&lt;그림 2&gt;는 동일한 SQL에 대해 DB2에서 얻은 실행계획이다. 실행계획의 형태로 볼 때 DB2에서는 recursive query를 with절을 이용한 형태로 재해석하여 처리하는 것으로 판단된다.<br><br><img src="http://www.dbguide.net/images/know/tech/db2_img1.jpg"><br><strong>&lt;그림 2&gt; recursive query에 대한 DB2에서의 실행계획</strong> <br><br>여기서 주목할 것은 connect by가 처리되는 부분이 NLJOIN으로 처리되고 있다는 점이다. 즉 선 처리된 로우로부터 하위계층을 연속적으로 액세스해 나갈 때마다 매번 Nested Loops 조인에 의한 random access 방법을 사용해서inner table에 대한 full table scan을 반복한다는 것이다. <br>이러한 방식은 대량의 데이터를 저장하고 있는 테이블이 대상이 될 경우 성능에 아주 큰 영향을 미칠 수 있기 때문에 대량 데이터를 저장하고 있는 테이블에 대해 추가적인 테스트가 필요한 부분이다. <br>DB2에서 &lt;예문 1&gt;의 recursive query를 같은 의미의 with절로 바꾸어 &lt;예문 2&gt;와 같이사용하게 되면 오라클에서의 출력 결과와 다른 정렬 순서의 결과를 얻게 된다. 이것은 &lt;그림 2&gt;에서 나타나는 sortoperation이 with절로 작성된 recursive query의 실행계획에서는 나타나지 않기 때문이다. <br>즉,&lt;그림 2&gt;의 실행계획에서 나타나는 sort operation이 오라클의 recursive query에서 사용되는order siblings by와 같은 효과를 부여함으로써 &lt;그림 3&gt;의 [가]와 같은 과정으로 처리되기 때문인것으로 보인다. 그러나 with절로 바꾸어 처리한 경우는 &lt;그림 4&gt;와 같은 형태의 실행계획으로 처리되며, 이때는sort operation이 나타나지 않고 조인에 의한 계층별 검색이 이루어지기 때문에 &lt;그림 3&gt;의 [나]와 같은형태로 처리가 이루어져 connect by로 처리했을 때와 다른 출력 결과를 얻게 된다. <br>이것 또한 오라클의recursive query를 DB2로 이행할 때 주의할 사항이다. 또한 이때에도 NLJOIN으로 full table scan을반복하면서 recursive를 처리하도록 실행계획이 수립되고 있어 이 부분 역시 추가적인 테스트가 필요하다.<br><br><img src="http://www.dbguide.net/images/know/tech/db2_img2.jpg"><br><strong>&lt;그림 3&gt; Recursive Query에 대한 처리 형태 </strong><br><br><table width="580" bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0"><tbody><tr><td><xmp>WITH parent (empno, ename, mgr) AS (SELECT empno, ename, mgr &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;    FROM emp WHERE mgr is null UNION ALL SELECT c.empno, c.ename, c.mgr &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;    FROM emp c, parent p WHERE c.mgr = p.empno ) SELECT empno, ename, mgr &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;    FROM parent ; </xmp></td></tr></tbody></table><br><strong>&lt;예문 2&gt; with절로 표현한 recursive query</strong><br><br><img src="http://www.dbguide.net/images/know/tech/db2_img3.jpg"><br><strong>&lt;그림 4&gt; with절로 표현한 recursive query에 대한 실행계획</strong><br><p class="sub1"><br><a name="N10069"><strong>오라클 dictionary view에 대한 호환성</strong></a><br></p>두 번째는 9.7버전에서 수용된 오라클 dictionary view에 대한 호환성이다. 오라클 사용자들은 user_tables, user_indexes 등과 같은 dictionary view를 자주 참조하는 편이다. <p>오라클을 사용하던 사람들은 DB2를 접했을 때 dictionary view에서 얻던 정보들을 어떻게 얻어야 할지 난감할 수있다. DB2도 이와 같은 용도의 Catalog 테이블들과 뷰들을 갖추고 있으나 오라클 사용자가 짧은 시간 안에 이들을 파악해서사용한다는 것은 쉽지 않다. 이 때문에 오라클 dictionary view에 대한 호환성을 부여한 것은 오라클 사용경험자들에게는 매우 고무적인 일이다. </p><p>이러한 특징을 사용하기 위해서는 db2_compatibility_vector 설정을 미리 적용한 후에 데이터베이스를생성해야 하는 절차상의 주의점을 고려해야 하며, 오라클에서와 동일한 명칭으로 그대로 사용할 수 있는 dictionaryview의 수는 테스트 결과 102개이다. </p><p>오라클과 동일한 명칭의 dictionary view를 참조하는 SQL을 실행하면 &lt;그림 5&gt;에서 보는 바와 같이 내부적으로 SYSIBMADM의 카탈로그 테이블들 참조하는 SQL문으로 변형되어 실행된다.<br></p><table width="580" bgcolor="#ffffcc" border="1" cellpadding="10" cellspacing="0"><tbody><tr><td><xmp>select * from user_tab_columns where table_schema='DB2ADMIN’ &amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;    order by table_name, column_id; </xmp></td></tr></tbody></table><br><img src="http://www.dbguide.net/images/know/tech/db2_img4.jpg"><br><strong>&lt;그림 5&gt; 오라클 dictionary view 참조에 대한 처리</strong><br><br><span style="font-weight: bold;"><br><br></span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

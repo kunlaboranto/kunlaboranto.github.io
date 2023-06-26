@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 이클립스 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2009-04-20 01:30:50</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 이클립스 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>@@ http://www.sjava.net/28<br><div class="titleWrap"><h2><a href="http://www.sjava.net/28">eclipse 에서 확장자 인식 추가..</a></h2><div class="underTitle"><span class="category"><a href="http://www.sjava.net/category/Tools">Tools</a></span><span class="date">Posted at 2008/04/22 09:45</span></div></div><!--close titleWrap--><span style="font-family: tahoma,arial,helvetica,sans-serif;">보통 파일에 대한 인식은 확장자를 기반으로 하고 있다..</span><br style="font-family: tahoma,arial,helvetica,sans-serif;"><span style="font-family: tahoma,arial,helvetica,sans-serif;">하지만, 웹을 통한 서비스는 설정을 통해서 확장자가 다른 파일로 웹 어플리케이션으로 인식할 수 있다..</span><br style="font-family: tahoma,arial,helvetica,sans-serif;"><br style="font-family: tahoma,arial,helvetica,sans-serif;"><span style="font-family: tahoma,arial,helvetica,sans-serif;">위의 상황에 따라서 만약<span id="callbacknestwwwsjavanet281579" style="width: 1px; height: 1px; float: right;"><embed allowscriptaccess="always" id="bootstrapperwwwsjavanet281579" src="http://www.sjava.net/plugin/CallBack_bootstrapperSrc?nil_profile=tistory&amp;nil_type=copied_post" wmode="transparent" type="application/x-shockwave-flash" enablecontextmenu="false" flashvars="&amp;callbackId=wwwsjavanet281579&amp;host=http://www.sjava.net&amp;embedCodeSrc=http%3A%2F%2Fwww.sjava.net%2Fplugin%2FCallBack_bootstrapper%3F%26src%3Dhttp%3A%2F%2Fcfs.tistory.com%2Fblog%2Fplugins%2FCallBack%2Fcallback%26id%3D28%26callbackId%3Dwwwsjavanet281579%26destDocId%3Dcallbacknestwwwsjavanet281579%26host%3Dhttp%3A%2F%2Fwww.sjava.net%26float%3Dleft" swliveconnect="true" width="1" height="1"></span> .xxx라는 확장자로 .jsp와 동일한 서비스를 하려고 이클립스에서 </span><br style="font-family: tahoma,arial,helvetica,sans-serif;"><span style="font-family: tahoma,arial,helvetica,sans-serif;">Windows -&gt; Preferences -&gt; General -&gt; Content Types -&gt; Text 밑에 JSP 를 클릭해서 원하는 확장자를 Add 시켜 주면 됩니다. </span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

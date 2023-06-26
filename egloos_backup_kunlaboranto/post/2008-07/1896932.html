@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Recursive SQL</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-07-25 17:11:39</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Recursive SQL</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://scidb.tistory.com/entry/Recursive-SQL <br><br><div class="article_title"><img alt="" src="http://cfs.tistory.com/custom/blog/19/199499/skin/images/30.gif"><a style="" href="http://scidb.tistory.com/entry/Recursive-SQL">Recursive SQL</a> <span class="date">2008/04/30 11:29</span> in <a style="" href="http://scidb.tistory.com/category/Oracle/SQL%20Pattern" class="category">Oracle/SQL Pattern</a><div class="article_title"><div class="article_info"></div></div><div class="clear"><img src="http://cfs.tistory.com/custom/blog/19/199499/skin/images/bg_clear.gif" alt=""></div></div><img src="http://cfs.tistory.com/custom/blog/19/199499/skin/images/bg_clear.gif" alt=""><h3 class="post-title entry-title"><a style="" href="http://extremedb.blogspot.com/2008/02/sql-1.html">Recursive SQL</a> </h3><div class="post-body entry-content"><p><font size="4"><span style="font-size: 130%;"><strong>개념 :</strong></span><br></font>SQL 이 좋은 언이이긴 하지만 집합처리 언어이기 때문에 불편한점이 많은 것이 사실이다.<br>특히 아래와 같은 구조에서 세로를 가로로 바꿀려고 하면 힘들다.<br><br>SELECT DEPTNO, ENAME<br>FROM EMP;<br><br>DEPTNO ENAME<br>------ ----------<br>10 CLARK<br>10 KING<br>10 MILLER<br>20 SMITH<br>20 ADAMS<br>20 FORD<br>20 SCOTT<br>20 JONES<br>30 ALLEN<br>30 BLAKE<br>30 MARTIN<br>30 JAMES<br>30 TURNER<br>30 WARD<br><br>위의 데이터를 아래처럼 부서번호별로 가로로 바꾸어야 하는것이 미션이다.<br><br>DEPTNO ENAME<br>------- ------------------------------------<br>10 CLARK,KING,MILLER<br>20 SMITH,JONES,SCOTT,ADAMS,FORD<br>30 ALLEN,WARD,MARTIN,BLAKE,TURNER,JAMES<br><br><font size="4"><span style="font-size: 130%;"><strong>오라클의 경우 조금 복잡한 Recursive SQL 을 작성해야 한다.</strong></span><br><br></font>select deptno,<br>ltrim(<span style="color: rgb(51, 51, 255);">sys_connect_by_path</span>(ename,','),',') ename<br>from (<br>select deptno,<br>ename,<br>row_number() over (partition by deptno order by empno) rn,<br>count(*) over (partition by deptno) cnt<br>from emp<br>)<br>where level = cnt<br>start with rn = 1<br><span style="color: rgb(255, 0, 0);">connect by prior deptno = deptno and prior rn = rn-1 ;</span><br><br><font size="4"><span style="font-size: 130%; color: rgb(0, 0, 0);"><strong>그럼 mySQL은 어떨까?</strong></span><br></font>놀랍게도 mySQL 은 group_concat 한방으로 해결하고 있다.<br><br>select deptno,<br><span style="color: rgb(51, 51, 255);"><strong>group_concat</strong></span>(ename order by empno separator, ',') as ename<br>from emp<br>group by deptno;<br><br>사실 필자는 오라클 9i 이전버젼부터 mySQL 의 정규식을 부러워 했었다.<br>mySQL 은 정말 그렇고 그런? DBMS 일까? 다시생각해야 될필요가 있다.<br><br><font size="4"><strong><span style="font-size: 130%;">그럼 DB2 나 SQL SERVER 는 Recursive SQL 이 사용가능할까?</span></strong><br><br></font>현재 많은 사람들이 Recursive 쿼리가 안된다고 판단하고 Self Join 을 사용하고 있다.<br>그러나 DB2나 SQL 서버의 최신버젼은 아래와 같이 Recursive With 를 사용하면 된다.<br><strong><span style="color: rgb(51, 51, 255);">with</span></strong> <span style="color: rgb(255, 0, 0);"><strong>x</strong></span> (deptno, cnt, list, empno, len)<br>as (<br>select deptno, count(*) over (partition by deptno),<br>cast(ename as varchar(100)), empno, 1<br>from emp<br>union all<br>select x.deptno, x.cnt, x.list ',' e.ename, e.empno, x.len+1<br>from emp e, <span style="color: rgb(255, 0, 0);"><strong>x --&gt; recursive call<br></strong></span>where e.deptno = x.deptno<br>and e.empno &gt; x. empno<br>)<br>select deptno,list<br>from x<br>where len = cnt ;<br><br>참고로 오라클은 Recursive With 절 이나 group_concat 은 11g 버젼에서도 지원하지 않고 있다.<br>오라클에서는 Recursive function 은 예전부터 지원되어 왔다.<br><br>참조서적 : SQL Cookbook By <a class="v1" target="_new">Anthony Molinaro</a>(O'Reilly)</p></div><span id="callbacknestscidbtistorycom126746" style="width: 1px; height: 1px; float: right;"><embed allowscriptaccess="always" id="bootstrapperscidbtistorycom126746" src="http://scidb.tistory.com/plugin/CallBack_bootstrapperSrc" wmode="transparent" type="application/x-shockwave-flash" enablecontextmenu="false" flashvars="&amp;callbackId=scidbtistorycom126746&amp;host=http://scidb.tistory.com&amp;embedCodeSrc=http%3A%2F%2Fscidb.tistory.com%2Fplugin%2FCallBack_bootstrapper%3F%26src%3Dhttp%3A%2F%2Fcfs.tistory.com%2Fblog%2Fplugins%2FCallBack%2Fcallback%26id%3D12%26callbackId%3Dscidbtistorycom126746%26destDocId%3Dcallbacknestscidbtistorycom126746%26host%3Dhttp%3A%2F%2Fscidb.tistory.com%26float%3Dleft" swliveconnect="true" width="1" height="1"></span><fieldset style="margin: 20px 0px; padding: 5px;"><legend><span><strong>크리에이티브 커먼즈 라이선스</strong></span></legend><!--Creative Commons License--><div style="float: left; width: 88px; margin-top: 3px;"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/kr/" target="_blank"><img alt="Creative Commons License" style="border-width: 0pt;" src="http://i.creativecommons.org/l/by-nc-sa/2.0/kr/88x31.png"></a></div><div style="margin-left: 92px; margin-top: 3px; text-align: justify;">이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/kr/" target="_blank">크리에이티브 커먼즈 코리아 저작자표시-비영리-동일조건변경허락 2.0 대한민국 라이선스</a>에 따라 이용하실 수 있습니다.</div></fieldset><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

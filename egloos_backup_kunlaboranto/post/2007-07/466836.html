@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>ksh 에서 command line 자동완성 기능</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-26 10:58:32</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">ksh 에서 command line 자동완성 기능</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : phynix<br><br><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">뭐 대부분 아시겠지만 혹시 모르는 분들은 도움이 될 듯 하여 메일 보냅니다<span lang="EN-US">.<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">보통 <span lang="EN-US">bash </span>을 많이 사용하는 이유는 <span lang="EN-US">&lt;TAB&gt; </span>으로 수행하는 명령어나 대상 <span lang="EN-US">directory, file </span>들을 자동 완성해 주는<span lang="EN-US"><o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">기능이 막강해서죠<span lang="EN-US">.<o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">bash </span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">은 아시다시피 <span lang="EN-US">&lt;TAB&gt; </span>으로 합니다<span lang="EN-US">.<o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">csh </span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">은 <span lang="EN-US">set filec </span>를 세팅하면 <span lang="EN-US">&lt;ESC&gt;&lt;ESC&gt; </span>로 사용 가능합니다<span lang="EN-US">.<o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">ksh </span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">은 좀 일반화 되지 않은 듯 하여<span lang="EN-US">..<o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt; TEXT-INDENT: -18pt; mso-list: l0 level1 lfo1"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림"><span style="mso-list: Ignore">1.<span style="FONT-SIZE: 85%; FONT-FAMILY: Times New Roman"><span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span></span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림">set </span></span><span style="FONT-FAMILY: Arial"><span lang="EN-US" style="FONT-FAMILY: Arial">–</span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림">o vi </span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">로 <span lang="EN-US">command line</span>을 <span lang="EN-US">vi </span>모드로 변경<span lang="EN-US">.<o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt; TEXT-INDENT: -18pt; mso-list: l0 level1 lfo1"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림"><span style="mso-list: Ignore">2.<span style="FONT-SIZE: 85%; FONT-FAMILY: Times New Roman"><span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span></span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림">ls a &lt;ESC&gt; + = </span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">를 하면<span lang="EN-US"><o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">a1<o:p></o:p></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">a2<o:p></o:p></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림">같은 선택의 범위가 보이고<span lang="EN-US">..<o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN-LEFT: 38pt; TEXT-INDENT: -18pt; mso-list: l0 level1 lfo1"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림"><span style="mso-list: Ignore">3.<span style="FONT-SIZE: 85%; FONT-FAMILY: Times New Roman"><span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span></span></span><span style="FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-FAMILY: 굴림">ls a &lt;ESC&gt; + \ </span></span><span style="FONT-FAMILY: 굴림"><span style="FONT-FAMILY: 굴림">를 하면 해당되는 곳까지 자동 완성합니다<span lang="EN-US">.<o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 굴림"><o:p>&nbsp;</o:p></span></span></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

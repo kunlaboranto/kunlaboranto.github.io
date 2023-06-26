@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] buffer cache의 hit ratio 향상</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-19 04:37:28</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] buffer cache의 hit ratio 향상</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://database.sarang.net/?inc=read&amp;aid=7684&amp;criteria=oracle&amp;subcrit=&amp;id=25842&amp;limit=20&amp;keyword=v%24statement&amp;page=31">http://database.sarang.net/?inc=read&amp;aid=7684&amp;criteria=oracle&amp;subcrit=&amp;id=25842&amp;limit=20&amp;keyword=v%24statement&amp;page=31</a><br><br><table class="infotable" style="TEXT-ALIGN: left" cellspacing="0" cellpadding="3" border="0"><tbody><tr><td class="rowtitle" colspan="6">buffer cache의 hit ratio 향상</td></tr><tr><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성자</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">정재욱</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성일</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">2001-09-28 16:40:37</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">조회수</div></th><td class="rowmisc" align="right"><div style="WHITE-SPACE: nowrap">593</div></td></tr></tbody></table><table class="viewtable" style="TEXT-ALIGN: left"><tbody><tr><td class="rowbody"><p># db_files = 80 # SMALL</p><p># db_files = 400 # MEDIUM</p><p># db_files = 1500 # LARGE</p><p>&nbsp;</p><p>control_files = ("/home/oracle/product/8.1.5/dbs/oradata/luck2you/control01.ctl", "/home/oracle/product/8.1.5/dbs/oradata/luck2you/c</p><p>ontrol02.ctl")</p><p>&nbsp;</p><p># db_file_multiblock_read_count = 8 # SMALL</p><p># db_file_multiblock_read_count = 16 # MEDIUM</p><p># db_file_multiblock_read_count = 32 # LARGE</p><p>&nbsp;</p><p>db_block_buffers = 8192 # INITIAL</p><p># db_block_buffers = 100 # SMALL</p><p># db_block_buffers = 550 # MEDIUM</p><p># db_block_buffers = 3200 # LARGE</p><p>&nbsp;</p><p>shared_pool_size = 15728640 # INITIAL</p><p># shared_pool_size = 3500000 # SMALL</p><p># shared_pool_size = 5000000 # MEDIUM</p><p># shared_pool_size = 9000000 # LARGE</p><p>&nbsp;</p><p>java_pool_size = 20971520</p><p>&nbsp;</p><p>log_checkpoint_interval = 10000</p><p>log_checkpoint_timeout = 1800</p><p>&nbsp;</p><p># processes = 30 # INITIAL</p><p># processes = 50 # SMALL</p><p>processes = 100 # MEDIUM</p><p># processes = 200 # LARGE</p><p>&nbsp;</p><p>log_buffer = 163840 # INITIAL</p><p># log_buffer = 32768 # SMALL</p><p># log_buffer = 32768 # MEDIUM</p><p># log_buffer = 163840 # LARGE</p><p>&nbsp;</p><p>initSID.ora 파일의 정보</p><p>&nbsp;</p><p>다음의 쿼리 수행시 hit ratio가 90% 이상 나와야 한다는데 </p><p>저희 머신은 50% 미만입니다. </p><p>================================================ </p><p>select 1 - (phy.value / (cur.value + con.value)) </p><p>from v$sysstat cur, v$sysstat con, v$sysstat phy </p><p>where cur.name = 'db block gets' </p><p>and con.name = 'consistent gets' </p><p>and phy.name = 'physical reads'; </p><p>================================================ </p><p>&nbsp;</p><p>어떻게 하면 좋을까요? </p><p>&nbsp;</p><p>100만 건의 정보를 full scan 하는 경우가 종종 발생하고 </p><p>group by을 쓰는 경우가 자주 발생하네요..</p><p>&nbsp;</p><p>한번은 전체 update 할려고 작업을 하는데 하면이 실행이 되지를 않네요..</p><p>그래도 다른 창으로는 접속은 되고요..</p><p>&nbsp;</p><p>이경우 어떻게 해야 되는 지를 몰라서 고수님들의 조언을 구합니다.</p><p>&nbsp;</p><p>&nbsp;</p><p>db_block_buffers = 8192를 증가 시키면 되는 줄은 알고 있는데 </p><p>이것을 증가 시킬려면 시스템 메모리을 더 증가 시켜야 하는 지도 궁금하고요, 그 밖에 더 증가 시켜야 되는 게 있는지를 알고 싶습니다.</p><p>&nbsp;</p><p>저의 O/S는 unix 5.8 메모리는 512입니다. </p><p>&nbsp;</p><p>그럼 즐거운 추석 명절을 보내세요... ^^</p></td></tr></tbody></table><div class="commenttitle">이 글에 대한 댓글이 총 1건 있습니다.</div><div class="commentrow"><div class="commentbody"><p>init.ora parameter: shared_pool_size</p><p>&nbsp;</p><p>&nbsp;</p><p>This parameter sets the size of the shared pool area. If there is not enough</p><p>space in the library cache or the data dictionary cache, Oracle will be forced</p><p>discard the information in these caches, even though Oracle might need it later.</p><p>Discarding the information can lead to reparsing <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>s or going to disk to</p><p>retreive information that was previously available in memory. Both actions can</p><p>have a negative impact on performance. You can correct the situation by</p><p>increasing the size of the shared pool.</p><p>It is not a good tuning practice to increase the size of the shared pool if</p><p>doing so forces the system to begin paging. If there is little no or available</p><p>memory on the system, you might consider decreasing db_block_buffers in order to</p><p>free up memory for the shared pool.</p><p>Performance indicators</p><p>You can determine if there is enough memory for the shared pool by looking at</p><p>the cache hit ratios for the library and data dictionary caches.</p><p>These ratios are determined by issuing the following queries against Oracle v$</p><p>tables.</p><p>For the library cache:</p><p>select (sum(pins - reloads)) / sum(pins)</p><p>from v$librarycache</p><p>For the data dictionary cache:</p><p>select (sum(gets - getmisses)) / sum(gets)</p><p>from v$rowcache</p><p>Tuning guidelines</p><p>If either of these ratios is below 0.95 (95%), consider increasing the size of</p><p>the shared pool.</p></div></div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

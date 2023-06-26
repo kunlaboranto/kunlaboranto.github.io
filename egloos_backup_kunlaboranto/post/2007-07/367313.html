@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[ELDK] </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-03 00:17:23</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[ELDK] </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://www.denx.de/wiki/view/DULG/ELDKUsage">http://www.denx.de/wiki/view/DULG/ELDKUsage</a><br><br><ul><li>Create a new directory where the <a class="twikiLink" href="http://www.denx.de/wiki/DULG/ELDK">ELDK</a> is to be installed, say: <pre>bash$ mkdir /opt/eldk</pre></li><li>Mount a CD or an ISO image with the distribution: <pre>bash$ mount /dev/cdrom /mnt/cdrom</pre></li><li>Run the installation utility included on the distribution to install into that specified directory: <pre>bash$ /mnt/cdrom/install -d /opt/eldk</pre></li><li>After the installation utility completes, export the <code><span style="FONT-FAMILY: Courier New">CROSS_COMPILE</span></code> variable: <pre>bash$ export CROSS_COMPILE=ppc_8xx-</pre><img height="16" alt="TIP" src="http://www.denx.de/wiki/pub/DULG/tip.gif" width="16" border="0"> The trailing '-' character in the <code><span style="FONT-FAMILY: Courier New">CROSS_COMPILE</span></code> variable value is optional and has no effect on the cross tools behavior. </li></ul><p></p><ul><li>Add the directories <em>/opt/eldk/usr/bin</em> and <em>/opt/eldk/bin</em> to <code><span style="FONT-FAMILY: Courier New">PATH</span></code>: <pre>bash$ PATH=$PATH:/opt/eldk/usr/bin:/opt/eldk/bin</pre></li><li>Compile a file: <pre>bash$ ${CROSS_COMPILE}gcc -o hello_world hello_world.c</pre><img height="16" alt="TIP" src="http://www.denx.de/wiki/pub/DULG/tip.gif" width="16" border="0"> You can also call the cross tools using the generic prefix <em>ppc-linux-</em> for example: <pre>bash$ ppc-linux-gcc -o hello_world hello_world.c</pre></li></ul><p></p><p></p><ul><li>or, equivalently: <pre>bash$ /opt/eldk/usr/ppc-linux/bin/gcc -o hello_world hello_world.c                                                                               </pre></li></ul></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>kunlaboranto란.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-16 16:36:30</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">kunlaboranto란.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">좀 길진 하지만. kunlaboranto 라는 이름을 지었다. <br>직장이라는 곳에서 내게 의미를 가지는 것이 무엇인가를 버리고 버리고 남은 것이.<br>'동료'라는 단어였다. 지금 불안한 것은.. 이 자체도 내가 나를 속이고 있는 허명이 아닌가하는 것이다.<br><br>그래도. 남은 것중 생각나는 것이 이것이므로 이걸 '대문'이름으로 삼고 멋을 부릴려고 서핑끝에 에스페란토 단어를 골랐다. <br>꿈은 바뀌어도 좋다. 10년 후에도 꿈을 꾸었다고 나에게 얘기하고 싶다. <br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

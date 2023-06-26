@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Doxygen Quick Guide </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:05:39</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Doxygen Quick Guide </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>From : <a class="con_link" href="http://cafe.naver.com/3djun.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=18" target="_blank">http://cafe.naver.com/3djun.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=18</a></p><p>&nbsp;</p><p>&lt;&lt; Doxygen Quick Guide &gt;&gt;</p><p>&nbsp;</p><p>*Doxygen 기본 스타일<br>&nbsp;&nbsp; /** */</p><p>*주석안에 아이템들<br>&nbsp;@breif ==&gt; 설명을 쓴다. 여러줄을 쓸때에는 @breif를 쓰고 한줄 띄운다움 계속해서 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 쓰면된다.<br>&nbsp;@file ==&gt; 파일 이름을 구별할때.<br>&nbsp;@return ==&gt; 함수의 리턴값 나타낼때.<br>&nbsp;@author ==&gt; 작성자 이름을 나타낼때<br>&nbsp;@date ==&gt; 작성날짜를 나타낼때.<br>&nbsp;@param ==&gt; 함수 파라메터를 나타낼때<br>&nbsp;@see ==&gt; 참고할 함수나 페이지를 지정한다.<br>&nbsp;@todo<br>&nbsp;@bug<br>&nbsp;@code ==&gt;중요 코드를 설명할때 시작 지점 가리킨다.<br>&nbsp;@endcode ==&gt; 중요코드 설명할때 종료 지점 가리킨다.<br>&nbsp;@exeception<br>&nbsp;@mainpage<br>&nbsp;@section</p><p>&nbsp;====클래스 처리===<br>&nbsp;@class ==&gt; 클래스명 나타낼때.<br>&nbsp;*클래스 멤버에대한 처리<br>&nbsp;/// 이렇게 표시한다.(단 멤버 상단에 표시할것!!)<br>&nbsp;/**&lt; 내용 */ 이렇게도 표시한다. (멤버 옆에)<br>&nbsp;///&lt; 이렇게도 표시한다.(멤버옆에)<br>&nbsp; <br>&nbsp;====enum 타입처리====<br>*상단에 @brief로 무엇을 하는것인지 나타내고<br>&nbsp;각각의 멤버에 대해서는.<br>&nbsp;/*!&lt; 내용 */&nbsp; 이렇게 표시한다. (멤버 옆에)<br>&nbsp;/**&lt; 내용 */ 이렇게도 표시한다. (멤버 옆에)<br>&nbsp;///&lt; 이렇게도 표시한다.(멤버옆에)</p><p>===중요 코드도 주석을 단다.===<br>@code 로 시작해서<br>@endcode 로 끝낸다.</p><p>&nbsp;예제)<br>&nbsp;&nbsp;&nbsp;&nbsp; /**<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * @brief 예제코드<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *&nbsp; 추가설명<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * @code<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *........<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * @endcode<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */<br></p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

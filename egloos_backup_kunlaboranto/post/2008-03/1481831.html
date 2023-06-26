@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] nmon에서 &quot; busy% is not available so no graphs&quot; 해결</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-03-03 12:59:50</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] nmon에서 &quot; busy% is not available so no graphs&quot; 해결</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://www.tek-tips.com/viewthread.cfm?qid=1089599&amp;page=5<br><br>AIX nmon에서, " busy% is not available so no graphs" 오류가 나면서 IO가 조회되지 않는 경우.<br><br>Gloups (IS/IT--Management) &nbsp;&nbsp;&nbsp; &nbsp;11 Jul 05 11:07<br><br>Dont forget to pass those commands before using nmon<br><br>chmod ugo+r /dev/kmem<br>and<br><span style="font-weight: bold;">chdev -l sys0 -a iostat=true</span><br><br>I tried on an AIX 5.2 Box and all is ok</div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

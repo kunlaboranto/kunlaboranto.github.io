@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] UltraSPARC-T2 , 8 Core X 8 SMT </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-10-20 09:55:00</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] UltraSPARC-T2 , 8 Core X 8 SMT </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">UltraSPARC-T2 를 보고 놀라서.. 서핑<br><br>From : http://minjang.egloos.com/1965403<br><br><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="620"><div class="POST_TTL"><a name="1965403" title="32코어, 128스레드의 인텔 Larrabee GPU"><span style="font-weight: bold;">32코어, 128스레드의 인텔 Larrabee GPU</span><br><br></a></div></td><td width="80" align="right"><br></td></tr></tbody></table><div class="POST_BODY"><p align="justify">예전에 들은 내용이긴 한데 그 동안 여전히 공개되지 않다가 오늘 <a href="http://www.parkoz.com/zboard/view.php?id=int_vganews&amp;no=5682">파코즈에 올라온 글</a>을보니 이 정보가 유출이 된 듯 하다. 인텔이 개발 중인 래러비 GPU는 x86 기반의 프로세서 32개로 출발한다.Out-of-Order 프로세서는 아니고 in-order 형식이다 (사실 이런 구조에서 in-order인 것이 당연). 그래서파코즈의 글 처럼 P5 (펜티엄 클래식의 마이크로아키텍처)에 기반했다고 표현되어있다. 이 작은 프로세서들은 4개의 스레드를동시에 돌릴 수 있는 구조여서 총 128개의 스레드가 동시에 돌아가는 구조. 하이퍼스레딩과 같은 <a href="http://en.wikipedia.org/wiki/Simultaneous_multithreading">SMT</a>는 아닌 것 같지만 어쨌든 하드웨어 수준에서 4개의 스레드가 처리가 되도록 한다. 내 생각엔 hard-partitioned multi-threading 정도가 아닐까 싶은데, 좀 더 알아봐야할 듯.</p> <p align="justify">그리고 중요한 것은 512비트의 SIMD (Single Instruction Multiple Data) 명령이 처리 가능하다는점. 즉, 16개의 float이나 int를 한방에 처리 가능한 명령어셋을 지원한다. 예를 들어, 주어진 두 float [16]배열을 가지고 전체 벡터 합을 구한다거나, 각 원소에 대해 덧셈과 뺄셈을 지그재그로 한다거나, 아니면 <a href="http://en.wikipedia.org/wiki/Saturation_arithmetic">saturated arithmetic</a>을한다거나 이러한 연산이 한방에, 즉 한 사이클에 된다는 것이다. 현재 Core 2 Duo는 128 비트의 SIMD(=SSE3)를지원한다. 아마 올해 나오는 네할렘은 (SSE 4.1) 128비트 SIMD이고, 그 다음 인텔의 마이크로아키텍처인 <a href="http://en.wikipedia.org/wiki/Sandy_Bridge_%28microarchitecture%29">Sandy Bridge</a>는 256비트로 확장된 AVX 명령어 셋이 지원된다.</p> <p align="justify">&nbsp;</p> <p align="justify">사실 이런 구조는 새삼스러운 것은 아니다. 코드네임 Niagara인 Sun의 UltraSPARC T1 프로세서는 이미 8개의코어와 4-way SMT (즉, 하이퍼스레딩 인텔 CPU가 코어 당 2개의 가상 CPU를 만들었다면 이 녀석은 4개를 만든다)을구현해서 32개의 스레드가 동시에 실행되는 CPU가 이미 2005년 11월에 나왔었다. Niagara 2인 <a href="http://en.wikipedia.org/wiki/UltraSPARC_T2">UltraSPARC T2</a>는 이 보다 더 나가 8코어에 코어 당 8스레드가 실행되어 <a href="http://www.sun.com/processors/UltraSPARC-T2/datasheet.pdf">64개의 스레드가 동시에 실행되는 CPU</a>이다. 아래 그림은 나이아가라 2의 대략적인 다이어그램.</p> <div style="text-align: center;"><img style="cursor: pointer;" class="image_mid" onmouseover="this.style.cursor='pointer'" alt="" src="http://pds9.egloos.com/pds/200807/06/29/d0033129_487044c4413b2.png" onclick="Control.Modal.openDialog(this, event, 'http://pds9.egloos.com/pds/200807/06/29/d0033129_487044c4413b2.png');" width="610" border="0" height="358"></div>  <p align="justify">L2캐쉬는 4MB 공유이며 8개의 뱅크로 나뉘어 있는 구조. 즉 8개의 독립된 입출력은 동시에 가능하다는 소리. 뱅크 하나만 해서Read/Write 포트를 늘리는 것은 일반적으로 매우 어렵기 때문에 대용량 캐쉬에서 더구나 이런 많은 코어에서는 멀티 뱅크구조가 합리적이다. 만약에 한 뱅크에 여러 입출력 요구가 몰리면 이른바 bank conflict가 생기고 성능 저하로 연결된다.이런 bank conflict는 캐쉬 뿐만 아니라 DRAM에서도 일어날 수 있으며 DRAM 레이턴시를 갉아먹는 주요한 원인이다.이쪽은 자세히 잘 모르므로 더 이상 언급은 생략.</p> <p align="justify">따라서 AMD가 인텔보고 <a href="http://bbs.danawa.com/view.php?nSeq=56263&amp;nGroup=7&amp;nBlogCateSeq1=404&amp;sLikeKey=title_n&amp;sLikeValue=%C0%CE%C5%DA&amp;nPage=1">네이티브 쿼드코어 디자인은 우리를 베꼈어</a>!이런 건 좀 넌센스. 또, 메모리 컨트롤 내장도 AMD 뿐만 아니라 다른 아키텍처에서도 흔히 볼 수 있는데, 이런 걸로 기술의우위를 논한다는 건 좀 웃기다. 현재 AMD 쿼드코어가 2년 전 나온 인텔 Q6600 에게도 밀리는 것이 사실인데 좀 얼굴이화끈 거린다. 그래도 AMD가 좀 분발해줘서 요지 부동인 인텔 CPU 가격이 떨어지도록 좀 해주기를. 이번에 ATi의 4850이엄청난 가격 대 성능비로 데뷔하자 nVidia의 8000 시리즈는 가격을 대폭 하락할 수 밖에 없었다. 요즘 ATi 때문에 난리~</p> <p align="justify">&nbsp;</p> <p align="justify">다시 GPU 이야기로 돌아가서, nVidia GPU 역시 100여개 이상의 스레드가 동시에 돌아가는 구조라서 큰 그림은 결국비슷하나 인텔은 조금 더 많은 일을 할 수 있는, 즉 좀 더 CPU 스러운 녀석을 중심으로 구현한 것이 차이인 것 같다.nVidia GPU 구조는 워낙 계층이 많고 용어가 모호해서 이해하기가 참 힘들었는데, 최근 나온 <a href="http://www.anandtech.com/video/showdoc.aspx?i=3334&amp;p=2">GTX 280에 대한 구조</a>를 읽어보니 이제 조금 감이 잡힌다. 그래도 그래픽 쪽에 대한 지식히 부족해서 그런지 좀 긴가민가한 점이 여전히 있다.</p> <p align="justify">일단 아래 그림 중 SP라고 불리는 아주 간단한 구조의 Streaming Processor로 출발을 한다. 보다시피 레지스터파일이 있고 계산 유닛이 있는 파이프라인화 되어있는 간단한 CPU이다. 이것과 SFU라고 하는 Special FunctionUnit을 묶어서 Streaming Multiprocessor, SM을 하나의 빌딩블럭으로 만든다. 여기에는 보다시피 캐쉬도있고 공유 메모리도 있고 그렇다.</p> <p align="justify"><img alt="" src="http://images.anandtech.com/reviews/video/NVIDIA/GeForceGTX200/SP.png" width="432" height="263"><img alt="" src="http://images.anandtech.com/reviews/video/NVIDIA/GeForceGTX200/SM.png" width="147" height="420"></p> <p align="justify">그런 뒤에 다시 얘들을 묶어서 Texture Processor Cluster라는 TPC를 만든다. 8800시리즈는 SM이 두개 있었다면 GT200은 3개가 묶어져있다.</p> <p align="justify"><img alt="" src="http://images.anandtech.com/reviews/video/NVIDIA/GeForceGTX200/TPC.png" width="477" height="395"></p> <p align="justify">그리고 이걸 또 모은다. nVidia 최신 GT 280은 이걸 10개를 모아서 총 240개의 스트리밍 프로세서를 가지고 있고 이 숫자는 과거 G80 구조가 가졌던 128개에 비해 대폭적인 증가이다.</p> <p align="justify"><img alt="" src="http://images.anandtech.com/reviews/video/NVIDIA/GeForceGTX200/SPA-GT200.png" width="541" height="358"></p> <p align="justify">이제 마지막으로 메모리랑 연결하고 그래서 GPU가 완성된다.</p> <p align="justify"><img alt="" src="http://images.anandtech.com/reviews/video/NVIDIA/GeForceGTX200/GT200fullblock.png" width="552" height="445"></p> <p align="justify">뭐가 참 복잡하다. 그래도 그 동안 GPU가 어떻게 생겨먹었나 궁금하셨던 분들에겐 조금이나가 그림이 그려졌기를 기대해본다.Larrabee는 좀 더 나이아가라스러운 구조가 아닐까 한데 나도 아는 바가 없어서... 그래도 본질적으로 100여개 이상의스레드를 동시에 처리할 수 있다는 점에서 동일하다고 볼 수 있다.<br></p><div class="posttaglist"><a href="http://minjang.egloos.com/tag/GPU" rel="tag">GPU</a></div>       <!--       <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"    xmlns:dc="http://purl.org/dc/elements/1.1/"    xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">       <rdf:Description        rdf:about="http://minjang.egloos.com/1965403"        dc:identifier="http://minjang.egloos.com/1965403"        dc:title="32코어, 128스레드의 인텔 Larrabee GPU"        trackback:ping="http://minjang.egloos.com/tb/1965403"/>       </rdf:RDF>       --></div><div class="POST_TAIL"><span class="TIME"><a href="http://minjang.egloos.com/1965403#" onclick="InsClipPost('d0033129','minjang','1965403'); return false;" class="checkpost" onfocus="blur();" title="체크포스트">☆</a>  <a href="http://minjang.egloos.com/1965403" class="permalink" title="32코어, 128스레드의 인텔 Larrabee GPU" rel="bookmark">#</a> by <span class="AUTHOR">object</span> | <a href="http://minjang.egloos.com/1965403" class="time" title="32코어, 128스레드의 인텔 Larrabee GPU" rel="bookmark">2008/07/06 13:06</a></span> | <a href="http://minjang.egloos.com/category/%EC%BB%B4%ED%93%A8%ED%84%B0" class="category">컴퓨터</a> | <span class="linkback">트랙백<span id="trbcnt1965403"></span></span> | <span class="linkback">덧글(<span id="cmtcnt1965403">7</span>)</span></div><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 리눅스 - tcp 커널 설정 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:02:37</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 리눅스 - tcp 커널 설정 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><span style="FONT-FAMILY: 돋움">$ uname -a</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">Linux gunchk02 2.6.9-34.ELsmp #1 SMP Fri Feb 24 16:56:28 EST 2006 x86_64 x86_64 x86_64 GNU/Linux</span><br style="FONT-FAMILY: 돋움"><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">gunchk02: /proc/sys/net/ipv4</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">$ ls </span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">conf/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ip_no_pmtu_disc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_no_metrics_save</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">icmp_echo_ignore_all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; neigh/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_orphan_retries</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">icmp_echo_ignore_broadcasts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; route/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_reordering</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">icmp_errors_use_inbound_ifaddr&nbsp;&nbsp;&nbsp;&nbsp; tcp_abort_on_overflow&nbsp;&nbsp;&nbsp;&nbsp; tcp_retrans_collapse</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">icmp_ignore_bogus_error_responses&nbsp; tcp_adv_win_scale&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_retries1</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">icmp_ratelimit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_app_win&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_retries2</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">icmp_ratemask&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_bic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_rfc1337</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">igmp_max_memberships&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_bic_beta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_rmem</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">igmp_max_msf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_bic_fast_convergence&nbsp; tcp_sack</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">inet_peer_gc_maxtime&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_bic_low_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_stdurg</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">inet_peer_gc_mintime&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_dsack&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_synack_retries</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">inet_peer_maxttl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_ecn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_syncookies</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">inet_peer_minttl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_fack&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_syn_retries</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">inet_peer_threshold&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_fin_timeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_timestamps</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ip_autoconfig&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_frto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_tso_win_divisor</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ip_default_ttl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_keepalive_intvl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_tw_recycle</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ip_dynaddr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_keepalive_probes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_tw_reuse</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ip_forward&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_keepalive_time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_vegas_alpha</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ipfrag_high_thresh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_low_latency&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_vegas_beta</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ipfrag_low_thresh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_max_orphans&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_vegas_cong_avoid</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ipfrag_secret_interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_max_syn_backlog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_vegas_gamma</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ipfrag_time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_max_tw_buckets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_westwood</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ip_local_port_range&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_mem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_window_scaling</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">ip_nonlocal_bind&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_moderate_rcvbuf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tcp_wmem</span><br style="FONT-FAMILY: 돋움"><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">gunchk02: /proc/sys/net/ipv4</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">$ ls /proc/sys/net/core/</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">dev_weight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message_burst&nbsp; netdev_max_backlog&nbsp; optmem_max&nbsp;&nbsp;&nbsp; somaxconn</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">divert_version&nbsp; message_cost&nbsp;&nbsp; no_cong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rmem_default&nbsp; wmem_default</span><br style="FONT-FAMILY: 돋움"><span style="FONT-FAMILY: 돋움">lo_cong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mod_cong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; no_cong_thresh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rmem_max&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wmem_max</span><br style="FONT-FAMILY: 돋움"><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

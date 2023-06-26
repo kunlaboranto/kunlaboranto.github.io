@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 회사 네트워크상에서 ip로 사용자 확인하기 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-21 16:26:50</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 회사 네트워크상에서 ip로 사용자 확인하기 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>From : <a href="http://kin.naver.com/db/detail.php?d1id=1&amp;dir_id=103&amp;eid=ybMV66FMxpOX79FyeJYaN/8FZqrVnKIG&amp;qb=aXAgt84gxMQgw6Ox4g">http://kin.naver.com/db/detail.php?d1id=1&amp;dir_id=103&amp;eid=ybMV66FMxpOX79FyeJYaN/8FZqrVnKIG&amp;qb=aXAgt84gxMQgw6Ox4g</a>==<br><br><br>DOS&gt; nbtstat -A 192.168.3.10<br>Node IpAddress: [192.168.3.122] Scope Id: []</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NetBIOS Remote Machine Name Table</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status<br>&nbsp;&nbsp;&nbsp; ---------------------------------------------<br>&nbsp;&nbsp;&nbsp; HWON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;00&gt;&nbsp; UNIQUE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Registered<br>&nbsp;&nbsp;&nbsp; WORKGROUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;00&gt;&nbsp; GROUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Registered<br>&nbsp;&nbsp;&nbsp; HWON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;20&gt;&nbsp; UNIQUE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Registered<br>&nbsp;&nbsp;&nbsp; WORKGROUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;1E&gt;&nbsp; GROUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Registered</p><p>&nbsp;&nbsp;&nbsp; MAC Address = 00-E0-91-11-28-F7<br><br>NBTSTAT [ [-a RemoteName] [-A IP address] [-c] [-n]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-r] [-R] [-RR] [-s] [-S] [interval] ]</p><p>&nbsp; -a&nbsp;&nbsp; (adapter status) Lists the remote machine's name table given its name<br>&nbsp; -A&nbsp;&nbsp; (Adapter status) Lists the remote machine's name table given its<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IP address.<br>&nbsp; -c&nbsp;&nbsp; (cache)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lists NBT's cache of remote [machine] names and their IP<br>&nbsp;addresses<br>&nbsp; -n&nbsp;&nbsp; (names)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lists local NetBIOS names.<br>&nbsp; -r&nbsp;&nbsp; (resolved)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lists names resolved by broadcast and via WINS<br>&nbsp; -R&nbsp;&nbsp; (Reload)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Purges and reloads the remote cache name table<br>&nbsp; -S&nbsp;&nbsp; (Sessions)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lists sessions table with the destination IP addresses<br>&nbsp; -s&nbsp;&nbsp; (sessions)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lists sessions table converting destination IP<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; addresses to computer NETBIOS names.<br>&nbsp; -RR&nbsp; (ReleaseRefresh) Sends Name Release packets to WINS and then, starts Refr<br>esh</p><p>&nbsp; RemoteName&nbsp;&nbsp; Remote host machine name.<br>&nbsp; IP address&nbsp;&nbsp; Dotted decimal representation of the IP address.<br>&nbsp; interval&nbsp;&nbsp;&nbsp;&nbsp; Redisplays selected statistics, pausing interval seconds<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; between each display. Press Ctrl+C to stop redisplaying<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; statistics.</p><p>&nbsp;</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

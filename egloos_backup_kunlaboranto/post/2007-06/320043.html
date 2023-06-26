@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[wget] gnu 류의 패키지를 깔때 어디에 뭐가 생기나 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:35:10</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[wget] gnu 류의 패키지를 깔때 어디에 뭐가 생기나 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>vmware에 sol10 설치후 깨끗한 상태에서 </p><p>&nbsp;</p><p># gzip -d ./wget-1.10.2-sol10-sparc-local.gz<br># pkgadd -d ./wget-1.10.2-sol10-sparc-local</p><p>로 1개만 설치하여 /usr/local 이하에 생성된 파일들을 본 내용입니다.</p><p>&nbsp;</p><p>gnu 류의 패키지를 깔때 어디에 뭐가 생기나 궁금한 사람을 위해서 ..</p><p>&nbsp;</p><p>$ ls -lR /usr/local<br>/usr/local:<br>총 12<br>drwxr-xr-x&nbsp;&nbsp; 2 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 bin/<br>drwxr-xr-x&nbsp;&nbsp; 3 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 doc/<br>drwxr-xr-x&nbsp;&nbsp; 2 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 etc/<br>drwxr-xr-x&nbsp;&nbsp; 2 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 info/<br>drwxr-xr-x&nbsp;&nbsp; 3 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 man/<br>drwxrwxrwx&nbsp;&nbsp; 2 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:15 src/</p><p>/usr/local/bin:<br>총 528<br>-rwxr-xr-x&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 259264 11월 25일&nbsp; 19:48 wget*</p><p>/usr/local/doc:<br>총 2<br>drwxr-xr-x&nbsp;&nbsp; 3 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 wget/</p><p>/usr/local/doc/wget:<br>총 234<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1440 11월 25일&nbsp; 19:48 AUTHORS<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18011 11월 25일&nbsp; 19:48 COPYING<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45224 11월 25일&nbsp; 19:48 ChangeLog<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 575 11월 25일&nbsp; 19:48 ChangeLog.README<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8599 11월 25일&nbsp; 19:48 INSTALL<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1782 11월 25일&nbsp; 19:48 MAILING-LIST<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 21491 11월 25일&nbsp; 19:48 NEWS<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6824 11월 25일&nbsp; 19:48 PATCHES<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4058 11월 25일&nbsp; 19:48 README<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1150 11월 25일&nbsp; 19:48 README.checkout<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4121 11월 25일&nbsp; 19:48 TODO<br>drwxr-xr-x&nbsp;&nbsp; 2 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 doc/</p><p>/usr/local/doc/wget/doc:<br>총 1714<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 31647 11월 25일&nbsp; 19:48 ChangeLog<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4914 11월 25일&nbsp; 19:48 Makefile<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4970 11월 25일&nbsp; 19:48 Makefile.in<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1529 11월 25일&nbsp; 19:48 ansi2knr.1<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20994 11월 25일&nbsp; 19:48 fdl.texi<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18438 11월 25일&nbsp; 19:48 gpl.texi<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4224 11월 25일&nbsp; 19:48 sample.wgetrc<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4225 11월 25일&nbsp; 19:48 sample.wgetrc.munged_for_texi_inclusion<br>-rwxr--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11236 11월 25일&nbsp; 19:48 texi2pod.pl*<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11230 11월 25일&nbsp; 19:48 texi2pod.pl.in<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 226839 11월 25일&nbsp; 19:48 texinfo.tex<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 11월 25일&nbsp; 19:48 version.texi<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 83145 11월 25일&nbsp; 19:48 wget.1<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 199568 11월 25일&nbsp; 19:48 wget.info<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 68475 11월 25일&nbsp; 19:48 wget.pod<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 142403 11월 25일&nbsp; 19:48 wget.texi</p><p>/usr/local/etc:<br>총 10<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4224 11월 25일&nbsp; 19:48 wgetrc</p><p>/usr/local/info:<br>총 416<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 199568 11월 25일&nbsp; 19:48 wget.info</p><p>/usr/local/man:<br>총 2<br>drwxr-xr-x&nbsp;&nbsp; 2 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512&nbsp; 3월 13일&nbsp; 17:16 man1/</p><p>/usr/local/man/man1:<br>총 164<br>-rw-r--r--&nbsp;&nbsp; 1 bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 83145 11월 25일&nbsp; 19:48 wget.1</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

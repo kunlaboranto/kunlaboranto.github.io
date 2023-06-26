@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Coverity Prevent - 소스 코드 검사 도구</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-12-28 17:06:52</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Coverity Prevent - 소스 코드 검사 도구</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://ideathinking.com/blog/?p=34<br><br><p>"이 툴의 유일한 문제는 비싸다는 것이랍니다. <img src="http://ideathinking.com/blog/wp-includes/images/smilies/icon_smile.gif" alt=":-)" class="wp-smiley">"</p><br><br>--------<br><h2 id="post-34"><a href="http://ideathinking.com/blog/?p=34" rel="bookmark" title="Permanent Link: Coverity Prevent - 소스 코드 검사 도구">Coverity Prevent - 소스 코드 검사 도구</a></h2><small id="postdate">Thursday, June 29th, 2006 <!-- by iwongu --></small><small id="tags"><a href="http://ideathinking.com/blog/?tag=coverity" rel="tag">coverity</a>, <a href="http://ideathinking.com/blog/?tag=prevent" rel="tag">prevent</a>, <a href="http://ideathinking.com/blog/?tag=source-code" rel="tag">source-code</a>, <a href="http://ideathinking.com/blog/?tag=static-analysis" rel="tag">static-analysis</a></small><p></p><p>이번에 회사에서 소스 코드 검사 도구를 하나 구입하는데 이것저것 비교해본 결과 <a href="http://www.coverity.com/products/prevent.html">Coverity Prevent</a>라는 툴이 가장 좋아 이걸로 결정했다고 하더군요.</p><p>간단히 말하자면 Lint 처럼 소스 코드에 대해 static analysis를 하는 도구입니다.</p><p>그래서 시험삼아 돌려본 결과를 보게 되었는데 그 품질이 정말 놀랍군요. 메모리 릭이나 초기화하지 않은 변수, 버퍼 오버런, null 체크등등 거의 정확하게 에러를 보고해 줍니다.</p><p>다음은 전체 코드에서 발견된 문제점들을 리스트 형태로 보여주는 화면입니다. 정말 많군요. <img src="http://ideathinking.com/blog/wp-includes/images/smilies/icon_wink.gif" alt=";-)" class="wp-smiley"> </p><p><a href="http://flickr.com/photos/35058603@N00/177438409"> <img src="http://static.flickr.com/69/177438409_da24f27b33_d.jpg"></a></p><p>다음은 이중 하나의 에러를 자세히 보기 위해 선택하여 들어간 화면입니다. 소스 코드에 라인번호와 에러가 발생한 위치,에러가 발생할 수 있는 조건들을 자세히 보여줍니다. 정말 '와우!'입니다. 각 함수와 같은 이름들을 클릭하면 그 함수로 바로이동할 수 있습니다.</p><p><a href="http://flickr.com/photos/35058603@N00/177439610"> <img src="http://static.flickr.com/55/177439610_eb26b1d797_d.jpg"></a></p><p>사용해보니 개인적으로는 purify 같은 runtime 검사 도구보다 더 맘에 드는군요. 사실 Lint 계열의 도구들은 한번도 사용해본 적이 없는데 다른 것들도 한번 구해다 써봐야겠습니다.</p><p>이 툴의 유일한 문제는 비싸다는 것이랍니다. <img src="http://ideathinking.com/blog/wp-includes/images/smilies/icon_smile.gif" alt=":-)" class="wp-smiley"></p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

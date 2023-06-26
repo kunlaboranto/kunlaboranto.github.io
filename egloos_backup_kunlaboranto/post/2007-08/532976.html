@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] core 가 안생기는 경우 - signal(), ulimit -c</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-12 17:51:02</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] core 가 안생기는 경우 - signal(), ulimit -c</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>void handler(int sig) <br>{<br>&nbsp;&nbsp;&nbsp; fprintf(stdout, "signal occured (sig=%d)\n", sig); fflush(stdout);<br>&nbsp;&nbsp;&nbsp; // DO IT..<br>}<br><br>void mySignal(void)<br>{<br>&nbsp;&nbsp;&nbsp; signal( SIGHUP, handler);&nbsp;&nbsp;&nbsp; /* 1 : hangup */<br>&nbsp;&nbsp;&nbsp; signal( SIGINT, handler);&nbsp;&nbsp;&nbsp; /* 2 : interrupt (rubout) */<br>&nbsp;&nbsp;&nbsp; signal( SIGQUIT, handler);&nbsp;&nbsp; /* 3 : quit (ASCII FS) */<br>&nbsp;&nbsp;&nbsp; signal( SIGILL, handler);&nbsp;&nbsp;&nbsp; /* 4 : illegal instruction(not reset when caught) */<br>&nbsp;&nbsp;&nbsp; signal( SIGTRAP, handler);&nbsp;&nbsp; /* 5 : trace trap (not reset when caught) */<br>&nbsp;&nbsp;&nbsp; signal( SIGIOT, handler);&nbsp;&nbsp;&nbsp; /* 6 : IOT instruction */<br>&nbsp;&nbsp;&nbsp; signal( SIGABRT, handler);&nbsp;&nbsp; /* 6 : used by abort,replace SIGIOT in the future */<br>&nbsp;&nbsp;&nbsp; signal( SIGEMT, handler);&nbsp;&nbsp;&nbsp; /* 7 : EMT instruction */<br>&nbsp;&nbsp;&nbsp; signal( SIGFPE, handler);&nbsp;&nbsp;&nbsp; /* 8 : floating point exception */<br>&nbsp;&nbsp;&nbsp; signal( SIGKILL , handler);&nbsp; /* 9 : kill (cannot be caught or ignored) */<br>&nbsp;&nbsp;&nbsp; signal( SIGBUS , handler);&nbsp;&nbsp; /* 10: bus error */<br>&nbsp;&nbsp;&nbsp; signal( SIGSEGV, handler);&nbsp;&nbsp; /* 11: segmentation violation */<br>&nbsp;&nbsp;&nbsp; signal( SIGSYS , handler);&nbsp;&nbsp; /* 12: bad argument to system call */<br>&nbsp;&nbsp;&nbsp; signal( SIGPIPE, handler);&nbsp;&nbsp; /* 13: write on a pipe with no one to read it */<br>&nbsp;&nbsp;&nbsp; signal( SIGALRM, handler);&nbsp;&nbsp; /* 14: alarm clock */<br>&nbsp;&nbsp;&nbsp; signal( SIGTERM, handler);&nbsp;&nbsp; /* 15: software termination signal from kill */<br>&nbsp;&nbsp;&nbsp; signal( SIGUSR1, handler);&nbsp;&nbsp; /* 16: user defined signal 1 */<br>&nbsp;&nbsp;&nbsp; signal( SIGUSR2, handler);&nbsp;&nbsp; /* 17: user defined signal 2 */<br>&nbsp;&nbsp;&nbsp; sigignore( SIGCLD );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* 18: child status change */<br>&nbsp;&nbsp;&nbsp; sigignore( SIGCHLD );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* 18: child status change alias (POSIX) */<br>&nbsp;&nbsp;&nbsp; signal( SIGPWR , handler);&nbsp;&nbsp; /* 19: power-fail restart */<br>&nbsp;&nbsp;&nbsp; sigignore( SIGWINCH );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* 20: window size change */<br>&nbsp;&nbsp;&nbsp; signal( SIGURG&nbsp; , handler);&nbsp; /* 21: urgent socket condition */<br>&nbsp;&nbsp;&nbsp; signal( SIGPOLL , handler);&nbsp; /* 22: pollable event occured */<br>&nbsp;&nbsp;&nbsp; signal( SIGIO&nbsp;&nbsp; , handler);&nbsp; /* 22: socket I/O possible (SIGPOLL alias) */<br>&nbsp;&nbsp;&nbsp; signal( SIGSTOP , handler);&nbsp; /* 23: stop (cannot be caught or ignored) */<br>&nbsp;&nbsp;&nbsp; signal( SIGTSTP , handler);&nbsp; /* 24: user stop requested from tty */<br>&nbsp;&nbsp;&nbsp; sigignore( SIGCONT );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* 25: stopped process has been continued */<br>&nbsp;&nbsp;&nbsp; signal( SIGTTIN , handler);&nbsp; /* 26: background tty read attempted */<br>&nbsp;&nbsp;&nbsp; signal( SIGTTOU , handler);&nbsp; /* 27: background tty write attempted */<br>&nbsp;&nbsp;&nbsp; signal( SIGVTALRM , handler);/* 28: virtual timer expired */<br>&nbsp;&nbsp;&nbsp; signal( SIGPROF , handler);&nbsp; /* 29: profiling timer expired */<br>&nbsp;&nbsp;&nbsp; signal( SIGXCPU , handler);&nbsp; /* 30: exceeded cpu limit */<br>&nbsp;&nbsp;&nbsp; signal( SIGXFSZ , handler);&nbsp; /* 31: exceeded file size limit */<br>}<br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

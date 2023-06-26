@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[관심회사] NC소프트</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-01 13:18:48</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[관심회사] NC소프트</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">사회적 IT기업이란게 가능할까. <br><ul><li><a href="http://www.hani.co.kr/arti/sports/baseball/470842.html">[이사람] 야구에 가슴 뛰던 소년 ‘구단주’ 되다</a><br>&gt; &lt;거인의 꿈&gt;<br>&gt;  “기업의 목적은 새로운 사회적 <a style="text-decoration:underline;color:#173F8D;font-weight:normal;letter-spacing:normal;cursor:pointer;font-family:Gulim;font-size:15px" id="KL_POP_ID0">가치</a> 창출이 최우선 목적이어야 하고, 기업으로서의 사회적 책임을 다해야 한다”<br>&gt; 끌린다. NC소프트, 지금 추구하는 도전의 결과가 나오면. 한번 참여하고 싶다. 이번 지진에 대한 동참도 그렇고</li></ul><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

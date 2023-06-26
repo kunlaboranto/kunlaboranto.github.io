@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[script] 멋진 awk - 범위 조각 모음</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-22 14:52:15</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[script] 멋진 awk - 범위 조각 모음</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>작업중, 다른 분이 쓰는 것을 보고, 신기해 하면서 적어둠<br>범위 BEGIN ~ END 값들이 있을때, 연결가능한 범위를 합치는 스크립트<br></p><p>--- 실행예<br>$ cat unsort.txt <br>1010 1020<br>1001 1010<br>1010 1010<br>3001 3010<br>2010 2020<br>2001 2010<br>2010 2010</p><p>$ imei.sh unsort.txt </p><p>1001&nbsp; 1020<br>2001&nbsp; 2020<br>3001&nbsp; 3010</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 row ,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 54 imei ,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4 list <br></p><p>$ cat imei.sh<br>cat $1 |sort |grep -v row |grep [0-9] |awk '{<br>ne=en+1<br>cnt=cnt+1<br>c=$2-$1+1<br>cc=cc+c<br>if($1 == en || $1 == ne){<br>en=$2<br>}<br>else {<br>print en <br>printf("%s&nbsp; ",$1)<br>en=$2<br>ccc=ccc+1<br>}<br>}<br>END{<br>print en<br>ccc=ccc+1<br>printf("\n\n&nbsp; %10d row ,&nbsp; %10d imei ,&nbsp; %10d list \n",cnt,cc,ccc)<br>}'<br></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

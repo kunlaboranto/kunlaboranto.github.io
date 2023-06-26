@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] BLOCK 손상 해결 방법(ORA-600[3339],ORA-600[3398], ORA-600[4519], ORA-1578)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-06 12:45:37</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] BLOCK 손상 해결 방법(ORA-600[3339],ORA-600[3398], ORA-600[4519], ORA-1578)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://nhmjh.egloos.com/835772<br><br><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="700"><div class="POST_TTL"><a name="835772" title="BLOCK 손상 해결 방법(ORA-600[3339],ORA-600[3398], ORA-600[4519], ORA-1578) ">BLOCK 손상 해결 방법(ORA-600[3339],ORA-600[3398], ORA-600[4519], ORA-1578) </a></div></td><td align="right" width="80"><br></td></tr></tbody></table> BULLETIN CATEGORY <br>BULLETIN TOPIC 　　  <br>　 : RDBMS <br>: BLOCK 손상 해결 방법(ORA-600[3339],ORA-600[3398], ORA-600[4519], ORA-1578) <br><br>--------------------------------------------------------------------------------<br>1. 개요　  <br>블럭의 손상 원인은 여러가지가 있으며 메모리내의 블럭이 손상된 경우와, 디스크 상의 물리적인 블럭이 손상되는 경우가 있다.　  <br>(1)　 오라클 오류　  <br>블럭 손상과 관계된 오라클 오류는 internal error인 ORA-600중 첫번째 인수가 3339, 3398, 4519인경우와 ORA-1578이 있으며, 이중 Ora-600[3398]은 메모리 블럭만 손상된 경우이고, ORA-1578은 물리적블럭이 손상된 경우 발생한다. ORA-600[3339]와 ORA-600[4519]는 메모리와 디스크 손상 모두가 연관될 수있다. 각각의 오류에 대한 자세한 설명은 아래의 3번에서 기술하였다.　 <br><br>(2) DBA (database address)　  <br>ORACLE데이타 블럭은 블럭의 정보를 담은 Fixed Header를 갖고 있으며 이 정보를 이용하여 각각의 블럭과 데이타베이스 전체의INTEGRITY를 유지한다. DBA는 Fixed Header의 한 부분으로 32bit 길이의 정수이며 데이타베이스의 화일번호와 화일에서　 블럭위치를 나타낸다.　 <br>블럭 손상이 발생하면 오라클은 오류 메시지에 이 DBA를 나타내거나 화일 번호와 블럭 위치를 십진수로 나타내기도 한다.　  <br><br>2. 블럭 손상의 원인　  <br>오라클은 화일에 블럭을 읽고 쓸 때 lseek(), read(), readv(), write(), writev() 와 같은 OS의시스템 펑션 콜(system function call)을 이용한다. 블럭이 이러한 시스템 콜을 이용하여 읽혀지거나 씌여진 후,혹은 직전에 오라클은 DBA에 대한 검사를 하여 블럭이 손상되었는지 확인하게 된다. 그러나 대개 블럭의 데이타가 손상될　당시에는 그 사실이 드러나지 않다가 손상된 부분의 데이타가　 사용될 때　 비로소 손상된 사실이 알려지게 되므로 대부분 블럭손상은 OS나 HW에 의해 손상된 블럭을 이후 오라클이 사용하고자 검사하는 과정에 발견하는 것이 대부분이다.　 <br><br>블럭 손상이 야기될 수 있는 주된 상황은 다음과 같이 요약될 수 있다.　  <br><br>(1) ORACLE 블럭내의 첫번째 OS 블럭이 디스크상의 문제로 해서 이상이 있는 경우, OS　 또는 디스크 복구 프로그램이 해당 블럭을 복구하려는 과정에서 블럭의 값이 모두 비정상적으로 0가 되어 버릴 수 있다.　  <br>　　　　  <br>(2) 매우 드문 경우이긴 하지만, 메모리상에서 이미 손상된 블럭을 디스크상에 그대로 기록하는 경우 물리적 블럭의 DBA가 틀리게 된다.　  <br><br>(3)블럭이 데이타화일상에 기록될 위치를 잘못 찾아 손상이 발생하기도 하는데, 이러한 경우를 "write blocks out ofsequence" 라고 불리운다. 이것은 ORACLE이 lseek()을 호출했을 때 OS가 블럭을 잘못된 곳에 기록해서 생기는경우가 많다.　 <br>이러한 예는 4.2G 를 넘는 큰 화일을 다룰 수 있는 기능을 제공하는 HW/OS의 경우발생한다.4.2G를 넘는 화일의 경우, 32bit unsigned number로 다룰 수 있는 범위를 벗어나기 때문에 OS는offset 값을 ORACLE 이 사용할 수 있도록 적절히 변환시켜야 한다. ORACLE은 OS의 지원 여부와 관계없이 2G이상의 화일을 지원하지 않으며 위와 같은 큰 화일을 다룰 수 있는 환경에서는 lseek() 시스템　 콜이　 정확한 위치로의변환을 시켜주지 못함에 따라 보다 작은 크기의 화일에서도 문제가 발생하는 경우도 있다.　 <br><br>(4) 네번째 원인은 I/O기능이 전혀 작동하지 않는 경우이다.　  <br>ORACLE은 lseek(), read() 시스템 콜이　 리턴하는 에러 코드를 검사하며 read()가 읽어들인 바이트 수가 BLOCKSIZE의 정수배인지를 검사한다. 이 검사를 통과하면 ORACLE은　 성공적으로 READ가 수행되었다고 가정한다. 만약 DBA가정확하지 않다고 체크되면 DATABASE에 대한 읽기 요구는 실패하기 때문에 실제의 블럭 읽기는 일어나지 않는다.　 <br><br>(5)　 다른 원인은 동일한 디바이스에서 다른 블럭을 읽어온 경우이다. 이것은 작업이 메우 바쁜 디스크에서 발생하곤 한다. 어떤 경우에는 수백개 이상 떨어진 곳의 블럭을 읽어오는 경우도 있다.　  <br>이러한 경우와 위의 (4)번의 경우에는 다시 한번 동작을 반복함으로써 문제는 해결될 수 있으며 이것은 일반적으로 ORACLE의 문제가 아니라 OS나 HW의 문제인 경우가 많다.　  <br><br>3. 블럭 손상과 관계된 오류의 종류와 가능한 조치방법　  <br>(1) ORA-600[3339]　  <br>ORA-600[3339]에러는 ORACLE이 직접 버퍼로 데이타를 읽어들일 때 읽은 블럭의　 DBA(Data BlockAddress)가 잘못되었음(INVALID)을 의미한다. 실제로 읽어들인 블럭의 DBA와 ORACLE이 읽고자 하였던 블럭의DBA가 다르면 위에서와 같은 에러가 발생하며 주로 OS나 HW의 문제가 그 원인이 되는 경우가 많다.　 <br>만약 메모리에문제가 있다고 생각된다면 다음과 같은 Event　 Parameter를 initSID.ora에 추가함으로써 블럭 검사를 할 수있다. 이것은 ORA-600[3398], ORA-600[4519]에서도 마찬가지이나 이러한 event를 사용하기전에 먼저한국오라클에 지원을 요청하는 것이 바람직하다.　 <br><br>　　　　　　　　　　　　　　 event = "10210 trace name context forever, level 10"　　  <br>　　　　　　　　　　　　　　 event = "10211 trace name context forever, level 10"　　  <br><br>ORA-1578이 함께 발생하는 디스크 블럭 손상이 발생하였다면, 아래의 (4)의 ORA-1578해결 방법과 같이 조치하면 된다.　  <br><br>(2) ORA-600[3398]　  <br>DBWR가 디스크에 데이타를 쓰기 전에 캐쉬에서 손상된 블럭을　 발견하면 OERI(3398) 메시지를 출력하고 인스턴스를 정지시킬것이다.　 따라서 문제의 블럭은 디스크에 저장되지 않으므로, 실제 디스크상의 블럭 손상은 야기시키지 않는다.　 <br>이 때 DBA를 포함한 많은 인수들이 OERI(3398) 내부 에러 처리기에 전달되므로 이것을 확인하여 한국오라클에 지원을 요청한다.　  <br><br>(3) ORA-600[4519]　  <br>메모리내의 블럭을 update/delete가 아닌 consistent read를 위해 읽고자 할 때 블럭이 손상됨을 발견한 경우, ORA-600[4519]가 발생한다.　  <br>이 오류는 메모리 손상과, 디스크 손상 모두의 경우 발생가능하며, 오류가 발생하는 즉시 한국오라클에 지원을 요청하는 것이 바람직하다.　  <br><br>(4) ORA-1578　  <br>ORA-1578 에러는 ORA-600[3339] 에러와 함께　 발생하곤 하며 디스크상에 물리적으로 블럭이 손상되었음을 의미한다. 이러한 디스크 블럭 손상의 복구방법을 살펴보자.　  <br><br>(a) 손상된 블럭을 포함하고 있는 세그먼트 확인　  <br>ORA-1578 에러가 발생하면　 Corruption이 발생한 화일번호와 블럭번호를 알려준다. 여기서는 이 때의　 화일번호를 f, 블럭번호를 b 라고 부르기로 한다.　  <br>우선 해야 할 일은　 어떠한 오브젝트가 Corrupt　 되었는가를 알아내는 것으로써, 다음의 스크립트를 이용하면 알 수 있다.　  <br><br>　　　　　　　 SQL&gt; select segment_name, segment_type　　  <br>　　　　　　　　　　　 from dba_extents　　  <br>　　　　　　　　　　　 where file_id = f and　　  <br>　　　　　　　　　　　 b between block_id and block_id + blocks - 1;　　  <br><br>(b) 해당 세그먼트가 인덱스이면 Drop 시키고 다시 생성하면 된다.　  <br><br>(c) 해당 세그먼트가 테이블이면 Corrupt 된 블럭의 데이타는 손상된 것이다.　  <br>이렇게 테이블이 손상된 경우, 만약 해당 테이블이 들어있는　 엑스포트 화일이 있다면 손상된 테이블을 Drop 시키고 임포트 받는것이 제일 간단한 방법이다. 하지만 만약 엑스포트 받은 화일이 없거나 백업해 둔 화일도 없다면 해당 테이블에 인덱스가 생성되어있는 경우에 한해서 다음의 방법을 사용해서　 복구를 하도록 한다.　 <br><br>예를 들어 다음과 같은 에러　 메시지가 떨어졌다고 하자.　  <br>　　　 01578, 00000, "ORACLE data block corrupted (file # 10, block # 4)　　  <br>　&lt;1&gt; 먼저 (a)번의 script를 이용하여 손상된 블럭을 포함하는 세그먼트를 확인한다.　  <br>　SQL&gt; select segment_name, segment_type　　  <br>　　　　　　　　　　 from dba_extents　　  <br>　　　　　　　　　　 where file_id = 10 and　　  <br>　　　　　　　　　　 4 between block_id and block_id + blocks - 1;　　  <br>　　　　　　　　　　　 <br><br>SEGMENT_NAME <br>------------ <br>EMP SEGMENT_TYPE <br>------------ <br>TABLE <br><br>  <br>　&lt;2&gt; Rowid를 이용하여 손상된 블럭내의 데이타를 찾아낸다.　  <br>위의 결과값이 EMP table이 empno, ename, deptno 를 컬럼으로 가지며, empno 컬럼에 인덱스가 생성되어있다고 하자.클러스터화되지 않은 모든　 테이블은　 유니크한　　 Rowid를 가진다. Rowid는 총 18자로블럭어드레스(8자), 점(1자), 로우 어드레스(4자), 점(1자),　 화일 어드레스(4자)로 구성되어 있다.　 <br>이rowid를 이용하여 다음과 같이 손상된 블럭에 있는 employee 에 대한 empno를 구할 수 있다. 이때 empno가char type이라면 [where empno &gt; 0] 대신 [where empno &gt; ‘ ‘]를 사용하여empno에 대한 인덱스를 사용하도록 유도한다.　 <br><br>　　　　　　　 SQL&gt; select empno　　  <br>　　　　　　　　　　　　 from emp　　  <br>　　　　　　　　 where empno &gt; 0　 and rowidtochar(rowid) like '00000004.%.000A';　　  <br><br>　　　　　　　 EMPNO　　　　　　　　　　 ROWID　　  <br>　　　　　　　 ------------　　　 --------------------------------　　  <br>　　　　　　　 500　　　　　　　　00000004.0000.000A　　  <br>　　　　　　　 501　　　　　　　　00000004.0001.000A　　  <br><br>　&lt;3&gt; EMP 테이블과 같은 구조를 갖는 새로운 테이블을 만든다.　  <br>　　　　　　　 SQL&gt; create table temp　　  <br>　　　　　　　　　　　 as select * from emp　　  <br>　　　　　　　　　　　 where 1 = 2;　　  <br><br>　&lt;4&gt; 손상된 부분을 피해서　 새로운 테이블에 손상된 테이블의 데이타를 추가한다.　  <br>　　　　　　　 SQL&gt;insert into temp select * from emp where empno &lt; 500;　　  <br>　　　　　　　 SQL&gt;insert into temp select * from emp where empno &gt; 501;　　  <br><br>　&lt;5&gt; 손상된 테이블인 EMP 테이블을 Drop 시키고　 Temp 테이블의 이름을 EMP 로 변경한다. 그리고 백업된 자료나 문서자료를　 통하여 손상된 부분에 대한 정보를　 추가한다.　  <br>　　　　　　　　 SQL&gt; drop table emp;　　  <br>　　　　　　　　 SQL&gt; rename temp to emp;　　  <br><br>　&lt;6&gt; 손상된 블럭에 대부분의 로우가　 존재하고 있다면 다음의 방법을 이용한다.　  <br>　SQL&gt; create table empnos as　　  <br>　　　　　　　　　 select empno from emp　　  <br>　　　　　　　　　 where empno&gt;0　　  <br>　　　　　　　　　 and rowidtochar(rowid) not like '00000004.%.000A';　　  <br><br>이 스크립트를 이용하면 손상된　 블럭에 포함되지 않은 empno 들을 알 수 있다.　  <br><br>다음의 스크립트를 계속 실행시켜 복구를 한다.　  <br><br>　　　　　　　 SQL&gt; create table temp　 as select * from emp　 where 1 = 2;　　  <br>　　　　　　　 SQL&gt; insert into temp　　  <br>　　　　　　　　　　　 select emp.empno, emp.ename, emp.deptno　　  <br>　　　　　　　　　　　 from emp, empnos　　  <br>　　　　　　　　　　　 where emp.empno &gt; 0　　  <br>　　　　　　　　　　　 and emp.empno = empnos.empno;　　  <br><br>　&lt;7&gt; 만약 데이타 딕셔너리의 테이블이나 인덱스에서 손상된 블럭이 발생했다면 지원을 요청해야 한다.<br> <br><br>--------------------------------------------------------------------------------<br>Oracle Korea Customer Support Technical Bulletins <br><br><div class="POST_TAIL"><span class="TIME"><a href="http://nhmjh.egloos.com/835772#" onclick="InsClipPost('a0004782','nhmjh','835772'); return false;" class="checkpost" onfocus="blur();" title="체크포스트">☆</a>  <a href="http://nhmjh.egloos.com/835772" class="permalink" title="BLOCK 손상 해결 방법(ORA-600[3339],ORA-600[3398], ORA-600[4519], ORA-1578) ">#</a> by <span class="AUTHOR">꾸술</span> | <a href="http://nhmjh.egloos.com/835772" class="time" title="BLOCK 손상 해결 방법(ORA-600[3339],ORA-600[3398], ORA-600[4519], ORA-1578) ">2004/12/13 17:53</a></span> | <a href="http://nhmjh.egloos.com/category/%EB%B0%B1%EC%97%85%26%EB%A6%AC%EC%BB%A4%EB%B2%84%EB%A6%AC" class="category">백업&amp;리커버리</a> | <span class="linkback">트랙백<span id="trbcnt835772"></span></span> | <span class="linkback">덧글(<span id="cmtcnt835772">0</span>)</span></div><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>Google 웹 기록.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-01 15:25:57</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">Google 웹 기록.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">GD에 큰 도움을 받고있는데.. 비슷한 유형이라고 할수 있다. <br>도움은 되겠는데, 빅브라더같아서, 깔까말까 고민된다. 허참이다. <br><br><br><br><br><font size="1"><br></font><table class="noborder center elem" style="width:750px;margin-left:auto;margin-right:auto"><tbody><tr><td><font size="1"><img src="https://www.google.com/history/images/logo_sm.gif" alt="Google logo" height="55" width="150"></font></td><td><font size="1">&nbsp;&nbsp;</font></td><td class="wide"><h1><font size="1">웹 기록에 오신 것을 환영합니다.</font></h1><hr class="thingrey" style="margin: 0.2em 0pt; height: 1px;"></td></tr></tbody></table><table class="noborder center elem" style="width:750px"><tbody><tr><td><div><font size="1">&nbsp;</font></div></td></tr><tr class="valign"><td class="wide"><h1><font size="1">방문하는 모든 웹사이트를 간편하게 관리하십시오.</font></h1><ul><li style="padding:5px"><font size="1"><b>귀하의 웹 활동을 확인해 보십시오.</b> 마음에 드는 웹사이트를 본 적이 있는데 기억이 안 나십니까? 웹 기록을 사용하면 해당 사이트를 찾을 수 있습니다.</font></li><li style="padding:5px"><font size="1"><b>방문했던 페이지의 전체 텍스트를 검색해 보십시오. </b> 웹 기록을 사용하면 기존에 보았던 웹페이지, 이미지, 비디오 및 뉴스 기사 등을 검색할 수 있습니다.</font></li><li style="padding:5px"><font size="1"><b>맞춤검색 및 기타 결과를 얻을 수 있습니다. </b> 웹 기록을 사용하면 이전에 검색한 내용과 방문했던 사이트를 기반으로 검색 결과를 얻을 수 있습니다.</font></li></ul><div><font size="1">웹 기록은 툴바에 근거하여 Google 계정에 로그인한 후 방문한 웹페이지를 보내고 연관시킵니다. Google <a href="https://www.google.com/history/intl/ko/privacy.html">웹 기록</a> 및 <a href="http://www.google.com/support/firefox/bin/static.py?page=privacy.html&amp;hl=ko">툴바</a> 개인정보 보호정책을 참조하시기 바랍니다. <a href="http://www.google.com/support/accounts/bin/topic.py?topic=14148&amp;hl=ko">자세히 알아보기</a>.</font></div></td><td><img src="https://www.google.com/images/cleardot.gif" alt="spacer" height="1" width="25"></td><td><img src="https://www.google.com/history/images/screen_wh.gif" alt="Web History screenshot" height="340" width="350"><br></td></tr></tbody></table><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

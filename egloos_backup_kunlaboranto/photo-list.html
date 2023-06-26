@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/result.css">
+
+        <title>kunlaboranto&#39;s blog</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="./images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                    <span class="sub"><img src="./images/logo_sub.png" width="57" height="12" alt="포토로그"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="list-wrap">
+                    <div class="list-body">
+                        <!-- 리스트 -->
+                        <table id="list" class="display" width="100%"></table>
+                        <!-- //리스트 -->
+                    </div>
+
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+        <script>
+            /*<![CDATA[*/
+            var LIST_LENGTH = 100;
+            var LIST_PER_PAGE = 10;
+
+            const dataSet = (() => {
+                var dataList = [{"formatter":{"locale":"en_US","decimalStyle":{"zeroDigit":"0","positiveSign":"+","negativeSign":"-","decimalSeparator":"."},"resolverStyle":"SMART","resolverFields":null,"zone":null,"chronology":null},"monthFormatter":{"locale":"en_US","decimalStyle":{"zeroDigit":"0","positiveSign":"+","negativeSign":"-","decimalSeparator":"."},"resolverStyle":"SMART","resolverFields":null,"zone":null,"chronology":null},"id":0,"blogId":"e0040769","blogUrl":"altibase","serial":"76482","title":"\uAC31\uC774\uB124","content":"\uC218\uACBD, \uD558\uACBD\uC774\uB77C, \uB450 \uC5B4\uC124\uD508 \uC544\uBE60 \uC5C4\uB9C8\u3134 \uC218\uACBD \uD638\uC218 \uACF5\uC6D0 (2008\uB144 05\uC6D4) - \uC5F0\uC6B0 \uC544\uC800\uC528\uB791\u3134 \uAC31\uC774\uB124 (2011\uB144)","writeDate":"2008-06-22 02:15:20","datePath":"2008-06","photoFileInfoList":[{"filename":"e0040769_485d365fb10c7.jpg","path":"pmf\/200806\/22\/69\/","url":"http:\/\/pds7.egloos.com\/pmf\/200806\/22\/69\/e0040769_485d365fb10c7.jpg","pds":"pds7"},{"filename":"e0040769_485d36bfbfa56.jpg","path":"pmf\/200806\/22\/69\/","url":"http:\/\/pds9.egloos.com\/pmf\/200806\/22\/69\/e0040769_485d36bfbfa56.jpg","pds":"pds9"},{"filename":"e0040769_485d36cf1de0b.jpg","path":"pmf\/200806\/22\/69\/","url":"http:\/\/pds8.egloos.com\/pmf\/200806\/22\/69\/e0040769_485d36cf1de0b.jpg","pds":"pds8"},{"filename":"e0040769_485d37147a88b.jpg","path":"pmf\/200806\/22\/69\/","url":"http:\/\/pds7.egloos.com\/pmf\/200806\/22\/69\/e0040769_485d37147a88b.jpg","pds":"pds7"},{"filename":"e0040769_4d92c7620a6eb.jpg","path":"pmf\/201103\/30\/69\/","url":"http:\/\/pds21.egloos.com\/pmf\/201103\/30\/69\/e0040769_4d92c7620a6eb.jpg","pds":"pds21"},{"filename":"e0040769_4d92c7665e669.jpg","path":"pmf\/201103\/30\/69\/","url":"http:\/\/pds19.egloos.com\/pmf\/201103\/30\/69\/e0040769_4d92c7665e669.jpg","pds":"pds19"},{"filename":"e0040769_4d92c79f92985.jpg","path":"pmf\/201103\/30\/69\/","url":"http:\/\/pds18.egloos.com\/pmf\/201103\/30\/69\/e0040769_4d92c79f92985.jpg","pds":"pds18"},{"filename":"e0040769_4d92c7b20024c.jpg","path":"pmf\/201103\/30\/69\/","url":"http:\/\/pds18.egloos.com\/pmf\/201103\/30\/69\/e0040769_4d92c7b20024c.jpg","pds":"pds18"},{"filename":"e0040769_4d92c7ff2e271.jpg","path":"pmf\/201103\/30\/69\/","url":"http:\/\/pds20.egloos.com\/pmf\/201103\/30\/69\/e0040769_4d92c7ff2e271.jpg","pds":"pds20"},{"filename":"e0040769_4d92c818abdd6.jpg","path":"pmf\/201103\/30\/69\/","url":"http:\/\/pds22.egloos.com\/pmf\/201103\/30\/69\/e0040769_4d92c818abdd6.jpg","pds":"pds22"}]}];
+                var list = new Array();
+                for(var i=0; i<dataList.length; i++) {
+                    var subList = new Array();
+                    subList.push('<a href="./photo/' + dataList[i].datePath + '/' + dataList[i].serial + '.html">' + dataList[i].title + '</a>');
+                    subList.push(dataList[i].writeDate);
+
+                    list.push(subList);
+                }
+
+                return list;
+            })();
+
+            // set data table
+            $('#list').DataTable({
+                stateSave:true,
+                data: dataSet,
+                columns: [
+                    // { title: 'No', type: 'numeric' },
+                    { title: '제목' },
+                    { title: '작성일자' }
+                ],
+                order: [],
+                // lengthMenu: [
+                //   [20, 50, 100, 200, -1],
+                //   [20, 50, 100, 200, 'All'],
+                // ],
+                pageLength: LIST_PER_PAGE,
+                lengthChange: false,
+                searching: false,
+                info: false,
+                pagingTag: 'button',
+                language: {
+                    paginate: {
+                        previous: '이전',
+                        next: '다음',
+                    }
+                }
+            });
+            /*]]>*/
+        </script>
+    </body>
+</html>

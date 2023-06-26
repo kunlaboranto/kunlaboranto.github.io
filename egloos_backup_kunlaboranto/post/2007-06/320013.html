@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>gdb 추적 예</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:27:59</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">gdb 추적 예</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><pre><br><br>gdb 상황..</pre><pre>stat:/WORK/mmdbsync/dbdiff/src&gt; gdb dbdiff<br>Detected 64-bit executable.<br>Invoking /opt/langtools/bin/gdb64.<br>HP gdb 3.1 for PA-RISC 2.0 (wide), HP-UX 11.00.<br>Copyright 1986 - 2001 Free Software Foundation, Inc.<br>Hewlett-Packard Wildebeest 3.1 (based on GDB) is covered by the<br>GNU General Public License. Type "show copying" to see the conditions to<br>change it and/or distribute copies. Type "show warranty" for warranty/support.<br>..<br>(gdb) go Compare_With_MEMBERNO_In_MMDB<br>Breakpoint 1 at 0x40000000000aa9d8: file mmdbif.c, line 445.<br>The program is not being run.<br>(gdb) b main<br>Breakpoint 2 at 0x40000000000a78d0: file dbdiff.c, line 79.<br>(gdb) run<br>Starting program: /WORK/mmdbsync/dbdiff/src/dbdiff <br>warning: section .data not found in /ORACLE/app/oracle/product/9.2.0/lib/libwtc9.sl</pre><pre>Breakpoint 2, main (argc=1, argv=0x800003ffbfff0a60) at dbdiff.c:79<br>79&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dStartNo = 1000000000;<br>(gdb) n<br>80&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dEndNo&nbsp;&nbsp; = 1000000020;<br>(gdb) n<br>81&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ret_state = MS_INIT;<br>(gdb) n<br>84&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tsleep(0,1000);<br>(gdb) n<br>85&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new_state = ret_state;<br>(gdb) n<br>86&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; switch(new_state)<br>(gdb) n<br>89&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(0 &gt; Init()) ret_state = MS_STOP;<br>(gdb) n<br>15:57:29&gt; Read configuration info from '/WORK/mmdbsync/dbdiff/conf/config.ini'.<br>15:57:29&gt; DB_UPDATE_FLAG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : OFF<br>15:57:29&gt; MAX_RETRY_TO_CONNECT_DB : infinite<br>15:57:29&gt; DB_CHECK_TIME_INTERVAL&nbsp; : 10 minute(s)<br>15:57:29&gt; ORACLE_USER_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : casdv_s<br>15:57:29&gt; ORACLE_USER_PWD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : xhdgkq2002<br>15:57:29&gt; ORACLE_SID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : CAS<br>15:57:29&gt; ALTIBASE_USER_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : MMDBUSR<br>15:57:29&gt; ALTIBASE_USER_PWD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : LGTMMDB00<br>15:57:29&gt; ALTIBASE_DSN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 192.168.230.54<br>15:57:29&gt; ALTIBASE_PORT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 20300<br>15:57:29&gt; ALTIBASE_CONNTYPE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 1<br>15:57:29&gt; LogFile(/WORK/mmdbsync/dbdiff/log/diff_20060315_155729.key:7) opened<br>15:57:29&gt; LogFile(/WORK/mmdbsync/dbdiff/log/diff_20060315_155729.field:8) opened<br>n<br>n<br>n<br>n<br>Program received signal SIGINT, Interrupt.<br>0x40000000000a7930 in main (argc=1, argv=0x800003ffbfff0a60) at dbdiff.c:89<br>89&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(0 &gt; Init()) ret_state = MS_STOP;<br>(gdb) n<br>15:57:56&gt; CASDB(<a href="mailto:casdv_s@CAS">casdv_s@CAS</a>) connected<br>15:57:56&gt; MMDB<br>(DSN=192.168.230.54;PORT_NO=20300;UID=MMDBUSR;PWD=LGTMMDB00;CONNTYPE=1;NLS_USE=KO16KSC5601) <br>connected<br>15:57:56&gt; DIFF[2006-03-15 15:57:56] [1000000000] ~ [1000000020]</pre><pre><br>Program received signal SIGINT, Interrupt.<br>Compare_With_MEMBERNO_In_MMDB (pCfg=0x8000000100040b40, pMEMBERNO=0x800003ffbfff0fc8 "1000000001", <br>pINTIME=0x0) at mmdbif.c:445<br>445&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bExistInCASDB= FLAG_ON;<br>(gdb) n<br>15:58:05&gt; MEMBERNO(1000000001) exist in MMDB!!<br>15:58:05&gt; ### COMPARE CASDB-MMDB by MEMBERNO(1000000001)<br>15:58:05&gt; [CASDB DATA]&lt;&lt;&lt;&lt;&lt;--------------------------------------------------------------<br>15:58:05&gt; memberno&nbsp;&nbsp;&nbsp;&nbsp; = [1000000001]<br>15:58:05&gt; memberid&nbsp;&nbsp;&nbsp;&nbsp; = [jdkim]<br>15:58:05&gt; ctn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [010080802201]<br>15:58:05&gt; pwd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [jdkim1234]<br>15:58:05&gt; pers_id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [1101111296676]<br>15:58:05&gt; real_pers_id = [6605171047119]<br>15:58:05&gt; pers_name&nbsp;&nbsp;&nbsp; = [김종득]<br>15:58:05&gt; ban&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [339237057]<br>15:58:05&gt; soc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [INSIDE2]<br>15:58:05&gt; sid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [EB10-20060306-4908281]<br>15:58:05&gt; mbox_path&nbsp;&nbsp;&nbsp; = [B2:034D]<br>15:58:05&gt; mtype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [0000]<br>15:58:05&gt; userinfo&nbsp;&nbsp;&nbsp;&nbsp; = [NNGA00000000000000000000000000]<br>15:58:05&gt; ad_pwd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [2201]<br>15:58:05&gt; init_url&nbsp;&nbsp;&nbsp;&nbsp; = [T2]<br>15:58:05&gt; unit_mdl&nbsp;&nbsp;&nbsp;&nbsp; = [LG-LF1200]<br>15:58:05&gt; imsi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [450061080802201]<br>15:58:05&gt; pot_route&nbsp;&nbsp;&nbsp; = []<br>15:58:05&gt; pot_flag&nbsp;&nbsp;&nbsp;&nbsp; = [N]<br>15:58:05&gt; regdate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [2000-05-07 00:00:00]<br>15:58:05&gt; sitereg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = [1000100100100000010000000000010000000000000000000000000000000000000000]<br>15:58:05&gt; musicreg&nbsp;&nbsp;&nbsp;&nbsp; = [000000000000000000000000000000]<br>15:58:05&gt; phoneinfo1&nbsp;&nbsp; = [100000]<br>15:58:05&gt; phoneinfo2&nbsp;&nbsp; = [11101010]<br>15:58:05&gt; try to fetch!!!</pre><pre>Program received signal SIGINT, Interrupt.<br>0x800003ffbf0516d4 in memmove+0x474 () from /usr/lib/pa20_64/libc.2<br>(gdb) n<br>Single stepping until exit from function memmove, <br>which has no line number information.</pre><pre><br>Program received signal SIGINT, Interrupt.<br>0x800003ffbf0516d4 in memmove+0x474 () from /usr/lib/pa20_64/libc.2<br>(gdb) where<br>#0&nbsp; 0x800003ffbf0516d4 in memmove+0x474 () from /usr/lib/pa20_64/libc.2<br>#1&nbsp; 0x400000000011f2e8 in char_convert+0x310 ()<br>#2&nbsp; 0x40000000001238dc in bind_value+0x39c ()<br>#3&nbsp; 0x40000000000c3c74 in CLIFetch+0x1cc ()<br>#4&nbsp; 0x40000000000bb8f4 in SQLFetch+0x24 ()<br>#5&nbsp; 0x40000000000ad2c4 in MMDB_Compare_With_Fields (pCfg=0x8000000100040b40, <br>pMEMBERNO=0x800003ffbfff0fc8 "1000000001", <br>&nbsp;&nbsp;&nbsp; pINTIME=0x0, dTotalTransaction=1) at mmdbif.c:715<br>#6&nbsp; 0x40000000000abe5c in Compare_With_MEMBERNO_In_MMDB (pCfg=0x8000000100040b40, <br>pMEMBERNO=0x800003ffbfff0fc8 "1000000001", <br>&nbsp;&nbsp;&nbsp; pINTIME=0x0) at mmdbif.c:564<br>#7&nbsp; 0x40000000000b6fc8 in Compare_CASDB_with_MMDB (pCfg=0x8000000100040b40, <br>pBeginMemberNo=0x800003ffbfff0ec8 "1000000000", <br>&nbsp;&nbsp;&nbsp; pEndMemberNo=0x800003ffbfff0ed8 "1000000020") at casif.c:1305<br>#8&nbsp; 0x40000000000a8148 in Compare_MMDB_CASDB (pCfg=0x8000000100040b40, start=1000000000, <br>end=1000000020) at dbdiff.c:192<br>#9&nbsp; 0x40000000000a79c4 in main (argc=1, argv=0x800003ffbfff0a60) at dbdiff.c:101</pre><pre>&nbsp;</pre><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

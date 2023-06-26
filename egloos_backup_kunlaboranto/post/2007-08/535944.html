@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] footprints, HPUX 11i v3, Compiler footprint summary</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-13 12:05:44</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] footprints, HPUX 11i v3, Compiler footprint summary</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://docs.hp.com/ja/B2355-60129/footprints.1.html<br><br>%% 위 사이트를 엠파스 "일한번역" 결과.<br><br><span id="tranResult"><div class="refnamediv"><h2 class="title">명칭</h2><p>footprints - 컴파일러의 footprint 레코드 정보의 요약</p></div><div class="refsect1" lang="ja"><a name="d0e78436" _base_href="http://docs.hp.com/ja/B2355-60129"></a><h2 class="title">구문</h2><p><tt class="literal">/usr/ccs/bin/footprints</tt>[<tt class="literal">-V</tt>][<tt class="literal">-v</tt>] [<tt class="literal">-w</tt>]<i class="replaceable"><tt>filename</tt></i>...</p></div><div class="refsect1" lang="ja"><a name="d0e78455" _base_href="http://docs.hp.com/ja/B2355-60129"></a><h2 class="title">설명</h2><p><tt class="literal">footprints</tt>커맨드는, 지정한 object file을 스캔해, 그 파일에 격납 되어 있는 컴파일러footprint 레코드를 분석해, 요약 레포트를 생성합니다.이 레포트는, HP 서포트 및 연구실 기술자가 문제의 진단에 이용하는 것을 목적으로서 있습니다.</p><p>레포트에는, 이하의 정보가 포함됩니다.</p><div><ul class="primarybullet"><li><div class="listitembody"><p class="list-initial">검출되었던 compilation unit의 총수</p></div></li><li><div class="listitembody"><p class="list-initial">최초와 최신의 컴파일러 time stamp와 링커 time stamp(존재할 경우)</p></div></li><li><div class="listitembody"><p class="list-initial">text segment와 data segment의 총 사이즈</p></div></li><li><div class="listitembody"><p class="list-initial">사용되었던 컴파일러의 버전과, 각 버전으로 컴파일한 compilation unit 수의 리스트</p></div></li><li><div class="listitembody"><p class="list-initial">사용되었던 옵션과, 각 옵션 설정으로 컴파일한 compilation unit 수의 리스트.이 리스트는 2개의 그룹에 나뉘어, 가장 중요도가 높은 옵션이 최초의 그룹에 분류당해, 나머지의 옵션이 2번째의 그룹에 분류당해 그 후에 알파벳순으로 리스트 됩니다.</p></div></li></ul></div><p>이하의 file type이 인식됩니다.</p><div><ul class="primarybullet"><li><div class="listitembody"><p class="list-initial">실행 가능 파일과 공유 도서관</p><p class="list-last"><span><b class="command">footprints</b></span>커맨드는, 모든 의존 도서관, 부정 시스템 공유 도서관을 검색해, 각 공유 도서관에 대해서 개별의 레포트를 출력합니다.<tt class="systemitem">LD_LIBRARY_PATH</tt>또는<tt class="systemitem">SHLIB_PATH</tt>환경 변수가 설정되고 있을 경우는, 환경 변수내에 리스트 되어 있는 디렉토리에서 의존 도서관을 검색합니다(<tt class="systemitem">LD_LIBRARY_PATH</tt>가 설정되고 있을 경우 ,<tt class="systemitem">SHLIB_PATH</tt>하 무시 당합니다).또, object file에 메워 넣어져 있는 검색 패스도 사용합니다.공유 도서관이 발견되지 않을 경우는, 진단 메세지를 출력하고 실행을 계속합니다.</p></div></li><li><div class="listitembody"><p class="list-initial">아카이브 도서관</p><p class="list-last"><span><b class="command">footprints</b></span>커맨드는, 아카이브의 각 object file 멤버를 스캔합니다.</p></div></li><li><div class="listitembody"><p class="list-initial">재배치 가능 object file</p><p class="list-last"><span><b class="command">footprints</b></span>커맨드는, 지정한 object file을 스캔합니다.</p></div></li></ul></div><p><span><b class="command">footprints</b></span>커맨드는, SOM 및 ELF object file 형식, 32비트 및 64 bit code, PA-RISC 및 Integrity 시스템을 서포트 합니다.또, HP C 및 C++ 컴파일러가 생성한 컴파일러footprint을 서포트 많아진다.다른 컴파일러가 생성한 compilation unit은, 요약에 반영되지 않을 때가 있습니다.</p><div class="refsect2" lang="ja"><a name="d0e78522" _base_href="http://docs.hp.com/ja/B2355-60129"></a><h3 class="title">옵션</h3><p><span><b class="command">footprints</b></span>커맨드는, 이하의 옵션을 인식합니다.</p><div class="variablelist"><table _base_href="http://docs.hp.com/ja/B2355-60129" border="0" cellspacing="3"><col align="left" valign="top"><tbody _base_href="http://docs.hp.com/ja/B2355-60129"><tr _base_href="http://docs.hp.com/ja/B2355-60129"><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" nowrap="nowrap" valign="top"><span class="term"><tt class="literal">-V</tt></span></td><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" valign="top" width="5"><br></td><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" valign="top"><p class="list-initial">버전번호를 출력하고 종료됩니다.</p></td></tr><tr _base_href="http://docs.hp.com/ja/B2355-60129"><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" nowrap="nowrap" valign="top"><span class="term"><tt class="literal">-v</tt></span></td><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" valign="top" width="5"><br></td><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" valign="top"><p class="list-initial">용장 모드: 검출한 각 compilation unit에 대해서, 상세한 정보를 출력합니다.</p></td></tr><tr _base_href="http://docs.hp.com/ja/B2355-60129"><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" nowrap="nowrap" valign="top"><span class="term"><tt class="literal">-w</tt></span></td><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" valign="top" width="5"><br></td><td _base_href="http://docs.hp.com/ja/B2355-60129" align="left" valign="top"><p class="list-initial">상호교환성의 문제가 일어날 가능성에 대해서, 경고를 출력합니다.현재(에)는, 버전 A.05.50보다 앞의 C/ C++ 컴파일러에서 Integrity시스팀용으로 구축한 compilation unit 전부에 대해서 경고가 출력됩니다.경고는<i class="replaceable"><tt>stderr</tt></i>니 출력되어, 유쿠토우에게는 아스타리스크가 3개 부가 됩니다.</p></td></tr></tbody></table></div></div></div><div class="refsect1" lang="ja"><a name="d0e78555" _base_href="http://docs.hp.com/ja/B2355-60129"></a><h2 class="title">사례</h2><p>다음의 사례는, 일반적인 요약 레포트의 선두부분입니다.</p><div class="literallayout" style="white-space: pre;"><p><tt class="literal">Scanning /usr/bin/ksh ...<br><br>Compiler footprint summary<br><br>Number of compilation units:    51<br><br>Earliest compiler timestamp:    N/A<br>Latest compiler timestamp:      N/A<br>Linker timestamp:       15-Jul-2006 13:07 UTC<br><br>Total size:  425.8K (text)  24.8K (data)<br><br>version                 [A.06.11/ANSI C   51]<br>architecture            [ipf32      51]<br>-O                      [01          1] [02     50]<br>PBO                     [off        51]<br>-g                      [off        51]<br>debugopt                [off        51]<br><br>+Ointeger_overflow      [moderate   51]<br>+Olit                   [const      51]<br>+eh                     [off        51]<br>-fpeval                 [float      51]<br>-inline                 [1           1] [2      50]<br>-link_type              [dynamic    51]<br>-mt                     [(off)      51]<br>-rodata                 [cond       51]<br>...</tt></p></div><p><tt class="literal">version</tt>행은, ANSIC컴파일러의 버전A. 06. 11로 합계 51개의 compilation unit이 컴파일된 것을 나타냅니다.<tt class="literal">architecture</tt>행은, Integrity시스템 (Itanium(R) Product Family) 용으로 어플리캐이션이 32 bit data 모델로 컴파일된 것을 나타냅니다.</p><p><tt class="literal">-O</tt>행은, 1개의 compilation unit이 default의 최적화 레벨(레벨 01)로 컴파일되어, 그 외의 50개는 레벨 02로 컴파일된 것을 나타냅니다.<tt class="literal">PBO</tt>행에 의하면, 51개의 유니트는 전부, 프로필 베이스의 최적화를 사용하지 않고 컴파일되어 있습니다.</p><p><tt class="literal">-g</tt>행은, 기호디버깅 옵션을 사용하고 컴파일된 compilation unit이 1개도 없는 것을 나타냅니다.기호디버깅 옵션을 사용하고 컴파일된 compilation unit이 있을 경우에는 ,<tt class="literal">debugopt</tt>행에는, 기호디버깅 및 높은 최적화 레벨을 다양하게 맞추고 컴파일한 compilation unit의 수가 표시됩니다.</p><p><tt class="literal">-mt</tt>행과 같이 on/ off 옵션 설정이 각각 안에 리스트 되어 있을 경우, 디펄트 설정을 compiler option에 따라서(의해서) 옮겨놓을 수 없는 것을 나타냅니다.</p><p>footprint 레코드내의 옵션에는, 커맨드행의 컴파일러 스위치와 직접 대응하고 있지 않는 것이나, 지철기의 다른 것이 많이 있습니다.이들은, HP 서포트 및 연구실 기술자가 사용할 수 있도록, 레포트에 포함되어 있습니다.서포트 되어 있는 커맨드행 스위치에 대해서는 ,<span class="nowrap"><span class="citerefentry"><i class="refentrytitle">cc</i>(1)</span></span>오 참조해 주세요.</p></div><div class="refsect1" lang="ja"><a name="d0e78650" _base_href="http://docs.hp.com/ja/B2355-60129"></a><h2 class="title">저자</h2><p><tt class="literal">footprints</tt>하 HP에서 개발되었습니다.</p></div><div class="refsect1" lang="ja"><a name="d0e78657" _base_href="http://docs.hp.com/ja/B2355-60129"></a><h2 class="title">참조</h2><p>cc(1), elfdump(1), odump(1)</p></div></span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

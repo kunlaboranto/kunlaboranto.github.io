@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌]  ADO.NET 2.0 오류 메시지 향상  </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:09:33</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌]  ADO.NET 2.0 오류 메시지 향상  </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <table class="clist"><tbody><tr valign="top"><td class="nik" noWrap></td><td class="txt pcol2"><span id="content1" style="FONT-FAMILY: true_0"><a class="con_link" href="http://www.simpleisbest.net/archive/2005/11/11/290.aspx" target="_blank">http://www.simpleisbest.net/archive/2005/11/11/290.aspx</a></span></td></tr></tbody></table><br><table class="post-body" id="printPost1" cellspacing="0" cellpadding="0"><tbody><tr><td class="bcl" noWrap></td><td class="bcc"><!-- 제목 --><table class="post-top"><tbody><tr><td valign="bottom"><div class="htitle"><span class="pcol1 itemSubjectBoldfont"><strong><span style="FONT-SIZE: 100%; COLOR: #719795">ADO.NET 2.0 오류 메시지 향상 </span></strong></span></div></td></tr></tbody></table></td></tr></tbody></table><div class="PostContent">닷넷 프레임워크 2.0이 Visual Studio 2005의 출시와 더불어 정식 출시되었습니다. 닷넷 프레임워크 2.0에는 기존 버전에 비해 많은 향상이 있었으며 그 중 많은 부분은 시간을 투자하여 살펴볼 의미를 갖음에도 불구하고 Visual Studio 2005와 SQL Server 2005의 그늘에 가려 관심 밖에 있는 것이 사실입니다. 뭐... 마이크로소프트 입장에서 보면 돈 받고 파는 제품에 보다 많은 마케팅 노력을 들이는 것이 당연하다고 보이지만, <span style="COLOR: #800080"><b>우리 개발자들은 닷넷 프레임워크 2.0에 추가되거나 향상된 기능에 대해 보다 관심을 갖어 줘야 한다고 봅니다</b></span>. <p>닷넷 프레임워크 2.0에서 향상된 새로운 기능들에 내용은 MSDN의 <a class="con_link" href="http://msdn2.microsoft.com/library/t357fb32" target="_blank">What's New in .NET Framework 2.0</a>을 살펴 보십시요. 오늘은 ADO.NET에서 향상된 오류 메시지에 대한 내용을 다루고자 합니다.</p><h1>ADO.NET 2.0 Error Message Enhancement</h1><p>어플리케이션을 개발하다가 혹은 운영하다가 종종, 아니 항상 어떤 문제에 부딛히기 마련이다. DB에 접속이 안 된다든가, 분산 트랜잭션 오류가 난다든가 등등... 이럴 때 우리는 원인을 찾기 위해 노력하는데, 범인(원인)을 찾는 최초의 단서는 오류 발생시에 나타나는 다양한 메시지와 현상을 시발점(발음에 주의하자. 씨발쫌 으로 발음하면 곤란타... -_-;)으로 해야 함은 당연하다. 개발자 커뮤니티 같은 곳에서 질문을 올릴 때 막연히 "안되요", "오류나요", "예외가 발생합니다" 등등의 말은 아~조 성의 없는 질문으로써, 범인을 잡는데 필요한 기본적인 씨발쫌을 주지 않는 것으로 볼 수 있겠다. 이런 질문은 십중 팔구 제대로 대답받기 어렵다. (갠적으로 필자는 이런 질문을 보면, 바로 '뒤로' 버튼을 눌러버린다)</p><p>뭐... 요약하자면, 오류가 발생했을 때, <span style="COLOR: #800000"><b>오류 메시지 혹은 예외 메시지는 문제 해결에 있어서 가장 기초적이고 중요한 단서가 되므로 매우 중요</b></span>하다고 할 수 있으며, 이것으로 부터 원인을 찾아나가야 한다는 것이다. 그런 면에서 닷넷 프레임워크의 예외(exception)들은 다양한 정보를 제시한다. 많은 경우, 예외 메시지로부터 원인을 찾고 그것을 해결해 낼 수 있다.</p><h2>Unknown Error Message</h2><p>오류메시지가 이렇게 중요하고, 웬만한 오류는 메시지로부터 원인과 조치 방법을 알아 낼 수 있음에도 불구하고, <span style="COLOR: #800000"><b>항상 오류 메시지가 오류에 대한 구체적인 정보를 제공하는 것이 아니다</b></span>. 대표적으로 짜증나고 애매모호한 예외들은 NullReferenceException, COMException 등이 있는데, NullReferenceException은 디버그 빌드를 사용하여 호출 스택(callstack)에 오류가 발생한 라인이 표시되지 않으면 찾는데 시간 깨나 잡아먹는 녀석으로 유명하고, COMException은 말 그대로 COM 관련 오류라는 너무 애매하고 추상적인 오류다(COM에 대해 잘 모르는 사람에겐 재앙 같은 오류이기도 하다). 다행이 COMException은 0x8?????? 어쩌구 하는 오류코드를 보여주므로, 이 오류코드를 KB나 구글에서 검색하면 개략적인 원인 파악이 가능하다.</p><p>이것 외에도 <span style="COLOR: #000080"><b>ADO.NET 관련한 난감한 오류는 유명한 "일반 네트워크 오류"</b></span>이다. 영어로는 General Network Error 라는 메시지를 뿌리는 이 오류는 SqlException 예외 클래스를 통해 발생한다. 뭐... 오류 내용은 네트워크 상에 오류로 DB 접속, 혹은 명령 수행에 지장이 생겼으니 니 꼴린대로 잘 해석하란 얘기다. 서버에 네트워크 케이블이 빠져 버렸다든가, 중간 라우터가 디져버렸다든가 등등의 다양한 이유일 수도 있다. 말 그대로 일반적인 네트워크 상의 문제인 것이다. 이런 메시지는 백날 잘 복사해서 질문에 올려봤다 말짱 허당이다. 메시지 자체가 구체적인 오류 원인을 알려주지 않기 때문이다.</p><p>예를 들어 보자. 다음은 연결 풀링(Connection Pooling)을 사용하지 않는 클라이언트들이 한꺼번에 서버에 접속하고자 할 때 발생하는 ADO.NET의 오류 메시지이다. 쓰바 어딜 봐도 접속 폭주가 원인이라는 힌트는 없으며 달랑 "네트워크 메뉴얼 찾아봐"란 소리나 하고 있을 뿐이다. 이런 오류 메시지는 심각한 정신적 스트레스와 더불어 반복적인 밤샘으로 체력적인 저하를 유발하는 메시지가 되겠다.</p><div class="Code"><a class="con_link" target="_blank" name="Listing1"></a>처리되지 않은 예외: System.Data.SqlClient.SqlException: 일반 네트워크 오류가 발생했습니다. 네트워크 설명서를 참조하십시오.<br>at System.Data.SqlClient.SqlInternalConnection.OpenAndLogin()<br>at System.Data.SqlClient.SqlInternalConnection..ctor(SqlConnection connection<br>, SqlConnectionString connectionOptions)<br>at System.Data.SqlClient.SqlConnection.Open()<br>at DBAccessTestApp.DoDBAccess() in d:\Temp\Code\ConnPool\DBAccess.cs:line 37</div><p class="FigureLabel">도통 원인 파악이 힘든 1.1 버전의 SqlException 메시지</p><h2>ADO.NET Specific Error Message</h2><p>ADO.NET 2.0에서는 보다 구체적으로 오류 메시지를 제시하도록 항샹되었다. SqlException의 오류 메시지는 보다 상세하게 바뀌었고, 특히 오류 메시지 뒤에는 어떤 접속 제공자(SQL Server에 접속할 때는 TCP/IP 혹은 Named Pipe 등의 방법을 사용할 수 있음을 기억하자)를 사용하였고 이 제공자가 반환한 오류 코드도 보여준다.</p><p>앞서 닷넷 프레임워크 1.1(한글판)에서 보였던 <a class="con_link" href="http://www.simpleisbest.net/archive/2005/11/11/290.aspx#Listing1" target="_blank">"일반 네트워크 오류" 메시지</a>는 2.0(영문판)에서는 다음과 같이 나타난다.</p><div class="Code"><a class="con_link" target="_blank" name="Listing2"></a>Unhandled Exception: System.Data.SqlClient.SqlException: <span style="COLOR: #000080"><b>A connection was successfully established with the server, but then an error occurred during the login process</b></span>. (<b><span style="COLOR: #800000">provider: TCP Provider, error: 0 - 현재 연결은 원격 호스트에 의해 강제로 끊겼습니다.</span></b>)<br>at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)<br>at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)<br>at System.Data.SqlClient.TdsParserStateObject.ThrowExceptionAndWarning()<br>...... 이하 생략 .....</div><p class="FigureLabel">원인을 친절하게 설명해 주는 2.0 버전의 SqlException 메시지</p><p>일단 달랑 "일반 네트워크 오류(General Network Error)"란 메시지는 보이지 않는다. 발생한 오류 메시지 의하면 서버에 성공적으로 접속(네트워크 레벨에서) 하였으나 로그온 프로세스에 의해 연결이 강제로 끊겼다는 내용이다. 훨씬 더 구체적인 내용으로 오류를 설명하고 있다. 일단 접속은 하였으나(네트워크 상으로 문제가 없어 보인다. 그치?), 서버가 연결을 강제로 끊었으므로 서버 과부하가 아닐까라는 추측이 가능하게 해주는 메시지이다(꿈보다 해몽이 좋다고 태클 걸면 대략 할말 없다... -_-). 게다가 <span style="COLOR: #800000"><b>오류 메시지 마지막에 TCP Provider가 표시되어 TCP/IP를 통해 DB에 연결하고 있음을 보여주고, 또한 TCP Provider가 겪은 저 수준의 오류 메시지도 보여준다</b></span>. 이 메시지는 SOCKET에서 발생하는 오류 메시지이다.</p><p>비슷한 예로서, DB 서버의 이름이 DNS에 등록되지 않은 경우나 연결 문자열에 서버 이름의 철자가 잘못된 상황에서 1.1 버전에서 표시하는 메시지는 다음과 같다. 단순히 SQL Server를 찾을 수 없다도 아니고, 찾을 수 없거나 액세스가 거부된 상황이다.</p><div class="Code"><a class="con_link" target="_blank" name="Listing3"></a>처리되지 않은 예외: System.Data.SqlClient.SqlException: SQL Server가 없거나 액세스가 거부되었습니다.<br>at System.Data.SqlClient.SqlInternalConnection.OpenAndLogin()<br>at System.Data.SqlClient.SqlInternalConnection..ctor(SqlConnection connection<br>, SqlConnectionString connectionOptions)<br>at System.Data.SqlClient.SqlConnection.Open()<br>at DBAccessTestApp.DoDBAccess() in d:\Temp\Code\ConnPool\DBAccess.cs:line 37</div><p class="FigureLabel">Host Name Resolution 오류 상황에서 애매한 1.1의 메시지</p><p>반면 동일한 상황에서 2.0의 메시지는 명확하게 그 이유를 알려준다. 주어진 서버 이름으로 IP를 알아낼 수 없다는 메시지를 명쾌하게 알려준다.</p><div class="Code"><a class="con_link" target="_blank" name="Listing4"></a>Unhandled Exception: System.Data.SqlClient.SqlException: An error has occurred while establishing a connection to the server. When connecting to SQL Server 2005, this failure may be caused by the fact that under the default settings SQL Server does not allow remote connections. (provider: TCP Provider, error: 0 - <span style="COLOR: #800000"><b>알려진 호스트가 없습니다</b></span>.)<br>at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)<br>at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)<br>...... 이하 생략 ......</div><p class="FigureLabel">Host Name Resolution 문제임을 정확하게 찝어주는 2.0의 오류 메시지</p><p>비슷하게 SQL Server가 1433 디폴트 포트가 아닌 다른 포트를 리스닝(listening)하는 상황도 고려해 볼 수 있다. 이때도 2.0의 메시지는 원인을 명확하게 찾아 오류 메시지를 나타내 준다. 클라이언트와 서버의 포트가 다른 경우, 대개의 경우 서버의 TCP/IP 드라이버는 연결을 거부하게 되는데, 이 때 SqlException 메시지의 내용은 정확하게 "대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다" 라는 소켓 오류 메시지를 뿌려준다.</p><h2>Summary</h2><p>닷넷 프레임워크에 향상된 여러 기능 중 눈에 확 들어오지 않고 많이 언급되지 않은 기능이지만 <span style="COLOR: #800000"><b>ADO.NET 2.0의 향상된 오류 메시지는 데이터베이스 관련 예외 발생시 원인 파악및 해결에 보다 많은 정보를 제공함으로써 보다 손쉽게 오류를 해결할 수 있게 되었다</b></span>. 한가지 아쉬운 점은 <span style="COLOR: #000080"><b>모든 ADO.NET 데이터 프로바이더가 향상된 오류 메시지를 제공하는 것이 아니라는 점</b></span>이다. <span style="COLOR: #000080">하위에 별도의 API 스택을 갖는 OleDb, Odbc, Oracle은 하위 API 스택이 제공하는 오류메시지를 그대로 따르게 된다</span>. 즉, 1.1이나 2.0이나 차이가 없다는 얘기가 되겠다. SQL Server와 저수준의 프로토콜 레벨에서 상호작용하는 SQL Server 데이터 프로바이더의 경우에만 상세한 오류 메시지가 제공된다는 점을 상기하면서 글을 마칠까 한다.</p></div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

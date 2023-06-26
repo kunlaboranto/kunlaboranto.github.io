@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌]    IOT(INDEX ORGANIZED TABLE)이 사용한 SPACE를 계산하는 방법</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-06 12:49:09</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌]    IOT(INDEX ORGANIZED TABLE)이 사용한 SPACE를 계산하는 방법</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://forums.oracle.com/forums/thread.jspa?messageID=1698904<br><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr valign="top"><td width="98%"><span class="jive-subject">                    IOT(INDEX ORGANIZED TABLE)이 사용한 SPACE를 계산하는 방법                    </span>                    <br>                                        <span class="jive-description">                    Posted:                    Feb 19, 2007 6:26 PM                                        </span>                </td>                <td width="1%">                    <div class="jive-buttons">                    <table border="0" cellpadding="0" cellspacing="0">                    <tbody><tr>                                                                                                                            <td>&nbsp;</td>                            <td class="jive-icon">                                <a href="http://forums.oracle.com/forums/post%21reply.jspa?messageID=1698904" title="Click to reply to this thread"><img src="http://forums.oracle.com/forums/images/reply-16x16.gif" alt="Click to reply to this thread" border="0" height="16" width="16"></a>                            </td>                            <td class="jive-icon-label">                                <a href="http://forums.oracle.com/forums/post%21reply.jspa?messageID=1698904" title="Click to reply to this thread">Reply</a>                            </td>                                            </tr>                    </tbody></table>                    </div>                </td>            </tr>                        <tr>                <td colspan="3" style="border-top: 1px solid rgb(204, 204, 204);">                    <br>                    제품 : ORACLE SERVER<br><br>작성날짜 : 2004-03-04<br><br><br>IOT(INDEX ORGANIZED TABLE)이 사용한 SPACE를 계산하는 방법<br>==============================================<br><br><br>PURPOSE<br>-------<br><br>IOT(Index Organized Table)이 사용한 space 를 계산하는 방법<br> <br>How To Determine the Space Allocated to an IOT<br>----------------------------------------------<br><br>A. 일반적으로,segment에 의해 할당되거나 사용된 공간을 얻기 위해서는 <br>dba_segments나 DBA_EXTENTS view에서 segment_name 으로 확인할수 있다.<br><br>   Example:<br>   <br>   SCOTT.EMP table의 사용양은 ..  <br><br>   SQL&gt; select segment_name, segment_type, bytes, blocks<br>     2  from dba_segments <br>     3  where segment_name = 'EMP' and owner='SCOTT';<br><br><br>   SEGMENT_NAME  SEGMENT_TYPE     BYTES       BLOCKS<br>   ------------- ------------     ----------  --------<br>   EMP           TABLE                 65536         8<br><br><br>B. IOT는 2두개의 segment들을 생성한다..<br><br>    --&gt; SYS_IOT_TOP_&lt;IOT_object_id&gt; 이름의 index와 <br>    --&gt; SYS_IOT_OVER_&lt;IOT_object_id&gt; 이름의 overflow table (optionally)<br><br>   TEST_CHECK iot는 space 할당이 없지만 SYS_IOT_OVER_27372 table,SYS_IOT_TOP_27372 index <br>   는 space가 할당 된다.<br>  <br>   Example:<br>   SQL&gt; create table TEST_CHECK (x number primary key, y number) <br>     2  ORGANIZATION INDEX <br>     3  tablespace tools pctthreshold  20<br>     4  OVERFLOW tablespace users;<br><br>   SQL&gt; select segment_name, segment_type, bytes, blocks <br>     2  from dba_segments<br>     3  where segment_name = 'TEST_CHECK' and owner='SCOTT' ;<br>   no rows selected<br><br>   SQL&gt; select object_name, object_id<br>     2  from dba_objects<br>     3  where object_name='TEST_CHECK' and owner='SCOTT';<br><br>   OBJECT_NAME              OBJECT_ID<br>   ------------------------ ---------------<br>   TEST_CHECK                         27372<br><br>   SQL&gt; select segment_name, segment_type, bytes, blocks <br>     2  from dba_segments <br>     3  where segment_name like '%27372%';<br><br>   NAME                 SEGMENT_TYPE    BYTES        BLOCKS<br>   -------------------  --------------- ----------   ----------<br>   SYS_IOT_OVER_27372   TABLE                65536            8<br>   SYS_IOT_TOP_27372    INDEX                65536            8<br><br>   SQL&gt; select table_name, iot_type, iot_name, tablespace_name <br>     2  from dba_tables<br>     3  where table_name = 'TEST_CHECK'<br>     4  or (iot_name = 'TEST_CHECK' and iot_type = 'IOT_OVERFLOW');<br><br>   TABLE_NAME         IOT_TYPE      TABLESPACE_NAME   IOT_NAME   <br>   ------------------ ------------- ----------------  ----------- <br>   SYS_IOT_OVER_27372 IOT_OVERFLOW  USERS             TEST_CHECK <br>   TEST_CHECK         IOT<br><br>   SQL&gt; SELECT index_name, index_type, tablespace_name, table_name<br>     2  FROM dba_indexes <br>     3  where table_name = 'TEST_CHECK';<br><br>   INDEX_NAME        INDEX_TYPE     TABLESPACE_NAME  TABLE_NAME<br>   ----------------- -------------- ---------------  --------------<br>   SYS_IOT_TOP_27372 IOT - TOP      TOOLS            TEST_CHECK<br><br><br>C. 계산<br><br>    A = IOT Index       ( SYS_IOT_TOP_27372)<br>  + B = OVERFLOW segment( SYS_IOT_OVER_27372)<br>  ----<br>    T = IOT에 의해 사용된 total Physical Storage Space<br><br><br>   즉,IOT에 의해 사용된 총 space 는  ==&gt;<br><br>    T = A + B<br> <br>    T = 8 + 8   = 16 Oracle Blocks.<br> <br><br>RELATED DOCUMENTS<br>-----------------<br>Note:205260.1                    </td></tr></tbody></table><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

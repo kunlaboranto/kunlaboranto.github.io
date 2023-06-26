@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[altibase] 유용한 define</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-06-13 18:33:41</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[altibase] 유용한 define</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">#define SQLCODE sqlca.sqlcode<br>#define SQLERRM sqlca.sqlerrm.sqlerrmc<br>#define DUP_KEY -69720&nbsp; <br><br>#ifdef _DEBUG<br>#define malloc(s) _malloc_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)<br>#endif<br><br><br>ALTER SEQUENCE   &nbsp;--&nbsp;   alter the definition of a sequence generator   <a name="AEN35199"></a><div class="REFSYNOPSISDIV"><a name="AEN35201"></a><h2>Synopsis</h2><pre class="SYNOPSIS">ALTER SEQUENCE <tt class="REPLACEABLE"><i>name</i></tt> [ INCREMENT [ BY ] <tt class="REPLACEABLE"><i>increment</i></tt> ]<br>    [ MINVALUE <tt class="REPLACEABLE"><i>minvalue</i></tt> | NO MINVALUE ] [ MAXVALUE <tt class="REPLACEABLE"><i>maxvalue</i></tt> | NO MAXVALUE ]<br>    [ RESTART [ WITH ] <tt class="REPLACEABLE"><i>start</i></tt> ] [ CACHE <tt class="REPLACEABLE"><i>cache</i></tt> ] [ [ NO ] CYCLE ]<br>  </pre></div>--------<br>http://www.oracle-base.com/articles/10g/OracleDB10gRACInstallationOnTru64.php<br>The performance of gettimeofday() can be improved in Oracle by performing the following as root on each node:<br><blockquote><pre>mknod /dev/timedev c 15 0<br>chmod 664 /dev/timedev</pre></blockquote><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

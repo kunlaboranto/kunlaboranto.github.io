@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 데이터파일삭제후 테이블스페이스삭제하는 방법?</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-19 04:34:45</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 데이터파일삭제후 테이블스페이스삭제하는 방법?</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://database.sarang.net/?inc=read&amp;aid=5679&amp;criteria=oracle&amp;subcrit=&amp;id=25842&amp;limit=20&amp;keyword=v%24statement&amp;page=33">http://database.sarang.net/?inc=read&amp;aid=5679&amp;criteria=oracle&amp;subcrit=&amp;id=25842&amp;limit=20&amp;keyword=v%24statement&amp;page=33</a><br><br><table class="infotable" style="TEXT-ALIGN: left" cellspacing="0" cellpadding="3" border="0"><tbody><tr><td class="rowtitle" colspan="6">Re: 데이터파일삭제후 테이블스페이스삭제하는 방법?</td></tr><tr><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성자</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">sllim</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성일</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">2001-07-05 10:06:21</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">조회수</div></th><td class="rowmisc" align="right"><div style="WHITE-SPACE: nowrap">670</div></td></tr></tbody></table><table class="viewtable" style="TEXT-ALIGN: left"><tbody><tr><td class="rowbody"><p>다음과 같은 Error가 난다.</p><p>&nbsp;</p><p>SVRMGR&gt; STARTUP;</p><p>ORACLE instance started</p><p>Database mounted</p><p>ORA-01157 : cannot identify data file 11 - file not found</p><p>ORA-01110 : data file 11 : '/user1/oracle8/dbs/user1.dbf'</p><p>Attempting to dismount database .... Database dismounted</p><p>Attempting to shutdown instance .... ORACLE instance shut down </p><p>&nbsp;</p><p>&nbsp;</p><p>여기서의 해결방법은 Datafile을 Drop하고 Tablespace도 Drop을 하는 예이다.</p><p>&nbsp;</p><p>$ svrmgrl</p><p>SVRMGR&gt; CONNECT INTERNAL;</p><p>SVRMGR&gt; STARTUP MOUNT;</p><p>ORACLE instance started.</p><p>Database mounted.</p><p>&nbsp;</p><p>SVRMGR&gt; ALTER DATABASE DATAFILE '/user1/oracle8/dbs/user1.dbf' </p><p>OFFLINE DROP;</p><p><span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">Statement</span> processed.</p><p>&nbsp;</p><p>SVRMGR&gt; ALTER DATABASE OPEN;</p><p><span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">Statement</span> processed.</p><p>&nbsp;</p><p>SVRMGR&gt; DROP TABLESPACE tablespace_name INCLUDING CONTENTS;</p><p><span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">Statement</span> processed.</p><p>&nbsp;</p><p>&nbsp;</p><p>&gt;&gt;바야바 님께서 쓰시길&lt;&lt;</p><p>&nbsp;</p><p>:: 안녕하세요</p><p>:: 테이블스페이스를 생성을 했습니다.</p><p>:: 그리고 유저도 생성했습니다.</p><p>:: 그러다가 테이블스페이스를 다시생성해야 하기에 </p><p>:: 테이블스페이스를 삭제하기 전에 먼저 데이터파일을 잘못해서 삭제를 했습니다.</p><p>:: 그래서 테이블스페이스가 삭제가 되지도 offline이 되지도 않습니다.</p><p>:: 다시 설치하기 않고도 테이블스페이스를 복구하거나 삭제를 할수 있을까요?</p><p>:: 부탁합니다.</p><p>::</p></td></tr></tbody></table></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 테이블 스페이스, 데이타 파일, 익스텐트 , 프리스페이스 관리하기.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-27 23:46:44</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 테이블 스페이스, 데이타 파일, 익스텐트 , 프리스페이스 관리하기.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://database.sarang.net/?inc=read&amp;aid=7906&amp;criteria=oracle&amp;subcrit=&amp;id=&amp;limit=20&amp;keyword=dba_tables&amp;page=7<br><br>## 테이블 스페이스, 데이타 파일, 익스텐트 , 프리스페이스 관리하기.<br><br><p>굳이 대용량이 아니라고 해도, 현재 사용한 용량을 알고 있어야 디스크를 사서 늘려도 늘릴것이고, 언제쯤 사야하겠다는 예상을할수 있을텐데 그런 것을 위해 있는 것이 ORACLE의 DBA_FREE_SPACE 뷰이다. 그러나 DBA_FREE_SPACE에는분명 공간이 있는데 ORACLE이 에러를 내는 경우는 많다. 가끔은 10GB TABLESPACE를 잡아놓고 쓴것은 1GB도 되지않는데 에러를 내기도 한다. 왜 이런 현상이 생기며, 어떻게 관리해야 하는지 알아보자.</p><p>&nbsp;</p><p> tablespace, datafile, extent에 대한 개념은 설명하지 않는다.</p><p>&nbsp;</p><p>select * from dba_freespace where tablespace_name='TEST2';</p><p>&nbsp;</p><p>현재 Tablespace의 여유 공간은 dba_free_space 뷰를 보면 알수 있다.</p><p>&nbsp;</p><pre> TABLESPACE_NAME                FILE_ID    BLOCK_ID   BYTES      BLOCKS     RELATIVE_F<br>------------------------------ ---------- ---------- ---------- ---------- ----------<br>TEST2                                  19         52      40960         20         19<br>TEST2                                  19         72      40960         20         19<br>TEST2                                  19         92      40960         20         19<br>TEST2                                  19        112      40960         20         19<br>TEST2                                  19        132      40960         20         19<br>TEST2                                  19        152      40960         20         19<br>TEST2                                  19        172      40960         20         19<br>TEST2                                  19        192      40960         20         19<br>TEST2                                  19        212      40960         20         19<br>TEST2                                  19        232      40960         20         19<br>TEST2                                  19        252      40960         20         19<br>TEST2                                  19        272      40960         20         19<br>TEST2                                  19        292      40960         20         19<br>TEST2                                  19        312      40960         20         19<br>TEST2                                  19        332      40960         20         19<br>TEST2                                  19        352      40960         20         19<br>TEST2                                  19        372      40960         20         19<br>TEST2                                  19        392      40960         20         19<br>TEST2                                  19        412      40960         20         19<br>TEST2                                  19        432      40960         20         19<br>TEST2                                  19        452      40960         20         19<br>TEST2                                  19        472      40960         20         19<br>TEST2                                  19        492      43008         21         19<br></pre><p>위의 결과에서 보면 이상한 점이 있다. 왜 여러개로 나눠져 있는거고 각 컬럼이 의미하는 것은 뭘까?</p><p>&nbsp;</p><p>우선 행이 나눠져 있는 이유는 할당되었다가 반납된 익스텐트들은 pctincrease가 0일 경우는 자동으로 합쳐지지않는다.각각은 할당되었다가 반납되어 빈공간(free space)로 잡혀있는 것이다. 첫번째 줄을 보면 52번 블록부터 20개의 블록이비어있고 두번째 줄을 보면 72번부터 20개의 블록이 비어있다는 것을 알수 있다. 어라! 그럼 52번부터 40개의 블록이비어있는 것이 아닌가? </p><p>&nbsp;</p><p>이런식으로 보다보니 52~ 513블록이 모두 빈공간이다.  그럼 하나로 합칠수도 있지 않나?</p><p>&nbsp;</p><p>alter tablespace test2 COALESCE;</p><p>&nbsp;</p><p>select * from dba_free_space where tablespace_name='TEST2';</p><p>&nbsp;</p><p>TABLESPACE_NAME                FILE_ID    BLOCK_ID   BYTES      BLOCKS     RELATIVE_F</p><p>------------------------------ ---------- ---------- ---------- ---------- ----------</p><p>TEST2                                  19         52     944128        461         1</p><p>&nbsp;</p><p>합쳐졌다는 것을 알수 있다.</p><p>&nbsp;</p><p>그럼 쓰고 있는 공간은 어떻게 알수 있나? DBA_EXTENTS뷰를 보면 알수 있다. 오라클은 extent 단위로 관리하기 때문에 USED_SPACE가 아니라 EXTENTS이다.</p><p>&nbsp;</p><p>select (생략) from dba_extents where tablespace_name='TEST2';</p><p>&nbsp;</p><p>OWNER  SEGMENT_NAME  EXTENT_ID  FILE_ID    BLOCK_ID   BYTES      BLOCKS     RELATIVE_F</p><p>------ ------------- --------- ---------- ---------- ---------- ---------- ----------</p><p>SYS    TEST_TABLE1          0         19          2     102400         50         19</p><p>위의 결과를 보니 0번 익스텐트이고 2번블록부터 50개의 블록을 쓰고있다. 따라서 102400바이트를 사용하고 있다. 0번 익스텐트이니까 테이블 스페이스를 만들때 storage 옵션에서 initial값을 1M로 준것이 틀림없다. </p><p>&nbsp;</p><p>select * from <span style="color: brown; background-color: yellow; font-weight: bold;">dba_tables</span>paces where tablespace_name='TEST2';</p><p>&nbsp;</p><p>TABLESPACE_NAME   INITIAL_EX NEXT_EXTEN MIN_EXTENT MAX_EXTENT PCT_INCREA MIN_EXTLEN </p><p>---------------- ----------- ---------- ---------- ---------- ---------- ---------- </p><p>TEST2               102400      40960          1        121          0          0   </p><p>&nbsp;</p><p> 역시 그렇다. next가 40960으로 되어있는 것도 dba_free_space뷰를 통해 조각나 남아있던 공간들의 크기와 똑같다.</p><p>&nbsp;</p><p> 그럼 전체 tablespace의 크기는 사용한 것 102400 + 944128 = 1046528 이라는 계산이 나온다.실제로는 0번 익스텐트가 2번 블록부터 시작하므로 파일크기는 1046528+2048=1048576이 나올것이다.</p><p>&nbsp;</p><p>select * from dba_data_files where tablespace_name='TEST2';</p><p>&nbsp;</p><p>FILE_NAME                FILE_ID  TABLESPACE_NAME    BYTES      BLOCKS   </p><p>/db2/oradata/test02.dbf  19       TEST2             1048576     512</p><p>그런것을 확인할수 있다.</p><p>&nbsp;</p><p> 따라서 dba_free_space뷰를 보고 여유공간이 별로 없다면 곧 데이타 파일을 늘리거나 resize를 하는 방법으로 테이블 스페이스를 늘려야 한다는 사실을 알수 있다. </p><p>&nbsp;</p><p> 그러나 여기서는 테이블 스페이스의 NEXT_EXTENT값이 40k 정도로 작기 때문에 상관이 없지만, 좀 크다는 DB의NEXT값이 20M라고 했을때, DBA_FREE_SPACE에 39M가 남아있다면 결과적으로는 20M만 남은것과 다르지 않다는 것에 유의해야 한다.</p><p>&nbsp;</p><p> 그보다 더 중요한 것은 PCT_INCREASE 값인데, 0이 아닌값이 설정되어 있으면, 각 익스텐트의 크기가 각각다르다. 이경우 반납되었다가 다시 할당될때 정확하게 맞아떨어지지 않는다. 다시말해 단편화가 생긴다는 이야기인데, 파일시스템의단편화는 단지 읽고쓰는 퍼포먼스의 문제이지만, 오라클에서도 같은 결과를 낸다.</p><p>&nbsp;</p><p>&nbsp;</p><p> 그리고 어떤 경우의 위의 경우에 전혀 해당하는 경우가 없고 free_space가 엄청나게 남아있는데도 문제가 생길수 있는경우가 있다. 바로 MAX extent 값때문인데, 각종 문의 게시판등을 보면 이 문제때문에 엄청나게 고생한다는 사실을알수있다. 위의 예에서 MAX_EXTENT값은 121이다. 각 익스텐트의 크기는 40K이므로 4,840K의 공간을 사용할수있다. 그런데 만약 data파일이 4,840k보다 크다면?</p><p> 그 이후공간은 전혀 사용할수가 없다. </p><p> 이 것이 문제가 많이 되는 것은 FREE_SPACE를 보니 전체파일크기에 비해 사용된 량이 별로 되지도 않는데 에러를낸다는 것이다. 예를 들어 100M가 분명 넘을리 없는 테이블을 위해 테이블 스페이스를 만들었는데 next값이 작아서 채10M가 되지도 못했는데 에러는 낼수 있다는 것이다.</p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

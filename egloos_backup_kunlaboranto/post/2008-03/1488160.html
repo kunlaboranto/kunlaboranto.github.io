@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[테스트] 웹번역.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-03-05 10:46:05</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[테스트] 웹번역.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">** 중국어 / 영어 / 일어 넣고 번역하면 됨.<br><br>http://trans.empas.com/china.php<br><br><br><p class="MsoNormal" style="margin-left: 21pt;"><font face="宋体" size="1"><span style="font-size: 9pt; font-family: 宋体;">你好：</span></font><font face="Arial" size="1"><span style="font-size: 9pt; font-family: Arial;" lang="EN-US"><o:p></o:p></span></font></p><p class="MsoNormal" style="margin-left: 21pt;"><font face="宋体" size="1"><span style="font-size: 9pt; font-family: 宋体;">我是 TEST，我们现在寻找一个可以用在实时系统上的实时数据库，想咨询一下你们的数据库产品，请问你们能否立刻联系我，谢谢！</span></font><font face="Arial" size="1"><span style="font-size: 9pt; font-family: Arial;" lang="EN-US"><o:p></o:p></span></font></p><p class="MsoNormal" style="margin-left: 21pt;"><font face="Arial" size="1"><span style="font-size: 9pt; font-family: Arial;" lang="EN-US"><o:p>&nbsp;</o:p></span></font></p><p class="MsoNormal" style="margin-left: 21pt;"><font face="宋体" size="1"><span style="font-size: 9pt; font-family: 宋体;">固定电话：０２１－xxx －xxx</span></font><font face="Arial" size="1"><span style="font-size: 9pt; font-family: Arial;" lang="EN-US"><o:p></o:p></span></font></p><p class="MsoNormal" style="margin-left: 21pt;"><font face="宋体" size="1"><span style="font-size: 9pt; font-family: 宋体;">手机：１３７xxxx</span></font><font face="Arial" size="1"><span style="font-size: 9pt; font-family: Arial;" lang="EN-US"><o:p></o:p></span></font></p><p class="MsoNormal" style="margin-left: 21pt;"><font face="Arial" size="1"><span style="font-size: 9pt; font-family: Arial;" lang="EN-US"><o:p>&nbsp;</o:p></span></font></p><br><p class="MsoNormal" style="margin-left: 21pt;"><font face="宋体" size="1"><span style="font-size: 9pt; font-family: 宋体;"></span></font><font face="Arial" size="1"><span style="font-size: 9pt; font-family: Arial;" lang="EN-US"><o:p></o:p></span></font></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

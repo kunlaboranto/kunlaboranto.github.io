@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[기초] Call by reference - C 컴파일러제한 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:12:17</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[기초] Call by reference - C 컴파일러제한 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>--------- </p><p>C 에서 호출가능한 API를 만들기 위해서는</p><p>CALL BY REFERENCE 방식을 사용할 수 없음, 또한 동일 함수명으로</p><p>넘기는 인자가 다른 형태를 C 컴파일러가 지원하지 않음.</p><p>void f1(int *val, int *pSize = NULL)</p><p>때문에 default 도 안됨.</p><p>&nbsp;</p><p>#include &lt;stdio.h&gt;</p><p>void f1(int *val)<br>{<br>&nbsp;&nbsp;&nbsp; printf("\n_OK_FB : f1(int *val) \n");<br>&nbsp;&nbsp;&nbsp; printf("addr=0x%X, val=%d\n", val, *val);<br>&nbsp;&nbsp;&nbsp; printf("addr=0x%X, val=%d\n", &amp;val, val);<br>&nbsp;&nbsp;&nbsp; *val = *val * (-1);<br>}</p><p>void f1(int &amp;val)<br>{<br>&nbsp;&nbsp;&nbsp; printf("\n_OK_FB : f1(int &amp;val) \n");<br>&nbsp;&nbsp;&nbsp; printf("addr=0x%X, val=%d\n", &amp;val, val);<br>&nbsp;&nbsp;&nbsp; val = val * (-1);<br>}</p><p>int main()<br>{<br>&nbsp;&nbsp;&nbsp; int val1;<br>&nbsp;&nbsp;&nbsp; int *pval1;</p><p>&nbsp;&nbsp;&nbsp; val1 = 10; </p><p>&nbsp;&nbsp;&nbsp; f1(val1);<br>&nbsp;&nbsp;&nbsp; f1(val1);</p><p>&nbsp;&nbsp;&nbsp; f1(&amp;val1);<br>&nbsp;&nbsp;&nbsp; f1(&amp;val1);</p><p>&nbsp;&nbsp;&nbsp; return 0;<br>}</p><p>&nbsp;</p><p>-- 테스트 결과</p><p>$ !CC<br>CC ex_refer.c </p><p><br>$ a.out</p><p>_OK_FB : f1(int &amp;val) <br>addr=0xFFBEF750, val=10</p><p>_OK_FB : f1(int &amp;val) <br>addr=0xFFBEF750, val=-10</p><p>_OK_FB : f1(int *val) <br>addr=0xFFBEF750, val=10<br>addr=0xFFBEF734, val=-4262064</p><p>_OK_FB : f1(int *val) <br>addr=0xFFBEF750, val=-10<br>addr=0xFFBEF734, val=-4262064</p><p><br>$ !cc<br>cc ex_refer.c <br>"ex_refer.c", line 11: syntax error before or at: &amp;<br>"ex_refer.c", line 12: identifier redefined: f1<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; current : function() returning void<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; previous: function(pointer to int) returning void : "ex_refer.c", line 3<br>"ex_refer.c", line 14: undefined symbol: val<br>cc: acomp failed for ex_refer.c</p><p>&nbsp;</p><p>== 디폴트 값은 *.h 에서 지정..</p><p>== *.h</p><p>SQLRETURN setDouble(int index, double *value, int *pSize = NULL)<br>== *.cpp</p><p>// Error: A previously specified default argument value cannot be changed.</p><p>SQLRETURN PrepareStatement::setDouble(int index, double *value, int *pSize)<br>{ ... }</p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

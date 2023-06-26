@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>altibase 추천 ~/.aliases 예</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-03-12 04:09:22</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">altibase 추천 ~/.aliases 예</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">## altibase 추천 ~/.aliases 예<br><br>$ cat ~/.aliases<br><br>export _HOSTNAME=`hostname`<br>PS1='<br>$_HOSTNAME: $PWD<br>$ '<br><br>alias h='history | tail -20'<br><br>alias ls='ls -F'<br>alias ll='ls -l'<br>alias lh='ls -alt | head'<br><br>alias pe='ps -ef | grep -i -e PID -e '<br><br style="font-weight: bold;"><span style="font-weight: bold;">#alias vi='vim'</span><br>alias hdiff='vim -d -o2'<br><br>alias ath='cd $ALTIBASE_HOME'<br>alias atb='cd $ALTIBASE_HOME/bin'<br>alias ats='cd $ALTIBASE_HOME/sample'<br>alias atp='vi $ALTIBASE_HOME/conf/altibase.properties'<br>alias att='tail -f $ALTIBASE_HOME/trc/altibase_boot.log'&nbsp;&nbsp;&nbsp;&nbsp; <br>alias attsm='tail -f $ALTIBASE_HOME/trc/altibase_sm.log'&nbsp; <br>alias attrp='tail -f $ALTIBASE_HOME/trc/altibase_rp.log'&nbsp; <br>alias atl='find /ALTILOG/logs/. -name "logfile*" -print | wc -l' <br><br>++++++++++++++++++++++<br>+ csh 예<br><br>$ source ~/.aliases<br>$ cat .aliases<br>set prompt="`hostname`: $cwd \<br>$ "<br><br>alias ls 'ls -F'<br>alias h 'history | tail -20'<br>alias ll 'ls -l'<br>alias lh 'ls -alt | head'<br><br><span style="font-weight: bold;">#alias grep '/usr/xpg4/bin/grep'</span><br>alias pe 'ps -ef | grep -i -e PID -e '<br><br>alias ath 'cd $ALTIBASE_HOME'<br>alias atb 'cd $ALTIBASE_HOME/bin'<br>alias atp 'vi $ALTIBASE_HOME/conf/altibase.properties'<br>alias att 'tail -f ALTIBASE_HOME/trc/altibase_boot.log'<br>alias atl 'find /altidata/logs/. -name "logfile*" -print | wc -l'<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

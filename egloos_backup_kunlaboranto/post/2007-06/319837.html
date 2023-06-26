@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[팁] sqlplus의 &amp;1을 isql에서는 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:53:04</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[팁] sqlplus의 &amp;1을 isql에서는 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>1. 현상</p><p>현재 altibase의 isql은</p><p>sqlplus의 편리한 기능인 &amp;1, &amp;2, &amp;&lt;변수명&gt;, &amp;&amp;&lt;변수명&gt; 등을 지원하고</p><p>있지 못하므로 불편함.</p><p>&nbsp;</p><p>4. 코드 수정전 대응방법</p><p>[ 예 ]</p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">#!/bin/sh<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">SQL1="<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">select<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp;&nbsp;&nbsp; (<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp;&nbsp;&nbsp; (select count(\*) from A_TABLE_NAME) <o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp;&nbsp;&nbsp; \* ceil((offset+size)/8)\*8<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp;&nbsp;&nbsp; / 1024 / 1024<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp;&nbsp;&nbsp; )<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">from adm_tb_size <o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">where table_name = 'A_TABLE_NAME' <o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">order by offset desc <o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">limit 1<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">;"<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">#echo $1<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">echo "["$SQL1"]"<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"></span></span>&nbsp;</p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">echo $SQL1 | sed -e "s/A_TABLE_NAME/$1/g" |sed -e "s/\\\\//g" &gt; .tmp.sql<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">is -f .tmp.sql<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p></o:p></span></span><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">+++++++++++++++++++++=======<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span style="FONT-SIZE: 10pt; COLOR: navy">이<span lang="EN-US"> view</span>도 추가되었으면 좋겠습니다<span lang="EN-US">.<o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">sizing</span></span><span style="FONT-SIZE: 100%; COLOR: #000080"><span style="FONT-SIZE: 10pt; COLOR: navy">할때 제가 자주 사용하는 쿼리입니다<span lang="EN-US">. fixed</span>일때만 유용하지만<span lang="EN-US">..<o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">create view adm_tb_size as <o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp; select table_name, column_name, offset, size <o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp; from system_.sys_tables_ a, system_.sys_columns_ b<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">&nbsp; where a.table_id = b.table_id;<o:p></o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span style="FONT-SIZE: 10pt; COLOR: navy">이 뷰가 있으면 사이즈 구할 때 다음 쿼리로 가능<span lang="EN-US">..<o:p></o:p></span></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy"><o:p>&nbsp;</o:p></span></span></p><p class="MsoNormal"><span style="FONT-SIZE: 100%; COLOR: #000080; FONT-FAMILY: 굴림"><span lang="EN-US" style="FONT-SIZE: 10pt; COLOR: navy">select * from adm_tb_size where table_name = 'T1';<o:p></o:p></span></span></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

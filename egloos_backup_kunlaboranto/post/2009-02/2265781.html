@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>HPUX 패치 번호 조회 URL (swlist -l patch)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2009-02-06 12:00:22</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">HPUX 패치 번호 조회 URL (swlist -l patch)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">HP 패치찾기<br><br><a href="http://www11.itrc.hp.com/service/patch/patchTree.do?patchid=PHKL_27282&amp;sel=%7Bhpux:11.00,%7D&amp;BC=main%7CpatchDetail%7BPHKL_27282,%7Bhpux:11.00,%7D%7D%7C">» Patch Family Tree</a><br>http://www11.itrc.hp.com/service/patch/patchTree.do?patchid=PHKL_27282&amp;sel={hpux:11.00,}&amp;BC=main|patchDetail{PHKL_27282,{hpux:11.00,}}|<br><br>http://www4.itrc.hp.com/service/patch/patchDetail.do?patchid=PHKL_27282<br><br>http://www11.itrc.hp.com/service/patch/patchDetail.do?patchid=PHKL_27282&amp;admit=109447626+1233882465249+28353475<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

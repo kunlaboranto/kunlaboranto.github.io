@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[2011년 3월] 왜 일하는가</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-30 12:37:37</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[2011년 3월] 왜 일하는가</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://www.aladin.co.kr/shop/wproduct.aspx?ISBN=8991819532&amp;partner=egloos" title="" target="_blank"><img class="image_left" src="http://image.aladin.co.kr/coveretc/book/coveroff/8991819532_1.jpg" alt="" align="left" border="0">왜 일하는가</a><br>이나모리 가즈오 지음, 신정길 옮김 / 서돌<br>나의 점수 : <br><br>2011년 3월<br><br>인생과 일 = 능력 X 열의 X ( 사고방식 * ?(-1) ), "인격수양의 수단"<br><br><br>386세대 이전의 선배들의 시대를 경험하지 못한, 온실에서 살아온 내게, 이 책은 ??<br>아무튼, '이나모리'와 함께 한 사람들은 행복하게 FSA, 달려왔을 것이다. <br>지금의 우리 (나와 동료와 가족)들에게, '당신은 왜 일하는가'에 대한 대답은. 우리가 만들어 가야함은 분명하다.<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

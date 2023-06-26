@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 정식으로 프로그램하는 재미 (ML)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-11-30 16:26:42</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 정식으로 프로그램하는 재미 (ML)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://ropas.snu.ac.kr/~kwang/functional-ad.html<br><br><center><h1><font color="#006633">정식으로 프로그램하는 재미</font></h1></center><p></p><center><strong><a href="/%7Ekwang/">이 광근</a></strong></center><p></p><hr><font color="#006633" size="2">제대로 디자인된 언어로 프로그램을 작성할 때 얻을 수 있는 장점은 도대체 무엇일까? 그 대표적인 언어중 하나인 <a href="sml.html">ML</a>의 경우를 살펴보자. </font><br><hr><h2><font color="#006633">작고 간단하다</font></h2><ul><li>문법이 작고 간단할 뿐만 아니라 그 의미구조 또한 간결하다. 극명한 예로, <a href="/courses/sml.html">ML</a> 참고서가 총 261쪽이고, 초보자를 위한 <a href="http://www-db.stanford.edu/%7Eullman">Ullman</a>의 입문서가 380쪽인 반면, C++ 의 경우는 각각 600쪽이 모두 넘는다.<br><font color="#ff9900">C? no. C++? no. Java? no.</font> </li></ul><h2><font color="#006633">안전하다</font> </h2><ul><li>수행중인 프로그램의 완전한 안정성이 보장되어 있다. 즉, 컴파일러를 통과한 프로그램은 실행중에 파행적으로 중단되는 경우가 (core dump 나 segmentation fault등이) 발생하지 않는다.<br><font color="#ff9900">C? no. C++? no. Java? no.</font> </li><li>이것은 언어 갖추고있는 강력한 타입 시스템 때문인데, <a href="/courses/sml.html">ML</a>에서는 특히, 타입 검사를 타입 유추를 이용해서 자동으로 하기 때문에 프로그래머가 변수의 타입을 표기할 필요가 없다.<br><font color="#ff9900">C? no. C++? no. Java? no.</font> </li></ul><h2><font color="#006633">타입에 얽매이지 않는 함수도 정의할 수 있다</font></h2><ul><li>하나의 함수로, 타입은 다르지만 하는 일이 같은 함수들을 표현할 수 있기 때문에 프로그램하기가 경제적이고, 타입검사를 하는 언어가 가지는 경직성이 없다.<br><font color="#ff9900">C? yes. C++? yes. Java? no.</font> </li></ul><h2><font color="#006633">편향된 프로그래밍 관성에서 벗어날 수 있다 </font></h2><ul><li>함수가 특이한 대상이 아니고, 여타 다른값과 구분 없이 (higher-order functions) 다루어 진다. 따라서, 함수형 언어에서 개발된 프로그램 기술들이 (stream, infinite data structures, process networks 등이) 자연스럽게 표현될 수 있다.<br><font color="#ff9900">C? no. C++? no. Java? no.</font> </li><li>또한, 메모리주소나 지정문 (assignment) 등으로 발생하는 메모리 반응들도 (side-effect들도) 표현가능 하다.<br><font color="#ff9900">C? yes. C++? yes. Java? yes.</font> </li></ul><h2><font color="#006633">정제된 모듈 처리기능을 갖추고 있다 </font></h2><ul><li>대형의 소프트웨어 개발에 꼭 필요한, 안전한 분리 컴파일 기능이 제공되어 있다.<br><font color="#ff9900">C? no. C++? no. Java? no.</font> </li><li>또한, 모듈을 일반화 시켜서 (parameterized module을) 정의할 수 있기때문에, 하나의 모듈을 필요에 따라 구체화해서 재 사용할 수 있다.<br><font color="#ff9900">C? no. C++? yes. Java? no.</font> </li></ul><h2><font color="#006633">자동으로 메모리를 관리해 준다 </font></h2><ul><li>효율적인 메모리 재활용 시스템이 (garbage collection이) 제공되기 때문에 프로그래머가 메모리의 부족이나 재사용등에 대한 부담에서 자유롭다.<br><font color="#ff9900">C? no. C++? no. Java? yes.</font> </li></ul><h2><font color="#006633">예외상황 관리 매카니즘을 갖추고 있다</font> </h2><ul><li>이것을 이용 해서, 프로그램의 실행 중에 발생할 수 있는 긴급상황들을 (예를 들면, x/y 에서 y 값이 0인 경우들을) 정황에 맞게 적절히 처리할 수 있다.<br><font color="#ff9900">C? yes. C++? yes. Java? yes.</font> </li></ul><h2><font color="#006633">정형적인 의미구조를 갖추고 있다</font> </h2><ul><li>프로그램을 이해하는 데 필요한 정확한 정의가 제공되어 있다. 따라서, 프로그램의 의미에 혼동의 여지가 없으므로 프로그램을 분석하고 관리하는 작업이 용이하다.<br><font color="#ff9900">C? no. C++? no. Java? no.</font> </li></ul><h2><font color="#006633">프로그래밍의 미학 </font></h2><ul><li>대형의 고난도 프로그램이 드러내는 복잡성을 다룰 수 있는 프로그래밍 원리와 미학이 자연스럽게 표현된다.<br><font color="#ff9900">C? no. C++? OO bubble. Java? OO bubble.</font> </li></ul><hr><a href="/%7Ekwang/functional-anger.html">이러한 프로그래밍 언어가 실제 사용된 예</a> /<a href="/smlnj">Standard ML</a> /<a href="/caml">OCaml</a> /<a href="/n">nML</a> /<a href="http://www.scheme.org/">Scheme</a> /<a href="http://www.haskell.org/">Haskell</a> </div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

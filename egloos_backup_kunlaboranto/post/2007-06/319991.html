@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[컴파일옵션] -D_REENTRANT </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:22:52</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[컴파일옵션] -D_REENTRANT </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>[ 예&nbsp;]</p><p>SUN5.8</p><p>1. 현상</p><p>"test.cpp", line 1947: Error: The function "localtime_r" must have a prototype.</p><p>&nbsp;</p><p>/usr/include/time.h</p><p>&nbsp;&nbsp;&nbsp;&nbsp; 58 #if defined(__EXTENSIONS__) || defined(_REENTRANT) || \<br>&nbsp;&nbsp;&nbsp;&nbsp; 59&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (_POSIX_C_SOURCE - 0 &gt;= 199506L)<br>&nbsp;&nbsp;&nbsp;&nbsp; 60 extern struct tm *gmtime_r(const time_t *, struct tm *);<br>&nbsp;&nbsp;&nbsp;&nbsp; 61 extern struct tm *localtime_r(const time_t *, struct tm *);<br>&nbsp;&nbsp;&nbsp;&nbsp; 62 #endif&nbsp; /* defined(__EXTENSIONS__) || defined(_REENTRANT) .. */<br>&nbsp;&nbsp;&nbsp;&nbsp; 63 </p><p>&nbsp;</p><p>2 조치</p><p>-mt 옵션이나 -D_REENTRANT</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>TIMEOUT=3;CONNECTION_TIMEOUT=10 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:44:26</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">TIMEOUT=3;CONNECTION_TIMEOUT=10 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><span style="FONT-SIZE: 100%">SESC에서 reconnect 하는 예제 입니다. <br><br><br>1] 설정예<br><br>예)<br><br>&nbsp;&nbsp;&nbsp; strcpy(conn_opt, "DSN=192.168.3.230;PORT_NO=20300; CONNTYPE=1;<strong><span style="COLOR: #0000ff">TIMEOUT=3;<span class="hl">CONNECTION_TIMEOUT</span>=10</span></strong>");<br><br>&nbsp;&nbsp;&nbsp; EXEC SQL CONNECT :usr IDENTIFIED BY :pwd USING :conn_opt;<br><br>&nbsp;&nbsp; --&gt;&nbsp; TIMEOUT : 서버 연결 시도 시 기다리는 시간. 기본값은 3초입니다.&nbsp;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">CONNECTION_TIMEOUT</span> : 네트워크 불안정 시 select() 또는 poll() 에서 발생할 수 있는 blocking을 방지하기 위한 속성입니다.<br><br></span><span style="FONT-SIZE: 100%"><strong><span style="COLOR: #0000ff">2] 주의 사항<br><br>&nbsp;<span class="hl">CONNECTION_TIMEOUT</span> 은 네트웍 오류시 빠른 failover를 위한 설정으로 10초로 설정이 된 경우 <br><br>&nbsp;&nbsp; 어떤 쿼리가 lock wait으로 10초이상 대기되거나 원래 10초 이상 수행되는 쿼리라면 ( 정확하게는 10초이내에 server 단에서 응답을 받지 못하는 쿼리 )<br>&nbsp;&nbsp; CONNECTION이 끊어지게 됩니다.</span></strong><br><br>&nbsp;&nbsp; 단 SELECT의 경우 FETCH 중 전체 시간을 의미하는 것은 아니며 보통 3000건 단위로 서버와 통신을 하게 되는데<br><br>&nbsp;&nbsp; 이때 서버와 통신하는 간격사이의 시간을 의미합니다.<br><br>3] 테스트 결과<br><br>&nbsp;&nbsp; RECONNECT을 처리하는 로직에서 <br><br>&nbsp;&nbsp; 4.3.9.6 버전으로 테스트시 “(a) EXEC SQL DISCONNECT;” 나 “(b) EXEC SQL FREE;” 를 둘 중 1개 혹은 둘 모두 설정한 경우에 <br><br>&nbsp;&nbsp; 모두 정상적으로 reconnection이 되었습니다.<br><br>&nbsp;&nbsp; 샘플 소스상에서는 (a) -&gt; (b) 으로 2번 호출 하도록 권장합니다.</span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

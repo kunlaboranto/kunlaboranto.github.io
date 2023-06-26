@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Sybase IQ : Join</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2010-01-29 16:18:14</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Sybase IQ : Join</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">http://soobin.textcube.com/44<br><br><h2><a href="http://soobin.textcube.com/44" rel="bookmark"><span class="entry-title">Sybase IQ : Join</span></a></h2><br>                <span class="category"><a href="http://soobin.textcube.com/category/%EB%B0%A5%ED%86%B5" rel="directory">밥통</a></span> <span class="date"><abbr class="published" title="2009-12-23T14:24:39+09:00">2009/12/23 14:24</abbr></span> <br>               <p><strong>가능하면 Inner 조인이 되도록 모델링을 한다</strong><br>Outer, <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">Range</span><br><br> 조인은 Inner 조인에 비해 사용할 수 있는 알고리즘도 적고 성능상 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">오버헤드도</span><br><br> 발생하기 때문에 가능하면 Inner 조인을 하도록 모델링을 구현해라<br><br><strong><span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">가능하면</span><br><br> 조인되는 컬럼의 수는 적게 하며 그 걸럼의 데이터 타입은 INT <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">계열이</span><br><br> 되도록 한다</strong><br>Sybase IQ는 composite 컬럼으로 된 인덱스가 조회 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">성능을</span><br><br> 빠르게 보장하는 기능이 다른 RDBMS에 비해 미약하기 때문에 가능하면 조인되는 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">컬럼</span><br><br> (주로 PK)의 수가 적을수록 유리하다. 또한 조인되는 컬럼의 데이터 타입은 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">INT</span><br><br> 계열(tinyint, smallint, int, unsigned int, bigint, unsigned bigint)이 성능상 가장 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">유리한</span><br><br> 데이터 타입이므로 그 타입을 사용할 것을 권장한다<br><br><strong>조인되는 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">컬럼은</span><br><br> 명시적이든 묵시적이든 변경 (타입변경, 함수 등)이 되지 않도록 한다</strong><br><span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">조인되는</span><br><br> 컬럼 간의 데이터 타입이 일치하지 않는 경우 내부적으로 타입 변경이 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">가능하다면</span><br><br> 자동으로 타입 변경이 발생하지만 그로 인해 그 만큼의 성능에 악영향을 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">미친다.</span><br><br> 여기에 해당하는 항목에는 타입 불일치, 문자 타입의 길이 불일치, substring과 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">같은</span><br><br> 함수 사용, 연산 등이 있다.<br><br><strong>조인되는 컬럼은 카디날리티에 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">따라</span><br><br> 인덱스를 생성한다</strong><br>Index_advisor 라는 옵션을 On으로 설정하면 iqmsg 파일에 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">조인되는</span><br><br> 컬럼에 인덱스 생성이되어 있지 않은 경우 무조건 HG 인덱스를 생성하라는 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">권장</span><br><br> 메시지가 출력되는데 HG 인덱스는 디스크 사용량, Write 작업에 많은 부담을 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">주게</span><br><br> 되므로 카디날리티에 따라 LF 혹은 HG로 나눠서 생성하는 것을 권장한다.<br><br><strong>m:n 조인을 피하기 위해 마스터성 테이블의 조인되는 칼럼에 PK를 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">생성한다</span><br><br></strong><br>Sybase IQ는 다른 RDBMS에 비해 m:n 조인의 성능이 월등히 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">떨어진다.</span><br><br> 그래서 질의 최적기가 m:n 조인으로 오해하지 않도록 하기 위해 논리적으로 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">마스터성</span><br><br> 테이블에 대해서는 논리 모델링에서 PK를 물리 모델링에서 선언적으로 만들어 주거나 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">unique</span><br><br> HG index를 만들어줘야 한다. 하지만 composite 컬럼에 대해 PK를 만들 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">때에도</span><br><br> 그 PK를 구성하는 개별 컬럼에 대한 인덱스는 별도로 반드시 만들어 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">줘야</span><br><br> 한다. 참고로 논리 모델링에서 FK는 특별한 업무적 요건이 없다면 선언적으로 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">만들어</span><br><br> 주기 보다는 FK 구성하는 각각의 컬럼에 대해 search argument 로 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">사용될</span><br><br> 때만 인덱스를 생성해 주는 것을 권장한다.<br><br><strong>DB의 내부 조인 알고리즘을 변경하도록<span class="copyAngel_soobin_Callback" host="http%3A%2F%2Fsoobin.textcube.com" entryid="44"></span> 유도하여 성능 향상이 가능하다.</strong><br>디폴트 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">상황에서는</span><br><br> 질의 최적기가 현재 인덱스, 메모리, 질의 수행중인 사용자, 질의 등 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">메타데이터를</span><br><br> 취합하여 가장 적절하다고 판단되는 조인 알고리즘을 선택하게 되는데 드물지만 경우에 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">따라</span><br><br> 메타데이터의 정보 부족 등으로 잘못된 알고리즘을 사용할 수도 있다. 이럴 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">경우라고</span><br><br> 판단되면 사용자가 임의적으로 쿼리 실행시 세션별(temporary) 옵션으로 join_preference (힌트)를 지정함으로써 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">알고리즘을</span><br><br> 선택할 수 있다. 이렇게 힌트를 사용할 경우 항상 어느 알고리즘이 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">제일</span><br><br> 빠르다는 정답은 없기 때문에 충분히 테스트 한 후에 적용해야 하며 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">데이터의</span><br><br> 축가/삭제/수정 등으로 경우에 따라서는 알고리즘 선택을 다시 바꿔줘야 할 때도 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">있다.</span><br><br> 조인 알고리즘을 변경하는 방법은 아래와 같다</p><br><p><br><font size="4"><em style="font-weight: bold;">set <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">temporary</span> option join_preference = n ;</em></font><br><br>n 값 &nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">&nbsp;</span><br><br> &nbsp; &nbsp;설명<br>&nbsp; 0&nbsp;&nbsp; 질의 최적기가 자동으로 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">선택한다</span><br>&nbsp; 1&nbsp;&nbsp; Sort/merge 조인 알고리즘을 사용한다<br>&nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">2 </span>&nbsp; Nested loop (NJL) 조인 알고리즘을 사용한다<br>&nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">3 </span>&nbsp; Nested loop push-down (NLPDJ) 조인 알고리즘을 사용한다<span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44"></span><br>&nbsp; 4&nbsp;&nbsp; Hash (HJ) 조인 알고리즘을 사용한다<br>&nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">5 </span>&nbsp; Hash push-down (HPDJ) 조인 알고리즘을 사용한다<br>&nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44">6 </span>&nbsp; Prejoin(join index) 조인 알고리즘을 사용한다<br>&nbsp; 7 <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44"></span>&nbsp; Sort/merge push-down (SMPDJ) 조인 알고리즘을 사용한다<br>-1 &nbsp;&nbsp; Sort/merge (SMJ) 조인 알고리즘을 사용하지 못하게 한다<br>-2 &nbsp;&nbsp; Nested loop 조인 알고리즘을 사용하지 못하게 한다<br>-3 &nbsp;&nbsp; Nested loop push-down 조인 알고리즘을 사용하지 못하게 한다<br>-4&nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44"></span>&nbsp; Hash 조인 알고리즘을 사용하지 못하게 한다<br>-5&nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44"></span>&nbsp; Hash push-down 조인 알고리즘을 사용하지 못하게 한다<br>-6&nbsp; <span class="copyAngel_soobin_LinkUp" original="http://soobin.textcube.com/44" entryid="44"></span>&nbsp; Prejoin 조인 알고리즘을 사용하지 못하게 한다<br>-7&nbsp;&nbsp; Sort/merge push-down 조인 알고리즘을 사용하지 못하게 한다</p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

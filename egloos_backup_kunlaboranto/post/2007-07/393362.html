@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] kermit 사용법</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-09 11:11:17</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] kermit 사용법</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : <a href="http://chonga.pe.kr/computer/tips/tip_kermit.txt">http://chonga.pe.kr/computer/tips/tip_kermit.txt</a><br><pre>&nbsp;제&nbsp; 목:[참고] Kermit 사용법&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 관련자료:없음&nbsp; [76]<br>&nbsp;보낸이:이홍기&nbsp; (청아사랑)&nbsp; 1998-04-21 08:05&nbsp; 조회:121<br>안녕하세요? 이홍기입니다.</pre><pre>예전에 kermit사용하는 법, 정리해놓은 겁니다.</pre><pre>한글처리 되는 세팅입니다.</pre><pre><br>Kermit Howto<br>------------<br>1997년 4월 22일 이홍기</pre><pre><br>커밋(Kermit) 사용법.</pre><pre>*. 커밋(Kermit) 설치하기</pre><pre>*. 커밋(Kermit) 설정 맞추기</pre><pre>~/.kermrc 의 소스<br>(다음은&nbsp; HOME 디렉토리에 들어가는 환경 설정 파일이다.)<br>-----------------------------&lt;Cut here&gt;----------------------------<br># Hongki's .kermrc from HLFTO &amp; HONGKI<br># 이 환경설정 파일은 하이텔의 이선중(HLFTO)님이 작성하신 것입니다.<br>cd&nbsp; \v(home)<br>#set line /dev/modem<br>#set speed 2400<br>#set modem hayes<br>set rec pack 9024<br>set send pack&nbsp; 9024<br>set window 5<br>set term byte 8<br>set com byte 8<br>set telnet echo remote<br>set TELNET terminal-type vt100<br>set TELNET newline-mode on <br>#set host chollian.dacom.co.kr<br>#set host hitel.goldstar.co.kr<br>set terminal character-set cp437 cp437<br>set file bytesize 8<br>set file character-set cp437<br>set file type bin<br>set file name lit<br>set file display full<br>set file collision update<br>set windows-size 1<br>set terminal byte 8<br>set terminal char transparent<br>set parity none<br>set block-check 3<br>set rec pack 2000<br>set send pack 2000<br>set window 5<br>set retry-limit 47<br>set prompt Hongki Kermit&gt; </pre><pre>set key \127 \008</pre><pre>COMMENT - Edit (vi)<br>;<br>def vi if = \v(argc) 2 assign myfile \%1,-<br>&nbsp; if not def myfile echo Edit what?,-<br>&nbsp; else run vi \m(myfile),-<br>&nbsp; def myfile</pre><pre>COMMENT - Capture (cap)<br>;<br>def cap log session captured append, output \13, connect<br>def uncap close session, connect</pre><pre>COMMENT - View (less, more)<br>;<br>def less if = \v(argc) 2 assign myfile \%1,-<br>&nbsp; if not def myfile echo View what?,-<br>&nbsp; else run less \m(myfile),-<br>&nbsp; def myfile<br>def more less \%1<br>&nbsp;<br>COMMENT - RzSz<br>;<br>def rz run /usr/bin/rz &lt;/dev/modem&gt;/dev/modem, output \13, connect<br>def sz if = \v(argc) 1 end 1 {Send what file(s)?}, -<br>&nbsp;&nbsp;&nbsp; run /usr/bin/sz +b \%1 \%2 \%3 \%4 \%5 \%6 \%7 \%8 \%9 -<br>&nbsp;&nbsp;&nbsp; &lt;/dev/modem&gt;/dev/modem</pre><pre>COMMENT - Dial Directory<br>;<br>if exist \v(home).kermdd -<br>&nbsp; set dial directory \v(home).kermdd ; C-Kermit dial directory</pre><pre>COMMENT - Greeting.<br>;<br>run clear<br>if &lt; \v(ntime) 43200 echo Good Morning!<br>&nbsp; else if &lt; \v(ntime) 61200 echo Good Afternoon!<br>&nbsp; else echo Good Evening.<br>echo </pre><pre>; End of C-Kermit 5A initialization file.<br>--------------------------&lt;Cut Here&gt;------------------------------<br>(바로 위 라인 까지가 ~/.kermrc의 내용이다.)</pre><pre><br>*. 커밋으로 접속하기<br>[explore:/home/genius]# kermit<br>&nbsp;Trying 141.223.2.16...<br>GENIUS95 Kermit&gt;c<br>Connecting to host hitel.postech.ac.kr:23.<br>The escape character is Ctrl-\ (ASCII 28, FS)<br>Type the escape character followed by C to get back,<br>or followed by ? to see other options.<br>Trying 960808...Open</pre><pre>&nbsp;(하이텔로 접속되었다.)</pre><pre>&nbsp;</pre><pre><br>&nbsp;* 선택 화일 이름<br>&nbsp;&nbsp; msconf.zip&nbsp;&nbsp; <br>&nbsp;* 화일 전송 프로토콜을 선택하십시오.<br>&nbsp;1.Kermit&nbsp; 2.Zmodem&nbsp; 3.Super Kermit&nbsp; 4.Apro&nbsp; 0.취소<br>&nbsp;선택 ==&gt; 3</pre><pre>&nbsp;화일 전송 프로그램을 실행시켜 주십시오 !!<br>Escape back to your local Kermit and give a RECEIVE command...<br>(위의 라인과 같은 메세지가 나오면 CTRL-\를 누르고 다시 c를 한번 눌러준다.<br>&nbsp;그러면 아래와 같이 Kermit Prompt로 나오게 된다.)</pre><pre>(Back at explore)<br>GENIUS95 Kermit&gt;rece (rece는 receive의 줄임말이다.)<br>SF<br>X to cancel file,&nbsp; CR to resend current packet<br>Z to cancel group, A for status report<br>E to send Error packet, Ctrl-C to quit immediately: <br>A<br>Receiving: MSCONF.ZIP =&gt; MSCONF.ZIP<br>Size: 31144, Type: binary<br>.............................Z [OK]<br>B<br>GENIUS95 Kermit&gt;c (여기서 c를 누르면 다시 하이텔로 돌아간다.)</pre><pre><br>*. Kermit 명령어 정리</pre><pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kermit Prompt상에서</pre><pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c, connect ; c를 누르면 접속화면으로 바뀐다.</pre><pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set ; 환경 설정을 바꿀 수 있다. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ex) KERMIT&gt; set host nowcom.co.kr<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KERMIT&gt; c<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (나우누리로 접속한다.)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quit ; kermit을 종료한다.</pre><pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ! ; shell로 잠시 나간다. (exit로 돌아온다.)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 접속화면에서<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctrl-\ c ; [CTRL]키와 [\]키를 동시에 눌러주고 [c]를 누른다.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 다시 Kermit Prompt로 나오게 된다.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 돌아갈때는 c를 누르고 엔터친다.</pre><pre><br>--<br>홍기~</pre></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

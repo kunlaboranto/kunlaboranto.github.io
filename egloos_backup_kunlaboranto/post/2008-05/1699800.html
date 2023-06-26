@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] MySQL + HeapTable (NO Logging)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-05-14 10:51:19</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] MySQL + HeapTable (NO Logging)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html<br><br><p>        The following <code class="literal">SELECT</code> statements do not use        indexes:      </p><pre class="programlisting">SELECT * FROM <em class="replaceable"><code>tbl_name</code></em> WHERE <em class="replaceable"><code>key_col</code></em> LIKE '%Patrick%';<br>SELECT * FROM <em class="replaceable"><code>tbl_name</code></em> WHERE <em class="replaceable"><code>key_col</code></em> LIKE <em class="replaceable"><code>other_col</code></em>;<br></pre><p>        In the first statement, the        <a href="http://dev.mysql.com/doc/refman/5.0/en/string-comparison-functions.html#operator_like"><code class="literal">LIKE</code></a> value begins with a        wildcard character. In the second statement, the        <a href="http://dev.mysql.com/doc/refman/5.0/en/string-comparison-functions.html#operator_like"><code class="literal">LIKE</code></a> value is not a constant.      </p><p>        If you use <code class="literal">... LIKE        '%<em class="replaceable"><code>string</code></em>%'</code> and        <em class="replaceable"><code>string</code></em> is longer than three        characters, MySQL uses the <em style="font-weight: bold;" class="firstterm">Turbo Boyer-Moore        algorithm</em> to initialize the pattern for the string        and then uses this pattern to perform the search more quickly.      </p><br><br><br>From : http://db.hanyang.ac.kr/~moka/Curriculum/DBMS_Implementation/5th_index_040607.doc<br><br>## Heap Table<br><br>HEAP table은 hash된 index와 in memory 형식으로 저장된다.<br>MySQL internal HEAP 테이블은 overflow area없이 100% dynamic hashing을 사용한다. Free list에 대한 어떠한 추가 공간도 필요하지 않는다. 또한 delete + insert 에 대한 문제를 갖지 않는다.<br>&nbsp;<br>사용법<br>mysql&gt; CREATE TABLE test TYPE=HEAP SELECT ip,SUM(downloads) AS down<br>&nbsp;&nbsp;&nbsp; -&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FROM log_table GROUP BY ip;<br>mysql&gt; SELECT COUNT(ip),AVG(down) FROM test;<br>mysql&gt; DROP TABLE test;<br>&nbsp;<br>HEAP 테이블을 만들 때 고려할 점<br><br>- 모든 메모리를 전부 사용하는 것을 막기 위해 CREATE 할 때 MAX_ROWS를 명시하라.<br>- 인덱스는 =과 &lt;=&gt;과 함께만 사용될 것이다.<br><br>- HEAP tables can only use whole keys to search for a row; compare this to MyISAM tables where any prefix of the key can be used to find rows.<br>- fixed 레코드 포맷에서 사용한다.<br><br>- BLOB/TEXT column은 지원하지 않는다.<br>- AUTO_INCREMENT column을 지원하지 않는다.<br>- non-unique한 key를 HEAP 테이블에서 가질 수 있다. ( 보통의 hash table과는 다르게 )<br>- HEAP 테이블은 모든 client들과 공유 되어 진다.<br>- HEAP 테이블에 데이타는 small block에 저장된다. 이 테이블은 100% 동적 삽입이다. Overflow area, extra key space가 필요하지 않다. 삭제된 행들은 linked list에 연결되어 있으므로 새로운 행이 삽입될 때 재사용이 가능하다.<br>Free memory가 필요할 경우, DELETE FROM heap_table, TRUNCATE heap_table or DROP TABLE heap_table을 실행시켜야 한다.<br>- HEAP 테이블에서 1개의 row를 위해 필요한 메모리의 크기<br>SUM_OVER_ALL_KEYS(max_length_of_key + sizeof(char*) * 2) + ALIGN(length_of_row+1, sizeof(char*))<br>sizeof(char*) is 4 on 32-bit machines and 8 on 64-bit machines.<br>&nbsp;<br>--&gt; a heap table은 .frm 화일만 생성하는군. 서버가 shutdown되면 구조는 남지만 데이타가 없어요.<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

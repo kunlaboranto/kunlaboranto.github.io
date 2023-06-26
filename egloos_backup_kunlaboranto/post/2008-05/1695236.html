@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] UTF8 등, 한글 깨짐 관련.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-05-12 21:00:33</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] UTF8 등, 한글 깨짐 관련.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br>From : <a href="http://kldp.org/node/79068">http://kldp.org/node/79068</a><br><h1 class="title"><font size="2">[완료] 자바에서 UTF-8, EUC-KR과 유니코드</font></h1><div class="vote-up-down-widget-alt"><span class="up-inact" title="You must login to vote."></span></div><p>안녕하세요.</p><p>자바에서 UTF-8 =&gt; 일반 유니코드 변환<br>        EUC-KR =&gt; 일반 유니코드 변환</p><p>이런것들은 어떻게 해야 하나요...</p><p>일반 유니코드라는것을 자바에서 어떻게 받아들이고 있는지 모르겠네요...</p><br>...<br><br><div class="submitted">Submitted by <a href="http://kldp.org/user/17694" title="사용자 프로필 보기">klutzy</a> on 화, 2007/02/27 - 2:00pm.</div>    <div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>유니코드 자체는 바이트의 개념이 아닙니다. 단순히 한 문자에 숫자 하나를 연결하는 개념이죠. 이것을 실제 바이트 단위로 저장하는 방식을 UTF-8, UTF-16 등으로 부르는 것입니다.</p><p>이중 UTF-8은 문자 하나당 저장되는 최소 단위가 8비트, 즉 1바이트입니다. UTF-16은 최소 단위가 2바이트이고요.그리고 과거에 UCS-2라는 것이 있었는데, 모든 문자를 2바이트 고정으로 저장합니다. 따라서 2바이트를 넘어가는 문자들은지원하지 못하는 방식으로 지금은 거의 사용되지 않는 방식이라고 생각하는 것이 좋습니다. (이것이 '유니코드는 2바이트다'는잘못된 소문의 원인이기도 합니다)</p><p>자바에서 지원이 어떻게 되는지는 자세히는 모르겠지만, String과 byte가 따로 구분되어 있고 String이 유니코드를 지원하는 것으로 알고 있습니다. <a href="http://www.jorendorff.com/articles/unicode/java.html" title="http://www.jorendorff.com/articles/unicode/java.html">http://www.jorendorff.com/articles/unicode/java.html</a> 문서를 보면 유니코드 문자열과 byte[]간의 변환 방법이 나와 있네요.</p></div><br><h3 class="title"><a href="http://kldp.org/node/79068#comment-374508" class="active">윗분 말씀처럼,</a></h3>    <div class="submitted">Submitted by <a href="http://kldp.org/user/18820" title="사용자 프로필 보기">dahlia</a> on 수, 2007/02/28 - 2:06pm.</div>    <div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>윗분 말씀처럼, 유니코드는 문자 집합(character set)이고, UTF-8, UTF-16 같은 것들이 인코딩 방식입니다.</p></div><br>-----------------------<br>From : http://symlink.tistory.com/20<br><br><div class="titleWrap"><h2><a href="http://symlink.tistory.com/20">Java에서 한글(EUC-KR 또는 UTF-8)을 자동 판단 하는 방법~</a></h2><span class="category"><a href="http://symlink.tistory.com/category/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8/API">프로그램/API</a> </span><span class="date">2008/02/19 20:35</span></div><!-- titleWrap close --><p>웹과 같은 환경에서 외부로 부터 전달받은 한글문자열이 EUC-KR인지 UTF-8인지 판단이 필요할때<br>사용될수 있는 소스 입니다.<br><br>해당 소스는 자동으로 LocalString으로 변경해 줍니다.<br><br></p><div style="border: 1px solid rgb(255, 242, 0); padding: 10px; background-color: rgb(255, 255, 204);"><p><font face="'GulimChe', 'Sans-serif'"><font face="'GulimChe', 'Sans-serif'">&nbsp;public static String LocalString( String val)<br>&nbsp;{<br>&nbsp; if (val == null)<br>&nbsp; &nbsp;return null;<br>&nbsp; else {<br>&nbsp; &nbsp;byte[] b;</font></font></p><p><font face="'GulimChe', 'Sans-serif'"><font face="'GulimChe', 'Sans-serif'">&nbsp; &nbsp;try {<br>&nbsp; &nbsp; b = val.getBytes("8859_1");<br>&nbsp; &nbsp; CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();<br>&nbsp; &nbsp; try {<br>&nbsp; &nbsp; &nbsp;CharBuffer r = decoder.decode( ByteBuffer.wrap( b));<br>&nbsp; &nbsp; &nbsp;return r.toString();<br>&nbsp; &nbsp; } catch (CharacterCodingException e) {<br>&nbsp; &nbsp; &nbsp;return new String( b, "EUC-KR");<br>&nbsp; &nbsp; }<br>&nbsp; &nbsp;} catch (UnsupportedEncodingException e1) {<br>&nbsp; &nbsp; e1.printStackTrace();<br>&nbsp; &nbsp;}<br>&nbsp; } return null;<br>&nbsp;}</font></font></p></div><br><br>-----------------------<br>From : http://www.javaservice.net/~java/bbs/read.cgi?b=qna2&amp;c=r_p&amp;n=1123209037<br><br><table bgcolor="#dad0c2" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="55"><td align="left" valign="center">제목 : 한글 코드 변환 euc-kr &lt;-&gt; utf-8<br> 글쓴이: 손님(guest)   2005/08/05 11:30:37  조회수:756  줄수:21</td><td align="right" valign="center"><br></td></tr></tbody></table><table bgcolor="#efefef" border="0" cellpadding="0" width="100%"><tbody><tr><td><pre>안녕하십니까,<br><br>euc-kr 과 utf-8 간의 한글 코드를 매핑해서 변환하려면 어떻게야<br><br>할지 조언을 구합니다...<br><br>예를들어 '가' 라는 글자가 euc-kr 에서는 0xEEEE 를 가지고<br><br>utf-8 에서는 0xEFEFEF 를 가진다고 가정하면<br><br>euc-kr 에서 utf-8 로 변환할때,<br><br>  String eucStr = "가";  // euc-kr String.<br>  String utfStr = new String(eucStr.getBytes("euc-kr"), "utf-8");<br><br>처럼 하면 utfStr 에는 "EFEFEF" 가 들어가는지요...<br><br>위 처럼 해보니 변환되지 않는것 같은데 방법이 있으면 가르쳐 주십시오.<br><br>그럼, 좋은 하루 되십시오.<br></pre></td></tr></tbody></table><a name="1123213971"></a><table bgcolor="#dee3e7" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="55"><td align="left" valign="center">제목 : Re: 움...저같은경우엔..<br> 글쓴이: 이규주(29zu)   2005/08/05 12:52:51  조회수:137  줄수:15</td><td align="right" valign="center"><br></td></tr></tbody></table><table bgcolor="#efefef" border="0" cellpadding="0" width="100%"><tbody><tr><td><pre>new OutputStreamWriter(new FileOutputStream(new File(tempFilePath,"tempRequest.txt")),"euc-kr");<br>utf-8-&gt;euc-kr로 변환하는방법으로 위의 방법을썼습니다..<br>파일로 euc-kr로 저장한다음 그것을 읽어들였죠...<br><br>그 반대도 이런식으로 이용할수 있을듯합니다...<br><br>파일에 안쓰고 분명 쓰는 방법도 있을텐데...<br>이거쓸당시 시간이 촉박해서 ...이렇게...^^; 지금이야..이미 잘돌아가는거<br>바꿀이유가 없어서..그렇구여...<br><br>정급하시면 이렇게 쓰시구여....<br><br>다른 방법 알아내셨다면 좀 알려주시길....<br><br></pre></td></tr></tbody></table><a name="1123291504"></a><table bgcolor="#dee3e7" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="55"><td align="left" valign="center">제목 : Re: 한글 코드 변환 euc-kr &lt;-&gt; utf-8<br> 글쓴이: 이희승(anoripi)   2005/08/06 10:25:04  조회수:314  줄수:11</td><td align="right" valign="center"><br></td></tr></tbody></table><table bgcolor="#efefef" border="0" cellpadding="0" width="100%"><tbody><tr><td><pre>자바에서 문자열은 내부적으로 보두 UTF-16 으로 관리됩니다.  따라서 내부적으로 EUc-KR<br>로 저장하는 방법이나 UTF-8 으로 저장되는 방법이란 없습니다.  다면 우리가 액세스하는<br>인터페이스 (브라우저) 에 어떤 엔코딩으로 변환해서 출력할 지만 존재합니다.<br><br>str = "가";  하셨다면 내부적으로는 한글 문자 '가' 에 해당하는 유니코드 char 값이 <br>들어가 있게 되는 것입니다.<br><br></pre></td></tr></tbody></table><a name="1123562802"></a><table bgcolor="#dee3e7" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="55"><td align="left" valign="center">제목 : Re:Re: 한글 코드 변환 euc-kr &lt;-&gt; utf-8<br> 글쓴이: 손님(guest)   2005/08/09 13:46:42  조회수:165  줄수:15</td><td align="right" valign="center"><br></td></tr></tbody></table><table bgcolor="#efefef" border="0" cellpadding="0" width="100%"><tbody><tr><td><pre>질문했던 사람인데요,<br><br>먼저 답변들 감사합니다.<br><br>utf-16 으로만 관리된다면, 데이터베이스에 ksc5601 로 저장되어 있는<br><br>한글을 쿼리로 가져와서 rs.getString(1) 등으로 String 에 넣으면<br><br>utf-16 으로 자동 전환된다는 말씀이신지 궁금합니다.<br><br>다시한번 답변 부탁드리며...<br><br><br>* 아 한글 처리는 왜이렇게 어려울까...ㅠ.ㅠ<br></pre></td></tr></tbody></table><a name="1123624616"></a><a name="last"></a><table bgcolor="#dee3e7" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="55"><td align="left" valign="center">제목 : Re: 한글 코드 변환 euc-kr &lt;-&gt; utf-8<br> 글쓴이: 이희승(anoripi)   2005/08/10 06:56:56  조회수:195  줄수:13</td><td align="right" valign="center"><br></td></tr></tbody></table><pre>답변이 늦었군요. ^^;;<br><br>네 맞습니다.  rs.getString(1) 하면 드라이버가 네트워크를 통해 DBMS 와 통신하여<br>가져온 값을 UTF-16 으로 변환해 메모리에 저장합니다.<br><br>화면에 출력할 때에는 다시 컨테이너에 지정된 캐릭터셋으로 변환하여 스트림으로<br>내보내지게 되는 것이구요.<br></pre><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

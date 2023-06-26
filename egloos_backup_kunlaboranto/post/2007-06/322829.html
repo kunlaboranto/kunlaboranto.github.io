@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] SHARED_POOL_SIZE</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-19 04:50:54</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] SHARED_POOL_SIZE</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>From : <a href="http://database.sarang.net/?inc=read&amp;aid=11939&amp;criteria=oracle&amp;subcrit=&amp;id=112&amp;limit=20&amp;keyword=v%24statement&amp;page=26">http://database.sarang.net/?inc=read&amp;aid=11939&amp;criteria=oracle&amp;subcrit=&amp;id=112&amp;limit=20&amp;keyword=v%24statement&amp;page=26</a><br><br><table class="infotable" style="TEXT-ALIGN: left" cellspacing="0" cellpadding="3" border="0"><tbody><tr><td class="rowtitle" colspan="6">SHARED_POOL_SIZE</td></tr><tr><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성자</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">정재익(advance)</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">작성일</div></th><td class="rowmisc"><div style="WHITE-SPACE: nowrap">2002-09-07 21:15:45</div></td><th class="infotable_th"><div style="WHITE-SPACE: nowrap">조회수</div></th><td class="rowmisc" align="right"><div style="WHITE-SPACE: nowrap">2,511</div></td></tr></tbody></table><table class="viewtable" style="TEXT-ALIGN: left"><tbody><tr><td class="rowbody"><p>SHARED_POOL_SIZE </p><p>--------------- </p><p>&nbsp;</p><p>The Shared_Pool_Size is specific to all versions of Oracle and is measured in bytes. This is the memory that is allocated to Oracle for areas like the data dictionary, stored procedures, and <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>s. Comprising a large part of the SGA, the Shared_Pool_Size is comprised of the dictionary cache and library cache, and just like DB_Block_Buffers above, should not be set too low or too high. </p><p>&nbsp;</p><p>The Shared_Pool_Size can be monitored through the data dictionary cache and the library cache. Both should be continuously monitored for an appropriate hit ratio. </p><p>&nbsp;</p><p>When a user processes a SQL <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>, Oracle references the data dictionary several times. Reducing physical disk IO is very important, so the more information that is stored in memory, the less that needs to be read from disk. </p><p>The data dictionary cache is very important in this respect because this is where the data dictionary components are buffered (think of it as a print </p><p>buffer). The data dictionary component can be monitored via v$rowcache using the following select <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>: </p><p>&nbsp;</p><pre>        select (1-(sum(getmisses)/sum(gets))) * 100 "Hit Ratio"          from v$rowcache; You should see output similar to the following:         Hit Ratio  95.40% </pre><p>&nbsp;</p><p>You should aim to have this value above 90%. The exception is when the database is first started, the value will be somewhere around 85%. </p><p>&nbsp;</p><p>The library cache consists of shared SQL and PL/SQL areas. When SQL is executed, the <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span> has to be parsed (or taken apart for further clarification). The library cache reduces the overhead of this by maintaining parsed SQL and PL/SQL in the library cache. When there is a subsequent execution of this <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>, there will not be the need to re-parse the <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>. Essentially, you are reducing the work of the database. If, for example, the customer is on an OLTP system which consistently issues the same SQL, performance is enhanced. Of course, using bind variables to have sharable versions of the <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>s. </p><p>&nbsp;</p><p>We have discussed having the Shared_Pool_Size set too low, but adverse effects may comes from setting the Shared_Pool_Size too high as well. Having the shared pool set too large increase the probability of latch contention when the database needs to find a free peace of memory to load a new <span style="FONT-WEIGHT: bold; COLOR: brown; BACKGROUND-COLOR: yellow">statement</span>. You can query v$sgastat to show the available free memory. This will tell you memory is being wasted. As an example, let's look at the following problem: </p><p>&nbsp;</p><pre>         select name, bytes/1024/1024 "Size in MB"          from v$sgastat          where name='free memory'; You should see output similar to the following:            NAME Size in MB  Free memory 39.6002884 </pre><p>&nbsp;</p><p>What this return would tell you is that there is 39M of free memory in the shared pool, which would mean that the shared pool is being under utilized. If the shared pool was 70M, over half of it would be under utilized. This memory could be allocated elsewhere. </p><p>&nbsp;</p><p>&nbsp;</p><p>See &lt;Note.62143.1&gt; for further reference on tuning the shared pool.</p></td></tr></tbody></table></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

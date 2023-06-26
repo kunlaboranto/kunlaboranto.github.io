@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] FIN_WAIT_2 상태에 대하여</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-05-15 14:40:09</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] FIN_WAIT_2 상태에 대하여</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://www-903.ibm.com/kr/techinfo/pseries/tech/tech_11.html<br><br><img src="http://www-903.ibm.com/kr/techinfo/i/title_01.gif" alt="IBM 기술정보" width="126" height="24"> <br><br><b>FIN_WAIT_2 상태에 대하여</b><br><br><div align="right">유부선 <img src="http://www-903.ibm.com/kr/i/em.gif" alt="이메일로 보내기" align="absmiddle"> <a href="mailto:bsyu@kr.ibm.com">bsyu@kr.ibm.com</a></div><br><table border="0" cellpadding="3" cellspacing="0" width="600"><tbody><tr><td align="left"><img src="http://www.ibm.com/i/v14/icons/fw.gif" alt="" border="0" width="16" height="16">&nbsp;<a href="http://www-903.ibm.com/kr/techinfo/pseries/tech/tech_11.html#aa" class="fbox">개요</a>&nbsp;&nbsp;<img src="http://www.ibm.com/i/v14/icons/fw.gif" alt="" border="0" width="16" height="16">&nbsp;<a href="http://www-903.ibm.com/kr/techinfo/pseries/tech/tech_11.html#bb" class="fbox">TCP socket connection 상태의 종류</a>&nbsp;&nbsp;<img src="http://www.ibm.com/i/v14/icons/fw.gif" alt="" border="0" width="16" height="16">&nbsp;<a href="http://www-903.ibm.com/kr/techinfo/pseries/tech/tech_11.html#cc" class="fbox">FIN_WAIT_2 에 대한 대책</a></td>  </tr></tbody></table><a name="aa"></a><br> <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td class="v14-header-1"><b>개요</b></td></tr></tbody></table>           <br> TCP는 UDP와는 달리 connection-oriented protocol인 관계로, 연결을 맺거나 특히 끊을 때,많은 확인 절차를 거치게 됩니다. 이로 인하여, server와 client 간에 약간의 overhead가 있을 수 있습니다.특히, web server로 사용되는 system의 경우, 대부분의 client들이 그리 안정적이지 않은 PCclient이므로, connection을 맺던 client application이 crash되는 경우 web server에는다소간의 문제가 발생할 여지가 있습니다.가장 대표적인 문제가 FIN_WAIT_2 상태입니다.여기서는 이 상태가 무엇을 뜻하는지, 이로 인해 어떤 문제가 있을 수 있는지, 또 그에 대한 대책은 무엇인지 알아보겠습니다.<br><br><a name="bb"></a><br> <table id="content-table" border="0" cellpadding="0" cellspacing="0" width="600"> <tbody><tr><td class="v14-header-1"><b>TCP socket connection 상태의 종류</b></td></tr></tbody></table>           <br>          다음은 RFC 793 에 나와있는 그림으로, TCP connection을 맺고 있는 두 system이 정상적으로 connection을 끝내는 과정을 보여줍니다.<br><br><table border="0" cellpadding="2" cellspacing="1" width="600"><tbody><tr>    <td colspan="6" align="center">TCP A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCP       B</td></tr><tr><td bgcolor="#ffffff" width="20">1.</td><td bgcolor="#ffffff" width="100">ESTABLISHED</td><td bgcolor="#ffffff" width="50"><br></td><td bgcolor="#ffffff" width="280"><br></td><td bgcolor="#ffffff" width="50"><br></td><td bgcolor="#ffffff" width="100">ESTABLISHED</td></tr><tr><td bgcolor="#ffffff">2.</td><td colspan="5" bgcolor="#ffffff">(Close)</td></tr>      <tr bgcolor="#ffffff"><td><br></td><td>FIN-WAIT-1</td><td align="center">→</td><td align="center"> &lt;SEQ=100&gt;&lt;ACK=300&gt;&lt;CTL=FIN,ACK&gt; </td><td align="center">→</td><td>CLOSE-WAIT</td></tr>          <tr bgcolor="#ffffff"><td>3.</td><td>FIN-WAIT-2</td><td align="center">←</td><td align="center"> &lt;SEQ=300&gt;&lt;ACK=101&gt;&lt;CTL=ACK&gt; </td><td align="center">←</td><td>CLOSE-WAIT</td></tr>                                                       <tr bgcolor="#ffffff"><td>4.</td><td colspan="5" align="right">(Close)&nbsp;&nbsp;</td></tr> <tr bgcolor="#ffffff"><td><br></td><td>TIME-WAIT</td><td align="center">←</td><td align="center"> &lt;SEQ=300&gt;&lt;ACK=101&gt;&lt;CTL=FIN,ACK&gt; </td><td align="center">←</td><td>LAST-ACK</td></tr> <tr bgcolor="#ffffff"><td>5.</td><td>TIME-WAIT</td><td align="center">→</td><td align="center"> &lt;SEQ=101&gt;&lt;ACK=301&gt;&lt;CTL=ACK&gt; </td><td align="center">→</td><td>CLOSED</td></tr>    <tr bgcolor="#ffffff"><td>6.</td><td>(2 MSL)</td><td><br></td><td><br></td><td><br></td><td><br></td></tr><tr bgcolor="#ffffff"><td><br></td><td colspan="5">CLOSED</td></tr></tbody></table><div align="center"> Normal Close Sequence </div><br><br>먼저, A가connection을 close 하면서, 종료 신호인 FIN segment를 A가 B로 보내고, A는 FIN-WAIT-1 상태로들어갑니다. 이 상태에서는 A system의 user는 더 이상의 SEND는 사용할 수 없게 되지만, RECEIVE는 계속가능합니다. B가 그 신호를 받으면 B는 CLOSE-WAIT에 들어가면서 그에 대한 acknowledge를 보내옵니다. A는이를 받으면 FIN-WAIT-2 상태가 되고, B는 connection을 close하면서 자신의 FIN을 보냅니다. 이 때 A는TIME-WAIT 상태가 되어 최종적으로 B와의 connection이 닫히는지 확인하게 됩니다.즉, server가 client로부터 FIN에 대한 ACK을 받고나서, client의 FIN을 기다리는 상태가FIN-WAIT-2 상태입니다.문제는, 이 FIN-WAIT-2 상태에 대해서는 원래 time-out 값이 정해져 있지 않아서, client가 FIN을 보내오기전에 client의 application이나 client 자체가 crash되는 경우, 또는, client program이나server program에 bug가 있어서 이를 제대로 처리 못하는 경우에는, server에 남아있을 FIN-WAIT-2상태는 server가 rebooting하기 전에는 끝까지 남아 있게 된다는 것입니다. 이는 netstat -a 명령어로 확인해볼 수 있는데, 이러한 상태의 connection이 많이 쌓이다보면 문제를 일으킬 수도 있습니다.<br><br><a name="cc"></a><br> <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td class="v14-header-1"><b>FIN_WAIT_2 에 대한 대책</b></td></tr></tbody></table>           <br> 가장 좋은 해결책은 bug가 있는 client 또는 server program을 수정하는 것입니다. 대부분의 문제는 그문제로부터 발생하기 때문입니다. Server에서 운영되는 가장 대표적인 application은 Apache webserver일것입니다. Apache는 이 문제에 대한 해결책으로 lingering_close() 함수 대신 SO_LINGER 함수를사용하도록 권하기도 합니다. (자세한 것은 아파치 홈페이지 <a href="http://www.apache.org/" target="_blank">www.apache.org</a>를참조하시기 바랍니다.)다른 UNIX들은 FIN-WAIT-2에 대해, time-out 값을 지정함으로써 이 문제를 회피하도록 해줄 수 있게 해주기도합니다. Solaris, HP/UX, Linux 등 많은 OS가 이러한 기능을 제공합니다. 이것들은 RFC 793을 위반하는것입니다만, 필요에 의해 각 vendor가 제공하는 것입니다.AIX는 (다른 UNIX와 마찬가지로) TCP keepalive timer를 제공함으로써 이 문제를 해결합니다.<br><br><ul><li> # no -a | grep tcp_keep<br>    tcp_keepintvl = 150<br>    tcp_keepidle = 14400<br>  </li></ul><p>위의 값이 default 값이며, 이 경우, 150 * 500ms clock tick = 75 초, 그리고 14400 * 500ms clock   tick = 2 시간이 됩니다.</p><ul><li> keepalive timer는 data segment를 보내면서 reset됩니다. 만약 주어진 tcp_keepidle tick     동안 아무 data segment도 보내지지 않았다면 먼저, 첫번째 keepalive probe packet이 보내집니다.<br>  </li><li>이 packet에 대해 reply가 없을 경우, tcp_keepintvl에 정해진 tick만큼을 간격으로 하여, 추가의 keepalive     packet을 보내게 됩니다. <br>  </li><li>만약 이 keepalive에 대해 reply가 계속 없을 경우, 그 connection은 close됩니다. AIX 4.2에서는 TCPTV_KEEPCNT     (기본값 8)에 해당하는 개수의 probe에 대해 응답이 없을 경우 close되는데, AIX 4.3에서는 이 no attribute가     없어졌습니다. <br>  </li><li>tcp_keepinit는 초기 연결시 응답이 없을 경우에 사용되는 값입니다. 따라서, 일단 connection을 맺고 나서 발생하는     문제에 대해서는 적용되지 않습니다.<br>  </li><li>위에 따르면, FIN_WAIT_2가 발생하는 경우, default로 2시간 10분 후에야 그 connection이 close되도록     되어 있습니다. 만약, 매우 busy한 web server인 경우에는 이 값들을 조절하는 것이 필요할 수 있습니다.<br>  </li></ul><b>참고</b><br><br><a href="http://www.faqs.org/rfcs/rfc793.html" class="fbox">http://www.faqs.org/rfcs/rfc793.html</a><br><a href="http://www.ibrado.com/sock-faq/" class="fbox">http://www.ibrado.com/sock-faq/</a><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

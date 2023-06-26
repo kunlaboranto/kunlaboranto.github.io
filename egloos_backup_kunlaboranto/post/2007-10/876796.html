@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Sun Solaris에서 자동적으로 Reboot시 알티베이스를 Startup하는 방법</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-10-16 21:13:16</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Sun Solaris에서 자동적으로 Reboot시 알티베이스를 Startup하는 방법</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://adc.altibase.com/board?do=default.read&amp;bid=club_qna&amp;ano=718&amp;np=0&amp;st=3&amp;sw=alti_start<br><br>shine 2004-08-17 204<br><br><br>Sun Solaris에서 자동적으로 Reboot시 알티베이스를 Startup하는 방법<br>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br><br>요약<br>++++<br>Sun Solaris에서 booting시 자동으로 Altibase server를 startup하는 스크립트 작성 방법<br><br>Sun Solaris Startup Script<br>++++++++++++++++++++++++++<br>Solaris는 run level과 관계가 있는 rc스크립트를 제공합니다. 이 스크립트들은 /sbin <br>디렉토리 안에 존재하며 /etc 디렉토리의 rc 스크립트와 심볼릭 링크되어 있습니다.<br><br>/sbin/rc# 스크립트들은 그들과 일치하는 이름의 /etc/rc#.d 디렉토리 아래에 해당하<br>는 파일들이 존재하는데, <br>/etc/rc#.d 디렉토리에는 run level을 위해 시스템 프로세스를 start하고 stop하는 스크립트들을 <br>포함하고 있습니다. 이 디렉토리 안에 존재하는 파일들을 파일명이 K와 S로 시작하며, <br>K* 스크립트는 프로세스 kill할 때 사용되며, S* 스크립트는 프로세스를 start할 때 사용됩니다. <br>이들 파일은 alphanumeric 순으로 수행됩니다.<br><br>/etc/init.d 디렉토리 안에는 프로세스를 start 시키거나 또는 kill 시키는 실질적<br>인 run control 파일들이 존재하는데 이들은 etc/rc#.d 디렉토리와 하드링크 되어 있습니다.<br><br><br>STEP1<br>+++++<br><br>/etc/alti-conf.d/alti.conf file을 만듭니다. <br>이 file에서는 자동 구동시 필요한 변수들을 정의하고 Setting합니다. <br><br>이 file의 내용은 아래와 같습니다.<br><br>################################################################<br>ALTIBASE_HOME=/home/altibase/altibase_home; export ALTIBASE_HOME<br>PATH=$ALTIBASE_HOME/bin:/usr/bin:/sbin; export PATH<br>ALTIBASE_OWNER=altibase<br>START_ALTIBASE=1<br>################################################################<br><br>만약 자동 구동을 하고 싶지 않다면 START_ALTIBASE의 값을 0으로 맞추면 됩니다. 그<br>리고 ALTIBASE_OWNER나 ALTIBASE_HOME이 변경되었을 경우에는 반드시 이 File에 있<br>는 값을 수정 해 주어야 합니다.<br><br>STEP2<br>+++++<br><br>/etc/init.d/alti_start file을 만든다. <br>이 script에서는 알티베이스 구동 명령어를 이용해서 실제로 DBMS를 startup하는 script입니다.<br><br>################################################################<br>#!/sbin/sh<br>if [ -f /etc/alti-conf.d/alti.conf ] ; then<br>&nbsp;&nbsp;&nbsp; . /etc/alti-conf.d/alti.conf<br>fi<br><br>isql -u sys -p manager -sysdba &lt;&lt; EOF<br>startup<br>quit<br>EOF <br>################################################################<br><br><br>STEP3<br>+++++<br><br>/etc/init.d/alti_stop file을 만든다.<br>이 script에서는 알티베이스 구동 명령어를 이용해서 실제로 DBMS를 stop하는 script 입니다.<br><br>################################################################<br>#!/sbin/sh<br>if [ -f /etc/alti-conf.d/alti.conf ] ; then<br>&nbsp;&nbsp;&nbsp; . /etc/alti-conf.d/alti.conf<br>fi<br>isql -u sys -p manager -sysdba &lt;&lt; EOF<br>shutdown immediate<br>quit<br>EOF <br>################################################################<br><br>STEP4<br>+++++<br><br>/etc/init.d/altibase file을 만든다.<br><br>이 file은 실제로 나중에 startup script나 stop script가 symbolic link를 만들 file이다. <br><br>이 file의 내용은 아래와 같다.<br><br>################################################################<br>#!/sbin/sh<br><br># Check configuration file<br>if [ -f /etc/alti-conf.d/alti.conf ] ; then<br>&nbsp;&nbsp;&nbsp; . /etc/alti-conf.d/alti.conf<br>else<br>&nbsp;&nbsp;&nbsp; echo "ERROR: check /etc/alti-conf.d/alti.conf !!"<br>fi<br><br>case $1 in<br><br>'start')<br><br># Check to see if this script is allowed to run...<br>if [ "$START_ALTIBASE" != 1 ]; then<br>&nbsp;&nbsp;&nbsp; exit 2<br>else<br>&nbsp;&nbsp;&nbsp; # Execute the commands to start your subsystem<br>&nbsp;&nbsp;&nbsp; su - $ALTIBASE_OWNER -c "/etc/init.d/alti_start"<br>fi<br>;;<br><br>'stop')<br><br># Check to see if this script is allowed to run...<br>if [ "$START_ALTIBASE" != 1 ]; then<br>&nbsp;&nbsp;&nbsp; exit 2<br>else<br>&nbsp;&nbsp;&nbsp; # Execute the commands to stop your subsystem<br>&nbsp;&nbsp;&nbsp; su - $ALTIBASE_OWNER -c "/etc/init.d/alti_stop"<br>fi<br>;;<br><br>*)<br>echo "usage: $0 {start|stop}"<br>exit 1<br>;;<br>esac<br><br>exit 0<br>#################################################################<br><br>STEP5<br>+++++<br><br>/etc/rc3.d Directory에서 Startup Script와 Shutdown Script의 Hard Link를 만든다.<br><br>#cd /etc/rc3.d<br># ln /etc/init.d/altibase S955altibase<br># ln /etc/init.d/altibase K955altibase <br><br>STEP6<br>+++++<br><br>각각의 Script가 정상적으로 수행될 수 있도록 수행 권한을 Setting한다.<br><br>#cd /etc/rc3.d<br># chmod 755 S955altibase<br>#cd /etc/init.d<br># chmod 755 *alti*<br><br><br>STEP7<br>+++++<br><br>정상적으로 동작하는 지 Test를 해본다. 이 때 Test는 root계정에서 수행해 보아야한다.<br># /etc/init.d/altibase<br><br><br><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

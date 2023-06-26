@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] alter table ... allocate extent 문 - DBA_EXTENTS</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-06 12:37:55</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] alter table ... allocate extent 문 - DBA_EXTENTS</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://radiocom.kunsan.ac.kr/lecture/oracle/statement_alter/alter_table_allocate_extent.html<br><br><font size="5">alter table ... allocate extent 문</font><hr color="red" size="5"><font size="4">data load시 현재의 extent보다 큰 데이터를 load할 경우 extent 할당이 동적으로 발생하여 할당에 대한 overhead가 발생할 수 있다.<br>뿐만 아니라 load하다가 공간이 부족해서 error를 발생시킬 수도 있다. 이러한 현상을 사전에 방지하기 위하여 alter table 명령을 이용하여 extent를 수동으로 할당한다.</font><p><font size="4">extent가 할당되는 경우는 다음과 같은 경우이다.<br>• segment가 생성될 때<br>• segment가 확장될 때(extent가 다차서 자동으로 오라클 서버가 할당하는 경우)<br>• table이 변경될 때<br></font></p><pre><font size="4">【형식】<br><font color="#0000ff"><br>ALTER TABLE 테이블명<br>ALLOCATE EXTENT<br>(SIZE 숫자 DATAFILE 'file의 이름과 경로');</font><br><br>여기서 <br>  • ALLOCATE EXTENT : EXTENT를 할당하기 위해 사용하는 명령<br>  • SIZE : EXTENT가 할당되는 크기<br>  • DATAFILE 'file의 이름과 경로' : 새로 할당될 extent의 위치를 나타냄<br><br>【예제】<br>SQL&gt; conn system/manager as sysdba<br>Connected.<br>SQL&gt; select segment_name, extent_id, block_id, bytes, blocks<br>  2  from <a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_extents.html">dba_extents</a><br>  3  where segment_name='EMP';<br> <br>SEGMENT_NAME<br>--------------------------------------------------------------------------------<br> EXTENT_ID   BLOCK_ID      BYTES     BLOCKS<br>---------- ---------- ---------- ----------<br>EMP<br>         0         25      65536          8<br> <br> <br>SQL&gt; alter table emp<br>  2   allocate extent<br>  3   (size 10k datafile '/export/home/oracle/app/oracle/oradata/orcl/data03.dbf');  <br></font></pre><font size="4"><b>extent 해제를 위한 alter table 명령어</b></font><p><font size="4">할당된 extent가 사용되지 않는다면, 공간의 낭비를 초래할 수 있기 때문에 할당된 공간을 해제하면 그 공간을 다른 데이터를 저장하기 위해 사용되어질 수 있다.<br></font></p><pre><font size="4">【형식】<br><font color="#0000ff"><br>ALTER TABLE 테이블명<br>ALLOCATE UNUSED; </font></font></pre><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

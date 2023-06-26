@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[ubuntu] ddclient 설치 - process의 args 정보를 스스로 바꾼다. -</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-04-27 10:00:36</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[ubuntu] ddclient 설치 - process의 args 정보를 스스로 바꾼다. -</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">고정IP가 없는 상황에서 외부에서 접근이 필요한 경우가 있어서 ddclient 를 설치함.<br>기록을 남기는 이유는.. 아래 파란색 부분이 재밋어서..<br><br>"process의 args 정보를 스스로 바꾼다." 친절한 개발자임.<br><br><span style="font-family: '굴림','Gulim';">$ ps -ef |grep ddclient</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">UID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PID&nbsp; PPID&nbsp; C STIME TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1183&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp; 0 09:37 ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00:00:00 ddclient </span><span style="color: rgb(51, 102, 255); font-family: '굴림','Gulim';">- reading from checkip.dyndns.com port 80</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">$ (2)</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">UID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PID&nbsp; PPID&nbsp; C STIME TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1183&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp; 0 09:37 ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00:00:00 ddclient </span><span style="color: rgb(51, 102, 255); font-family: '굴림','Gulim';">- sleeping for 300 seconds</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">$ (3)</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">UID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PID&nbsp; PPID&nbsp; C STIME TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD</span><br style="font-family: '굴림','Gulim';"><span style="font-family: '굴림','Gulim';">root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1183&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp; 0 09:37 ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00:00:00 ddclient - sleeping for </span><span style="color: rgb(51, 102, 255); font-family: '굴림','Gulim';">280</span><span style="font-family: '굴림','Gulim';"> seconds</span><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>64bit에서만 %ld 로 (long long) 출력??</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:27:16</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">64bit에서만 %ld 로 (long long) 출력??</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>&nbsp;&nbsp;&nbsp; c9 = (long long)(INT_MAX+10);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;-- overflow warning<br>&nbsp;&nbsp;&nbsp; c9 = (long long)INT_MAX + 10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (OK)</p><p>------------------</p><p>$ cat a.c<br>#include &lt;stdio.h&gt;<br>#include &lt;limits.h&gt;</p><p>int main()<br>{<br>&nbsp;&nbsp;&nbsp; long long c9 = -9;</p><p>&nbsp;&nbsp;&nbsp; c9 = (long long)(INT_MAX);<br>&nbsp;&nbsp;&nbsp; printf("INT_MAX=%ld, c9=%Ld, %ld, %u\n", INT_MAX, c9, c9, c9);</p><p>&nbsp;&nbsp;&nbsp; c9 = (long long)(INT_MAX+10);<br>&nbsp;&nbsp;&nbsp; printf("INT_MAX=%ld, c9=%Ld, %ld, %u\n", INT_MAX, c9, c9, c9);</p><p>&nbsp;&nbsp;&nbsp; c9 = (long long)INT_MAX + 10;<br>&nbsp;&nbsp;&nbsp; printf("INT_MAX=%ld, c9=%Ld, %ld, %u\n", INT_MAX, c9, c9, c9);</p><p>&nbsp;&nbsp;&nbsp; return 0;<br>}</p><p>e450: /home1/okseop7/mysvn/cdbc/cdbc/src<br>$&nbsp; CC -xarch=v9&nbsp; a.c</p><p>e450: /home1/okseop7/mysvn/cdbc/cdbc/src<br>$ ./a.out<br>INT_MAX=2147483647, c9=2147483647, 2147483647, 2147483647<br>INT_MAX=2147483647, c9=-2147483639, -2147483639, 2147483657<br>INT_MAX=2147483647, c9=-2147483639, 2147483657, 2147483657</p><p>e450: /home1/okseop7/mysvn/cdbc/cdbc/src<br>$ CC a.c</p><p>e450: /home1/okseop7/mysvn/cdbc/cdbc/src<br>$ ./a.out<br>INT_MAX=2147483647, c9=0, 2147483647, 0<br>INT_MAX=2147483647, c9=-1, -2147483639, 4294967295<br>INT_MAX=2147483647, c9=0, -2147483639, 0</p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] Debugging a program, dbx</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-14 02:17:23</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] Debugging a program, dbx</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://fusfis.frascati.enea.it/Software/Unix/UKSmemento/UnKoSh_dbx.html<br><br><br><h1>Debugging a program</h1><hr><i>dbx</i> can be used to debug programs written in C, C++, Pascal and Fortran.<br>Use "man dbx" to have a complete description of the debugger commands.<hr>To start the debugger :<pre>    &gt; <b>dbx</b> prog_name<br></pre>The most comm<hr>only used commands are :<tt><blockquote><pre>dbx&gt; <b>l</b> n              List next n lines<br>     <b>l</b> n1,n2          List from line <i>n1</i> to line <i>n2</i><br>     <b>l</b> func           List function <i>func</i><br>dbx&gt; <b>W</b>                List 10 lines before &amp; after<br><br>dbx&gt; <b>b</b> #line          Set a break point at this source line number<br>dbx&gt; <b>stop</b> variable    Stop if <i>variable</i> changes value<br>dbx&gt; <b>trace</b> var <b>at</b> #line<br>                      Tracing a variable during execution<br>dbx&gt; <b>d</b> n              Delete a break point or a trace event<br><br>dbx&gt; <b>run</b> [args] [<fin] [="">fout]<br>                      Run the program, passing the arguments<br>                      <br>dbx&gt; <b>cont</b>             Continue execution<br>dbx&gt; <b>cont to</b> #line    Continue up to this line number<br>dbx&gt; <b>n</b> [n]            Execute next code line(s)<br>                      (doen't go into functions)<br>dbx&gt; <b>step</b> [n]         idem, but go into functions<br>dbx&gt; <b>return</b> [procedure]<br>                      Continue until a return to procedure is called<br>dbx&gt; <b>call</b> func(parms)<br>                      Execute function <i>func</i><br>                      <br>dbx&gt; <b>print</b> var_name   Print value of <i>var_name</i><br>dbx&gt; <b>printf "%x"</b> var  --- idem in hexadecimal ---<br>dbx&gt; <b>status</b>           List current break points &amp; trace events<br>dbx&gt; <b>j</b>                --- idem ---<br>dbx&gt; <b>sh</b> command       Execute the specified shell <i>command</i><br>dbx&gt; <b>q</b>                Quit the debugger<br></fin]></pre></blockquote></tt><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

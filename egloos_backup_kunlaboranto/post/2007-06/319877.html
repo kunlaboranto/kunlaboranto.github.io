@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] svn rollback </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:00:59</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] svn rollback </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>svn은 rollback 기능을 제공하지 않고, 불편하지만 아래 방식을 사용함.</p><p>&nbsp;</p><p>svn merge -r 2642:2641 .<br>svn st<br>svn commit -m "Rollback to revision 2641"</p><p>&nbsp;</p><p>출처 : <a class="con_link" href="http://wiki.kldp.org/wiki.php/SubversionBook/BranchingAndMerging" target="_blank">http://wiki.kldp.org/wiki.php/SubversionBook/BranchingAndMerging</a></p><p>-----</p><h2 class="SECT1"><a class="con_link" target="_blank" name="svn-ch-4-sect-4">1.4. 저장소(repository)로부터의 변경을 삭제한다</a></h2><p><b class="COMMAND"><span class="searchword0">svn</span> <span id="__firefox-findbar-search-id" style="PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; COLOR: black; PADDING-TOP: 0pt; BACKGROUND-COLOR: yellow">merge</span></b> 가 좋게 있는 사용법은 벌써 커밋했다 변경을 롤백(<span class="searchword1">rollback</span>) 하는 것입니다. <tt class="FILENAME"><span style="FONT-FAMILY: 굴림체">integer.c</span></tt> (을)를 변경한 리비전 303의 변경은 완전하게 실수였다고 합니다. 그것은 커밋해야 하지는 않았습니다. 작업 카피의 변경을 취소하는데 (은)는<b class="COMMAND"><span class="searchword0">svn</span> <span id="__firefox-findbar-search-id" style="PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; COLOR: black; PADDING-TOP: 0pt; BACKGROUND-COLOR: yellow">merge</span></b> 를 사용할 수가 있습니다. 그 후로 로컬 의 변경을 저장소(repository)에 커밋합니다. 하지 않으면 안 되는 것은, <b class="EMPHASIS">반대 방향의</b>차분을 지정하는 것 뿐입니다:</p><p><table width="100%" bgcolor="#e0e0e0" border="0"><tbody><tr><td><pre class="SCREEN">$ <span class="searchword0">svn</span> <span id="__firefox-findbar-search-id" style="PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; COLOR: black; PADDING-TOP: 0pt; BACKGROUND-COLOR: yellow">merge</span> -r 303:302 http://<span class="searchword0">svn</span>.example.com/trunk/calcU  integer.c$ <span class="searchword0">svn</span> statusM  integer.c$ <span class="searchword0">svn</span> commit -m "Undoing change committed in r303. "Sending    integer.cTransmitting file data .Committed revision 350.</pre></td></tr></tbody></table></p><p>저장소(repository) 리비전에 대한 하나 더의 생각은, 그것을 특정의 변경의 모임이라고 생각하는 것입니다(몇개의 버전 관리 시스템에서는, 이것을,<i class="FIRSTTERM">changesets</i>와 부르고 있습니다). <var class="OPTION">-r</var> 스윗치를 사용해 <b class="COMMAND"><span class="searchword0">svn</span> <span id="__firefox-findbar-search-id" style="PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; COLOR: black; PADDING-TOP: 0pt; BACKGROUND-COLOR: yellow">merge</span></b> 를 호출하는 것으로, 어느 체인지 세트를 적용하는지, 혹은 있는 범위의 체인지 세트 전부를 작업 카피에 적용할 수가 있습니다. 우리의 경우라면<b class="COMMAND"><span class="searchword0">svn</span> <span id="__firefox-findbar-search-id" style="PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; COLOR: black; PADDING-TOP: 0pt; BACKGROUND-COLOR: yellow">merge</span></b> (을)를 사용해 체인지 세트#303를 작업 카피에<b class="EMPHASIS">반대 방향으로</b> 적용합니다.</p><p>이러한 변경의 취소는, 보통<b class="COMMAND"><span class="searchword0">svn</span> <span id="__firefox-findbar-search-id" style="PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; COLOR: black; PADDING-TOP: 0pt; BACKGROUND-COLOR: yellow">merge</span></b> 의 조작에 지나지 않기 때문에, 작업 카피가 바라는 상태가 되었는지 어떠했는지는 <b class="COMMAND"><span class="searchword0">svn</span> status</b> 와<b class="COMMAND"><span class="searchword0">svn</span> diff</b> 를 사용할 수가 있어 그 후<b class="COMMAND"><span class="searchword0">svn</span> commit</b> 로 저장소(repository)에 최종적인 버전을 보낼 수가 있다, 라고 하는 것을 눌러 두어 주세요. 커밋 후는 이 특별한 체인지 세트는 이미 HEAD 리비전에는 반영되지 않습니다.</p><p>이렇게 생각할지도 모릅니다: 로 하면(자), 그것은 「취소」가 아니다 (이)가 아닌가. 변경은 아직 리비전 303에 존재하고 있는 것은, 이라고. 만약 누군가가<tt class="FILENAME"><span style="FONT-FAMILY: 굴림체">calc</span></tt> 프로젝트의 리비전 303 (와)과 349의 사이의 버전을 체크아웃 했다고 하면(자), 잘못했다 변경을 받아들이는 것은 아닌지, 다른지, 라고.</p><p>말씀하시는 대로. 우리가, 변경의 것"취소"에 대해 말할 때, 사실은"HEAD로부터 없애는 것"을 말합니다. 원래의 변경은 저장소(repository)의 히스토리에 여전히 남아 있습니다. 대부분의 상황에서는 이것으로 충분합니다. 어쨌든 대부분의 사람들은 프로젝트의 HEAD를 뒤쫓는다 일에만 흥미가 있기 때문입니다. 그러나, 커밋에 관한 모든 정보를 삭제하고 싶다고 하는 예외적인 상황도 있겠지요. (아마, 누군가가 극비의 문서를 커밋해 버린, 등) 이것은 그렇게 쉬운 일이 아닙니다. Subversion은 의도적으로 결코 정보가 없어지지 않게 설계되고 있기 때문입니다. 히스토리로부터의 리비전의 삭제는, 연쇄적인 영향을 주어 모든 후속 리비전과 아마 모든 작업 카피에 혼란을 일으킵니다. <a class="con_link" href="http://wiki.kldp.org/wiki.php/SubversionBook/BranchingAndMerging#FTN.AEN263" target="_blank" name="AEN263"><span class="footnote">[3]</span></a> </p><!-- //포스팅 --></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

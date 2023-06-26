@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] IOT 2탄</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-07-11 14:12:20</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] IOT 2탄</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a title="" href="http://altibase.egloos.com/403621">[펌] IOT - oracle 8i, index oragized table</a><br><br>From : <a href="http://72.14.235.104/search?q=cache:vbF85SoummUJ:www.dbguide.net/blog/post/post_list.jsp%3Fpage%3D10%26urlid%3Djinnjune%26cnum%3Dnull+IOT+oracle&amp;hl=ko&amp;ct=clnk&amp;cd=2&amp;gl=kr&amp;lr=lang_ko">http://72.14.235.104/search?q=cache:vbF85SoummUJ:www.dbguide.net/blog/post/post_list.jsp%3Fpage%3D10%26urlid%3Djinnjune%26cnum%3Dnull+IOT+oracle&amp;hl=ko&amp;ct=clnk&amp;cd=2&amp;gl=kr&amp;lr=lang_ko</a><br><br><tr valign="top"><td height="25" width="75%"><span class="bold"><br><br>&nbsp;[엔코아 박대규 전임]Partition 의 확장 </span><img height="11" src="http://www.dbguide.net/blog_main/img/blog/gab_01.gif" width="16"><span class="light">스크랩</span></td> <td class="ver" height="25" width="25%" align="right">2005-01-25 14:37</td> </tr><tr><td height="1" background="/blog_main/img/blog/dot2.gif" colspan="2"></td></tr><tr><td class="ver9_light" valign="middle" height="25" align="right" colspan="2"><a href="http://www.dbguide.net/blog/post/post_view.jsp?urlid=jinnjune&amp;cnum=12003&amp;pnum=2042"><span class="ver9_light">http://blog.dbguide.net/jinnjune/2042</span></a></td> </tr><tr><td height="20" colspan="2"></td></tr><tr><td colspan="2"><!-- 내용 --><table style="TABLE-LAYOUT: fixed" cellspacing="0" cellpadding="0" width="100%" border="0"><tbody><tr><td><img height="10" src="http://www.dbguide.net/blog/images/blank.gif" width="1" border="0"><br>''' 본 연재에서는 <b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">oracle</b> 8 에서부터 소개되고 있는 INDEX ORGANIZED TABLE(이하 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>)의 PARTITIONING 에 대해서 알아보고자 한다. &nbsp;이해를 돕기 위해서 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>에 대해서 먼저 개략적으로 다루고, <b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">ORACLE</b> 8i에서부터 지원되는 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">iot</b> partitioning에 대해서 설명하고자 한다. <p><b>1. <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>(Index Organized Table)의 역사</b></p><p><b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>는 <b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">ORACLE</b> 8에서부터 소개되었다. 그러나, PRIMARY KEY 이외에 다른 INDEX를 생성하지 못한다는 제약으로 인해서 많이 쓰이지 않았다. &nbsp;<b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">ORACLE</b> 8i 에서부터 가능하게 되었다. 그리고 <b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">oracle</b> 8i에서부터 range partition 이 허용되고, <b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">oracle</b> 9i에서부터는 hash partition 이 가능하게 되었다. 그러면 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">iot</b>가 어떤 이유로 나오게 되었는 지 살펴보도록 하자.</p><p><b>2. 전통적인 INDEX 와 TABLE의 관계</b></p><p>QUERY가 인덱스를 경유해서 TABLE의 테이터를 요청할 경우 일반적으로 DBMS는 QUERY를 그림 1과 같이 수행한다.</p><p><img src="http://korea.internet.com/images/nid_image/21693_1.gif" border="0"></p><ol type="1"><li>Index segment 를 찾는다. </li><li>B*Tree 구조에서 해당되는 key를 찾는다. </li><li>해당되는 Rowid를 찾는다. </li><li>Rowid를 통해서 table의 data block를 찾는다. </li></ol><p>위와 같은 경우 DBMS가 ACCESS하는 블록의 수는 인덱스구조를 ACCESS한 블록 + ROWID를 가지고 테이블을 ACCESS한 블록이 된다. 그리고 KEY에 해당되는 값(A,B,C,..)은 인덱스와 테이블에 두군데에 중복존재하게 된다.</p><p>만약, 업무의 성격상 또는 테이블의 성격상 아래의 두 조건을 만족한다면 </p><ol type="1"><li><span style="COLOR: #0000ff">대부분의 Query가 Primary Key를 중심으로 Unique Scan 이나 Range Scan을 하는 경우,</span> </li><li><span style="COLOR: #0000ff">UNIQUE KEY가 테이블컬럼의 대부분을 차지할 때 </span></li></ol><p>에는 아래와 같은 비효율을 가지게 된다.</p><ol type="1"><li>항상 INDEX를 경유해서 TABLE의 데이터를 ACCESS하게 됨으로 최소 두번의 I/O를 일으킨다. </li><li>인덱스의 KEY 부분은 중복되어서 저장된다. </li><li>Table의 data Block 들은 순서없이, 서로간에 연관성이 없이 저장되어 있게 된다. </li></ol><p>바로 이와 같은 경우에 각각의 DBMS는 INDEX 구조안에 TABLE 테이터까지 저장하는 방법을 고안하게 되었다.</p><p><b>3. <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>의 구조</b></p><p>위의 그림1 을 아래와 같이 그려보자.</p><p><img src="http://korea.internet.com/images/nid_image/21693_2.gif" border="0"></p><p>그림 1 과 비교해서 달라진 점은 &nbsp;INDEX구조의 맨 밑에 TABLE에 있는 데이터들이 같이 저장되어 있고, ROWID 가 없어졌다는 것이다. 실제로 ROWID라고 하는 것은 INDEX 에서 테이블의 데이터를 정확하게 찾아가기 &nbsp;위해서 INDEX 구조내에 저장하고 있는 일종의 포인터이므로, 인덱스구조내에 테이블의 데이터가 같이 들어가 있는 그림2의 구조에서 ROWID는 필요가 없어지게 된다.</p><p>그림 2와 같은 구조로 <b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">ORACLE</b> 에서 구현한 것을 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>(INDEX ORGANIZED TABLE)라고 하며, SQL SERVER에서 구현한 것을 CLUSTERED INDEX 라고 한다. 물론 기본적인 개념은 비슷하나 구현레벨에서 약간의 차이점이 있다.</p><p>생성하는 문장은 다음과 같다.</p><p><img src="http://korea.internet.com/images/nid_image/21693_3.gif" border="0"></p><p><b>4. <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>와 일반TABLE과의 차이 및 장점</b></p><p><img src="http://korea.internet.com/images/nid_image/21693_4.gif" border="0"></p><ol type="1"><li>인덱스뿐만 아니라, 다른 컬럼도 primary key &nbsp;Index &nbsp;구조에 저장하기 때문에 Index를 통해서 데이터를 찾으면 다른 정보도 같이 참조할 수 있다. </li><li>Rowid를 통해서 정보를 한번더 찾을 필요가 없다. </li><li>Key column이 중복되어 저장되지 않으므로 그만큼의 용량을 절약할 수 있다. </li><li>TABLE의 데이터가 PK순으로 저장되어 있으므로, 많은 SORT OPERATION 이 필요없어지게 된다. </li></ol><p>주의 할 점은 테이블의 데이터를 저장하는 방식이 달라졌다고 해서 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">iot</b>에 대해서 특별한 sql 문법이 있는 것은 아니다. Select, insert,update, delete구문은 똑같다.</p><p><b>5. <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>의 PARTITIONING </b></p><p>이제 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>의 PARTITIONG에 대해서 알아보자.</p><p><b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">ORACLE</b> 8i에서는 range partiton 만 지원하고, <b style="COLOR: black; BACKGROUND-COLOR: rgb(160,255,255)">oracle</b> 9i부터 hash partitioning을 지원한다. &nbsp;</p><p><img src="http://korea.internet.com/images/nid_image/21693_5.gif" border="0"></p><p>생성하는 문장은 다음과 같다.</p><p><img src="http://korea.internet.com/images/nid_image/21693_6.gif" border="0"></p><p>ITEM 값이 ''''M''''보다 작은 것은 그림3의 PARTITION A 에 ''''Z''''보다 작은 것은 PARTITION B에 저장된다. 그리고 각각의 partition 내에서 index key값을 중심으로 인덱스 구조의 형태로 저장이 된다.</p><p>PARTITION COLUMN은 반드시 PRIMARY KEY의 부분집합이어야 한다. 즉, 테이블 A의 PRIMARY KEY가 COL1+COL2+COL3으로 이루어져 있다면, <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>를 PARTITION 할수 있는 컬럼은 COL1+COL2 또는 COL2+COL1, COL3+COL1 … 으로 각각의 컬럼을 포함하면 된다. &nbsp;PARTITION COLUMN의 순서는 PRIMARY KEY 의 순서와 같지 않아도 된다.</p><p>일반 테이블과 같이 global partitioned(prefixed) index 와 local partitioned(prefix,nonprefix) index를 생성할 수 있다. &nbsp;차이점은 이들 인덱스는 PHYSICAL ROWID를 가지지 않고, LOGICAL ROWID를 가지고 있다는 점이다.</p><p>PARTITIONED <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b> 에서도 모든 "ALTER &nbsp;TABLE" OPERATION이 가능하다. 다만 차이점은 다음과 같다.</p><ol type="1"><li>ALTER TABLE MOVE PARTITION : 모든 INDEX(LOCAL,GLOBAL, NON-PARTITIONED) 는 VALID 하다. 이유는 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>에 생성된 INDEX는 PHYSICAL ROWID를 가지고 있는 것이 아니라, LOGICAL ROWID를 가지고 있기 때문이다. </li><li>테이블 SPLIT : 모든 NON-PARTITIONED 인덱스와 GLOBAL INDEX는 여전히 사용가능하다. </li><li>ALTER TABLE EXCHANGE : TARGET 테이블은 반드시 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">IOT</b>여야 한다. </li></ol><p>이상으로 파티션의 확장 부분중에 <b style="COLOR: black; BACKGROUND-COLOR: rgb(255,255,102)">iot</b>의 partition 에 대해서 알아봤으며, 다음연재에서는 partition의 하드웨어적 관리에 대해서 다루게 될 것이다.</p></td></tr></tbody></table></td></tr></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

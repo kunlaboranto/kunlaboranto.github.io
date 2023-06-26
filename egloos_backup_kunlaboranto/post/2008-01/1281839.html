@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] VirtualBox - Windows의 네트워크 브리지를 사용한 네트워크 구성(NAT 사용)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-01-13 13:12:32</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] VirtualBox - Windows의 네트워크 브리지를 사용한 네트워크 구성(NAT 사용)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://servermaster.pe.kr/tt/86<br><br>아래글 방장님께 감사.<br><br><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="td_bodyt" style="border-bottom: 1px dotted rgb(204, 204, 204);"><img src="http://servermaster.pe.kr/tt/skin/customize/1/images/icon_comment.gif"><a href="http://servermaster.pe.kr/tt/86"><font class="head_title">VirtualBox - Windows의 네트워크 브리지를 사용한 네트워크 구성(NAT 사용)</font></a><br>&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://servermaster.pe.kr/tt/category/SoftWare/Windows" class="gbtn_kor">SoftWare/Windows</a> |<font class="sver">2007/12/17 13:54</font><br></td></tr><tr><td class="td_body" align="center"><br></td></tr><tr><td class="td_body"><table align="center" border="0" cellpadding="0" cellspacing="0" width="630"><tbody><tr><td>VirtualBox 를 사용하여 리눅스 설치시 내부 NAT 네트워크 사용으로 해야지만 인터넷이 되는것을 해결해 보고자 찾아보던중 알게된 것입니다.<br>보통 공유기를 사용하고 있기 때문에 공유기에서 포트포워딩을 통해 VirtualBox에 설치한 리눅스에 외부에서 접속하기 위한방법이라 생각하시면 됩니다. Vmware의 경우 따로 Network 장치를 다루는 부분까지 되어 있으나 VirtualBox의경우는 없더군요...<br><br>다음과 같이 구성하시면 내부 네트워크의 IP 를 VirtualBox에서 할당 받아서 사용하실 수 있습니다.<br><br>1. VirtualBox 에서 네트워크를 선택합니다.<br><div class="imageblock center" style="text-align: center; clear: both;"><img src="http://servermaster.pe.kr/tt/attach/1/1382578541.jpg" alt="사용자 삽입 이미지" style="cursor: pointer;" onclick="open_img('/tt/attach/1/1382578541.jpg')" height="450" width="600"></div><br>2. 환경설정 하는 부분이 나오는데 호스트 인터페이스 의 + 버튼을 눌러 장치를 1개 추가한 후 호스트 인터페이스, VirtualBox 호스트 인터페이스 1 로 각각 선택해 놓습니다.<br><div class="imageblock center" style="text-align: center; clear: both;"><img src="http://servermaster.pe.kr/tt/attach/1/1312346745.jpg" alt="사용자 삽입 이미지" style="cursor: pointer;" onclick="open_img('/tt/attach/1/1312346745.jpg')" height="491" width="600"></div><br>3. 다음은 XP환경에서 설정하는 부분에 대해 적어 놓았습니다. 따라하시면 됩니다.<br><div class="imageblock center" style="text-align: center; clear: both;"><img src="http://servermaster.pe.kr/tt/attach/1/1399008841.jpg" alt="사용자 삽입 이미지" style="cursor: pointer;" onclick="open_img('/tt/attach/1/1399008841.jpg')" height="970" width="600"></div>4.이제 설정이 끝났고, VirtualBox에서 리눅스로 부팅하면 공유기에서 DHCP를 할당해 놓았다면 설정된 것에 따라내부네트워크 IP가 잡히게 됩니다. IP를 수동으로 설정하셔서 포트포워딩을 구성하시면 외부에서도 접속이 가능하겠죠...<br><br>참고. 두개의 네트워크 장치를 브리지로 연결하게 되면 네트워크 브리지 장치에 IP가 할당이 됩니다. 수동으로 IP를 잡을 경우 네트워크 브리지에 IP를 부여해 주시면 됩니다.<br>VirtualBox 의 리눅스의 경우 해당 장치에 IP를 수동으로 부여해 주시면 간단하게 됩니다.</td></tr></tbody></table><br></td></tr><tr><td class="td_body"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td height="20"><img src="http://servermaster.pe.kr/tt/skin/customize/1/images/arrow.gif"><font class="tag_txt">태그</font> : <a href="http://servermaster.pe.kr/tt/tag/NAT" rel="tag">NAT</a>,<a href="http://servermaster.pe.kr/tt/tag/VirtualBox" rel="tag">VirtualBox</a>,<a href="http://servermaster.pe.kr/tt/tag/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%20%EB%B8%8C%EB%A6%AC%EC%A7%80" rel="tag">네트워크 브리지</a></td></tr></tbody></table></td></tr></tbody></table><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

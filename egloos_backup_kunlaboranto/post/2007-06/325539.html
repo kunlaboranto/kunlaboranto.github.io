@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[TIP] ALTIBASE3 성능 모니터링 - altistatistics</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-19 23:54:28</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[TIP] ALTIBASE3 성능 모니터링 - altistatistics</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>++ ALTIBASE3에서 지원되는 DB단 수행 쿼리의 성능 분석 툴인 altistatics의 사용예<br>&nbsp;&nbsp;&nbsp; (버전 4의 경우 altiProfile 로 대체됨)<br><br>1] 우선 altibase와 연동되는 서비스를 중단후 altibaes를 정상적으로 중단합니다. (server stop)</p><p>2] 아래 기술된 프로퍼티를 $ALTIBASE_HOME/conf/altibase.properties 안에 마지막에 추가합니다.</p><p>SNMP_LISTENER_PORT = 20500<br>QUERY_LOG_SPLIT = 1MINUTE</p><p>3] altibase를 다시 정상적으로 구동합니다.&nbsp; (server start)</p><p>4] 아래명령을 통해 쿼리통계로깅을 start/stop할수 있습니다.<br>$ altiAdmin --port 20500 --set altiQueryLog ON&nbsp;&nbsp;&nbsp; &lt;=== start할때<br>altiQueryLog<br>ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p><p>$ altiAdmin --port 20500 --set altiQueryLog OFF&nbsp;&nbsp; &lt;=== stop할때<br>altiQueryLog<br>OFF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p><p>해당로깅작업이 시작되면 쿼리량에 따라서 로깅이 엄청 많이 쌓이게 됩니다.(disk-full주의요망)<br>로그 위치는 $ALTIBASE_HOME/trc/밑에 일자별로 생성되면 그 일자안에 지정된 QUERY_LOG_SPLIT단위로<br>파일이 생성됩니다. <br>(ex)<br>$ cd $ALTIBASE_HOME/trc<br>$ ls<br>20040913&nbsp; altibase_boot.log&nbsp; altibased20300 &lt;== 오늘날짜로 경로가 한개 만들어지고<br>$ ls 20040913/ <br>1423&nbsp; 1424&nbsp; &lt;== 지정된 split시간별로 생성됨</p><p><br>5] 통계를 보는 방법<br>cat 20040303/* | altiStatistics <br>&nbsp;&nbsp; COUNT TOTAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AVG&nbsp;&nbsp; CV QUERY<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp;&nbsp; 0s&nbsp;&nbsp; 0.03ms&nbsp; 1.0 insert into TEST values ( 1 )<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp; 0s&nbsp;&nbsp; 0.26ms&nbsp; 0.0 select COUNT(*) from TEST<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp; 0s&nbsp;&nbsp; 0.22ms&nbsp; 0.0 select * from TEST</p><p>수행을 하시면 모든로그를 분석해서 어떤 쿼리가 몇번수행되고 평균시간이 얼마가 걸리는지를<br>나타내줍니다. 위의 쿼리중 위쪽에 나오는 쿼리들이 중점 튜닝대상이 된다고 보시면 됩니다.</p><p><br></p><p>------</p><pre>일일히 altibase.properties 에 설정 적용하고 restart 해야 하는 번거로움 없이 logging 가능합니다.<br>select snmp_get('AltiQueryLog') from system_.sys_database_;<br>로 조회해보면 현재 상태가 나옵니다.<br>select snmp_set('AltiQueryLog', 'ON') from system_.sys_database_;<br>하면 그때부터 logging 합니다.<br>이후 원하는 시간이 지난 후<br>select snmp_set('AltiQueryLog', 'OFF') from system_.sys_database_;<br>하면 끝나죠.<br><br>properties 에 설정하지 않아도 작업은 가능한데 split 단위는 바꿀수가 없어서 default 로 파일 분할 됩<br>니다.<br><br>------<br>SNMP_LISTENER_PORT = 20500<br>는 altiAdmin 과의 통신 및 상용 snmp 들과 호환을 위해서 만든 것입니다.<br>snmp 표준에 MIB 라는 것이 있어서 DBMS 에서 query를 사용하듯이 사용합니다.<br>마치 altibase의 20300 port 를 쓰듯이 사용하고 MIB 문법으로 송수신하게 되어있습니다.<br></pre></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

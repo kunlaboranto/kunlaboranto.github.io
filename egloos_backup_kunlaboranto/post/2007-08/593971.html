@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 테이블 크기 계산과 관련한 의문점</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-08-27 23:30:36</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 테이블 크기 계산과 관련한 의문점</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">From : http://database.sarang.net/?inc=read&amp;aid=28115&amp;criteria=oracle&amp;subcrit=&amp;id=&amp;limit=20&amp;keyword=dba_tables&amp;page=1<br><br><p><font face="굴림">CAF란 테이블의 크기를 구할려고 합니다.<br></font></p><p><font face="굴림">아래와 같이 3가지 방법으로 구했더니.. 그 크기가 다 다르게 나옵니다.<br></font></p><p></p><p><font face="굴림"><br></font></p><p><font face="굴림">1&gt;<br></font></p><p><font face="굴림">select TABLE_NAME,(SUM(BLOCKS)*32768)/1024/1024/1024<br></font></p><p><font face="굴림">from dba_tab_partitions<br></font></p><p><font face="굴림">where table_name = 'CAF'<br></font></p><p><font face="굴림">group by TABLE_NAME<br></font></p><p><font face="굴림"><br></font></p><p><font face="굴림"><br></font></p><p><font face="굴림"><font face="굴림">TABLE_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (SUM(BLOCKS)*32768)/1024/1024/1024<br></font></font></p><p><font face="굴림"><font face="굴림">-------------------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ----------------------------------<br></font></font></p><p><font face="굴림"><font face="굴림">CAF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25.4518738<br></font></font></p><p><font face="굴림"><font face="굴림"><br></font></font></p><p></p><p><font face="굴림"><font face="굴림">2&gt;<br></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림">select TABLE_NAME,(SUM(BLOCKS)*32768)/1024/1024/1024<br></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림">from <span style="color: brown; background-color: yellow; font-weight: bold;">dba_tables</span><br></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림">where table_name = 'CAF'<br></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림">group by TABLE_NAME<br></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><br></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><br></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">TABLE_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (SUM(BLOCKS)*32768)/1024/1024/1024<br></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">-----------------&nbsp;&nbsp;&nbsp; ------ ----------------------------------<br></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">CAF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 19.3466797<br></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><br></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">3&gt;<br></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">select SEGMENT_NAME,<br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SUM(BYTES)/1024/1024/1024 ,&nbsp;<br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (SUM(BLOCKS)*32768)/1024/1024/1024 <br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">from&nbsp; dba_segments<br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">where SEGMENT_NAME&nbsp; = 'CAF'<br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">group by segment_name<br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">order by&nbsp; SEGMENT_NAME desc<br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><br></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">SEGMENT_NAME&nbsp;&nbsp;&nbsp; SUM(BYTES)/1024/1024/1024 (SUM(BLOCKS)*32768)/1024/1024/1024<br></font></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">--------------- ------------------------- ----------------------------------<br></font></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">CAF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 51.9990234&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 51.9990234<br></font></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><br></font></font></font></font></font></font></p><p></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">테이블 값을 구하는 데 위의 3개의 쿼리의 값이 모두 틀려요.<br></font></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">차이점은 무엇인가요?<br></font></font></font></font></font></font></p><p><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림"><font face="굴림">부탁드리겠습니다.</font></font></font></font></font></font></p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

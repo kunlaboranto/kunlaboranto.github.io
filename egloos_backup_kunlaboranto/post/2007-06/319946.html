@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[HPUX] libc libpthread 링크 순서에 따른 SEGV </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:13:49</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[HPUX] libc libpthread 링크 순서에 따른 SEGV </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p>From : <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/007715.html">http://mailman.mit.edu/pipermail/kerberos/2005-May/007715.html</a><br>&nbsp;</p><h1>Problems running kinit on HP-UX 11.00, 11i</h1><p><b>Albert Chin</b> <a title="Problems running kinit on HP-UX 11.00, 11i" href="mailto:kerberos%40mit.edu?Subject=Problems%20running%20kinit%20on%20HP-UX%2011.00%2C%2011i&amp;In-Reply-To=3173a985f9525aa0a2e77d8dd30122c2%40mit.edu">kerberos at mlists.thewrittenword.com </a><br><i>Thu May 12 17:13:50 EDT 2005</i> </p><p><ul><li>Previous message: <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/007714.html">Problems running kinit on HP-UX 11.00, 11i </a><li>Next message: <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/007716.html">Problems running kinit on HP-UX 11.00, 11i </a><li><b>Messages sorted by:</b> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/date.html#7715">[ date ]</a> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/thread.html#7715">[ thread ]</a> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/subject.html#7715">[ subject ]</a> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/author.html#7715">[ author ]</a> </li></ul><p><hr><p></p><p><br>On Thu, May 12, 2005 at 04:51:22PM -0400, Ken Raeburn wrote:<br>&gt; On May 12, 2005, at 14:20, Albert Chin wrote:<br>&gt; &gt;I built krb5-1.4.1 on HP-UX with CC=cc CFLAGS="-g -Ae +DAportable".<br>&gt; &gt;Running kinit gives the following:<br>&gt; &gt;&nbsp; $ kinit<br>&gt; &gt;&nbsp; Assertion failed: i-&gt;did_run != 0, file ../../include/k5-platform.h, <br>&gt; &gt;line 232<br>&gt; &gt;&nbsp; Abort(coredump)<br>&gt; <br>&gt; This indicates that the k5_once macro isn't doing its job correctly.&nbsp; <br>&gt; One possible reason might be if the native C library provides a stub <br>&gt; for pthread_once that never calls the indicated function.&nbsp; Could you <br>&gt; check on that and let me know?</p><p>On HP-UX 11i:<br>&nbsp; $ swlist -l fileset | grep -i 'libc cumulative patch'<br>&nbsp; # PHCO_27434&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; libc cumulative patch </p><p>&nbsp; $ nm /usr/lib/libc.sl | grep pthread_once<br>&nbsp; ___pthread_once&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; 1171160|extern|code&nbsp;&nbsp; |$CODE$<br>&nbsp; pthread_once&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; 1171144|extern|entry&nbsp; |<br>&nbsp; pthread_once&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; 1171160|extern|code&nbsp;&nbsp; |$CODE$</p><p>&gt;From HP's patch description of PHCO_22923:<br>&nbsp; On&nbsp; HP-UX&nbsp; if&nbsp; a&nbsp;&nbsp; nonthreaded&nbsp;&nbsp; application&nbsp;&nbsp; links&nbsp;&nbsp; to&nbsp; a<br>&nbsp; thread-safed&nbsp; library&nbsp; the link will fail due to&nbsp; unresolved<br>&nbsp; pthread symbols.To resolve these symbols, it is necessary to<br>&nbsp; link the&nbsp; nonthreaded&nbsp; application&nbsp; to the&nbsp; threads&nbsp; library<br>&nbsp; libpthread.But linking to that library makes the application<br>&nbsp; threaded&nbsp; even if it creates no&nbsp; threads.Providing&nbsp; POSIX 1c<br>&nbsp; thread&nbsp; "stubs" in HP-UX C language&nbsp; library have two direct<br>&nbsp; effects for&nbsp; nonthreaded&nbsp; applications.&nbsp; a) POSIX 1c threads<br>&nbsp; symbols are resolved if a nonthreaded application links to a<br>&nbsp; thread-safed&nbsp; library&nbsp; b)We&nbsp; avoid&nbsp; the&nbsp; overhead&nbsp; of a real<br>&nbsp; threads library -- especially the overhead&nbsp; associated&nbsp; with<br>&nbsp; mutexes when the nonthreaded&nbsp; application&nbsp; uses thread stubs<br>&nbsp; rather than real threads library procedures.</p><p>&nbsp; Resolution:<br>&nbsp; Stubs are provided for all pthread calls only in SHARED LIBC<br>&nbsp; FLAVORS of the HP-UX C Library.&nbsp; These stubs do not have any<br>&nbsp; functionality,&nbsp; these are&nbsp; dummy&nbsp; functions&nbsp; returning&nbsp; zero<br>&nbsp; except&nbsp; pthread_getspecific()&nbsp; family of APIs which has full<br>&nbsp; functionality&nbsp; implemented in the stubs.&nbsp; Full functionality<br>&nbsp; is provided in the stub for the&nbsp; following&nbsp; pthread&nbsp; calls<br>&nbsp;&nbsp; * pthread_key_create()<br>&nbsp;&nbsp; * pthread_getspecific()<br>&nbsp;&nbsp; * pthread_setspecific()<br>&nbsp;&nbsp; * ptherad_key_delete()<br>&nbsp;&nbsp; * pthread_exit()<br>&nbsp; call to stub pthread_self() returns 1<br>&nbsp; call to stub pthread_equal(arg1, arg2) will return<br>&nbsp; (arg1 == arg2)<br>&nbsp; Call to the stub pthread_create() and pthread_attr_init()<br>&nbsp; returns ENOSYS.<br>&nbsp; All other stub calls returns zero.<br>&nbsp; There are two special&nbsp; interfaces&nbsp; provided&nbsp; for checking<br>&nbsp; whether an application is linked to pthread library or not.<br>&nbsp; a)&nbsp; __is_threadlib_linked()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; returns 1 for an applications linked to pthread<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; library otherwise returns zero.<br>&nbsp; b)&nbsp; __get_ismt()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; returns 1 for applications linked with libcma<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; returns 2 for applications linked with libpthread<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; otherwise returns 0</p><p>&nbsp; Risks:<br>&nbsp; ------<br>&nbsp; An application may&nbsp; inadvertantly&nbsp; pick up the stubs when it<br>&nbsp; intended&nbsp; to use the real&nbsp; pthreads&nbsp; APIs, or it may pick up<br>&nbsp; the&nbsp; stubs&nbsp; when it needs cma APIs or stubs.&nbsp; These&nbsp; are all<br>&nbsp; link order problems.&nbsp; An application that needs cma behavior<br>&nbsp; must link to libcma (or the cma stubs&nbsp; library)&nbsp; and must do<br>&nbsp; so in a supported link order,<br>&nbsp; i.e.&nbsp; the link line&nbsp; should be shared only and should<br>&nbsp; not contain "-lc" before -lcma.<br>&nbsp; So long as this&nbsp; condition is met, the correct cma functions<br>&nbsp; will be referenced.&nbsp; Similarly, a multithreaded&nbsp; application<br>&nbsp; that needs pthread&nbsp; threads&nbsp; library&nbsp; behavior&nbsp; must link to<br>&nbsp; libpthread&nbsp; and must do so in a&nbsp; supported&nbsp; link&nbsp; order, and<br>&nbsp; only use shared libc and libpthread.<br>&nbsp; eg : An applications wants to use pthread stubs then<br>&nbsp; the link order should be<br>&nbsp; $ cc test.c -lc -lpthread<br>&nbsp; An applications wants to use pthread library then the<br>&nbsp; link order should be<br>&nbsp; $ cc test.c -lpthread -lc<br>&nbsp; JAGab69119; SR 8606102984</p><p>If I relink kinit with -lpthread, it works, mostly:<br>&nbsp; # /opt/TWWfsw/krb5141/bin/kinit Administrator at AD.IL.THEWRITTENWORD.COM<br>&nbsp; kinit(v5): Cannot resolve network address for KDC in requested realm<br>&nbsp; while getting initial credentials</p><p>-- <br>albert chin (china at thewrittenword.com)<br></p><!--endarticle--><p><hr><p></p><p><ul><!--threads--><li>Previous message: <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/007714.html">Problems running kinit on HP-UX 11.00, 11i </a><li>Next message: <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/007716.html">Problems running kinit on HP-UX 11.00, 11i </a><li><b>Messages sorted by:</b> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/date.html#7715">[ date ]</a> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/thread.html#7715">[ thread ]</a> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/subject.html#7715">[ subject ]</a> <a href="http://mailman.mit.edu/pipermail/kerberos/2005-May/author.html#7715">[ author ]</a> </li></ul><hr><p><a href="https://mailman.mit.edu/mailman/listinfo/kerberos">More information about the Kerberos mailing list</a><br></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

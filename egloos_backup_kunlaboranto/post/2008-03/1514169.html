@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[oracle] 10g 설치후 다른 계정에서 proc 컴파일 환경 </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-03-13 18:06:46</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[oracle] 10g 설치후 다른 계정에서 proc 컴파일 환경 </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">10g 설치후 다른 계정에서 proc 컴파일을 위해 변경한 것들..<br><br>oracle에서 권장하는 방식은 아니며. 저는 이렇게 했습니다.<br><br><br>## sqlplus (경로 기준은 $ORACLE_HOME)<br><br>$ find . -type d -exec chmod a+rx {} \;<br>$ find . -type f -name '*.msb' -exec chmod a+r {} \;<br>$ find . -type f -name '*.so' -exec chmod a+r {} \;<br>$ chmod +r /home/oracle/oracle10g/oracore/zoneinfo/timezlrg.dat<br><br>## proc compile <br><br>$ find . -type f -name '*.a' -exec chmod a+r {} \;<br>$ find . -type f -name '*.h' -exec chmod a+r {} \;<br>$ chmod +r precomp/admin/pcscfg.cfg<br><br>$ cat precomp/admin/pcscfg.cfg<br>sys_include=(/build/s630/precomp/public,/usr/include,/opt/gcc33/lib64/gcc-lib/x86_64-redhat-linux/3.3/include,/usr/lib/gcc-lib/x86_64-redhat-linux/3.2.3/include,/usr/lib64/gcc-lib/x86_64-redhat-linux/3.3.3/include)<br>ltype=short<br>define=__x86_64__<br><br><br>$ chmod +r ./lib/ldflags<br>$ cat ./lib/ldflags<br>-lnbeq10 -lnhost10 -lnus10 -lnldap10 -lldapclnt10&nbsp; -lnsslb10&nbsp;&nbsp; -lntcp10 -lntcps10 -lnsslb10 -lntcp10 -lntns10 <br><br>$ chmod +r lib/sysliblist<br>$ cat precomp/admin/pcscfg.cfg<br>sys_include=(/build/s630/precomp/public,/usr/include,/opt/gcc33/lib64/gcc-lib/x86_64-redhat-linux/3.3/include,/usr/lib/gcc-lib/x86_64-<span style="font-weight: bold;">redhat</span>-linux/3.2.3/include,/usr/lib64/gcc-lib/x86_64-redhat-linux/3.3.3/include)<br>ltype=short<br>define=__x86_64__<br><br>as43-x64: /home/oracle/oracle10g/network/admin<br>$ chmod +r tnsnames.ora sqlnet.ora listener.ora<br><br><br>########<br>ALTER SESSION SET NLS_DATE_FORMAT='YYYYMMDDHH24MISS';<br>를 했는데요. 10g에서는 안먹음. 9i 이전과 정책이 달려졌음.<br><br>SQL&gt; select c10||'', c10 from tb_test1;<br><br>C10||''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C10<br>-------------- ---------<br>20080316185213 16-MAR-08<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>(계층) 카탈로그의 아쉬움을 태그로서</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2011-03-29 18:37:39</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">(계층) 카탈로그의 아쉬움을 태그로서</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">티스토리에서 맘에든 것이, 트리형태의 카탈로그였다.<br>그런데. 문득 '태그' 라는 것이 눈에 들어왔다.<br><br>어떤 주제, 사람의 생각은 사실 단일선이 아니다. 이를 계층으로 표현하다 보면 걸쳐있는 얘매한 영역이 생긴다.<br>트리 형태에서는 결국, 한단계 상위 정도에서 타협을 하는데..<br>태그는, 그에 대한 고민을 덜어준다.<br><br>당분간 태그를 시험해 보자.<br>잘되면 과감히, 아깝지만, 모든 카타고리 삭제.. <br><br><br> </div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

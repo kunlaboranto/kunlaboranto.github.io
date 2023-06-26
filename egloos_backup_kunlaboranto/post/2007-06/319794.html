@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] CONNECT BY ... START WITH ... 의 제약 조건</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 12:39:41</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] CONNECT BY ... START WITH ... 의 제약 조건</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><table cellspacing="0" cellpadding="0" width="100%" border="0"><tbody><tr valign="bottom"><td style="PADDING-LEFT: 8px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px; TEXT-ALIGN: justify" valign="center" height="28"><a class="con_link" href="http://eroom.korea.com/eroom/default.aspx?bid=tab_292525&amp;pid=250973" target="_blank"><span class="Ttitle1_content">CONNECT BY ... START WITH ... 의 제약 조건</span></a> <a class="con_link" href="http://eroom.korea.com/eroom/default.aspx?bid=tab_292525&amp;cate=1553491" target="_blank"><span class="Ttitle2_content">[Oracle ]</span></a></td><td style="PADDING-RIGHT: 2px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 3px" valign="center" align="right" width="90">&nbsp;<!-- badtag filtered --><a>DejavuEffect</a></td></tr><tr><td background="/images/dotline_536.gif" colspan="2" height="3"></td></tr><tr valign="top" align="left"><td style="PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-TOP: 4px" colspan="2" height="12"></td></tr><tr valign="top"><td id="_ctl0_rptList__ctl1_tdCommonInfo" style="PADDING-RIGHT: 2px; PADDING-BOTTOM: 4px; PADDING-TOP: 0px" align="right" colspan="2" height="12"><b>스크랩</b> : 0&nbsp;&nbsp; <b>조회수</b> : 124 </td></tr></tbody></table><!--컨텐트 내용보여주기--><table cellspacing="0" cellpadding="0" width="100%" border="0"><tbody><tr><td><span style="TEXT-ALIGN: justify"><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">순환 구조 내에서는<span lang="EN-US"> JOIN 이 불가능하므로 JOIN 을 수행하는 QUERY 로 구성된 VIEW 에 대해서도 SELECT 가 불가능합니다. 다른 테이블들과의 JOIN 을 하기 위해서는 순환 구조를 가지는 문장을 INLINE VIEW 로 처리한 후 JOIN 에 참여하게 해야 합니다.<?xml:namespace prefix = o /><o:p></o:p></span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><o:p><span style="FONT-SIZE: 100%">&nbsp;</span></o:p></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">CONNECT BY 는 순환 구조에서 무한 LOOP 가 발생할 수 있습니다. 이러한 루프는 서로 다른 ROW에 부모와 자식이 존재하는 경우 발생하며, ORA-1436 에러를 발생합니다. 이는 데이터 자체의 논리적 구조의 결함에 의해 발생하는 것입니다. 모든 데이터의 부모 데이터가 항상 존재할 수는 없듯이, 이러한 부분이 있는 지를 검증해보아야만 하고 만약 이렇게 된 겨웅가 있다면 이는 전체적인 구조 설계가 잘못되었거나 대상 테이블에 입력된 데이터가 잘못된 경우 입니다. 대부분 후자의 경우에 무한 LOOP 이 발생하게 됩니다. <o:p></o:p></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span lang="EN-US" style="FONT-FAMILY: 굴림"><o:p><span style="FONT-SIZE: 100%">&nbsp;</span></o:p></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%">마지막으로 이와 같은<span lang="EN-US"> CONNECT BY 를 사용한 후 ORDER BY 를 사용할 경우 실제로는 결과값이 정렬이 되지는 않았습니다. 하지만 ORACLE 9i 에서부터는 ORDER SIBLINGS BY 라는 구문이 추가되어 실제 값들을 정렬을 수행하면서 순환 구조로 전개가 되어 데이터의 추출이 이루어집니다. </span></span></span></p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%"><span lang="EN-US"></span></span></span>&nbsp;</p><p class="MsoNormal" style="MARGIN: 0cm 0cm 0pt; LINE-HEIGHT: 12pt"><span style="FONT-FAMILY: 굴림"><span style="FONT-SIZE: 100%"><span lang="EN-US">출처 : <a class="con_link" href="http://cafe.naver.com/marinebang.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=1254" target="_blank">http://cafe.naver.com/marinebang.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=1254</a></span></span></span></p></span></td></tr></tbody></table></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

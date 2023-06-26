@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title> Expat is a fast, non-validating, stream-oriented XML parsing library  </title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:35:39</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title"> Expat is a fast, non-validating, stream-oriented XML parsing library  </h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><li>bison 설치후 Broken Pipe 오류 조치 <p>truss bison -d -y ./test.y -o test.cpp&nbsp; &gt; a.txt 2&gt;&amp;1</p><p>&nbsp;</p><p>sigaction(SIGCLD, 0x080397D0, 0x08039850)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 0<br>pipe()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 3 [4]<br>pipe()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 5 [6]</p><p>lwp_sigmask(SIG_SETMASK, 0xFFBFFEFF, 0x0000FFFF) = 0x00000000 [0x00000000]<br>vfork()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 2627<br>lwp_sigmask(SIG_SETMASK, 0x00000000, 0x00000000) = 0xFFBFFEFF [0x0000FFFF]<br>close(3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 0<br>close(6)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 0<br>fcntl(4, F_GETFD, 0x080398C8)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 0<br>fstat64(4, 0x08039790)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 0<br>fstat64(4, 0x080396D0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 0<br>ioctl(4, TCGETA, 0x08039764)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Err#22 EINVAL<br>write(4, " m 4 _ i n i t ( )\n m 4".., 5120)&nbsp;&nbsp;&nbsp; Err#32 EPIPE<br>&nbsp;&nbsp;&nbsp; Received signal #13, SIGPIPE [default]</p><p>&nbsp;</p><p>++ m4-1.4.7-sol10-x86-local 설치후 해소</p><p>&nbsp;</p><p>[ 정상인 경우 ]</p><p>&nbsp;&nbsp;&nbsp; 74&nbsp; ioctl(4, TCGETA, 0x08039764)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Err#22 EINVAL<br>&nbsp;&nbsp;&nbsp; 75&nbsp; write(4, " m 4 _ i n i t ( )\n m 4".., 5120)&nbsp;&nbsp;&nbsp; = 5120<br>&nbsp;&nbsp;&nbsp; 76&nbsp; write(4, " n e ( [ b 4 _ c o n f l".., 850) = 850</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><li><a class="con_link" href="ftp://ftp.sunfreeware.com/pub/freeware/intel/10/expat-1.95.5-sol10-intel-local.gz" target="_blank">expat-1.95.5-sol10-intel-local.gz</a> Expat is a fast, non-validating, stream-oriented XML parsing library - installs in /usr/local. <li><a class="con_link" href="ftp://ftp.sunfreeware.com/pub/freeware/SOURCES/expat-1.95.5.tar.gz" target="_blank">expat-1.95.5.tar.gz </a>Source Code. <a class="con_link" href="http://expat.sourceforge.net/" target="_blank">[Details]</a> <p>&nbsp;</p><li><a class="con_link" href="ftp://ftp.sunfreeware.com/pub/freeware/intel/10/apache-2.2.0-sol10-x86-local.gz" target="_blank">apache-2.2.0-sol10-x86-local.gz</a> Apache 2 - the popular web server - installs in <span style="COLOR: #ff0000">/usr/local/apache2</span>. This apache package was configured with openssl support. The <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#apr" target="_blank">apr-1.2.2</a>, <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#aprutil" target="_blank">aprutil-1.2.2</a>, <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#expat" target="_blank">expat</a>, <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#libiconv" target="_blank">libiconv</a>, <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#gdbm" target="_blank">gdbm</a>, <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#db44" target="_blank">db-4.4.20.NC</a>, <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#openssl098" target="_blank">openssl-0.9.8d</a>, and either the <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#libgcc" target="_blank">libgcc</a> or <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#gcc33" target="_blank">gcc</a> must be installed. Documentation can be found in /usr/local/apache2/doc/apache2. The configuration files in /usr/local/apache2/conf must be edited to fit your site's needs, including ssl support. The httpd-std.conf there should be copied to httpd.conf and any edits you must make included. <p><span style="COLOR: #ff0000">If you have already been using apache2, MAKE SURE that you backup any files in the conf, htdocs, modules, or other subdirectories of /usr/local/apache2 where you might have changed or added files so that installing the updated apache2 will not cause your configuration or other files to be lost.</span></p><p>The configuration step for this package was </p><p>./configure --prefix=/usr/local/apache2 --enable-mods-shared=all --enable-ssl=shared --enable-ssl --with-ssl=/usr/local/ssl </p><p>The modules that were compiled with this package can be found in /usr/local/apache2/modules. You may also need to set up startup scripts to begin the httpd processes at boot up. See the appropriate link for your level of Solaris in <a class="con_link" href="http://www.sunfreeware.com/openssh.html" target="_blank">openssh.html</a> where you can determine how to set up the randomness features required when using openssl. </p><p>&nbsp;</p><p>&nbsp;</p><p>출처 : <a class="con_link" href="http://www.sunfreeware.com/programlistintel10.html#expat" target="_blank">http://www.sunfreeware.com/programlistintel10.html#expat</a></p><!-- //포스팅 --></li></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

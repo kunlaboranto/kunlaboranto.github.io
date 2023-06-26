@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] PosGraph 프레임워크</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 14:08:07</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] PosGraph 프레임워크</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><br><br><img height="17" alt="원본" src="http://blogimgs.naver.com/blog20/blog/ico_source.gif" width="32"> <a class="link1" href="http://blog.naver.com/neorio76/80005057610" target="_top"><span style="COLOR: #426adf">http://blog.naver.com/neorio76/80005057610</span></a><div class="post-view pcol2"><!-- 포스팅 --><p>졸업하기 전에 꼭 해놓고 싶은 것이 있었는데,&nbsp;내가&nbsp;짰었던 그리고 앞으로 짤&nbsp;프로그램들을 하나의 프래임 워크로 쉽게 통합할 수 있는 개발 환경을 만들어 놓는 것이었다.</p><p>&nbsp;</p><p>그동안 블로그질도 좀 뜸하게 하면서&nbsp;여기 좀 매진 했는데,&nbsp;원하는 개략적인 산물이 나왔다. </p><p>프레임워크는 이름하여 PosGraph&nbsp;:)</p><p>&nbsp;</p><p>프로그램의 레이아웃은 Visual Studio .NET 2003을 모방했는데,&nbsp;일반적인 그래픽스 프로그램 (특히, 연구실에서 작성하는 논문용 프로그램) 의 개발환경이 이 레이아웃에 적합할 것 같다는 개인적인 판단에서다.</p><p>&nbsp;</p><p>레이아웃은&nbsp;scene viewer, model/render view, property view, 그리고 output view로 4가지로 크게 나누었다 (아래 그림 참조).</p><p>&nbsp;&nbsp;&nbsp; </p><center><center><img src='./320161/e0040769_02065635.jpg'></center></center><p>&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp; - Scene viewer는 3D scene에 존재하는 물체가 렌더링되는 부분</p><p>&nbsp;&nbsp;&nbsp;&nbsp; - Model/render view는 scene에 존재하는 3D&nbsp;model,&nbsp;light, material 등을 선택할 수 있는 부분</p><p>&nbsp;&nbsp;&nbsp;&nbsp; - Property view는 선택된 객체의 속성을 보여주고 그 속성을 바꿀 수 있는 인터페이스를 제공</p><p>&nbsp;&nbsp;&nbsp;&nbsp; - Output view는 프로그래머가 코드의 중간중간 남긴 log 메시지를 보여주는 부분</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>지금까지 구현된 기능은...</p><p>i) property view를 통해서 선택된 물체의 속성 (material color, 3d position, etc.)을 바꿀 수 있다.</p><p>&nbsp;</p><p align="center"><img src='./320161/e0040769_02061295.jpg'></p></div><img src='./320161/e0040769_02064523.jpg'><p>ii) model view에서 물체를 선택하고 마우스 우클릭을 통해&nbsp;context menu를 띄울 수 있다.</p><p>&nbsp;&nbsp; (객체의 type에 따라 context menu의 내용이 다르다)</p><p>&nbsp;</p><p align="center">[raw mesh의 경우]<br><br><br><img src='./320161/e0040769_02062211.jpg'></p><p align="center">[multiresolution mesh의 경우]</p><p align="center"><img src='./320161/e0040769_02064694.jpg'></p><p>iii) Property view에는 선택된 객체의 type에 따라 다른 category의 property가 보여진다.</p><p align="center">&nbsp;</p><p align="center">[raw mesh의 경우]</p><p align="center"><img src='./320161/e0040769_02060612.jpg'>[multiresolution mesh의 경우]<br><img src='./320161/e0040769_02062378.jpg'></p><p>iv) code의 특정부분에서 std::cout 으로 streaming한 결과는 output window에 찍힌다. </p><p>&nbsp;&nbsp;&nbsp; (이것으로 쉽게 printf 스타일 디버깅이 가능하다)</p><p align="center"><img src='./320161/e0040769_02063870.jpg'></p><p>가장 어려운 부분이 될 것이라고 예상했던 property view 부분은 의외로 <a class="con_link" href="http://www.codejock.com/" target="_blank">Xtreme toolkit Pro</a>에 있는 property grid 기능을&nbsp;이용하여 의외로 가장 쉽게 해결되었다. 물론 graphics 프로그램에 맞게 vector/matrix, 및 material 등의 객체에 대한 property에 접근할 수 있는 grid item 객체는 내가 다시&nbsp;다 손을 봐서 만들어야 했다.</p><p>&nbsp;</p><p>예상보다 가장 어려웠던 문제는 Output view 기능을 구현하는 것.</p><p>원래 내가 원했던 기능은 프로그램 내에 std::cout을 통해&nbsp;문자열을 streaming을 했을 경우, console이 아니라 특정 window (여기서는 output window)에 그 문자열이 쓰이는 것이었다. 사실 내가 MFC 사용에도 별로 능숙하지 못한데다가, 일반적으로 win32의 windows programming에서는 console out이 무시되는 특성까지 있어서 예상외로 내가 가져다 쓸만한 코드를 찾는게 쉬운게 아니었다. (덕분에 여러 개발자 웹사이트를 뒤지면서 win32 windows programming에서의 console 기능에 관한 공부를 할 수 있었서 좋긴했지만 -_-;;)</p><p>&nbsp;</p><p>뭐 여튼 이리저리 고생끝에 딱 구미에 맞는 코드를 찾아 냈는데 그게 바로 <a class="con_link" href="http://www.codeproject.com/editctrl/editlog.asp" target="_blank">CEditLog</a>이다. 이 클래스 디자인은&nbsp;내가 원하는&nbsp;기능과 딱 맞아 떨어졌는데 std::cout의 ostream을 redirection함으로써 프로그램 상의 어떤 부분에서 std::cout으로 streaming이 되더라도 그 결과가 특정 window (여기서는 output view)에 찍히게 된다.&nbsp; </p><p>&nbsp;</p><p>정말 cool하지 않은가!!!&nbsp; </p><p align="center"><!-- //포스팅 --><br><br></p></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] 공부 - 2010년, QP</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2010-02-07 20:40:45</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] 공부 - 2010년, QP</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><font size="2"><span id="title-text">* 02-07<br><a href="http://wiki.oracleclub.com/pages/viewpage.action?pageId=3900131">&nbsp;&nbsp; 병렬 작업을 사용할 시기 알기</a></span></font><br>&nbsp;&nbsp; http://wiki.oracleclub.com/pages/viewpage.action?pageId=390013<br><br><h4>Group By Push Down</h4><p>"Parallel Query 를 수행하면 Group By 가 두번 수행된다. 따라서 Group By 가 있는 SQL 은 Parallel 을 사용하지 마라." <br>실제 DBA 들의 입에서 오고 가는 말들이다. 잘못된 미신이 퍼져 있다니 참으로 안타까운 현실이 아닐수 없다.<br>Parallel Query 를 수행하면 Group By 가 무조건 두번 수행되는 것은 아니며 두번 수행 된다면 오히려 성능향상을 기대할 수 있다. </p><br><br>* External Table (9i)<br>&nbsp;&nbsp; http://blog.naver.com/tangamjaelt?Redirect=Log&amp;logNo=39542677<br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

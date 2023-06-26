@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] row migration/chaining</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2008-02-06 12:42:45</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] row migration/chaining</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><a href="http://altibase.egloos.com/1386686" title="">[펌] SEGMENTS 란?</a><br><br>From : http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/what_is_table.html<br><br><font size="4"><b>row migration/chaining</b><p>테이블에 대해 잦은 insert와 update가 발생하면 <b>row migration</b>이라고 하는 행 이전이 발생하거나 <b>row chaining</b>이 발생한다.<br>만약 기존의 블럭에 저장된 6개 크기의 데이터가 보다 큰 공간을 필요로 하는 14개 크기의 데이터로 ipdate돼야 한다면<br>기존 블럭에서는 필요한 공간이 부족하므로 갱신된 데이터가 저장될 수 없다. 이럴 경우, 갱신된 데이터를 포함하는 전체 row가필요한 공간이 제공될 수 있는 다른 블럭으로 옮겨서 저장되어 지며, 기존 블럭의 예전 저장 위치의 row header에 옮겨간다른 새로운 블록의 위치 정보를 남기게 된다.<br>이러한 row 전체가 다른 블럭으로 옮겨 가면서 이전의 위치에 이전한 위치의 정보를 남기는 현상을 row migration이라고 한다.</p><p>다른 의미로 기존의 블럭에 16개의 row를 삽입하려고 하는데 PCTUSED와 사용 가능한 공간이 다 차고 3개의 블럭이 더 이상 삽입할 수 없게 되는 경우가 있다. 이럴 경우 새로운 블럭으로 row chaining이 발생한다.</p><p></p><table></table><table bgcolor="#fafecc" border="1"><tbody><tr><th>구분</th><th>migration</th><th>chaining</th></tr><tr><th>정의</th><td>update로 인하여 늘어나는 공간을 저장할 공간이 없어서 다른 블럭으로 row를 옮기는 현상</td><td>하나의 row를 하나의 블럭에 저장할 수 없어서 여러 블럭에 걸쳐서 저장하는 현상</td></tr><tr><th>특징</th><td>기존 블럭에는 migration되는 데이터의 row header와 블럭 주소값을 갖게되고, 새로운 블럭에는 migration되는 데이터가 저장됨</td><td>initial row piece(행 조각)와 row pointer로 블럭 내에 저장</td></tr><tr><th>문제점</th><td>migration된 row를 일기 전에 기존 블럭에서 헤더를 통해 migration된 row를 읽기 때문에 성능이 감소됨</td><td>row의 정보를 검색하기 위해 하나 이상의 데이터 블럭을 scan해야 하기 때문에 성능이 감소</td></tr><tr><th>해결책</th><td>•PCTFREE를 크게 설정<br>              • 객체를 export하고 삭제한 후, import<br>              • 객체를 migration하고 truncate</td><td>• 블럭의 크기를 크게 설정</td></tr><tr></tr></tbody><caption>migration과 chaining의 비교</caption></table> </font><hr><table bgcolor="#fafecc" border="1"><tbody><tr><td bgcolor="#33ff99" width="250"><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/statement_alter/alter_table.html">alter table</a></td><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/parameter_file.html">parameter</a>에 대한 할당을 할 수 있다.</td></tr><tr><td bgcolor="#33ff99"><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/statement_alter/alter_table_allocate_extent.html">alter table .. allocate extent</a></td><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/what_is/extents.html">extent</a> 할당을 위한 alter table 명령어</td></tr><tr><td bgcolor="#33ff99"><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/sql/truncate.html">truncate table</a></td><td>테이블의 모든 데이터를 삭제하고 데이터가 차지하고 있던 기억공간을 해제한다.</td></tr><tr><td bgcolor="#33ff99"><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/statement_drop/drop_table.html">drop table</a></td><td>테이블을 삭제하는  명령으로 데이터와 기억공간, 구조 모두를 삭제한다.</td></tr><tr><td bgcolor="#33ff99"><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/sql/analyze.html">analyze table</a></td><td>테이블의 구조에 대한 분석을 할 수 있으며, 테이블에 대한 통계자료를 얻을 수 있다.</td></tr><tr></tr></tbody></table><hr color="#0000ff" size="3"><font size="4"><font color="#0000ff" size="+2">테이블 관련 정보 확인 뷰</font></font><p><table bgcolor="#fafecc" border="1"><tbody><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_segments.html">dba_segments</a></td><td>segment의 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_objects.html">dba_objects</a></td><td>object의 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_tables.html">dba_tables</a></td><td>table의 정보</td></tr><tr><td><a href="http://radiocom.kunsan.ac.kr/lecture/oracle/dictionary/dba_extents.html">dba_extents</a></td><td>extent의 정보</td></tr></tbody></table></p><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

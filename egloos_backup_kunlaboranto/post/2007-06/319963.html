@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>[펌] SIGBUS(Invalid Address Alignment)</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2007-06-18 13:17:23</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">[펌] SIGBUS(Invalid Address Alignment)</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content"><p><br><span id="content1" style="FONT-FAMILY: true_0">From : <a class="con_link" href="http://kldp.org/node/46311" target="_blank">http://kldp.org/node/46311</a></span><br></p><h1 class="title">솔라리스 SIGBUS(Invalid Address Alignment)에 관하여...</h1><div class="tabs"></div><div class="messages error">The image verification code you entered is incorrect.</div><!-- begin content --><div class="node"><span class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/13314" target="_blank">robin7446</a> 씀 (금, 2005/01/21 - 10:08am)</span> <span class="taxonomy"><a class="con_link" title="개발 작업 도중 일어난 문제점을 서로 상의하세요." href="http://kldp.org/forum/5" target="_blank" rel="tag">프로그래밍 QnA</a></span> <div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>썬 솔라리스 Sun WorkShop Compilers C/C++ 5.0을 이용하여<br>프로그램을 개발하고 있는 개발자 입니다.</p><p>제가 개발한 Application이 SIGBUS가 발생하며 계속 비정상 종료됩니다.<br>core dump file을 분석해 보면 SIGBUS Signal이 발생한 이유가<br>"invalid address alignment" 때문이라고 합니다.<br>제가 아는 상식으로는 "invalid address alignment"는 보통 address를 잘못<br>참조하였을 경우 발생하는 것으로 아는데 제 프로그램이 실제로 종료된 <br>위치를 보면 모두 Memory Allocation하다가 발생하였습니다.<br>Memory Allocation 하다가 "invalid address alignment"가 발생하는 <br>이유는 무엇인지 궁금합니다. 그리고 해결방안은 어떤것이 있는지 알고싶습니다.</p><p>아래의 내용은 dbx를 이용하여 core dump file을 분석한 내용입니다.<br>이부분에서만 발생하는 것이 아니라 불특정 다수의 Memory Allocation 부분<br>에서 발생하고 있습니다. 아래의 내용은 그 중 한부분입니다.</p><p>detected a multithreaded program<br>t@3360 (l@3) terminated by signal BUS (invalid address alignment)<br>Current function is CStrArrAddStr<br>112 NowNode = new NODE; // 현재 노드<br>(/opt/SUNWspro/bin/../WS5.0/bin/sparcv9/dbx) where <br>current thread t@3360<br>[1] t_splay(0x619888, 0x6fd28, 0x4, 0xfdb689e8, 0x0, 0xfdb819b3), at 0xff146430<br>[2] t_delete(0x619888, 0xff1b5f74, 0x60d9a0, 0x81d818, 0x12d998, 0x203f88), at 0xff146298<br>[3] realfree(0x81d820, 0x619888, 0xff1bc8d8, 0xff1b5f74, 0x81d818, 0x203f8b), at 0xff145ee0<br>[4] cleanfree(0x0, 0xff1b5f74, 0xff1bc84c, 0xff1bc8cc, 0xff1bc84c, 0x0), at 0xff146768<br>[5] _malloc_unlocked(0x81d820, 0x10, 0x0, 0x81d818, 0x0, 0xff1b5f74), at 0xff1458f0<br>[6] malloc(0x10, 0x0, 0x0, 0x0, 0x0, 0x0), at 0xff1457e8<br>[7] 0xff20651c(0x10, 0xfdb7e910, 0x13b84, 0xff34caf0, 0xff21a07c, 0x10), at 0xff20651b<br>=&gt;[8] CStrArrAddStr(this = 0x16fe78, szStr = 0xfdb819ae "\x80a", nSizeOfStr = 4), line 112 in "StrArr.cpp"<br>[9] PGMSResponsePutDataWithHttp(this = 0x169210, szData = 0xfdb819ae "\x80a", nSizeOfData = 4), line 2442 in "Pgms.cpp"<br>[10] PGMSResponseResponseDynamicMenus(this = 0x169210, smcode = 0x175290 "^B", transType = 1), line 154 in "MenuList.cpp"<br>[11] PGMSResponseResponseTC3(this = 0x169210), line 1415 in "Pgms.cpp"<br>[12] PGMSResponseResponseFromUser(this = 0x169210, subCmd = 'f'), line 769 in "Pgms.cpp"<br>[13] PGMSResponseProcessMessage(this = 0x169210, cmd = STRUCT), line 664 in "Pgms.cpp"<br>[14] PGMSResponseRun(this = 0x169210), line 522 in "Pgms.cpp"<br>[15] StartUpSPThread(pThread = 0x169210), line 214 in "Spthread.cpp"</p><p>여러 고수님들의 많은 조언 부탁드립니다.</p><div class="forum-topic-navigation"><a class="con_link" title="이전 글" href="http://kldp.org/node/46320" target="_blank">‹ stdio.h에 있는 소스 파일들은..</a> <a class="con_link" title="다음 글" href="http://kldp.org/node/46160" target="_blank">전역변수 사용을 피하는 방법? ›</a><br class="clear"></div></div><div class="links">» <span class="vote-points" id="vote_points_46311">0 points</span> | 161번 읽힘</div></div><a class="con_link" id="comment" target="_blank"></a><a class="con_link" id="comment-170019" target="_blank"></a><div class="comment"><div class="picture"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/2252" target="_blank"><img title="kihlle의 그림" alt="kihlle의 그림" src="http://kldp.org/files/pictures/14743199603f7a619b70601.jpg"></a></div><h3 class="title"><a class="con_link" href="http://kldp.org/node/46311#comment-170019" target="_blank">이전 코드에서 허용되지 않은 공간에 덮어쓰기가 있었거나 혹은 할당받지 않</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/2252" target="_blank">kihlle</a> 씀 (금, 2005/01/21 - 11:24am)</div><div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>이전 코드에서 허용되지 않은 공간에 덮어쓰기가 있었거나 혹은 할당받지 않은 장소에 대해 free()를 호출했던것으로 추정됩니다.<br>배열이나 malloc으로 할당받은 공간의 경계를 넘어서 쓰기가 있었는지 살펴보셔야 할것입니다. 여기에는 a=(int*)malloc(7)로 잡고 a[1]에다 writing한 부분까지 포함됩니다.<br>할당받은 장소에 대해서 free()를 두번이상하거나, 할당된 주소변수가 변조되어서 free()까지 갔는지, 비할당영역에 free()가 호출되었는지도 체크해보셔야합니다.</p><p>Sun플랫폼에서도 efence라이브러리나 _MALLOC_CHECK같은 환경변수가 작동하는지 잘 몰라서 다른 해결책을 말씀드리긴 힘들구요. 어쨌든 저런 에러는 솔라리스뿐 아니라 다른 유닉스들에서도 각각 다른 형태로 나타나며, 그 원인은 에러가 난 부분보다 (훨씬)더 이전에 있었음을 말씀드리고 싶습니다.</p></div><div class="links">» <span class="vote-points" id="vote_points_170019">0 points</span> | <a class="con_link" href="http://kldp.org/comment/reply/46311/170019" target="_blank">답글</a></div></div><a class="con_link" id="comment-170020" target="_blank"></a><div class="comment"><h3 class="title"><a class="con_link" href="http://kldp.org/node/46311#comment-170020" target="_blank">위에서 말씀하신 경우도 맞고요.다른 경우는 메모리를 100 바이트</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/12856" target="_blank">alofree</a> 씀 (금, 2005/01/21 - 11:40am)</div><div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>위에서 말씀하신 경우도 맞고요.</p><p>다른 경우는 메모리를 100 바이트 할당할 경우<br>실제로 메모리 페이지가 생성되는 것은 메모리 블럭사이즈 만큼 할당됩니다<br>아마도 512바이트.. 이런 식으로 할당이 되겟지요.</p><p>따라서, 100 바이트를 할당하고 100 혹은 그 이후의 의 위치에 write를 발생 시켰다고 해서 에러가 발생하진 않습니다. <br>512짜리 페이지가 할당 되었다면 512이후의 위치에 write를 할 경우 invalid address alignment 가 발생합니다.</p><p>하지만, 위의 경우와 같이 프로그램 하시는 분은 잘 없겠죠..</p><p>제가 생각하는 대부분의 경우는 메모리를 할당 한 후 그 메모리를 free 하고 난 이후에 그 메모리에 write를 하는 경우라고 생각됩니다.</p><p>위의 답변에서 말하는 free를 두번 한 경우도 비슷한 경우가 아닐까 생각합니다.</p></div><div class="links">» <span class="vote-points" id="vote_points_170020">0 points</span> | <a class="con_link" href="http://kldp.org/comment/reply/46311/170020" target="_blank">답글</a></div></div><a class="con_link" id="comment-170021" target="_blank"></a><div class="comment"><div class="picture"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/2753" target="_blank"><img title="simpid의 그림" alt="simpid의 그림" src="http://kldp.org/files/pictures/13784685373f22033385ac8.gif"></a></div><h3 class="title"><a class="con_link" href="http://kldp.org/node/46311#comment-170021" target="_blank">..</a></h3><div class="submitted"><a class="con_link" title="사용자 프로필 보기" href="http://kldp.org/user/2753" target="_blank">simpid</a> 씀 (금, 2005/01/21 - 12:40pm)</div><div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>제가 얼마전에 경험한적 있습니다.</p><p>thread, mutex, condition ... 셋중 하나였는데...(기억은 안남)<br>주소가 짝수로 align되어 있어야 합니다.</p><p>예를들어 구조체에 이것저것 들었는데..<br>#pragma pack 1<br>을 한 후에 문제가 되더군요.</p><p>소켓 통신하는 프로그램이었기에 전송하는 구조체를 위해 #pragma pack 1을 했었는데..<br>전송용이 아닌 내부 사용을 위한 구조체는 #pragma pack 2 를 사용했었습니다.</p></div><div class="links">» <span class="vote-points" id="vote_points_170021">0 points</span> | <a class="con_link" href="http://kldp.org/comment/reply/46311/170021" target="_blank">답글</a></div></div><a class="con_link" id="comment-170022" target="_blank"></a><div class="comment"><h3 class="title"><a class="con_link" href="http://kldp.org/node/46311#comment-170022" target="_blank">risc에서 잘 발생하는 일이죠.</a></h3><div class="submitted">익명사용자 씀 (금, 2005/01/21 - 1:00pm)</div><div class="content"><div class="vote-up-down-widget"><span class="up-inact" title="You must login to vote."></span><span class="down-inact" title="You must login to vote."></span></div><p>risc에서 잘 발생하는 일이죠.</p></div></div></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>

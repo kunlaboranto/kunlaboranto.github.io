@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/result.css">
+
+        <title>MyWork.</title>
+    </head>
+    <body>
+        <section id="wrap">
+            <header>
+                <h1 class="logo-title">
+                    <span class="main"><img src="../../images/logo_egloos.png" width="105" height="34" alt="이글루스"></span>
+                </h1>
+                <div class="user-info">
+                    <strong class="name">kun</strong> 님 (<strong class="name">okseop7</strong>)
+                </div>
+            </header>
+            <main>
+                <article class="post-wrap">
+                    <!-- 게시물 정보 : 날짜 -->
+                    <div class="post-info">
+                        <span class="time">2009-03-30 11:16:31</span>
+                    </div>
+                    <!-- 게시물 제목 -->
+                    <h2 class="post-title">MyWork.</h2>
+                    <!-- 게시물 본문 -->
+                    <div class="post-body">
+                        <div class="content">..ING..<br><br><table width="100%"><tbody><tr><td><a href="http://support.altibase.com/app_case/case_view.jsp?case_no=15776" target="_blank">case-15776</a></td><td>Escalated</td><td><a href="http://support.altibase.com/app_case/case_view.jsp?case_no=15776" target="_blank">[ICAS BMT] (weblogic + a5) Multiply server transaction - 문제1</a></td></tr><tr><td><a href="http://support.altibase.com/app_case/case_view.jsp?case_no=15777" target="_blank">case-15777</a></td><td>Escalated</td><td><a href="http://support.altibase.com/app_case/case_view.jsp?case_no=15777" target="_blank">[ICAS BMT] (weblogic + a5) 웹로직 health check 쿼리가 FETCH TIMEOUT 으로 끊어짐. - 문제2 -</a></td></tr><tr><td><a href="http://support.altibase.com/app_case/case_view.jsp?case_no=15778" target="_blank">case-15778</a></td><td>Open</td><td><a href="http://support.altibase.com/app_case/case_view.jsp?case_no=15778" target="_blank">[ICAS BMT] (weblogic + a5) Several statement still opened - 문제3 -</a></td></tr></tbody></table><br></div>
+                        <div class="post-footer">
+                            <button class="btn" onclick="button_click();">목록</button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script>
+            function button_click() {
+                if(history.length > 1) {
+                    history.back();
+                } else {
+                    document.location.href = "../../블로그포스트목록.html";
+                }
+            }
+        </script>
+    </body>
+</html>
