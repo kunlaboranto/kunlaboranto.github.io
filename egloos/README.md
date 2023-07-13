@@ -4,27 +4,235 @@
 ```
 
 
-## xx
+## show_full_processlist-xx
 
 ```SQL
+$ cat ../skel/show_full_processlist.sql
+/*
+-- ms-xx -f -vvv < show_full_processlist.sql > ./logs/show_full_processlist.out.ms-xx.`date "+%Y%m%d_%H%M"`.1
+*/
+
+show full processlist;
+
+$ cat ../skel/show_full_processlist.sh
+#!/bin/sh
+
+ SQLCMD="ms-xx"
+test "x$1" != "x" && SQLCMD="$1"
+
+echo ""
+echo "[${SQLCMD}]"
+echo ""
+
+# ${SQLCMD} -f -vvv < show_full_processlist.sql > ./logs/show_full_processlist.out.${SQLCMD}.`date "+%Y%m%d_%H%M"`.1
+${SQLCMD} -f -vvv < show_full_processlist.sql 2>&1 |grep -v "Using a password"  > ./logs/aa.out
+cat ./logs/aa.out |dos2unix > ./logs/show_full_processlist.out.${SQLCMD}.`date "+%Y%m%d_%H%M"`.1
+
+MYUSR="X2040811"
+echo ""
+echo "@@ Running JOB @@"
+grep "^|" logs/aa.out |grep -v " 0 | init " |grep -v Sleep |grep -v ${MYUSR}
+echo ""
+echo "@@ Running JOB (${MYUSR}) @@"
+grep ${MYUSR} logs/aa.out |grep -v " 0 | init "
+
+exit
+
+${SQLCMD} -f -vvv < show_full_processlist.sql |dos2unix > ./logs/show_full_processlist.out.${SQLCMD}.`date "+%Y%m%d_%H%M"`.1
+
 ```
 
 
-## xx
+## mon_sp.sql-xx
 
 ```SQL
+$ cat ../skel/mon_sp.sql-xx
+/*
+ # Usage:
+    watch -n 10 'ms-xx < mon_sp.sql 2>&1 |dos2unix |grep -v password |expand -t 8 |tee -a watch.log.ms-xx.`date "+%Y%m%d"`'
+
+*/
+
+SELECT
+       -- NOW() AS ILSI
+       DATE_FORMAT(NOW(),'%d %H:%i:%S') AS SNAP_TIME_
+     -- , ID AS "ID      "
+     -- 305204400685696 : READ ONLY TX
+     -- 1018111834      : TX
+     -- NULL            : NO-TX
+     -- 33788135 1018111834 : ID + TX
+     -- , ( SELECT IFNULL( MAX(TRX_ID), 0 ) AS TRX_ID FROM INFORMATION_SCHEMA.INNODB_TRX WHERE TRX_MYSQL_THREAD_ID = A.ID ) AS TRX_ID
+     -- [NOTE] 만일 'x' 가 짤린다면, TRX_ID가 10자리를 넘어선것임
+     -- , CONCAT(ID, ' ', ( SELECT LPAD( CONCAT(IFNULL(MAX(TRX_ID),0),'x'),11,' ') AS TRX_ID FROM INFORMATION_SCHEMA.INNODB_TRX WHERE TRX_MYSQL_THREAD_ID = A.ID AND TRX_ID < POWER(2,48) )) AS "ID            TRX_ID"
+     , CONCAT(ID, ' ', ( SELECT REPLACE(LPAD( CONCAT(IFNULL(MAX(TRX_ID),0),'x'),11,' '),' 0x',' 0 ') AS TRX_ID FROM INFORMATION_SCHEMA.INNODB_TRX WHERE TRX_MYSQL_THREAD_ID = A.ID AND TRX_ID < POWER(2,48) )) AS "ID            TRX_ID"
+     -- , USER
+     , SUBSTR(USER,1,7) AS USER
+     -- , DB
+     -- , COMMAND
+     , TIME
+     , SUBSTR(STATE,1,5) AS STATE
+     -- , HOST
+     , SUBSTR(HOST,1,INSTR(HOST,':')-1) AS HOST
+     -- , STATEMENT_DIGEST(INFO) AS SQL_HASH
+     -- , SUBSTR(STATEMENT_DIGEST_TEXT(INFO),1,60) AS SQL_TEXT
+     -- , SUBSTR(INFO,1,86) AS SQL_TEXT
+     -- , SUBSTR(INFO,1,180) AS SQL_TEXT
+     , SUBSTR(REGEXP_REPLACE(REPLACE(INFO,CHAR(9),' '),' [ ]*',' '),1,180) AS SQL_TEXT
+  FROM INFORMATION_SCHEMA.PROCESSLIST A
+ WHERE 1=1
+   AND USER NOT IN ('event_scheduler')
+   AND ID <> connection_id()
+   AND Command NOT IN ( 'Sleep' )
+   AND STATE NOT IN ( 'Source has sent all binlog to replica; waiting for more updates' ) 
+ ORDER BY A.TIME DESC
+;
+
 ```
 
 
-## xx
+## L3.sql-xx
 
 ```SQL
+$ cat ../skel/L3.sql-xx 
+/*
+  Usage:
+    watch -n 10 'ms-xx < L3.sql 2>&1 |grep -v password |expand -t 16 |tee -a watch.LOCK.log.ms-xx.`date "+%Y%m%d"`'
+
+  BUGBUG:
+    if "-- Est DDL TIME" then "Unable to normalize query; Additional details available are Query Text:" AT 'performance_schema.error_log'
+*/
+
+/* Est DDL TIME */
+SELECT 
+       CURRENT_TIME AS TIME
+     , ROUND(WORK_COMPLETED*100/WORK_ESTIMATED,1) AS PCT
+     , ROUND( (timer_end - timer_start)/10E11, 3 ) as 'ELAP,s'
+     , WORK_COMPLETED, WORK_ESTIMATED
+     , EVENT_NAME
+     -- , NESTING_EVENT_ID 
+     -- , ROUND( TIMER_WAIT/10E11, 3 ) as TIMER_WAIT 
+     -- , a.* 
+FROM performance_schema.events_stages_current a ;
+SELECT ' ' FROM DUAL WHERE 1 = (SELECT 1 FROM performance_schema.events_stages_current LIMIT 1);
+
+
+SELECT NOW() TM4,
+       r.trx_id waiting_trx_id
+     , r.trx_mysql_thread_id waiting_thread
+     , r.trx_query waiting_query
+     , b.trx_id blocking_trx_id
+     , b.trx_mysql_thread_id blocking_thread
+     -- , b.trx_query blocking_query
+     , IFNULL( b.trx_query
+             , (SELECT SUBSTR( ss.last_statement, 1, 100 ) FROM sys.x$session ss WHERE ss.conn_id = b.trx_mysql_thread_id LIMIT 1) 
+             ) AS BLOCKING_QUERY
+     , (SELECT 
+               CONCAT_WS('','['
+               , DATE_FORMAT(DATE_SUB( NOW(), INTERVAL ROUND(ss.trx_latency/10E11,0) SECOND ),'%Y-%m-%d %H:%i:%s') 
+               , ' - '
+               -- , ss.command
+               -- , ss.state
+               , IFNULL(ss.state,ss.command)
+               , '] ')
+          FROM sys.x$session ss WHERE ss.conn_id = b.trx_mysql_thread_id ) AS BLOCKING_TRX_STARTED
+  FROM performance_schema.data_lock_waits w 
+       INNER JOIN information_schema.innodb_trx b ON b.trx_id = w.blocking_engine_transaction_id 
+       INNER JOIN information_schema.innodb_trx r ON r.trx_id = w.requesting_engine_transaction_id
+\G
+SELECT ' ' FROM DUAL WHERE 1 = (SELECT 1 FROM sys.schema_table_lock_waits LIMIT 1);
+
+/* NORMAL LOCK */
+/* -- {{ OKT
+select CURRENT_TIME TM1, w.*, count(*) over() as DATA_LOCK_CNT
+     , (select substr( b.trx_query, 1, 100 ) from information_schema.innodb_trx b where b.trx_id = w.blocking_engine_transaction_id) as BLOCKING_QUERY
+  from performance_schema.data_lock_waits w where not exists (select 1 from sys.schema_table_lock_waits lw) limit 3 \G
+SELECT ' ' FROM DUAL WHERE 1 = (SELECT 1 FROM performance_schema.data_lock_waits LIMIT 1);
+*/ -- }} OKT
+
+
+/* META LOCK */ 
+select CURRENT_TIME TM2, lw.*, count(*) over() as META_LOCK_CNT 
+     -- , (select substr( convert(px.info using utf8mb4), 1, 131000 ) from INFORMATION_SCHEMA.processlist px where px.id = lw.blocking_pid ) as BLOCKING_QUERY
+     -- , (select substr( convert(px.info using utf8mb4), 1, 100    ) from INFORMATION_SCHEMA.processlist px where px.id = lw.blocking_pid ) as BLOCKING_QUERY
+     , IFNULL(
+               (SELECT SUBSTR( CONVERT(px.info using utf8mb4), 1, 100    ) FROM INFORMATION_SCHEMA.processlist px WHERE px.id = lw.blocking_pid LIMIT 1)
+             , (SELECT SUBSTR( ss.last_statement, 1, 100 ) FROM sys.x$session ss WHERE ss.conn_id = lw.blocking_pid LIMIT 1) 
+             ) AS BLOCKING_QUERY
+     , (SELECT 
+               CONCAT_WS('','['
+               , DATE_FORMAT(DATE_SUB( NOW(), INTERVAL ROUND(ss.trx_latency/10E11,0) SECOND ),'%Y-%m-%d %H:%i:%s') 
+               , ' - '
+               -- , ss.command
+               -- , ss.state
+               , IFNULL(ss.state,ss.command)
+               , '] ')
+          FROM sys.x$session ss WHERE ss.conn_id = lw.blocking_pid ) AS BLOCKING_TRX_STARTED
+  from sys.schema_table_lock_waits lw where waiting_pid <> blocking_pid limit 8 \G
+SELECT ' ' FROM DUAL WHERE 1 = (SELECT 1 FROM sys.schema_table_lock_waits LIMIT 1);
+
+
 ```
 
 
-## xx
+## prop.sh-xx
 
 ```SQL
+$ cat prop.sh-xx
+#!/bin/sh
+
+MYSQL_PS1=""
+
+ SQLCMD="msl"
+test "x$2" != "x" && SQLCMD="$2"
+
+STR="$1"
+
+########################################
+# FUNCTION
+########################################
+
+alias grep='grep --color=auto'
+
+function doIt
+{
+    ${SQLCMD} -t -vvv << EOF
+   SHOW VARIABLES LIKE '%${STR}%' ;
+-- SHOW GLOBAL VARIABLES LIKE '%${STR}%' ;
+EOF
+}
+
+function doIt_NEW
+{
+    ${SQLCMD} -s -t -vvv << EOF
+SELECT NOW() AS SNAP_TIME, @@version, @@hostname;
+SHOW VARIABLES LIKE '%' ;
+EOF
+
+# -- SELECT @@hostname, @@aurora_server_id;
+# -- SHOW GLOBAL VARIABLES LIKE '%' ;
+# -- SHOW GLOBAL STATUS;
+}
+
+########################################
+# MAIN
+########################################
+
+echo ""
+echo "[${SQLCMD}]"
+
+#doIt ; exit 
+
+#doIt 2>&1 |expand -t 4 |sed -e "s/|[ ]*$//g" |sed -e "s/ [ ]*$//g" |grep -v "insecure.$" |grep -v ^Bye
+#exit
+
+if [ "x${STR}" = "x%" ]
+then
+    doIt_NEW 2>&1 |dos2unix |expand -t 4 |sed -e "s/-[-]*+$/--------|/g" |sed -e "s/|[ ]*$//g" |sed -e "s/ [ ]*$//g" |tee .prop.TXT.${SQLCMD}
+else
+    doIt_NEW 2>&1 |dos2unix |expand -t 4 |sed -e "s/-[-]*+$/--------|/g" |sed -e "s/|[ ]*$//g" |sed -e "s/ [ ]*$//g" \
+    |grep -i -e "^+" -e "| Value" -e "${STR}"
+fi
+
 ```
 
 
