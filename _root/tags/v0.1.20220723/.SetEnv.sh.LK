@@ -1,0 +1,7 @@
+ln -sf ./work/onmir/.onmir/.aliases .
+ln -sf ./work/onmir/.onmir/.bashrc .
+ln -sf ./work/onmir/.onmir/.profile.altibase .
+ln -sf ./work/onmir/.onmir/.profile.onmir .
+ln -sf ./work/onmir/.onmir/.profile.oracle .
+ln -sf ./work/onmir/.onmir/.profile.tibero .
+ln -sf ./work/onmir/.onmir/.vimrc .
