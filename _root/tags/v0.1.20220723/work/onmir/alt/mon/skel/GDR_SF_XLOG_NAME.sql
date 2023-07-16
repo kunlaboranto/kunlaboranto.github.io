@@ -1,0 +1,58 @@
+CREATE OR REPLACE FUNCTION US_GDMON.GDR_SF_XLOG_NAME
+(
+  A_SQL_TEXT    IN VARCHAR(32000)
+, A_SQL_TEXT2   IN VARCHAR(32000)       DEFAULT NULL
+, A_LANG        IN VARCHAR(4)           DEFAULT NULL    -- EN
+)
+RETURN VARCHAR(128)
+AS
+    V_TMP       VARCHAR(32000);
+    V_KEYSTR    VARCHAR(128);
+BEGIN
+
+    V_KEYSTR := ' [SQL_ID].[' ;
+
+    IF A_SQL_TEXT2 IS NOT NULL THEN
+        V_TMP := A_SQL_TEXT2;
+        IF INSTR( V_TMP, V_KEYSTR ) != 0 THEN
+            IF A_LANG IS NULL THEN
+                V_TMP := SUBSTR( V_TMP, INSTR( V_TMP, V_KEYSTR ) + LENGTH(V_KEYSTR), 100 ) ;
+                V_KEYSTR := '].[' ;
+                V_TMP := SUBSTR( V_TMP, INSTR( V_TMP, V_KEYSTR ) + LENGTH(V_KEYSTR), 100 ) ;
+                V_KEYSTR := ']' ;
+                V_TMP := SUBSTR( V_TMP, 1, INSTR( V_TMP, V_KEYSTR ) - 1 );
+            ELSE
+                V_TMP := SUBSTR( V_TMP, INSTR( V_TMP, V_KEYSTR ) + LENGTH(V_KEYSTR), 100 ) ;
+                V_KEYSTR := '].[' ;
+                V_TMP := SUBSTR( V_TMP, 1, INSTR( V_TMP, V_KEYSTR ) - 1 );
+            END IF;
+        ELSE
+            RETURN NULL;
+        END IF;
+    ELSE
+        V_TMP := A_SQL_TEXT;
+        IF INSTR( V_TMP, V_KEYSTR ) != 0 THEN
+            IF A_LANG IS NULL THEN
+                V_TMP := SUBSTR( V_TMP, INSTR( V_TMP, V_KEYSTR ) + LENGTH(V_KEYSTR), 100 ) ;
+                V_KEYSTR := '].[' ;
+                V_TMP := SUBSTR( V_TMP, INSTR( V_TMP, V_KEYSTR ) + LENGTH(V_KEYSTR), 100 ) ;
+                V_KEYSTR := ']' ;
+                V_TMP := SUBSTR( V_TMP, 1, INSTR( V_TMP, V_KEYSTR ) - 1 );
+            ELSE
+                V_TMP := SUBSTR( V_TMP, INSTR( V_TMP, V_KEYSTR ) + LENGTH(V_KEYSTR), 100 ) ;
+                V_KEYSTR := '].[' ;
+                V_TMP := SUBSTR( V_TMP, 1, INSTR( V_TMP, V_KEYSTR ) - 1 );
+            END IF;
+        ELSE
+            RETURN NULL;
+        END IF;
+    END IF;
+
+    RETURN V_TMP;
+EXCEPTION
+    WHEN OTHERS THEN
+        SYSTEM_.PRINTLN('['||TO_CHAR(SYSDATE,'YYYY/MM/DD HH24:MI:SS.FF6')||'] ERR-'||SQLCODE||' '||SQLERRM );
+        --RAISE;
+    RETURN NULL ;
+END;
+/

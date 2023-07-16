@@ -1,0 +1,59 @@
+CREATE OR REPLACE FUNCTION US_GDMON.SF_COL_TYPE
+(
+  A_DATA_TYPE IN INTEGER
+, A_PRECISION IN INTEGER DEFAULT NULL
+, A_SCALE     IN INTEGER DEFAULT NULL
+, A_OFFSET    IN INTEGER DEFAULT NULL
+)
+RETURN VARCHAR(32)
+AS
+  V_RET VARCHAR(32);
+BEGIN
+
+    IF A_DATA_TYPE = 20001 THEN
+        IF A_OFFSET IS NULL THEN
+            --TODO: [BUGBUG] WHAT DIFF TIMESTAMP OR NOT ?
+            V_RET := 'TIMESTAMP';
+        ELSE
+            V_RET := 'BYTE(' || A_PRECISION || ')';
+        END IF;
+    ELSIF A_DATA_TYPE = 9 THEN
+        V_RET := 'DATE';
+    ELSIF A_DATA_TYPE = 4 THEN
+        V_RET := 'INTEGER';
+    ELSIF A_DATA_TYPE = 5 THEN
+        V_RET := 'SMALLINT';
+    ELSIF A_DATA_TYPE = -5 THEN
+        V_RET := 'BIGINT';
+    ELSIF A_DATA_TYPE = 6 THEN
+        IF A_PRECISION = 38 THEN
+            V_RET := 'FLOAT';
+        ELSE
+            V_RET := 'FLOAT(' || A_PRECISION || ')';
+        END IF;
+    ELSIF A_DATA_TYPE = 7 THEN
+        V_RET := 'REAL';
+    ELSIF A_DATA_TYPE = 8 THEN
+        V_RET := 'DOUBLE';
+    ELSIF A_DATA_TYPE = 30 THEN
+        V_RET := 'BLOB';
+    ELSIF A_DATA_TYPE = 40 THEN
+        V_RET := 'CLOB';
+    ELSIF A_DATA_TYPE = 1 THEN
+        V_RET := 'CHAR(' || A_PRECISION || ')';
+    ELSIF A_DATA_TYPE = 12 THEN
+        V_RET := 'VARCHAR(' || A_PRECISION || ')';
+    ELSIF A_DATA_TYPE = 2 THEN
+        IF A_SCALE = 0 THEN
+            V_RET := 'NUMERIC(' || A_PRECISION || ')';
+        ELSE
+            V_RET := 'NUMERIC(' || A_PRECISION || ',' || A_SCALE || ')';
+        END IF;
+    ELSIF A_DATA_TYPE = -7 THEN
+        V_RET := 'BIT(' || A_PRECISION || ')';
+    END IF;
+
+    RETURN V_RET;
+END;
+/
+

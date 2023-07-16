@@ -1,0 +1,36 @@
+#!/bin/sh
+
+ SQLCMD="ts"
+test "x`hostname`" = "xdb01" && SQLCMD="tsd"
+
+doit()
+{
+    $SQLCMD --silent << EOF
+    SET HEADING OFF;
+    SET LINESIZE 120;
+
+    SELECT
+           RPAD(A.NAME,48)||' = '||RPAD(A.VALUE||' ',48)
+           AS VALUE
+      FROM DATABASE_PROPERTIES A
+     WHERE 1=1
+       AND (A.NAME LIKE UPPER('%$1%') OR A.VALUE LIKE UPPER('%$1%') )
+     UNION ALL
+    SELECT
+           RPAD(A.NAME,48)||' = '||RPAD(A.VALUE||' ',48)
+           ||CASE WHEN A.DFLT_VALUE <> A.VALUE THEN '(DEF) '||A.DFLT_VALUE ELSE '(SAME)' END
+           --||DECODE(B.NAME, NULL, ', (I)', '')
+           AS VALUE
+      FROM V\$PARAMETERS A
+           --LEFT OUTER JOIN V\$PARAMETERS B ON A.NAME = B.NAME
+     WHERE 1=1
+       AND (A.NAME LIKE UPPER('%$1%') OR A.VALUE LIKE UPPER('%$1%') OR A.DFLT_VALUE LIKE UPPER('%$1%') )
+       --AND A.DFLT_VALUE <> A.VALUE
+    ORDER BY 1;
+EOF
+}
+
+echo ""
+#doit $1
+ doit $1 |grep -v "^ " |grep " = " |sed -e "s/ [ ]*$//g"
+

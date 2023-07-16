@@ -1,0 +1,81 @@
+#!/bin/bash
+# THIS FILE IS ADDED FOR COMPATIBILITY PURPOSES
+#
+# It is highly advisable to create own systemd services or udev rules
+# to run scripts during boot instead of using this file.
+#
+# In contrast to previous versions due to parallel execution during boot
+# this script will NOT be run after all other services.
+#
+# Please note that you must run 'chmod +x /etc/rc.d/rc.local' to ensure
+# that this script will be executed during boot.
+
+touch /var/lock/subsys/local
+
+########################################
+# db-A
+########################################
+# echo 2147483648 > /proc/sys/kernel/shmmax         # def: 1081882877952
+# echo 4096 > /proc/sys/kernel/shmmni               # def: 4096
+# echo 1024 32000 1024 5026 > /proc/sys/kernel/sem    # def: 250  32000   100 128
+# echo 30 > /proc/sys/vm/swappiness                 # def: 60
+
+########################################
+# GoldiLocks
+########################################
+
+# perf
+echo 1 > /proc/sys/kernel/perf_event_paranoid       # def: 1
+echo 0 > /proc/sys/kernel/kptr_restrict             # def: 0
+
+# gettimeofday (el6)
+# echo 2 > /proc/sys/kernel/vsyscall64
+
+# etc
+echo 65536 > /proc/sys/kernel/pid_max               # def: 32768
+
+# vm
+echo 1 > /proc/sys/vm/dirty_writeback_centisecs   # def: 500
+echo 10 > /proc/sys/vm/dirty_expire_centisecs     # def: 3000
+echo 0 > /proc/sys/vm/swappiness                  # def: 60
+
+echo 10000 > /proc/sys/vm/vfs_cache_pressure      # def: 100
+echo 15 > /proc/sys/vm/dirty_ratio                # def: 20
+echo 3 > /proc/sys/vm/dirty_background_ratio      # def: 10
+
+# net 
+echo 1 > /proc/sys/net/ipv4/tcp_low_latency         # def: 0
+echo 3 > /proc/sys/net/ipv4/tcp_keepalive_intvl     # def: 75
+echo 3 > /proc/sys/net/ipv4/tcp_keepalive_probes    # def: 9
+echo 3 > /proc/sys/net/ipv4/tcp_keepalive_time      # def: 7200
+
+
+# disk IO
+# noatime , nobarrier (밧데리가있을때)
+#echo "noop" > /sys/block/sdb/queue/scheduler       # def: noop [deadline] cfq
+
+# selinux disabled
+# firewalld disable
+
+# service (el6)
+# service acpid stop
+# service irqbalance stop
+# service iptables stop
+# service ip6tables stop
+
+# service (el7)
+service auditd stop
+
+
+###########
+# Solarflare
+###########
+# numactl --cpunodebind=1 onload_tool reload
+# ethtool -C ens5f0 rx-usecs 0 adaptive-rx off
+# ethtool -C ens5f1 rx-usecs 0 adaptive-rx off
+# ifconfig ens5f0 mtu 9000 txqueuelen 50000
+# ifconfig ens5f1 mtu 9000 txqueuelen 50000
+# echo 0 > /sys/class/net/ens5f0/device/lro
+# echo 0 > /sys/class/net/ens5f1/device/lro
+# sfcaffinity_config -c 54,55 auto
+

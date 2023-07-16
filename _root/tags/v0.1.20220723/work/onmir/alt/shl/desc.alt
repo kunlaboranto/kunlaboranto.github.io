@@ -1,0 +1,97 @@
+#!/bin/sh
+
+# ALTIBASE_NLS_USE=UTF8
+# ALTIBASE_NLS_USE=MS949
+
+ SQLCMD="is"
+test "x$2" != "x" && SQLCMD="$2"
+
+chk=`echo $LANG |grep -i utf |wc -l`
+test "x"$chk = "x1" && export ALTIBASE_NLS_USE=UTF8
+
+########################################
+# FUNCTION
+########################################
+
+function doIt
+{
+    ${SQLCMD} -silent << EOF
+alter session set explain plan = off;
+set linesize 80;
+set feedback off;
+--set ForeignKeys on;
+set ForeignKeys off;
+
+desc ${USR}.${TBL}
+--desc ${TBL}
+EOF
+}
+
+function doUsr
+{
+    ${SQLCMD} -silent << EOF
+alter session set explain plan = off;
+set linesize 80;
+set feedback off;
+
+SELECT 'CUT='||USER_NAME
+  FROM (SELECT U.USER_NAME
+          FROM system_.sys_users_ U
+             , system_.sys_tables_ T
+         WHERE U.USER_ID = T.USER_ID
+           AND U.USER_NAME LIKE '%OWN' 
+       AND T.TABLE_NAME = UPPER('${TBL}')
+         UNION ALL
+        SELECT U.USER_NAME
+          FROM system_.sys_users_ U
+             , system_.sys_tables_ T
+         WHERE U.USER_ID = T.USER_ID
+           AND U.USER_NAME NOT LIKE '%OWN' 
+       AND T.TABLE_NAME = UPPER('${TBL}')
+       )
+ WHERE ROWNUM = 1
+;
+
+EOF
+}
+
+function doCnt
+{
+    ${SQLCMD} -silent << EOF
+alter session set explain plan = off;
+set heading off
+set linesize 180
+
+select SYSDATE, ' ${USR}.${TBL} ( '
+|| LPAD( NVL( ( SELECT REPLACE( TC.COMMENTS, CHR(10), ' ') FROM system_.SYS_COMMENTS_ TC WHERE TC.USER_NAME = '${USR}' AND TC.TABLE_NAME = '${TBL}' AND TC.COLUMN_NAME IS NULL )
+, '-' ), 28 )
+|| ' ) = '||TO_CHAR( CNT,'999,999,999,999' )
+AS "VALUE"
+  from ( SELECT COUNT(*) CNT FROM ${USR}.${TBL} )
+;
+
+EOF
+}
+
+########################################
+# MAIN
+########################################
+
+chk=`echo $1 |grep "\." |wc -l`
+if [ "x"$chk = "x0" ]
+then
+    TBL=$1
+    USR=`doUsr ${TBL} |grep "^CUT=" |sed -e "s/^.*=//g"`
+else
+    TBL=`echo $1 |sed -e "s/\./ /g" |awk '{print $2}'`
+    USR=`echo $1 |sed -e "s/\./ /g" |awk '{print $1}'`
+fi
+
+TBL=`echo ${TBL} |tr [a-z] [A-Z]`
+USR=`echo ${USR} |tr [a-z] [A-Z]`
+
+##
+
+doIt ${TBL} |grep -v "^ [ ]*PRIMARY KEY$" |grep -v "^SQL>"
+echo ""
+doCnt ${TBL} |grep " = " |sed -e "s/ [ ]*$//g"

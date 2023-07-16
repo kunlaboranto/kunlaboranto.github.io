@@ -1,0 +1,85 @@
+#!/bin/sh
+
+UNAME=`uname`
+
+if [ "x$UNAME" = "xLinux" ]
+then
+   #echo "          Filesystem  GB blocks     Free    %Used    Iused   %Iused Mounted on (`date '+%Y/%m/%d %H:%M:%S'`)"
+    echo "                    Filesystem  GB blocks     Free    %Used    Iused   %Iused Mounted on (`date '+%Y/%m/%d %H:%M:%S'`)"
+
+    mkdir -p /tmp/$USER
+
+    df -h > /tmp/$USER/df_h.res
+    \vim -c "%g/^[^ ]*$/j" -c "wq" /tmp/$USER/df_h.res 1>/dev/null 2>&1
+
+    df -i > /tmp/$USER/df_i.res_
+    \vim -c "%g/^[^ ]*$/j" -c "wq" /tmp/$USER/df_i.res_ 1>/dev/null 2>&1
+    cat /tmp/$USER/df_i.res_ |awk '{print $3" "$5}' > /tmp/$USER/df_i.res
+#exit 0;
+
+    #df -h |grep -v "^Filesystem" |awk '{print $1" "$2" "$3" "$5" "-" "-" "$6}' |xargs printf "%20s %10s %8s %8s %8s %8s %s\n"
+    sdiff /tmp/$USER/df_h.res /tmp/$USER/df_i.res \
+        |grep -v "^Filesystem" |awk '{print $1" "$2" "$4" "$5" "$8" "$9" "$6}' \
+        |xargs printf "%30s %10s %8s %8s %8s %8s %s\n"
+
+elif [ "x$UNAME" = "xAIX" ]
+then
+
+    echo "          Filesystem  GB blocks     Free    %Used    Iused   %Iused Mounted on (`date '+%Y/%m/%d %H:%M:%S'`)"
+    df -g |grep -v "^Filesystem" |awk '{print $1" "$2" "$3" "$4" "$5" "$6" "$7}' |xargs printf "%20s %10s %8s %8s %8s %8s %s\n"
+
+elif [ "x$UNAME" = "xHP-UX" ]
+then
+    function doIt
+    {
+
+    # LOG_DIR : altidata004 --> altidata014
+    # ARCHIVE_LOG : archive
+
+    bdf -s |grep -e altidata014 -e archive -e $KEY |grep -v "^/dev/vx/" |grep -v Filesystem |sed -e "s/^ /X/g" \
+    |awk '
+    BEGIN {
+    }
+    { 
+        printf("%12s", $6) ;
+        printf("%8d", $2/1024) ;
+        printf("%8d", $3/1024) ;
+        printf("%8d", $4/1024) ;
+        printf("%8s", $5) ;
+        printf("\n") ;
+    }
+    END {
+        printf("\n") ;
+    }
+    '
+
+    }
+
+    DT=`date "+%Y/%m/%d %H:%M:%S"`
+    echo "[$DT]"
+    awk '
+    BEGIN {
+        printf("%12s", "Mouted-on") ;
+        printf("%8s", "size") ;
+        printf("%8s", "used") ;
+        printf("%8s", "avail") ;
+        printf("%8s", "(%)") ;
+        printf("\n") ;
+    }'
+
+    if [ $# -eq 0 ]
+    then
+        KEY="/"
+    else
+        KEY=$1
+    fi
+
+    doIt $KEY |sort -k 1
+    echo "[$DT]"
+
+else
+
+    df -m
+
+fi
+

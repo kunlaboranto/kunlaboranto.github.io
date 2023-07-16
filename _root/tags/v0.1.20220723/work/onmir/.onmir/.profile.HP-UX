@@ -1,0 +1,122 @@
+####################
+# HP-UX
+####################
+
+export TERM=vt100
+export UNIX95=1
+
+# GNU #
+# http://forums11.itrc.hp.com/service/forums/questionanswer.do?admit=109447626+1260475679145+28353475&threadId=1095597
+export TERMINFO=/usr/share/lib/terminfo    
+
+test "x`uname`" = "xHP-UX" && set +u
+
+export PATH=/usr/local/bin:/usr/sbin:/sbin:$PATH
+export PATH=/opt/aCC/bin:$PATH
+
+# Set up the terminal:
+if [ "$TERM" = "" ]
+then
+	eval ` tset -s -Q -m ':?hp' `
+else
+	eval ` tset -s -Q `
+fi
+
+stty erase "^H" kill "^U" intr "^C" eof "^D"
+stty hupcl ixon ixoff
+
+tabs
+
+test "x`uname`" = "xHP-UX" && set -u
+trap "echo 'logout'" 0
+
+# hangul
+stty cs8 -parenb -istrip -ixany
+
+export HISTFILE=~/.sh_history
+export HISTSIZE=500
+
+###################
+# OS PERF ENV (1) #
+###################
+
+export PTHREAD_FORCE_SCOPE_SYSTEM=ON    # if 11.23, use PERF_ENABLE=1 also
+export PTHREAD_SUSPEND_SYNC=1           # if using suspension APIs
+export PTHREAD_FAST_SHARED_OBJECTS=ON
+
+export PTHREAD_DISABLE_HANDOFF=ON
+export PTHREAD_SHARED_MUTEX_OLDSPIN=1   # HP 11.23, PHCO_33675
+
+#export _M_ARENA_OPTS=8:32              # default 8:32, SybaseIQ 1:4096, LPL 20:32
+ export _M_ARENA_OPTS=20:32             # 2019.01.25 (by okseop7)
+#export _M_SBA_OPTS=65536:50:256        # defualt 512:100:16, SybaseIQ 65536:50:256
+ export PTHREAD_COND_PERF=1             # if mutex wait, user space spinning instead of ksleep ( reduce kernel lock contention )
+
+###################
+# OS PERF ENV (2) #
+###################
+
+export PTHREAD_SWTCH_TO_THREAD=1                        # 0 -> 1 by hslee 2010.09.17
+#export PTHREAD_COND_SPIN_YIELD=160000:40000            # 40000:10000 (default)
+
+###################
+# aliases
+###################
+
+if [ -f $HOME/local/bin/tar ]
+then
+    alias tar='$HOME/local/bin/tar'
+	alias vim='$HOME/local/bin/gvim'
+fi
+
+alias bdf='bdf -s'
+# alisa strace='tusc'
+
+
+###################
+# APP
+###################
+
+if [ -d /opt/java7 -o -d /opt/java6 ]
+then
+    if [ -d /opt/java7 ]
+    then
+        export JAVA_HOME=/opt/java7
+    else
+        export JAVA_HOME=/opt/java6
+    fi
+    export PATH=$JAVA_HOME/bin:$PATH
+fi
+
+test "x`uname`" = "xHP-UX" && set +u
+
+export PATH=/opt/perf/bin:$PATH
+# export PATH=xx:$PATH
+
+export LD_LIBRARY_PATH=/usr/lib/hpux64:/lib/hpux64:/usr/local/lib/hpux64:$LD_LIBRARY_PATH
+
+export JSVN_HOME=~altibase/local/svnkit-1.8.12
+export PATH=$JSVN_HOME/bin:$PATH
+
+export CLASSPATH=.:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/antlr-runtime-3.4.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jna-4.1.0.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jna-platform-4.1.0.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jsch.agentproxy.connector-factory-0.0.7.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jsch.agentproxy.core-0.0.7.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jsch.agentproxy.pageant-0.0.7.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jsch.agentproxy.sshagent-0.0.7.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jsch.agentproxy.svnkit-trilead-ssh2-0.0.7.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jsch.agentproxy.usocket-jna-0.0.7.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/jsch.agentproxy.usocket-nc-0.0.7.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/sequence-library-1.0.3.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/sqljet-1.1.10.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/svnkit-1.8.12.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/svnkit-cli-1.8.12.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/svnkit-javahl16-1.8.12.jar:$CLASSPATH
+export CLASSPATH=$JSVN_HOME/lib/trilead-ssh2-1.0.0-build220.jar:$CLASSPATH
+
+test "x`uname`" = "xHP-UX" && set -u
+
+
+

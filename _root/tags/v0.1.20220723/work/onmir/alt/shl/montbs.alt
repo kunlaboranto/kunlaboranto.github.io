@@ -1,0 +1,17 @@
+#!/bin/sh
+
+test "x`uname`" = "xLinux" && alias grep='grep --color=auto'
+
+ SQLCMD="is"
+test "x$1" != "x" && SQLCMD="$1"
+
+function doIt
+{
+    ${SQLCMD} -silent -f $_C_HOME/../alt/mon/montbs.sql
+}
+
+# doIt $1
+# doIt $1 |grep "^[TN]" |grep -e "^" -e ".*9[0-9]\..*" -e 100 ; date
+doIt $1 |sed -e "s/ [ ]*$//g" |grep -e "^[TNSM]" -e "^----" |grep -e ^ -e IMSI -e " 9[0-9]\."
+
+echo ""; date

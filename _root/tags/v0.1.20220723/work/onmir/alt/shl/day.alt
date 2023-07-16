@@ -1,0 +1,71 @@
+#!/bin/sh
+
+#
+# TODO: HP-UX Only
+#
+
+UNIX95=1; export UNIX95
+
+LOG="$ALTIBASE_HOME/trc/mon_daily.log"
+#LOG="$_C_HOME/../alt/mon/log/mon_daily.log"
+
+LOG_DIR=`grep "^LOG_DIR" $ALTIBASE_HOME/conf/altibase.properties |awk '{print $3}' |sed -e "s;?;$ALTIBASE_HOME;g" `
+
+PID=`ps -ef|grep $ALTIBASE_HOME |grep "$HOME/altibase_home/bin/altibase -" |grep -v grep |awk '{print $2}'`
+VSZ=`ps -p $PID -o vsz |tail -1`
+VSZ=`expr $VSZ / 1024`
+CPU=`ps -p $PID -o pcpu |tail -1 |sed -e "s/ //g"`
+#NUM_LOG=`find $LOG_DIR/. -name "logfile*" -print |wc -l |sed -e "s/ //g"`
+NUM_LOG=`ls $LOG_DIR/logfile* |wc -l`
+
+DT=`date "+%m/%d %H:%M:%S"`
+
+SQL=`.is2 -silent << EOF
+set heading off;
+select 'CUT='||count(*) from v\\$session;
+EOF`
+CONN_CNT=`echo $SQL |sed -e "s/^.*CUT=//g" |awk '{printf ("%d", $1)}'`
+CONN_CNT=${CONN_CNT:=N/A}
+
+SQL=`.is2 -silent << EOF
+set heading off;
+select 'CUT='||count(*) from v\\$session
+where
+--comm_name like '%IPC%'
+xa_session_flag <> 0
+;
+EOF`
+IPC_CNT=`echo $SQL |sed -e "s/^.*CUT=//g" |awk '{printf ("%d", $1)}'`
+IPC_CNT=${IPC_CNT:=N/A}
+
+SQL=`.is2 -silent << EOF
+set heading off;
+select 'CUT='||count(*) from v\\$service_thread where state like '%EXEC%';
+EOF`
+EXE_CNT=`echo $SQL |sed -e "s/^.*CUT=//g" |awk '{printf ("%d", $1)}'`
+EXE_CNT=${EXE_CNT:=N/A}
+
+SQL=`.is2 -silent << EOF
+set heading off;
+select 'CUT='||nvl(max(rep_gap),9990909) from v\\$repgap;
+EOF`
+REP_GAP=`echo $SQL |sed -e "s/^.*CUT=//g" |awk '{printf ("%d", $1)}'`
+REP_GAP=${REP_GAP:=N/A}
+
+SQL=`.is2 -silent << EOF
+set heading off;
+select 'CUT='||nvl(max(ADD_TSS_CNT - GC_TSS_CNT),9990909) from v\\$diskgc;
+EOF`
+GC_GAP=`echo $SQL |sed -e "s/^.*CUT=//g" |awk '{printf ("%d", $1)}'`
+GC_GAP=${GC_GAP:=N/A}
+
+echo "[$DT] PID=$PID VSZ=$VSZ CPU=$CPU CONN=$CONN_CNT (e$EXE_CNT,x$IPC_CNT) LOG=$NUM_LOG GC=$GC_GAP GAP=$REP_GAP" >> $LOG
+tail -20 $LOG
+
+exit
+echo ""
+.is2 -silent << EOF
+set timing off;
+exec sp_sysstat;
+EOF
+

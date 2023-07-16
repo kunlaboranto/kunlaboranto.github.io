@@ -1,0 +1,52 @@
+####################
+# TIBERO
+####################
+
+# test "x$TB_HOME" != "x" && return
+
+test "x`uname`" = "xHP-UX" && set +u
+if [ "x$TB_HOME" = "x" ]
+then
+    export TB_HOME=$HOME/tibero6
+    export TB_SID=TIBERO
+    export LD_LIBRARY_PATH=$TB_HOME/lib:$TB_HOME/client/lib:$LD_LIBRARY_PATH
+    export PATH=$TB_HOME/bin:$TB_HOME/client/bin:$PATH
+
+    export TB_EDITOR=vi
+    export TB_SQL_PATH=.
+    export TB_NLS_LANG=UTF8
+
+    ### Tibero TBCM ###
+    # export CM_HOME=$TB_HOME
+    # export CM_SID=TIBERO_CM1
+fi
+test "x`uname`" = "xHP-UX" && set -u
+
+####################
+# aliase
+####################
+
+alias tbh='cd $TB_HOME'
+alias tbb='cd $TB_HOME/bin'
+alias tbs='cd $TB_HOME/sample'
+alias tbtpr='cd $TB_HOME/instance/$TB_SID'
+# alias tbcfg='cd $TB_HOME/config'
+# alias tblog='cd /TIBERO/tblog'
+# alias tbcli='cd $TB_HOME/client/config'
+# alias tbi='cd ~/tbinary'
+
+alias tbp='vi $TB_HOME/conf/$TB_SID.tip'
+alias tbt='tail -n 100 -f $TB_HOME/trc/altibase_boot.log'
+
+alias tbhome='cd $TB_HOME'
+alias tbbin='cd $TB_HOME/bin'
+alias tblog='cd /TIBERO/tblog'
+alias tbcfg='cd $TB_HOME/config'
+alias tbcfgv='vi $TB_HOME/config/$TB_SID.tip'
+alias tbcli='cd ${TB_HOME}/client/config'
+alias tbcliv='vi ${TB_HOME}/client/config/tbdsn.tbr'
+alias tbi='cd ~/tbinary'
+
+#alias tm='cd ~/tbinary/monitor;monitor;cd -'
+alias tm2='cd $_C_HOME/../tib/tbinary/monitor;monitor;cd -'
+

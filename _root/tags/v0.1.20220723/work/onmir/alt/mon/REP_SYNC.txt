@@ -1,0 +1,33 @@
+$ prop.alt REPLIC
+
+REPLICATION_DDL_ENABLE                                       = 1                                       (DEF) 0
+REPLICATION_LOCK_TIMEOUT                                     = 5                                       (SAME)
+REPLICATION_PREFETCH_LOGFILE_COUNT                           = 0                                       (SAME)
+REPLICATION_SYNC_LOCK_TIMEOUT                                = 30                                      (SAME)
+REPLICATION_SYNC_TUPLE_COUNT                                 = 30000                                   (SAME)
+REPLICATION_UPDATE_PK                                        = 0                                       (SAME), (I)
+REPLICATION_UPDATE_REPLACE                                   = 0                                       (SAME)
+--> 
+
+(1)
+	REPLICATION_SYNC_TUPLE_COUNT                                 
+	  = <80G 사이즈테이블 건수의 1/2 또는 1/3 최소는 1/4 정도일듯, 단 병렬수행하지 않을 다른 20G 테이블 건수보다는 커야함> 
+
+(2) 
+	SYNC시 PARALLEL 개수는 논리 CORE 개수의 2배 정도가 적절할듯
+	어짜피 REPLICATION_SYNC_TUPLE_COUNT 설정을 크게 잡으면, 최대 테이블 말고는 한 테이블당 1개의 THREAD만 활당됨
+
+(3)
+	REPLICATION_PREFETCH_LOGFILE_COUNT 는 SYNC 중에 발생한 데이타를 쫓아가서 반영하는 속도에 영향을 줌
+    = 3 정도가 적절했던듯
+
+(4) 
+	REDO 로그 경로는 작업시간동안 변경분을 버틸만큼 충분히 디스크 용량 확보요
+
+(5) 
+	최신버전에서 추가된 설정관련한 ALTIBASE 측 조언 구할필요는 ?
+
+
+
+
+

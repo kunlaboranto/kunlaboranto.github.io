@@ -1,0 +1,343 @@
+####################
+# TODO
+####################
+
+export _P_HOME=$HOME/PBT
+export PATH=$_P_HOME/bin:$PATH
+export PATH=$_P_HOME/shl:$PATH
+
+alias bin='cd $_P_HOME/bin'
+alias sql='cd $_P_HOME/sql'
+alias dba='cd $_P_HOME/sql/dba'
+alias ing='cd $_P_HOME/sql/stmt'        # current todo directory
+alias dat='cd $_P_HOME/data'
+
+alias montbs='is -f /tmp/montbs |grep "^[TN]" |grep -e "^" -e ".*9[0-9]\..*" -e 100 ; date'
+
+
+####################
+# Base
+####################
+
+TMOUT=0
+
+function slog
+{
+    tail -f $DBM_HOME/trc/alert_$HOSTNAME.log
+}
+
+
+if [ -d $HOME_PRE/onmir/.onmir/. ]
+then
+    export _C_HOME=$HOME_PRE/onmir/.onmir
+else
+    if [ -d $HOME_PRE/work/onmir/.onmir/. ]
+    then
+        export _C_HOME=$HOME_PRE/work/onmir/.onmir
+    else
+        if [ -d $HOME/work/onmir/.onmir/. ]
+        then
+            export _C_HOME=$HOME/work/onmir/.onmir
+        else
+            if [ -d $HOME/.onmir/. ]
+            then
+                export _C_HOME=$HOME/.onmir
+            else
+                export _C_HOME=/tmp/.onmir
+            fi
+        fi
+    fi
+fi
+
+# (def) USE $HOME ( for vi , svn , .. )
+# export _C_HOME=$HOME
+
+test "x`uname`" = "xHP-UX" && set +u
+if [ $_C_STATIC"x" = "x" ]
+then
+    export _C_STATIC=1
+    export PATH=$PATH:/sbin:/usr/sbin:/usr/local/bin
+    export PATH=.:$PATH:$_C_HOME/bin:$_C_HOME/local/bin
+    export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH:$_C_HOME/local/lib
+fi
+test "x`uname`" = "xHP-UX" && set -u
+
+####################
+# aliases
+####################
+
+which vim > /dev/null 2>&1
+if [ "x"$? = "x0" ]
+then
+    alias vi='vim -u $_C_HOME/.vimrc'
+    alias gvim='/usr/bin/gvim -u $_C_HOME/.vimrc'
+fi
+
+####################
+# git
+####################
+
+alias gits='git status -uno'
+alias gitc='git commit -m' 
+alias gitca='git commit -a -m' 
+alias gitp='git push origin master'
+alias gitco='git clone paul@rtf9:/home/git/repositories/3rd_iter.git trunk.git'
+
+####################
+# SVN
+####################
+
+alias svnu='svn update'
+alias svnd='HOME=$_C_HOME svn diff'
+alias svnd2='HOME=$_C_HOME svn diff -r PREV'
+
+function svnl 
+{
+    #SNUM=`LANG=C svn info |grep "^Last Changed Rev:" |awk '{printf "%d", $4 - 1000}'`
+    #SNUM=`LANG=C svn info |grep "^Last Changed Rev:" |awk '{printf "%d", $4 - 100}'`
+    SNUM=`LANG=C svn info |grep "^Last Changed Rev:" |awk '{printf "%d", $4 - 10}'`
+    svn log -r $SNUM:HEAD $*
+}
+
+function svnsd
+{
+    for i in `/bin/ls -F |grep "\/$"`
+    do
+        cd ${i}
+        echo ">> ${i}"
+        svns
+        cd ..
+    done
+}
+
+function svns
+{
+    #svn status |grep -v "build-aux/" |grep -v "Makefile.in" |grep -v "aclocal.m4" |grep -v "config.h.in" |grep -v "^!" |grep -v "^?" |grep "^." 
+    svn status |grep -v "build-aux/" |grep -v "Makefile.in" |grep -v "aclocal.m4" |grep -v "config.h.in" |grep -v "^?" |grep "^." 
+}
+
+function svns2
+{
+    #svn status --no-ignore |grep -v "build-aux/" |grep -v "Makefile.in" |grep -v "aclocal.m4" |grep -v "config.h.in" |grep -v "^!" |grep "^."
+    svn status --no-ignore |grep -v "build-aux/" |grep -v "Makefile.in" |grep -v "aclocal.m4" |grep -v "config.h.in" |grep -v "\.o$" |grep -v "\.out" |grep "^."
+}
+
+function svns3
+{
+    svn status --no-ignore |grep -e "\.[ch]" -e "akefile" -e "\.mk" -e "\.so$" |grep -v "^!" |grep "^?" |grep -e "^." -e "\.[ch]"
+}
+
+function svnsd2
+{
+    for i in `/bin/ls -F |grep "\/$"`
+    do
+        cd ${i}
+        echo ">> ${i}"
+        svns2
+        echo ""
+        cd ..
+    done
+}
+
+function svnud
+{
+    for i in `/bin/ls -F |grep "\/$"`
+    do  
+        cd ${i}
+        echo ">> ${i}"
+        svn up
+        cd ..
+    done
+}
+
+function svncl
+{
+    from=456
+    to="HEAD"
+
+    test $# -gt 0 && from=$1
+    test $# -gt 1 && to=$2
+
+    echo "svn change list ( $from ~ $to )"
+    echo "## LOG ##"
+    svn log -r $from:$to
+    svn log -r $from:$to -v |grep -v "build-aux" |grep -v "autom4te.cache" |grep -v "[\./]m4" |grep -v "\.in" |grep "^   M" |awk '{print $2}' |sort |uniq -c > _tmp.txt
+    echo "## FILE (`cat _tmp.txt |wc -l`) ##"
+    cat _tmp.txt
+}
+
+####################
+# FUNC (PBT)
+####################
+
+# 1초간만 strace
+function _strace
+{
+    step=1
+    #PID=`ps -ef|grep -P "lt-perf -c" |grep -v grep |awk '{print $2}'`
+    
+    test $# -eq 0 && echo "usage: trace <pid> <time>" && return
+    test $# -gt 0 && pid=$1
+    test $# -gt 1 && step=$2
+    
+    ps -p $pid -opid,cmd
+    printf "\n\n"
+
+    date
+    printf "[run] strace -f -p $pid\n"
+    strace -f -p $pid 2>&1 &
+    TID=$!
+    usleep 10000
+    kill $TID
+    #test $? -ne 0 && kill -9 $TID
+
+    date
+    printf "[run] strace -f -c -p $pid\n"
+    strace -f -c -p $pid 2>&1 &
+    TID=$!
+    sleep $step
+    kill $TID
+    #test $? -ne 0 && kill -9 $TID
+    date
+}
+
+function pt
+{
+    test $# -eq 0 && echo "usage: pt <pid>" && return
+    test $# -gt 0 && pid=$1
+    pid=$1
+
+    cmd="ps -L -p $pid -o pid,tid,psr,pcpu,ni,pri,time,stat,wchan"
+# $ ps -L -p 21941 -o pid,tid,psr,pcpu,ni,pri,time,stat,wchan
+#   PID   TID PSR %CPU  NI PRI     TIME STAT WCHAN
+#   21941 21941   9  0.0   0  19 00:00:00 Sl   futex_wait_queue_me
+#   21941 21942   0  0.0   0  19 00:00:03 Sl   poll_schedule_timeout
+
+    echo ""
+    echo "## [$cmd] ##"
+    echo $cmd |sh |tee _tmp.txt
+
+    echo ""
+    cmd="pstree $pid"
+    echo "## [$cmd] ##"
+    echo $cmd |sh |tee -a _tmp.txt
+}
+
+# pstack + cpu usage
+function _pstack
+{
+    test $# -eq 0 && echo "usage: _pstack <pid>" && return
+    test $# -gt 0 && pid=$1
+    pid=$1
+
+    cmd="ps -mp $pid -o THREAD,nlwp,lwp,wchan"
+
+    echo ""
+    echo "## [$cmd] ##"
+    echo $cmd |sh |tee _tmp.txt
+    echo ""
+    echo "## Summary ##"
+    ps -p $pid -opid,pcpu,wchan,vsz,rss,nlwp,cmd
+
+    # echo ""
+    # echo "## pstack ##"
+    # pstack $pid > _pstack.txt
+
+    echo ""
+    echo "## pstack (cpu high) ##"
+    cat _tmp.txt |grep -v "0.0  19"
+    echo ""
+    for tid in `cat _tmp.txt |grep -v "^USER" |grep -v "0.0  [12][0-9]" |awk '{if (NR > 1) print $9 }'`
+    do
+        pstack $tid
+    done;
+    
+    return;
+
+#   (1) 위의 2개 라인을 제거
+#   (2) 19는 PRI 숫자
+#       USER     %CPU PRI SCNT WCHAN  USER SYSTEM NLWP   LWP    VSZ   RSS WCHAN  CMD
+#       expmw    99.8   -    - -         -      -   13     - 163336  9380 -      a.out
+#       expmw     0.0  19    - futex_    -      -    - 24276      -     - futex_ -
+#       expmw    99.5  19    - -         -      -    - 24277      -     - -      -
+}
+
+function pbt
+{
+    test $# -eq 0 && echo "usage: pbt <pid> [2]" && return
+    test $# -gt 0 && pid=$1
+
+    DT=`date "+%m%d-%H%M"`
+    echo ""
+    echo "########################################"
+    echo "## pstack"
+    echo "########################################"
+    _pstack $pid |tee _pstack.log.$pid-$DT
+
+    if [ $# -gt 1 ]
+    then
+        echo ""
+        echo "########################################"
+        echo "## 2nd"
+        echo "########################################"
+        sleep 1
+        _pstack $pid |tee _pstack.log.$pid-$DT.2
+    fi
+
+    echo ""
+    echo "########################################"
+    echo "## strace"
+    echo "########################################"
+    _strace $pid |tee _strace.log.$pid-$DT
+
+    # cp -r /proc/$pid ./proc.$pid
+
+    return;
+}
+
+#({{{-- ( for Folding )
+
+# export N00="numactl --cpunodebind=0 --membind=0"
+# export N01="numactl --cpunodebind=0 --membind=1"
+# export N10="numactl --cpunodebind=1 --membind=0"
+# export N11="numactl --cpunodebind=1 --membind=1"
+# export _D_LOG=$_C_HOME/log
+# export HEAPPROFILE=$_D_LOG/cpu    # cpu.00x.heap 파일 생성
+# export CPUPROFILE=$_D_LOG/cpu     # cpu.00x.heap 파일 생성
+# export LD_PRELOAD=/usr/lib/libtcmalloc.so
+
+#}}})
+
+
+#({{{-- ( for Folding )
+
+#ssh -N -L 55555:10.10.10.1:55555 10.10.10.2
+#alias chcc="scl enable devtoolset-1.1 'bash'"
+
+# export LD_LIBRARY_PATH=../lib:$LD_LIBRARY_PATH
+# export CK_FORK=no
+# export CK_DEFAULT_TIMEOUT=300
+# export PKG_CONFIG_PATH=$_C_HOME/tools/lib/pkgconfig
+# export TMPDIR=$_C_HOME/tmp
+#}}})
+
+####################
+# IB
+####################
+alias ibstat='/usr/sbin/ibstat'                     # IB
+alias setcpu="sudo $HOME/onmir/bin/set-cpu.sh"
+alias chkcpu="cat /proc/`ps -ef|grep /usr/sbin/sshd |grep -v grep |awk '{print $2}'`/status |grep Cpus_allowed"
+
+function allcpu
+{
+    H=`cat /proc/cpuinfo |grep "^processor" |head -1 |awk '{print $3}'`
+    T=`cat /proc/cpuinfo |grep "^processor" |tail -1 |awk '{print $3}'`
+
+    PID=`ps -ef|grep bash |grep -v 'grep ' |grep $LOGNAME |awk '{print $2}'`
+    for pid in $PID
+    do  
+        run="taskset -cp ${H}-${T} $pid"
+        echo ${run}; ${run}
+    done
+}
+

@@ -1,0 +1,75 @@
+####################
+# ALTIBASE
+####################
+
+# BACKUP FOR A5 ENV
+ export PATH_=$PATH
+ export LD_LIBRARY_PATH_=$LD_LIBRARY_PATH
+ export CLASSPATH_=$CLASSPATH
+
+if [ "x$ALTIBASE_HOME" = "x" ]
+then
+    export ALTIBASE_HOME=$HOME/altibase_home
+    export PATH=$ALTIBASE_HOME/bin:$PATH
+    export LD_LIBRARY_PATH=$ALTIBASE_HOME/lib:$LD_LIBRARY_PATH
+    export CLASSPATH=.:$ALTIBASE_HOME/lib/Altibase.jar:$CLASSPATH
+
+    #export ALTIBASE_NLS_USE=MS949
+    export ILO_DATEFORM='YYYYMMDDHHMISS'
+    export ISQL_BUFFER_SIZE=256000
+fi
+
+####################
+# aliase
+####################
+
+alias ist='isql -u test -p test -s localhost'
+
+alias ath='cd $ALTIBASE_HOME'
+alias atb='cd $ALTIBASE_HOME/bin'
+alias ats='cd $ALTIBASE_HOME/sample'
+alias atp='vi $ALTIBASE_HOME/conf/altibase.properties'
+alias att='tail -n 100 -f $ALTIBASE_HOME/trc/altibase_boot.log'
+alias attrp='tail -n 100 -f $ALTIBASE_HOME/trc/altibase_rp.log'
+alias attsm='tail -n 100 -f $ALTIBASE_HOME/trc/altibase_sm.log'
+alias attqp='tail -n 100 -f $ALTIBASE_HOME/trc/altibase_qp.log'
+alias attxa='tail -n 100 -f $ALTIBASE_HOME/trc/altibase_xa.log'
+
+alias repath='export ALTIBASE_HOME=`pwd`;export PATH=$ALTIBASE_HOME/bin:$PATH'
+#alias cdh='cd $HOME/work/AEXPORT/`date +"%Y%m%d"`'
+
+
+function atl
+{
+    LOG_DIR=`grep "^LOG_DIR" $ALTIBASE_HOME/conf/altibase.properties |awk '{print $3}' |sed -e "s;?;$ALTIBASE_HOME;g" `
+    echo "[LOG_DIR] = "$LOG_DIR
+    # find $LOG_DIR/. -name "logfile*" -print | wc -l
+    ls $LOG_DIR/logfile* | wc -l
+    ls -l $LOG_DIR/logfile* | head -5
+    echo ".."
+    ls -l $LOG_DIR/logfile* | tail -3
+}
+
+function atl2
+{
+    ARCHIVE_DIR=`grep "^ARCHIVE_DIR" $ALTIBASE_HOME/conf/altibase.properties |awk '{print $3}' |sed -e "s;?;$ALTIBASE_HOME;g" `
+    echo "[ARCHIVE_DIR] = "$ARCHIVE_DIR
+    # find $ARCHIVE_DIR/. -name "logfile*" -print | wc -l
+    ls $ARCHIVE_DIR/logfile* | wc -l
+    ls -l $ARCHIVE_DIR/logfile* | head -3
+    echo ".."
+    ls -l $ARCHIVE_DIR/logfile* | tail -10
+}
+
+function acd
+{
+    if [ $1 = "logs" ]
+    then
+        ACD_DIR=`grep "^LOG_DIR" $ALTIBASE_HOME/conf/altibase.properties |awk '{print $3}' |sed -e "s;?;$ALTIBASE_HOME;g" `
+    else
+        ACD_DIR=$ALTIBASE_HOME/$1
+    fi
+
+    cd $ACD_DIR
+}
+

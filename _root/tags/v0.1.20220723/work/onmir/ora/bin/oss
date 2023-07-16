@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DBCONN=US_GDMON/US_GDMON@ORCL
+
+# rlwrap -if sqlplus.dict sqlplus $DBCONN $*
+sqlplus -S $DBCONN $*
+

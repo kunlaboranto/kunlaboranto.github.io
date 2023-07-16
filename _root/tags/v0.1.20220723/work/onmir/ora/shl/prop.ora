@@ -1,0 +1,22 @@
+#!/bin/sh
+
+ SQLCMD="os"
+#test "x`hostname`" = "xdev01" && SQLCMD="osd"
+test "x$2" != "x" && SQLCMD="$2"
+
+BASEDIR=`dirname $0`
+PROP_ORA_SQL=$BASEDIR/../mon/prop.sql
+
+function doit
+{
+    $SQLCMD << EOF
+START ${PROP_ORA_SQL} '$1'
+EOF
+}
+
+alias grep='grep --color=auto'
+
+echo ""
+doit $1 |expand -t 8
+# doit $1 |grep -v "^ " |grep -v ":=" |grep -v "@@" |grep "=" |sed -e "s/ [ ]*$//g" |grep -e ^ -e "$1"
+

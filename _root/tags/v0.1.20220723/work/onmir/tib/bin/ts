@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DBCONN=sys@$TB_SID
+
+# . $TB_HOME/.tiberorc
+# rlwrap -if tbsql.dict tbsql $DBCONN $*
+tbsql $DBCONN $*
+

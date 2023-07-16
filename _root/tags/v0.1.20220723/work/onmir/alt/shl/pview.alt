@@ -1,0 +1,42 @@
+
+#!/bin/sh
+
+function doIt
+{
+    .is2 -silent << EOF
+    set heading off;
+    set linesize 120;
+    set colsize 80;
+    select
+        rpad(tablename,40,' ')||' = '||colname
+        --rpad(colname,40,' ')||' = '||tablename
+    from v\$allcolumn
+    where
+        (
+            colname like upper('%$1%')
+            or tablename like upper('%$1%')
+        )
+        AND
+        tablename like upper('V%')
+    order by 1;
+EOF
+}
+
+function doIt2
+{
+    .is2 -silent << EOF
+    set heading off;
+    set linesize 120;
+    set colsize 80;
+    select
+        rpad(name,40,' ')||' = '||value
+    from v\$sysstat
+    where
+        upper(name) like upper('%$1%')
+    order by 1;
+EOF
+}
+
+doIt $1 |grep " = " |sed -e "s/ [ ]*$//g"
+echo "++++++++ v\$sysstat ++++++++"
+doIt2 $1 |grep " = " |sed -e "s/ [ ]*$//g"

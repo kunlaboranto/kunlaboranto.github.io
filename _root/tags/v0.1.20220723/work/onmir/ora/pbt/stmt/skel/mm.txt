@@ -1,0 +1,24 @@
+
+티베로 튜닝....
+
+1. 아래 형태의 문장으로 sql_id, child_number 조회
+SELECT *
+FROM V$SQL
+WHERE 1 = 1
+AND SQL_TEXT LIKE '%select /*+ index_ffs(T "IX_xx_N02") no_parallel */%'
+;
+
+2-1. 서버에서 tm => 81(메뉴번호) => sql_id, child_number 입력
+
+2-2. 또는 "/TIBERO/tbinary/monitor/sql" 디렉토리로 이동 => tbsql => db connect
+SQL> @8_sql_plan_6.sql
+INPUT SQL_ID(ex: sql_id/sql_child_number ) : => sql_id, child_number 입력
+
+아래 형태로 조회가 됨...
+
+## SQL Info
+----------------------------------------------------------------------------------------------------
+
+SQL_ID        CHILD_NUMBER HASH_VALUE PLAN_HASH_VALUE  Gets/Exec Elap/Exec(ms) EXECUTIONS
+------------- ------------ ---------- --------------- ---------- ------------- ----------
+cmapzabcgxj00        58195 3640574976       560466274          4             0          1

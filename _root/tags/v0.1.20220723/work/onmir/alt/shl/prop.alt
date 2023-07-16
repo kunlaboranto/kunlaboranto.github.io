@@ -1,0 +1,28 @@
+#!/bin/sh
+
+ SQLCMD="is"
+test "x$2" != "x" && SQLCMD="$2"
+
+doit()
+{
+    ${SQLCMD} -silent << EOF
+    SET HEADING OFF;
+    SET LINESIZE 0;
+    SET COLSIZE 0;
+    SELECT
+           RPAD(A.NAME,60)||' = '||RPAD(A.MEMORY_VALUE1,40)
+           ||CASE WHEN A.DEFAULT_VALUE1 <> A.MEMORY_VALUE1 THEN '(DEF) '||A.DEFAULT_VALUE1 ELSE '(SAME)' END
+           ||DECODE(B.NAME, NULL, ', (I)', '')
+      FROM X\$PROPERTY A
+           LEFT OUTER JOIN V\$PROPERTY B
+                   ON A.NAME = B.NAME
+     WHERE 1=1
+       AND (A.MEMORY_VALUE1 LIKE UPPER('%$1%') OR A.NAME LIKE UPPER('%$1%') )
+       --AND A.DEFAULT_VALUE1 <> A.MEMORY_VALUE1
+    ORDER BY 1;
+EOF
+}
+
+echo ""
+doit $1 |grep -v "^ " |grep " = " |sed -e "s/ [ ]*$//g"
+

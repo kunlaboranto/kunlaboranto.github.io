@@ -1,0 +1,13 @@
+#!/bin/sh
+
+trap "" TSTP
+
+ export ISQL_CONNECTION=TCP
+#export ALTIBASE_NLS_USE=MS949
+ export ALTIBASE_NLS_USE=UTF8
+
+#DBCONN="-s 127.0.0.1 -port 20300 -u sys -p manager"
+
+ isql $DBCONN $*
+#isql5 $DBCONN $*
+

@@ -1,0 +1,8 @@
+SRC=$1
+SRC=${SRC:=sc}
+for I in `ls *.$SRC`
+do
+    echo $I
+    iconv -f euckr -t utf8 $I > $I.utf8
+    mv $I.utf8 $I
+done

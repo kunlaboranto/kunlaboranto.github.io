@@ -1,0 +1,4 @@
+@off
+@vc
+SELECT * FROM V$BUFFPOOL_STAT A;
+

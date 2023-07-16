@@ -1,0 +1,22 @@
+ORA9> desc V$SESSION_LONGOPS
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER
+ SERIAL#                                            NUMBER
+ OPNAME                                             VARCHAR2(64)
+ TARGET                                             VARCHAR2(64)
+ TARGET_DESC                                        VARCHAR2(32)
+ SOFAR                                              NUMBER
+ TOTALWORK                                          NUMBER
+ UNITS                                              VARCHAR2(32)
+ START_TIME                                         DATE
+ LAST_UPDATE_TIME                                   DATE
+ TIME_REMAINING                                     NUMBER
+ ELAPSED_SECONDS                                    NUMBER
+ CONTEXT                                            NUMBER
+ MESSAGE                                            VARCHAR2(512)
+ USERNAME                                           VARCHAR2(30)
+ SQL_ADDRESS                                        RAW(8)
+ SQL_HASH_VALUE                                     NUMBER
+ QCSID                                              NUMBER
+

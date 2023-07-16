@@ -1,0 +1,31 @@
+#!/bin/sh
+
+
+if [ "x$2" != "x" ]
+then
+    desc.$2 $1
+    exit
+fi
+
+####################
+# ETC
+####################
+
+if [ "x$DBMS" = "xalt" ]
+then
+    desc.alt $1
+    exit
+fi
+
+if [ "x$DBMS" = "xtib" ]
+then
+    desc.tib $1
+    exit
+fi
+
+if [ "x$DBMS" = "xora" ]
+then
+    desc.ora $1
+    exit
+fi
+

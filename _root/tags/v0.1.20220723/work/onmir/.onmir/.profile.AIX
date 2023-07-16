@@ -1,0 +1,25 @@
+####################
+# AIX
+####################
+
+###################
+# OS PERF ENV
+###################
+
+export AIXTHREAD_SCOPE=S
+#export LINK_CNTRL=L_PTHREADS_D7        # for tibero
+
+
+
+###################
+# aliases
+###################
+
+if [ -f $HOME/local/bin/tar ]
+then
+    alias tar='$HOME/local/bin/tar'
+	alias vim='$HOME/local/bin/gvim'
+fi
+
+alias bdf='bdf -s'
+

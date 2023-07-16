@@ -1,0 +1,38 @@
+#!/bin/sh
+
+test "x`uname`" = "xLinux" && alias grep='grep --color=auto'
+
+chk=`echo $LANG |grep -i utf |wc -l`
+test "x"$chk = "x1" && export ALTIBASE_NLS_USE=UTF8
+
+SQLCMD=.is2
+
+function doIt
+{
+    ${SQLCMD} -silent << EOF
+set heading off;
+set linesize 200;
+set colsize 200;
+
+SELECT
+       LPAD(A.USER_NAME,15)||'.'||RPAD(B.TABLE_NAME,30)||' = ('||LPAD(C.COLUMN_ORDER,2)||') '||RPAD(C.COLUMN_NAME,41)||RPAD( SF_COL_TYPE( C.DATA_TYPE, C.PRECISION, C.SCALE ), 15)||' -- '||D.COMMENTS VALUE
+  FROM SYSTEM_.SYS_USERS_ A
+       INNER JOIN SYSTEM_.SYS_TABLES_ B
+               ON A.USER_ID = B.USER_ID
+       INNER JOIN SYSTEM_.SYS_COLUMNS_ C
+               ON B.TABLE_ID = C.TABLE_ID
+              AND C.COLUMN_NAME LIKE UPPER('%$1%')
+       LEFT OUTER JOIN SYSTEM_.SYS_COMMENTS_ D
+               ON D.USER_NAME = A.USER_NAME
+              AND D.TABLE_NAME = B.TABLE_NAME
+              AND D.COLUMN_NAME = C.COLUMN_NAME
+ WHERE 1=1
+   AND A.USER_NAME NOT IN ('SYS', 'SYSTEM_')
+   AND A.USER_NAME LIKE '%OWN'
+ ORDER BY A.USER_NAME, B.TABLE_NAME, C.COLUMN_ORDER
+;
+EOF
+}
+
+doIt $1 |grep " = " |sed -e "s/ [ ]*$//g"
+

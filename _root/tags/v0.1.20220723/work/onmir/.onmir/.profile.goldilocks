@@ -1,0 +1,31 @@
+####################
+# GOLDILOCKS
+####################
+
+export GOLDILOCKS_BASE=$HOME
+export GOLDILOCKS_HOME=$GOLDILOCKS_BASE/goldilocks_home
+export GOLDILOCKS_DATA=$GOLDILOCKS_BASE/goldilocks_data
+export PATH=$GOLDILOCKS_HOME/bin:$PATH:.
+export LD_LIBRARY_PATH=$GOLDILOCKS_HOME/lib:$LD_LIBRARY_PATH
+export CLASSPATH=$GOLDILOCKS_HOME/lib/goldilocks6.jar
+
+export GOLDILOCKS_LISTEN_PORT=`expr 20000 + $UID`
+export GOLDILOCKS_SHARED_MEMORY_STATIC_KEY=${GOLDILOCKS_LISTEN_PORT}00  # 542353
+#export GOLDILOCKS_LOCAL_CLUSTER_MEMBER='G1N1'
+#export GOLDILOCKS_LOCAL_CLUSTER_MEMBER_HOST="192.168.0.119"
+#export GOLDILOCKS_LOCAL_CLUSTER_MEMBER_PORT=`expr 10000 + $GOLDILOCKS_LISTEN_PORT`
+
+alias gs='gsql sys gliese --as sysdba'
+alias gsn='gsqlnet sys gliese --as sysdba'
+alias gst='gsql test test'
+alias gsnt='gsqlnet test test'
+alias glp='vi $GOLDILOCKS_DATA/conf/goldilocks.properties.conf'
+alias gld='cd $GOLDILOCKS_DATA'
+alias glh='cd $GOLDILOCKS_HOME'
+alias glb='cd $GOLDILOCKS_HOME/bin'
+alias gls='cd $GOLDILOCKS_HOME/sample'
+alias glc='cd $GOLDILOCKS_DATA/conf'
+alias glt='tail -f $GOLDILOCKS_DATA/trc/system.trc'
+alias glt2='tail -f $GOLDILOCKS_DATA/trc/*.trc'
+
+

@@ -1,0 +1,314 @@
+#   \vim -c "%g/ using [ ]*$/j" -c "wq" $I_FILE 1>/dev/null 2>&1
+
+alias glances='/usr/bin/python /usr/bin/glances'
+alias agrep='grep -E '\''page|elapsed|rows|LIMIT|FULL|HASH|STORE|PROJECT|UNION|TABLE:|ACCESS: [0-9][0-9][0-9]+'\'''
+
+
+####################
+# PROJ
+####################
+
+test "x`uname`" = "xHP-UX" && set +u
+test "x$TB_HOME" != "x" && export DBMS="tib"
+test "x$ALTIBASE_HOME" != "x" && export DBMS="alt"
+test "x$ORACLE_HOME" != "x" && export DBMS="ora"
+
+if [ -f $ALTIBASE_HOME/bin/isql ]
+then
+    export PATH=$_C_HOME/../alt/bin:$PATH
+    export PATH=$_C_HOME/../alt/shl:$PATH
+fi
+
+if [ -f $TB_HOME/client/bin/tbsql ]
+then
+    export PATH=$_C_HOME/../tib/bin:$PATH
+    export PATH=$_C_HOME/../tib/shl:$PATH
+fi
+
+if [ -f $ORACLE_HOME/bin/sqlplus ]
+then
+    export PATH=$_C_HOME/../ora/bin:$PATH
+    export PATH=$_C_HOME/../ora/shl:$PATH
+fi
+test "x`uname`" = "xHP-UX" && set -u
+
+export PATH=.:$PATH
+
+function setdb
+{
+    export DBMS="$1"
+}
+
+function cdm
+{
+    if [ "x$1" = "x" ]
+    then
+        cd $_C_HOME/../$DBMS/mon/
+    else
+        cd $_C_HOME/../$1/mon/
+    fi
+}
+
+alias cdh='cd $_C_HOME/..'
+alias cdlog='cd $_C_HOME/../log'
+alias cdw='cd $_C_HOME/../work'
+
+####################
+# COMMON
+####################
+
+alias h='history | tail -20'
+
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
+alias ls='ls -F'
+alias ll='ls -alF'
+alias lt='ls -alt'
+alias lh='ls -alt | head -15'
+alias lr='ls -altr | head -20'
+alias lc='echo ">> [file-modified-time] <<"; ls -cal'
+
+alias cat4='expand -t 4'
+alias cat8='expand -t 8'
+alias dt='date "+%Y/%m/%d %H:%M:%S"'
+alias xtime=''
+alias gtime='time'
+
+alias htopx='TERM=xterm htop'
+alias htop2='TERM=vt100 htop'
+
+#alias sdiff='sdiff -w 240'
+alias vc='vi "+set tags=`pwd`/tags"'
+alias vk='LANG=ko_KR.euckr vi'
+alias vd='vi -d -O2'
+
+function vd3 
+{
+    vd $1.out $1.lst
+}
+
+#alias t4='terminator -l 4T'
+
+#export MALLOC_CHECK_=2
+alias gdb2='MALLOC_CHECK_=2 gdb'
+
+
+alias sar='LANG=C sar'
+
+export SSH_TTY=`tty`
+alias pe='ps -ef | grep -i -e PPID -e '
+alias pm='ps -ef | grep -v grep |grep -v bash | grep -e PPID -e "$LOGNAME " | grep -i -e PPID -e '
+alias pe2='ps -elf | grep -i -e PPID -e '
+alias pm2='ps -elf | grep -v "grep " |grep -e PPID -e "$LOGNAME " |grep -e PPID -e `echo $SSH_TTY |sed -e "s;^.*/dev/;;g"` |grep -e PPID -e'
+
+alias en='export LANG=en_US.utf8'
+alias ko='export LANG=ko_KR.euckr'
+
+if [ -f /usr/bin/rlwrap ]
+then
+    alias sqlplus='rlwrap sqlplus'
+    alias tbsql='rlwrap tbsql'
+fi
+
+
+export UNAME=`uname`
+if [ "x`uname`" = "xHP-UX" ]
+then
+    test -f $HOME/.profile.HP-UX    && . $HOME/.profile.HP-UX
+fi
+
+if [ "x`uname`" = "xAIX" ]
+then
+    export PATH=/opt/freeware/bin:/opt/freeware/sbin:$PATH
+fi
+
+if [ "x`uname`" = "xLinux" ]
+then
+    # Uncomment the following line if you don't like systemctl's auto-paging feature:
+    # export SYSTEMD_PAGER=
+
+    alias grep='grep --color=auto'
+    alias file2='file --mime-encoding'          # file encoding check
+
+    # HW
+    alias bios='[ -f /usr/sbin/dmidecode ] && sudo -v && echo -n "Motherboard" && sudo /usr/sbin/dmidecode -t 1 | grep "Manufacturer\|Product Name\|Serial Number" | tr -d "\t" | sed "s/Manufacturer//" && echo -ne "\nBIOS" && sudo /usr/sbin/dmidecode -t 0 | grep "Vendor\|Version\|Release" | tr -d "\t" | sed "s/Vendor//"'
+    alias memory='sudo dmidecode --type memory'
+
+fi
+
+
+####################
+# FUNC
+####################
+
+function loc
+{
+    rm -f /tmp/$USER/a.txt /tmp/$USER/f.txt /tmp/$USER/d.txt
+
+    locate $1 > /tmp/$USER/a.txt
+    test "x"$? != "x0" && return $?
+
+    #cat /tmp/$USER/a.txt |xargs ls -l |sort -k 6,7
+    for i in `cat /tmp/$USER/a.txt`
+    do
+        if [ -f $i ]
+        then
+            ls -l $i >> /tmp/$USER/f.txt 2>&1
+        else
+            D=`dirname $i`
+            ls -l $D/ 2>&1 |grep $1 >> /tmp/$USER/d.txt
+        fi
+    done
+    cat /tmp/$USER/f.txt |sort -k 6,7 |sed -e "s/ 20..-/\x09&/g" |grep -e $1 -e "^dr"
+    if [ -f /tmp/$USER/d.txt ]
+    then
+        cat /tmp/$USER/d.txt |sort -k 6,7 |sed -e "s/ 20..-/\x09&/g" |grep -e $1 -e "^dr"
+    fi
+}
+
+function fn
+{
+    sDir=`pwd`/.
+    sTxt="$1"
+
+    test "x`uname`" = "xHP-UX" && set +u # ( only for HP-UX )
+    test "x"$2 != "x" && sDir=$2
+    test "x`uname`" = "xHP-UX" && set -u
+
+    echo ""
+    if [ "x`uname`" = "xHP-UX" ]
+    then
+        find ${sDir} \( -type f -o -type l \) \( -name "*${sTxt}*" \) -exec ls -l {} \; |grep "${sTxt}"
+    else
+        # SVN CHECK
+        #find ${sDir} -type f \( ! -regex ".*\.svn-base" -a -regex ".*${sTxt}.*" \) -exec svn st {} \; 2>&1 |grep -v "warning"
+        find ${sDir} \( -type f -o -type l \) \( ! -regex ".*\.svn-base" -a -regex ".*${sTxt}.*" \) -ls |grep "${sTxt}"
+    fi
+}
+
+function fd
+{
+    sDir="."
+    sTxt="$1"
+
+    test "x`uname`" = "xHP-UX" && set +u # ( only for HP-UX )
+    test "x"$2 != "x" && sDir=$2
+    test "x`uname`" = "xHP-UX" && set -u
+
+    echo ""
+    if [ "x`uname`" = "xHP-UX" ]
+    then
+        find ${sDir} -type d \( -name "*${sTxt}*" \) -ls |grep "${sTxt}"
+    else
+        find ${sDir} -type d \( ! -regex ".*\.svn-base" -a -regex ".*${sTxt}[^/]*" \) -ls |grep "${sTxt}"
+    fi
+}
+
+# 현재 경로 이하에서 소스 검색 ex) ff <search str> [dir] [grep opt]
+function ff
+{
+    # grep: -P supports only unibyte and UTF-8 locales
+    _LANG=$LANG
+    LANG=en_US.utf8
+
+    CAT="expand -t 4"
+
+    if [ $# -gt 1 ]
+    then
+        if [ $# -eq 3 ]
+        then
+            OPT="$3"
+        fi
+        LOC=$2
+        TXT=$1
+    elif [ $# -eq 1 ]
+    then
+        LOC=.
+        TXT=$1
+        printf "usage: \n\tff <search str> <dir> <grep opt>\n"
+        printf "\tdefault <dir> \"$LOC\"\n\n"
+    else
+        printf "usage: \n\tff <search text> [search_dir] [grep opt]\n\n"
+        return;
+    fi
+
+    GREP="grep $OPT"
+
+    if [ ! -d /tmp/$USER ]
+    then
+        mkdir /tmp/$USER
+    fi
+
+
+    echo "########################################"
+    echo ">> searching .. ($LOC) <<"
+    echo "########################################"
+    echo ""
+
+    if [ "x"${_FF_TYPE_} = "x2" ]
+    then
+        find $LOC -type f \( -regex ".*\.[h]" -o -name '*.hpp' \) -exec $GREP -Pn "$TXT" {} \; -exec ls -l {} \; |tee /tmp/$USER/ff.log 2>&1 |$GREP -v "://" |$GREP --color=auto -e "^.r" -e "$TXT"
+    else
+        # ./3rd/src/openldap-2.4.40/doc/guide/images/src/config_repl.dia: gzip compressed data, from Unix
+        # find $LOC -type f \( -regex ".*\.[cCh]" -o -name '*.java' -o -name '*.am' -o -name '*.mk' -o -name '?akefile*' -o -name 'config*' -o -name '*.cpp' -o -name '*.hpp' -o -name '*.pc' \) -exec $GREP -Pn "$TXT" {} \; -exec ls -l {} \; |tee /tmp/$USER/ff.log 2>&1 |${CAT} |$GREP --color=auto -e "^.r" -e "$TXT"
+        #find $LOC -type f \( -regex ".*\.[cCh]" -o -name '*.java' -o -name '*.am' -o -name '*.mk' -o -name '?akefile*' -o -name '*.cpp' -o -name '*.hpp' -o -name '*.pc' \) -exec $GREP -Pn "$TXT" {} \; -exec ls -l {} \; |tee /tmp/$USER/ff.log 2>&1 |${CAT} |$GREP --color=auto -e "^.r" -e "$TXT"
+        find $LOC -type f \( -name "*.xml" -o -name "*.java" -o -name "*.c" -o -name '*.cpp' -o -name '*.cc' -o -name '*.C' -o -name '*.gc' -o -name '?akefile*' -o -name '*.h' \) -exec $GREP -Pn "$TXT" {} \; -exec ls -l {} \; |tee /tmp/$USER/ff.log 2>&1 |${CAT} |$GREP --color=auto -e "^.r" -e "$TXT"
+    fi
+    unset _FF_TYPE_
+
+
+    echo ""
+    echo "########################################"
+    echo "## FILE"
+    echo "########################################"
+    # -rw-r--r-- 1 paul onmir 32692 Jul 16 03:44 ./goldilocks/util/dbmExp.cpp
+    #${CAT} /tmp/$USER/ff.log |$GREP --color=auto -e "^.r"
+    ${CAT} /tmp/$USER/ff.log |$GREP --color=auto -e "^.r" |awk '{ printf("%s %s %s %s %10s %s %s %s %s\n", $1, $2, $3, $4, $5, $6, $7, $8, $9 ) }' |$GREP --color=auto -e "^.r"
+
+    rm -f /tmp/$USER/ff.log
+
+    echo ""
+    echo ">> OK ($LOC) <<"
+
+    # grep: -P supports only unibyte and UTF-8 locales
+    LANG=$_LANG
+} # ff
+
+function fh
+{
+    export _FF_TYPE_="2"
+    ff $*
+}
+
+function fso
+{
+    sDir="."
+    sTxt=$1
+    test "x"$2 != "x" && sDir=$2
+
+    for i in `echo $LD_LIBRARY_PATH |sed -e "s/:/ /g"`
+    do
+        run="ls --color=auto -lF ${i}/*${sTxt}"
+        #echo ${run}; 
+        ${run} > /dev/null 2>&1
+        test "x"$? = "x0" && ${run}
+    done
+}
+
+function fnm
+{
+    sDir="."
+    sTxt=$1
+    test "x"$2 != "x" && sDir=$2
+
+    echo ""
+    if [ "x"$3 = "x" ]
+    then
+        find ${sDir} -type f -name "*.so" -exec sh -c "nm {} |c++filt |grep -v -E ' U | b | B | d | r | v | V | W ' |grep -e '-r' -e ${sTxt} " \; -ls |grep -e '-r' -e ${sTxt}
+    else
+        find ${sDir} -type f -name "*.so" -exec sh -c "nm {} |c++filt |grep -e '-r' -e ${sTxt} " \; -ls |grep -e '-r' -e ${sTxt}
+    fi
+}
+

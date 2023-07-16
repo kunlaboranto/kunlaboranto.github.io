@@ -1,0 +1,42 @@
+/*
+WITH WX AS (
+SELECT -- OKT_MON_SKIP
+       LAST_CAPTURED
+     , SQL_ID
+     , POSITION
+     , VALUE_STRING
+     --, SUBSTRB( VALUE_STRING, 1, 10 ) AS VALUE_STRING
+  FROM V$SQL_BIND_CAPTURE A
+ WHERE 1=1
+   --AND SQL_ID = 'xx'
+   AND SQL_ID IN
+       ( SELECT SQL_ID
+          FROM V$SQLAREA X
+         WHERE 1=1
+           --AND SQL_TEXT NOT LIKE '%OKT_MON%'
+           AND ( 1=0
+              --OR SQL_FULLTEXT LIKE '%xx%'
+               )
+       )
+)
+SELECT *
+  FROM WX
+ PIVOT ( MAX(VALUE_STRING) FOR POSITION IN
+         --(1,2,3,4,5,6,7,8,9,10)
+         (1,2,3,4,5,6)
+       )
+ ORDER BY SQL_ID, LAST_CAPTURED DESC, POSITION
+;
+*/
+
+SELECT -- OKT_MON_SKIP
+       LAST_CAPTURED
+     , SQL_ID
+     , POSITION
+     , VALUE_STRING
+     --, SUBSTRB( VALUE_STRING, 1, 10 ) AS VALUE_STRING
+  FROM V$SQL_BIND_CAPTURE A
+ WHERE 1=1
+   AND SQL_ID = '&SQL_ID'
+ ORDER BY SQL_ID, LAST_CAPTURED DESC, POSITION
+;

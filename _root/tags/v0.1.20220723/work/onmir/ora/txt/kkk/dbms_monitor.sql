@@ -1,0 +1,22 @@
+BEGIN
+    DBMS_MONITOR.SESSION_TRACE_ENABLE
+    (
+      SESSION_ID => 1234
+    , SERIAL_NUM => XX
+    , WAITS => TRUE
+    , BINDS => TRUE
+    );
+  END;
+/
+
+!sleep 2
+
+BEGIN
+    DBMS_MONITOR.SESSION_TRACE_DISABLE
+    (
+      SESSION_ID => 1234
+    , SERIAL_NUM => XX
+    );
+  END;
+/
+

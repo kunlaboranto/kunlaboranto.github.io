@@ -1,0 +1,75 @@
+#!/bin/sh
+
+ SQLCMD="is"
+test "x$2" != "x" && SQLCMD="$2"
+
+#test "x`uname`" = "xLinux" && alias grep='grep --color=auto'
+
+chk=`echo $LANG |grep -i utf |wc -l`
+test "x"$chk = "x1" && export ALTIBASE_NLS_USE=UTF8
+
+function doIt2
+{
+    ${SQLCMD} -silent << EOF
+set heading off;
+set timing off;
+set linesize 1000;
+set colsize 0;
+
+SELECT SYSDATE || ' | ' ||
+       RPAD( B.TABLE_TYPE, 1 ) || ' | ' ||
+       RPAD( A.USER_NAME, 10 ) || ' | ' ||
+       RPAD( B.TABLE_NAME, 40 ) || ' | ' ||
+       SUBSTRB( RPAD( 
+( SELECT TC.COMMENTS FROM system_.SYS_COMMENTS_ TC WHERE TC.USER_NAME = A.USER_NAME AND TC.TABLE_NAME = B.TABLE_NAME AND TC.COLUMN_NAME IS NULL )||' ' 
+, 40 ) , 1, 40 )
+  FROM SYSTEM_.SYS_USERS_ A
+     , SYSTEM_.SYS_TABLES_ B
+ WHERE 1=1
+   AND A.USER_NAME NOT IN ('SYSTEM_')
+   AND A.USER_ID = B.USER_ID
+   AND ( 1=0
+      OR B.TABLE_NAME LIKE UPPER('%$1%')
+       )
+ ORDER BY A.USER_NAME, B.TABLE_TYPE, B.TABLE_NAME
+;
+
+EOF
+}
+
+function doIt
+{
+    ${SQLCMD} -silent << EOF
+--set heading off;
+set timing off;
+set linesize 1000;
+set colsize 20;
+
+alter session set explain plan = off;
+
+SELECT SYSDATE, A.* 
+  FROM ALL_OBJECTS A
+ WHERE 1=1
+   --AND OWNER NOT IN ('SYSTEM_')
+   AND ( 1=0
+      OR OBJECT_NAME LIKE UPPER('%$1%')
+       )
+ ORDER BY OWNER, OBJECT_TYPE, OBJECT_NAME
+;
+
+EOF
+}
+
+####################
+# MAIN
+####################
+
+YYYY=`date "+%Y"`
+DASH="--------------------"
+
+echo ""
+# doIt $1
+doIt $1 2>&1 |sed -e "s/ [ ]*$//g" |grep -e ^${YYYY} -e ^SYSDATE -e "^${DASH}"
+
+
+exit

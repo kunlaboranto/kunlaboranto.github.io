@@ -1,0 +1,75 @@
+#!/bin/sh
+
+chk=`echo $LANG |grep -i utf |wc -l`
+test "x"$chk = "x1" && export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
+
+SQL="os"
+test "x`hostname`" = "xdev01" && SQL=".tsd"
+
+doIt()
+{
+    if [ "x"$2 = "x" ]
+    then
+        P_TYPE="%"
+
+        SKIP_OPT="AND 1=1 "
+        SKIP_OPT=${SKIP_OPT}"AND T.OBJECT_TYPE NOT LIKE '%INDEX%' "
+        SKIP_OPT=${SKIP_OPT}"AND T.OBJECT_TYPE NOT LIKE '%PARTITION%' "
+        # SKIP_OPT=${SKIP_OPT}"AND T.OBJECT_TYPE NOT LIKE '%SYNONYM%' "
+    else 
+        P_TYPE=$2
+    fi
+
+    $SQL << EOF
+set autot off
+--set heading off
+set linesize 180
+set pagesize 1000
+
+--col VALUE format a120
+col OWNER format a10
+col OBJECT_NAME format a30
+col OBJECT_TYPE format a20
+col COMMENTS format a40
+col SYSDATE format a20
+
+SELECT  TO_CHAR( SYSDATE, 'YYYY/MM/DD HH24:MI:SS' ) AS "SYSDATE", T.OWNER, T.OBJECT_TYPE, T.OBJECT_NAME
+     --,  TC.COMMENTS
+     ,  CASE WHEN T.OBJECT_TYPE = 'SYNONYM'
+             --THEN '-> '||SN.ORG_OBJECT_OWNER||'.'||SN.ORG_OBJECT_NAME /* TIBERO */
+             THEN '-> '||OD.TO_OWNER||'.'||OD.TO_NAME /* ORACLE */
+             ELSE TC.COMMENTS
+         END AS COMMENTS
+FROM    ALL_OBJECTS T
+        LEFT OUTER JOIN ALL_TAB_COMMENTS TC 
+                ON  TC.OWNER = T.OWNER
+                AND TC.TABLE_NAME = T.OBJECT_NAME 
+        LEFT OUTER JOIN ALL_SYNONYMS SN
+                ON  SN.OWNER = T.OWNER
+                AND SN.SYNONYM_NAME = T.OBJECT_NAME
+        LEFT OUTER JOIN V\$OBJECT_DEPENDENCY OD
+                ON  OD.CON_ID = SN.ORIGIN_CON_ID
+WHERE   1=1 ${SKIP_OPT}
+--AND   T.OBJECT_TYPE IN (  'SYNONYM', 'TABLE', 'VIEW' )
+--AND   T.OWNER NOT IN ('SYS')
+--AND   T.OWNER LIKE '%OWN'
+--AND   T.OBJECT_NAME NOT LIKE '%_201%'
+AND (   1=0
+   OR   T.OBJECT_NAME LIKE UPPER('%$1%')
+   --OR   T.OBJECT_TYPE LIKE UPPER('%$1%')
+    )
+AND     (   T.OBJECT_NAME NOT LIKE UPPER('USER_%') 
+        AND T.OBJECT_NAME NOT LIKE UPPER('ALL_%') 
+        AND T.OBJECT_NAME NOT LIKE UPPER('GV$%') 
+        )
+AND     T.OBJECT_TYPE LIKE '%$P_TYPE%'
+ORDER BY T.OWNER , T.OBJECT_NAME
+;
+
+EOF
+}
+
+echo ""
+doIt $* |grep -e "^--" -e ^SYSDATE -e ^20[12] -e " = " |sed -e "s/ [ ]*$//g"
+# doIt $1
+

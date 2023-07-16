@@ -1,0 +1,66 @@
+$ sh o2g_mig.sh 
+Usage] sh o2g_mig.sh <table_name>
+
+와 같이 수행을 하면 됩니다. ( 단 실행계정에, ORACLE 과 GLODILOCKS DB 접속환경이 있어야함 )
+
+
+이하는 T1 이라는 테이블을 만들고, 테스트를 하나씩 하는 예입니다.
+
+## env step ##
+
+(1)
+$ cat ~/.odbc.ini 
+[GOLDILOCKS]
+host=127.0.0.1
+port=22581
+
+(2)
+$ cat ~/.bashrc
+
+####################
+# GOLDILOCKS
+####################
+export GOLDILOCKS_HOME=$HOME/goldilocks_home
+export GOLDILOCKS_DATA=$HOME/goldilocks_data
+export PATH=$GOLDILOCKS_HOME/bin:$PATH:$HOME/script:.
+export LD_LIBRARY_PATH=$GOLDILOCKS_HOME/lib:$LD_LIBRARY_PATH
+#export LANG=en_US.utf8
+export LANG=ko_KR.utf8
+
+####################
+# ORACLE
+####################
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=$ORACLE_BASE/product/12.2.0/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ORACLE_HOME/lib
+export ORACLE_SID=orcl
+#export NLS_LANG=KOREAN_KOREA.KO16KSC5601
+export NLS_LANG=American_America.UTF8
+
+
+
+## test step ##
+
+1. create table
+$ sqlplus test/test < crt.sql
+$ sqlplus test/test < ins.sql
+$ gsqlnet test test < crt.sql
+
+2. spool data with csv format ( download data from oracle )
+$ sqlplus -S test/test @getdata T1
+
+3. check spooled data
+
+$ file T1.dat
+T1.dat: UTF-8 Unicode text
+
+$ head T1.dat
+"1","asdf","한글(1,1)","2017/08/08 07:00:46"
+"2","asdf","한글(1,1)","2017/08/08 07:00:46"
+"3","asdf","한글(1,1)","2017/08/08 07:00:46"
+"10","### LINE1
+LINE2","한글(1,1)","2017/08/08 07:00:46"
+
+4. upload T1.dat with gloadernet ( upload data into Goldilocks DB )
+$ sh o2g_imp.sh T1

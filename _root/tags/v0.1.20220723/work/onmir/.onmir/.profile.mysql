@@ -1,0 +1,6 @@
+####################
+# MYSQL
+####################
+export MYSQL_HOME=$HOME/mysql
+export PATH=$MYSQL_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MYSQL_HOME/lib

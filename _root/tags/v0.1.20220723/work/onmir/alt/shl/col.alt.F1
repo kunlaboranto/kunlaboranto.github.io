@@ -1,0 +1,43 @@
+#!/bin/sh
+
+test "x`uname`" = "xLinux" && alias grep='grep --color=auto'
+
+chk=`echo $LANG |grep -i utf |wc -l`
+test "x"$chk = "x1" && export ALTIBASE_NLS_USE=UTF8
+
+doIt()
+{
+    .is2 -silent << EOF
+set heading off;
+set linesize 1000;
+set colsize 0;
+
+SELECT 
+       RPAD( LPAD( A.USER_NAME, 10 ) ||'.'||B.TABLE_NAME, 48 )
+|| ' ( ' || SUBSTRB( RPAD( 
+( SELECT TC.COMMENTS FROM system_.SYS_COMMENTS_ TC WHERE TC.USER_NAME = A.USER_NAME AND TC.TABLE_NAME = B.TABLE_NAME AND TC.COLUMN_NAME IS NULL )||' ' 
+, 30 ) , 1, 30 ) || ' ) '
+       ||' = ('
+       ||LPAD( C.COLUMN_ORDER, 2 )
+       ||') '
+       ||C.COLUMN_NAME VALUE
+  FROM SYSTEM_.SYS_USERS_ A
+     , SYSTEM_.SYS_TABLES_ B
+     , SYSTEM_.SYS_COLUMNS_ C
+ WHERE 1=1
+   AND A.USER_ID = B.USER_ID
+   AND B.TABLE_ID = C.TABLE_ID
+   AND A.USER_NAME NOT IN ('SYSTEM_')
+   AND ( 1=0
+      OR B.TABLE_NAME LIKE UPPER('%$1%')
+      OR C.COLUMN_NAME LIKE UPPER('%$1%') 
+       )
+ ORDER BY A.USER_NAME, B.TABLE_NAME, C.COLUMN_ORDER
+;
+
+EOF
+}
+
+# doIt $1 |grep "$1"
+doIt $1 |sed -e "s/ [ ]*$//g" |grep "$1" 
+

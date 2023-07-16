@@ -1,0 +1,86 @@
+#!/bin/sh
+
+# Usage:
+#   $ pview.tib DATABASE_PROPERTIES
+
+ SQLCMD="os"
+test "x$2" != "x" && SQLCMD="$2"
+
+function doIt
+{
+    $SQLCMD << EOF
+    set autot off;
+    --set heading off;
+    set linesize 180;
+    set pagesize 1000;
+
+    col SYSDATE format a20
+    col OWNER format a10
+    col OBJECT_NAME format a30
+    col COLUMN_NAME format a30
+    --col xx format a10
+
+SELECT  SYSDATE,
+        --NULL AS OWNER,
+        TABLE_NAME AS OBJECT_NAME,
+        COLUMN_NAME
+FROM    DICT_COLUMNS
+WHERE   1=1
+AND     ( 1=0
+        OR COLUMN_NAME LIKE UPPER('%$1%') 
+        OR TABLE_NAME LIKE UPPER('%$1%') 
+        )
+--AND     TABLE_NAME LIKE UPPER('V%')
+AND     ( TABLE_NAME NOT LIKE UPPER('USER_%') AND TABLE_NAME NOT LIKE UPPER('ALL_%') AND TABLE_NAME NOT LIKE UPPER('GV$%') )
+UNION ALL
+SELECT  SYSDATE,
+        --OWNER,
+        VIEW_NAME,
+        '( DICTIONARY VIEW )'
+FROM    ALL_VIEWS
+WHERE   1=1
+AND     ( 1=0
+        OR VIEW_NAME LIKE UPPER('%$1%') 
+        )
+AND     ( VIEW_NAME NOT LIKE UPPER('USER_%') AND VIEW_NAME NOT LIKE UPPER('ALL_%') AND VIEW_NAME NOT LIKE UPPER('GV$%') )
+ORDER BY 1, 2, 3;
+EOF
+}
+
+# V$SYSSTAT
+# V$SESSTAT
+
+function doIt2
+{
+    $SQLCMD << EOF
+    set autot off;
+    --set heading off;
+    set linesize 180;
+    set pagesize 1000;
+
+    col SYSDATE format a20
+    col OWNER format a10
+    col OBJECT_NAME format a30
+    col OBJECT_TYPE format a14
+    col VALUE format a80
+
+SELECT SYSDATE
+     , RPAD(NAME,60,' ')||' = '|| TO_CHAR( VALUE, '999,999,999,9999') VALUE
+     --, RPAD(NAME,60,' ')||' = '|| TO_CHAR( VALUE, '999,9999') VALUE
+  FROM V\$SYSSTAT
+ WHERE UPPER(NAME) LIKE UPPER('%$1%')
+ ORDER BY 1, 2;
+
+EOF
+}
+
+printf "\n[ DB Dictionary ]\n\n"
+#doIt $1 |grep " = " |sed -e "s/ [ ]*$//g"
+# doIt $1 |grep -e "^--" -e ^SYSDATE -e ^20[12] -e " = " |sed -e "s/ [ ]*$//g"
+doIt $1
+
+exit
+
+printf "\n[ V\$SYSSTAT ( `date '+%Y/%m/%d %H:%M:%S'` ) ]\n\n"
+doIt2 $1 |grep -e "^--" -e ^SYSDATE -e ^20[12] -e " = " |sed -e "s/ [ ]*$//g"
+

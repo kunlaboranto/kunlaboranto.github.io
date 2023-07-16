@@ -1,0 +1,147 @@
+
+https://shlee0882.tistory.com/206
+
+spring aop 를 이용하는거고 여기에서 db로 부터 읽어오는 row 개수를 알 수 있고 그 개수가 넘을때  예외를 발생 시키시면 됩니다.
+
+<!-- 로그 : 실행시간 -->
+   <!-- <bean id="loggingBean" class="kr.co.mangoe.support.spring.LoggingAspect" />
+   <aop:config>
+      <aop:pointcut id="servicePointcut" expression="execution(* kr.co..*Impl.*(..))" />
+      <aop:aspect ref="loggingBean">
+         <aop:around pointcut-ref="servicePointcut" method="logging" />
+      </aop:aspect>
+   </aop:config> -->
+
+aop는 이런식으로 지정하는 거구요
+
+Weblogic 측과 테스트 해서 도출했던 GC 옵션은 남겨둔게 없네요..
+
+당시에, 기억상으로는
+병렬 + 점진을 사용했던 것 같기는 하므로. 아래 링크에 따르면
+
+  - GC 소요시간 최소화 옵션
+    > -XX:+UseParNewGC -XX:+UseConcMarkSweepGC
+
+===
+
+#### https://waspro.tistory.com/403
+
+[GC Policy] GC 별 권고 옵션 자료 (G1GC, CMS, ParallelGC)
+와스프로 GodNR 2019. 1. 9. 11:01
+
+#!/bin/sh
+
+# JVM Options : Server
+export JAVA_OPTS="-server $JAVA_OPTS"
+
+
+# G1GC
+export JAVA_OPTS="$JAVA_OPTS -XX:+DoEscapeAnalysis -XX:+UseG1GC"
+export JAVA_OPTS="$JAVA_OPTS -Xms1024M -Xmx1024M -XX:CompressedClassSpaceSize=1024M  -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=512M"
+export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCTimeStamps"
+export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDateStamps"
+export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDetails"
+#export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCApplicationStoppedTime"
+export JAVA_OPTS="$JAVA_OPTS -Xloggc:$JBOSS_LOG_DIR/gclog/${LOG_FILE_PREFIX}_gc_$DATE.log"
+export JAVA_OPTS="$JAVA_OPTS -XX:+ExplicitGCInvokesConcurrent"
+export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError"
+export JAVA_OPTS="$JAVA_OPTS -XX:HeapDumpPath=$JBOSS_LOG_DIR/heapdump"
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedOops"
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseCompressedClassPointers"
+export JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC -XX:-UseAdaptiveSizePolicy -XX:CodeCacheMinimumFreeSpace=8M"
+export JAVA_OPTS="$JAVA_OPTS -Duser.timezone=GMT -Dfile.encoding=UTF-8 -Dfile.client.encoding=UTF-8"
+
+
+# CMS
+export JAVA_OPTS="$JAVA_OPTS -Xms4g -Xmx4g -XX:NewSize=1536M -XX:MaxNewSize=1536M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=512M -XX:SurvivorRatio=8 -XX:CodeCacheMinimumFreeSpace=8M"
+export JAVA_OPTS="$JAVA_OPTS -XX:+PrintHeapAtGC -XX:+PrintGCDetails  -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
+export JAVA_OPTS="$JAVA_OPTS -Xloggc:$JBOSS_LOG_DIR/gclog/${LOG_FILE_PREFIX}_gc.log"
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=2 -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=80  -XX:+CMSParallelRemarkEnabled -XX:+CMSClassUnloadingEnabled -XX:+UseLargePagesInMetaspace"
+export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$JBOSS_LOG_DIR/heapdump"
+export JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC -XX:-UseAdaptiveSizePolicy"
+export JAVA_OPTS="$JAVA_OPTS -Duser.timezone=GMT -Dfile.encoding=UTF-8 -Dfile.client.encoding=UTF-8"
+
+
+# ParallelGC
+export JAVA_OPTS="$JAVA_OPTS -Xms2048m -Xmx2048m -Xss256k"
+#export JAVA_OPTS="$JAVA_OPTS -Xms2048m -Xmx2048m -XX:MaxPermSize=256m -Xss256k"
+export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCTimeStamps"
+export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDetails"
+export JAVA_OPTS="$JAVA_OPTS -Xloggc:$JBOSS_LOG_DIR/gclog/${LOG_FILE_PREFIX}_gc_$DATE.log"
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseParallelGC"
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseParallelOldGC"
+#export JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
+export JAVA_OPTS="$JAVA_OPTS -XX:+ExplicitGCInvokesConcurrent"
+export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError"
+export JAVA_OPTS="$JAVA_OPTS -XX:HeapDumpPath=$JBOSS_LOG_DIR/heapdump"
+
+
+====
+#### https://dimdim.tistory.com/entry/Java-GC-타입-및-설정-정보-정리
+
+출처: https://dimdim.tistory.com/entry/Java-GC-타입-및-설정-정보-정리 [딤딤이의 블로그]
+
+Java GC 타입 및 설정 정보 정리
+딤딤이 2012. 1. 12. 18:08
+
+아래의 글은 Sun(Oracle?) Hotspot JVM을 기반으로 정리한 내용이다.
+
+JVM에서 GC는 크게 Minor GC와 Major GC로 나뉜다. Minor GC는 Young Generation영역을 정리하는 GC이고, Major GC는 Old Generation영역을 정리하는 GC이다. 그리고 Major GC는 Full GC로도 불린다. 하지만 일부 CMS Collector를 설명하는 글에서는 Major GC와 Full GC를 구분하기도 하는 것 같다. Major GC와 Full GC의 명확한 구분은 잘 모르겠다.
+
+
+
+
+                     Java Heap Memeory 구조
+
+
+
+GC의 종류는 아래와 같다.
+===========================================================================================
+1. Serial Collector
+  - 단일 Thread로 GC 작업을 수행
+  - "-XX:+UseSerialGC" 옵션 사용하여 활성화 할 수 있다.
+  - 요즘 H/W환경에서는 사용할 필요가 없는? GC라고 생각된다.
+
+2. Parallel Collector
+  - 복수의 Thread로 GC작업을 수행한다
+  - "-XX:+UseParallelGC" 옵션을 사용하여 Minor GC 에서 parallel collector를 활성화 할 수 있다.
+  - "-XX:+UseParallelOldGC" 옵션을 사용하여 Major GC에서 parallel collector를 활성화 할 수 있다.
+  - 복수의 Thread를 사용하여 GC를 수행하기 때문에 Serial Collector에 비해서 GC가 빨리 수행된다.
+  - 최대 성능을 내기 위한 GC라고 생각된다.
+
+3. CMS Collector
+  - Major GC 실행시 Application Thread와 GC Thread가 동시에 수행된다. (GC의 6단계 중에서 2단계에서만 Application Thread를 Block 하며 나머지 4단계는 동시에 수해된다.)
+     * 참조 :  http://www.javaperformancetuning.com/news/qotm026.shtml
+  - "-XX:+UseConcMarkSweepGC" 옵션을 사용하여 활성화 할 수 있다.
+  - Minor GC에서 Parallel Collector를 활성화하기 위해서는 "-XX:+UseParNewGC" 옵션을 사용해야 하며,  "-XX:+UseParallelGC" 와는 같이 사용해서는 않된다!!!
+  -  Parallel Collector GC 보다는 최대 성능이 낮게 나오지만, GC로 인한 Application Thread 정지 시간을 최소화 하여 응답시간 지연을 줄이고자 하는 경우 사용된다.
+  - CMS Collector에 의한 Major GC가 수행되는 동안 Application에 의해서 Old generation 영역이 꽉차게 되면, 모든 Application Thread를 멈추고, Full GC를 수행하게 된다.
+===========================================================================================
+
+JVM Heap 메모리 및 GC 옵션 예제
+  - 최소 사이즈 : -Xms128m
+  - 최대 사이즈 : -Xmx384m
+  - GC 로그 옵션
+   > -verbose:gc -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCTimeStamps
+  - Young Gen 영역을 위한 옵션
+    > -XX:NewSize=100m -XX:MaxNewSize=100m -XX:SurvivorRatio=32
+  - GC 소요시간 최소화 옵션
+    > -XX:+UseParNewGC -XX:+UseConcMarkSweepGC
+  - 성능을 위한 기타 추가 옵션
+    > -XX:MaxTenuringThreshold=0 -XX:CMSInitiatingOccupancyFraction=60
+  - OutOfMemoryError 발생시 자동으로 힙덤프 생성 옵션
+    > -XX:+HeapDumpOnOutOfmemoryError -XX:HeapDumpPath=/path
+
+JVM 옵션 상세 정보 참고자료 :  http://wiki.ex-em.com/index.php/JVM_Options
+
+기타 툴
+  - Java Stack Trace (dead lock 분석)
+    > jps   [java 프로세스 확인]
+    > kill -3 <pid>  [IBM JDK]
+
+    > $JAVA_HOME/bin/jstack <pid>   [Hotspot JDK
+  - Runtime JVM Heap Dump 생성
+    > jmap -dump:format=b,file=heap.hprof [pid]
+  - 힙덤프 분석 툴 : jhat, MemoryAnalyzer, visualvm
+
+

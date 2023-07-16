@@ -1,0 +1,17 @@
+#!/bin/sh
+
+test "x`uname`" = "xLinux" && alias grep='grep --color=auto'
+
+ SQLCMD="ts"
+#test "x`hostname`" = "xdb01" && SQLCMD=".tsd"
+test "x$1" != "x" && SQLCMD="$1"
+
+echo "$SQLCMD"
+
+doIt()
+{
+    $SQLCMD --silent @$_C_HOME/../tib/mon/montbs.sql
+}
+
+# doIt $1
+doIt $1 |grep -e ^ -e " 9[0-9]\."

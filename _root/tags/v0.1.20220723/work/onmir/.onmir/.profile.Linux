@@ -1,0 +1,20 @@
+####################
+# Linux
+####################
+
+if [ "x0" = "xUseNabi" ]
+then
+    export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+    chk=`ps -ef |grep nabi |grep -v grep |grep -v vim |wc -l`
+    if [ "x"$chk = "x0" ]
+    then
+        echo ">> nabi" 
+        #nabi >> ~/cron/log/nabi.log 2>&1 &
+    fi
+
+    export XMODIFIERS="@im=nabi"
+    export HANGUL_KEYBOARD_TYPE=2
+    export GTK_IM_MODULE=xim
+fi

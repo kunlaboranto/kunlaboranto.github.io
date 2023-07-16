@@ -1,0 +1,2 @@
+ -- AUTOT[RACE] {OFF|ON|TRACE[ONLY]} [EXP[LAIN]] [STAT[ISTICS]] [PLANS[TAT]]
+set autot on;

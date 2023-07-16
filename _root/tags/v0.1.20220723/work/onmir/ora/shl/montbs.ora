@@ -1,0 +1,14 @@
+#!/bin/sh
+
+test "x`uname`" = "xLinux" && alias grep='grep --color=auto'
+
+SQLCMD="os"
+#test "x`hostname`" = "xdev01 && SQLCMD="osd"
+test "x$1" != "x" && SQLCMD="$1"
+
+doIt()
+{
+    $SQLCMD @$_C_HOME/../ora/mon/montbs.sql
+}
+
+doIt |grep -e ^ -e " 9[0-9]\." -e ".*TEMP.*" -e ".*UNDO.*"

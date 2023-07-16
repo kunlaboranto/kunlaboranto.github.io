@@ -1,0 +1,62 @@
+####################
+# ORACLE
+####################
+
+export ORACLE_BASE=/data/oracle
+export ORACLE_HOME=$ORACLE_BASE/11
+export ORACLE_PATH=$ORACLE_BASE/common/oracle/sql:.:$ORACLE_HOME/rdbms/admin
+
+export ORACLE_SID=ORCL
+export ORACLE_HOSTNAME=`echo $ORACLE_SID |tr [A-Z] [a-z]`
+# export ORACLE_HOME_LISTNER=$ORACLE_HOME/bin/lsnrctl
+
+#export NLS_LANG=KOREAN_KOREA.KO16MSWIN949
+export NLS_LANG=AMERICAN_AMERICA.KO16MSWIN949
+# cHk=`echo $LANG |grep -i utf |wc -l`
+# test "x"$chk = "x1" && export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
+
+export SQL_PATH=.
+export ORACLE_PATH=.
+export EDITOR=vi
+#export ORACLE_TERM=xterm
+
+export ORACLE_TERM=xterm
+export TNS_ADMIN=$ORACLE_HOME/network/admin
+export ORA_NLS33=$ORACLE_HOME/ocommon/nls/admin/data
+export NLS_DATE_FORMAT='YYYY/MM/DD HH24:MI:SS'
+#export NLS_DATE_FORMAT='YY/MM/DD'
+
+alias DF2='export NLS_DATE_FORMAT="YY/MM/DD"'
+alias DF4='export NLS_DATE_FORMAT="YYYY/MM/DD HH24:MI:SS"'
+
+export PATH=.:${PATH}:$HOME/bin:$ORACLE_HOME/bin:$GRID_HOME/bin
+export PATH=${PATH}:/usr/bin:/bin:/usr/bin/X11:/usr/local/bin
+export PATH=${PATH}:$ORACLE_BASE/common/oracle/bin:$ORACLE_HOME/OPatch:$ORACLE_BASE/media
+export PATH=$PATH:/usr/openwin/bin  ## for solaris
+
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ORACLE_HOME/lib:$ORACLE_HOME/lib32:$ORACLE_HOME/jdbc/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ORACLE_HOME/oracm/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/lib:/usr/lib:/usr/local/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ORACLE_HOME/jre:$ORACLE_HOME/jlib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ORACLE_HOME/jdbc/lib:$ORACLE_HOME/jdk/jre/lib
+
+export CLASSPATH=$ORACLE_HOME/jdbc/lib/classes12.jar
+export CLASSPATH=${CLASSPATH}:$ORACLE_HOME/jre
+export CLASSPATH=${CLASSPATH}:$ORACLE_HOME/jlib
+export CLASSPATH=${CLASSPATH}:$ORACLE_HOME/rdbms/jlib
+export CLASSPATH=${CLASSPATH}:$ORACLE_HOME/network/jlib
+export CLASSPATH=${CLASSPATH}:$ORACLE_HOME/jdbc/lib
+export CLASSPATH=${CLASSPATH}:$ORACLE_HOME/jdk/jre/lib
+
+# aliases
+alias osql='sqlplus scott/tiger@$ORACLE_SID'
+ 
+# db01
+
+alias udump='cd $ORACLE_HOME/diag/rdbms/$ORACLE_HOSTNAME/$ORACLE_SID/trace'
+alias bdump='cd $ORACLE_HOME/diag/rdbms/$ORACLE_HOSTNAME/$ORACLE_SID/trace'
+alias cdump='cd $ORACLE_HOME/diag/rdbms/$ORACLE_HOSTNAME/$ORACLE_SID/cdump'
+# alias bin='cd /ora_works/bin'
+# alias log='cd /ora_works/log'
+# alias dmp='cd /ora_works/dmp'
+

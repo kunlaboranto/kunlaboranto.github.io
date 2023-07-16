@@ -1,0 +1,5 @@
+alter session set explain plan = on;
+--ALTER SESSION SET TRCLOG_DETAIL_PREDICATE = 1 ;
+--ALTER SYSTEM SET TRCLOG_EXPLAIN_GRAPH = 1 ;
+
+

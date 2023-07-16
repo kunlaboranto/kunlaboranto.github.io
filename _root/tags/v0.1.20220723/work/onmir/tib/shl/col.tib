@@ -1,0 +1,47 @@
+#!/bin/sh
+
+chk=`echo $LANG |grep -i utf |wc -l`
+test "x"$chk = "x1" && export TB_NLS_LANG=UTF8
+
+ SQLCMD="ts"
+test "x`hostname`" = "xdb01" && SQLCMD=".tsd"
+
+doIt()
+{
+    
+    $SQLCMD --silent << EOF
+set heading off
+set linesize 120
+col VALUE format a120
+
+SELECT VALUE
+  FROM (SELECT T.OWNER||'.'||T.TABLE_NAME TNAME
+         , RPAD( T.OWNER||'.'||T.TABLE_NAME, 48)
+           ||'( '|| RPAD(
+( SELECT TC.COMMENTS FROM ALL_TAB_COMMENTS TC WHERE TC.OWNER = T.OWNER AND TC.TABLE_NAME = T.TABLE_NAME )||' '
+, 30) || ' )'
+           ||' = ('||LPAD( C.COLUMN_ID, 2, ' ') ||') '||C.COLUMN_NAME VALUE
+         , C.COLUMN_ID
+      FROM ALL_TABLES T
+         , ALL_TAB_COLUMNS C
+     WHERE 1=1
+       --AND T.OWNER NOT IN ('SYS')
+       --AND T.OWNER LIKE '%OWN'
+       --AND T.TABLE_NAME NOT LIKE '%_201%'
+       --AND T.TABLE_NAME = 'xx'
+       AND C.OWNER = T.OWNER
+       AND C.TABLE_NAME = T.TABLE_NAME
+       AND ( 1=0
+          OR T.TABLE_NAME LIKE UPPER('%$1%')
+          OR C.COLUMN_NAME LIKE UPPER('%$1%') 
+           )
+       AND ( T.TABLE_NAME NOT LIKE UPPER('USER_%') AND T.TABLE_NAME NOT LIKE UPPER('ALL_%') )
+     ORDER BY TNAME, C.COLUMN_ID 
+       )
+;
+ 
+EOF
+}
+
+# doIt $1
+doIt $1 |grep -e "^--" -e ^SYSDATE -e ^20[12] -e " = " |sed -e "s/ [ ]*$//g"

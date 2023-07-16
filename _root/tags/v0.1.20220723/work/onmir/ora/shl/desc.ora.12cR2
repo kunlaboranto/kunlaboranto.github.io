@@ -1,0 +1,167 @@
+#!/bin/sh
+
+ SQLCMD="os"
+test "x`hostname`" = "xdev01" && SQLCMD="osd"
+
+########################################
+# FUNCTION
+########################################
+
+function doIt
+{
+    $SQLCMD << EOF
+set autot off;
+set timing off;
+set linesize 80;
+set feedback off;
+
+desc ${USR}.${TBL}
+--desc ${TBL}
+
+col INDEX_NAME format a30;
+col "TYPE" format a34;
+col COL_LIST format a80;
+
+set linesize 200
+
+with wx as (
+    select i.index_name
+         , tc.column_id
+         , ic.column_position
+         , tc.column_name
+         , ic.DESCEND
+         --, decode( ic.column_position, null, '', decode( i.uniqueness, 'UNIQUE', 'U', '') ) as is_unique
+         , i.uniqueness
+         , i.index_type     -- NORMAL, LOB, FUNCTION-BASED NORMAL, FUNCTION-BASED DOMAIN
+         , i.NUM_ROWS
+         , i.DISTINCT_KEYS
+      from 
+           ( select '${USR}' owner, '${TBL}' table_name from dual ) p 
+           inner join dba_tab_columns tc
+                   on tc.owner = p.owner and tc.table_name = p.table_name
+           left outer join dba_ind_columns ic
+                   on ic.table_owner = tc.owner
+                  and ic.table_name = tc.table_name
+                  and ic.column_name = tc.column_name
+               partition by ( ic.index_name )
+           left outer join dba_indexes i
+                   on i.table_owner = tc.owner
+                  and i.table_name = tc.table_name
+                  and i.index_name = ic.index_name
+     order by ic.index_name, ic.COLUMN_POSITION
+)
+select 
+       --wx.index_name || nvl2( max(wx.uniqueness), ' (U)', '' ) INDEX_name
+       wx.index_name 
+     --, CASE WHEN max(wx.NUM_ROWS) > 0 THEN '(' || LPAD( max(wx.DISTINCT_KEYS), LENGTH( max(wx.NUM_ROWS) ) ) || '/' || max(wx.NUM_ROWS) || ') ' ELSE NULL END
+     , CASE WHEN max(wx.NUM_ROWS) > 0 THEN '(' || LPAD( max(wx.NUM_ROWS), 10 ) || '/' || LPAD( max(wx.DISTINCT_KEYS), 10 ) || ') ' ELSE NULL END
+       || max( wx.index_type ) || decode( max( wx.uniqueness ), 'UNIQUE', ',UK', '') 
+       AS "TYPE"
+     , listagg( nvl2( wx.column_position, wx.column_name || decode( wx.DESCEND, 'ASC', '', ' desc' ), '' ), ', ' )
+                within group ( order by wx.column_position )
+                as col_list
+  from wx
+ group by wx.index_name
+;
+
+EOF
+}
+
+function doUsr
+{
+    $SQLCMD << EOF
+set autot off;
+set timing off;
+set linesize 80;
+set feedback off;
+
+SELECT 'CUT='||OWNER
+  FROM (SELECT OWNER FROM ALL_OBJECTS WHERE OWNER LIKE '%OWN' AND OBJECT_NAME = UPPER('${TBL}')
+         UNION ALL
+        SELECT OWNER FROM ALL_OBJECTS WHERE OWNER NOT LIKE '%OWN' AND OBJECT_NAME = UPPER('${TBL}')
+       )
+ WHERE ROWNUM = 1
+;
+
+EOF
+}
+
+function doTbs
+{
+    $SQLCMD << EOF
+set autot off;
+set timing off;
+set linesize 80;
+set feedback off;
+
+-- IJB030MT ( if PT )
+SELECT 'CUT='||MAX(tablespace_name)||DECODE( COUNT(*), 1, NULL, ' (PT='||COUNT(*)||')' ) FROM dba_segments WHERE owner = '${USR}' AND segment_name = '${TBL}' ;
+EOF
+}
+
+function doSize
+{
+    $SQLCMD << EOF
+set autot off;
+set timing off;
+set linesize 80;
+set feedback off;
+
+SELECT 'CUT='||TO_CHAR( round(SUM(bytes)/1024/1024,2), '999,990.999') FROM dba_segments WHERE owner = '${USR}' AND segment_name = '${TBL}' ;
+EOF
+}
+
+function doCnt
+{
+    $SQLCMD << EOF
+set autot off;
+set timing off;
+set heading off
+set linesize 200
+col VALUE format a180
+
+--select sysdate, ' ${TBL} = '||to_char(count(*),'999,999,999,999') as " " from ${TBL} where 1=1 ;
+select TO_CHAR( sysdate , 'YYYY/MM/DD HH24:MI:SS' )
+|| ' [ '
+|| LPAD( NVL( ( SELECT TC.COMMENTS FROM ALL_TAB_COMMENTS TC WHERE TC.OWNER = '${USR}' AND TC.TABLE_NAME = '${TBL}' ) , '-' ) , 28 )
+|| ' ] '
+|| LPAD(' ${USR}.${TBL}', 40 )
+|| ' = '||to_char( CNT,'999,999,999,999' )
+--|| ' rows'
+--|| ' ( ' || TO_CHAR( ${SIZE2}*1024*1024/( CNT + 1 ), '9,990' ) || ' ) '
+|| ' ( ' || ROUND( ${SIZE2}*1024*1024/( CNT + 1 ), 0 ) || ' B/row ) '
+as "VALUE"
+  from ( SELECT COUNT(*) CNT FROM ${USR}.${TBL} )
+ where 1=1 ;
+EOF
+}
+
+########################################
+# MAIN
+########################################
+
+chk=`echo $1 |grep "\." |wc -l`
+if [ "x"$chk = "x0" ]
+then
+    TBL=$1
+    USR=`doUsr ${TBL} |grep "^CUT=" |sed -e "s/^.*=//g"`
+else
+    TBL=`echo $1 |sed -e "s/\./ /g" |awk '{print $2}'`
+    USR=`echo $1 |sed -e "s/\./ /g" |awk '{print $1}'`
+fi
+
+TBL=`echo ${TBL} |tr [a-z] [A-Z]`
+USR=`echo ${USR} |tr [a-z] [A-Z]`
+
+##
+
+TBS=`doTbs |grep "^CUT=" |sed -e "s/^.*=//g"`
+SIZE=`doSize |grep "^CUT=" |sed -e "s/^.*=//g"`
+SIZE2=`echo ${SIZE} |sed -e "s/,//g"`
+
+doIt ${TBL} |grep -v "^ [ ]*PRIMARY KEY$" |grep -v "^SQL>"
+echo "[ TABLESPACE : ${TBS}, Size(MB) : ${SIZE} ]"
+
+#doCnt ${TBL}
+doCnt ${TBL} |grep -e "^20[12]"
+

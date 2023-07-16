@@ -1,0 +1,21 @@
+col MODE_HELD format a20
+col MODE_REQD format a20
+col "USN/Table" format a30
+
+SELECT L.SESSION_ID SID
+     , (CASE WHEN LOCK_TYPE = 'Transaction' THEN  'TX'
+             WHEN LOCK_TYPE = 'DML' THEN 'TM' END) TYPE
+     , MODE_HELD
+     , MODE_REQUESTED MODE_REQD
+     , (CASE WHEN LOCK_TYPE = 'Transaction' THEN TO_CHAR(TRUNC(LOCK_ID1/POWER(2,16)))
+             WHEN LOCK_TYPE = 'DML' THEN (SELECT OBJECT_NAME FROM DBA_OBJECTS WHERE OBJECT_ID = L.LOCK_ID1)
+             END) "USN/Table"
+     , (CASE WHEN LOCK_TYPE = 'Transaction' THEN BITAND(LOCK_ID1, TO_NUMBER('FFFF', 'XXXX')) + 0 
+             END) "SLOT"
+     , (CASE WHEN LOCK_TYPE = 'Transaction' THEN TO_NUMBER(LOCK_ID2) END) "SQN"
+     , (CASE WHEN BLOCKING_OTHERS = 'Blocking' THEN ' <<<<<' END) Blocking
+  FROM DBA_LOCK L
+ WHERE 1=1
+   AND LOCK_TYPE IN ('Transaction', 'DML')
+ ORDER BY L.SESSION_ID, L.LOCK_TYPE, L.LOCK_ID1, L.LOCK_ID2
+;

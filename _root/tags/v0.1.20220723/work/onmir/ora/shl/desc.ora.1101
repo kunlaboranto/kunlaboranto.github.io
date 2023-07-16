@@ -1,0 +1,115 @@
+#!/bin/sh
+
+ SQLCMD="os"
+test "x`hostname`" = "xdev01" && SQLCMD="osd"
+
+########################################
+# FUNCTION
+########################################
+
+function doIt
+{
+    $SQLCMD << EOF
+set autot off;
+set linesize 80;
+set feedback off;
+
+desc ${USR}.${TBL}
+--desc ${TBL}
+EOF
+}
+
+function doUsr
+{
+    $SQLCMD << EOF
+set autot off;
+set linesize 80;
+set feedback off;
+
+SELECT 'CUT='||OWNER
+  FROM (SELECT OWNER FROM ALL_OBJECTS WHERE OWNER LIKE '%OWN' AND OBJECT_NAME = UPPER('${TBL}')
+         UNION ALL
+        SELECT OWNER FROM ALL_OBJECTS WHERE OWNER NOT LIKE '%OWN' AND OBJECT_NAME = UPPER('${TBL}')
+       )
+ WHERE ROWNUM = 1
+;
+
+EOF
+}
+
+function doTbs
+{
+    $SQLCMD << EOF
+set autot off;
+set linesize 80;
+set feedback off;
+
+-- IJB030MT ( if PT )
+SELECT 'CUT='||MAX(tablespace_name)||DECODE( COUNT(*), 1, NULL, ' (PT='||COUNT(*)||')' ) FROM dba_segments WHERE owner = '${USR}' AND segment_name = '${TBL}' ;
+EOF
+}
+
+function doSize
+{
+    $SQLCMD << EOF
+set autot off;
+set linesize 80;
+set feedback off;
+
+SELECT 'CUT='||TO_CHAR( round(SUM(bytes)/1024/1024,2), '999,990.999') FROM dba_segments WHERE owner = '${USR}' AND segment_name = '${TBL}' ;
+EOF
+}
+
+function doCnt
+{
+    $SQLCMD << EOF
+set autot off;
+set heading off
+set linesize 180
+col VALUE format a120
+
+--select sysdate, ' ${TBL} = '||to_char(count(*),'999,999,999,999') as " " from ${TBL} where 1=1 ;
+select TO_CHAR( sysdate , 'YYYY/MM/DD HH24:MI:SS' )
+|| ' [ '
+|| LPAD( NVL( ( SELECT TC.COMMENTS FROM ALL_TAB_COMMENTS TC WHERE TC.OWNER = '${USR}' AND TC.TABLE_NAME = '${TBL}' ) , '-' ) , 28 )
+|| ' ] '
+|| LPAD(' ${USR}.${TBL}', 24 )
+|| ' = '||to_char( CNT,'999,999,999,999' )
+--|| ' rows'
+--|| ' ( ' || TO_CHAR( ${SIZE2}*1024*1024/( CNT + 1 ), '9,990' ) || ' ) '
+|| ' ( ' || ROUND( ${SIZE2}*1024*1024/( CNT + 1 ), 0 ) || ' B/row ) '
+as "VALUE"
+  from ( SELECT COUNT(*) CNT FROM ${USR}.${TBL} )
+ where 1=1 ;
+EOF
+}
+
+########################################
+# MAIN
+########################################
+
+chk=`echo $1 |grep "\." |wc -l`
+if [ "x"$chk = "x0" ]
+then
+    TBL=$1
+    USR=`doUsr ${TBL} |grep "^CUT=" |sed -e "s/^.*=//g"`
+else
+    TBL=`echo $1 |sed -e "s/\./ /g" |awk '{print $2}'`
+    USR=`echo $1 |sed -e "s/\./ /g" |awk '{print $1}'`
+fi
+
+TBL=`echo ${TBL} |tr [a-z] [A-Z]`
+USR=`echo ${USR} |tr [a-z] [A-Z]`
+
+##
+
+TBS=`doTbs |grep "^CUT=" |sed -e "s/^.*=//g"`
+SIZE=`doSize |grep "^CUT=" |sed -e "s/^.*=//g"`
+SIZE2=`echo ${SIZE} |sed -e "s/,//g"`
+
+doIt ${TBL} |grep -v "^ [ ]*PRIMARY KEY$" |grep -v "^SQL>"
+echo "[ TABLESPACE : ${TBS}, Size(MB) : ${SIZE} ]"
+
+#doCnt ${TBL}
+doCnt ${TBL} |grep -e "^20[12]"
+

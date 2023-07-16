@@ -1,0 +1,11 @@
+#!/bin/sh
+
+test "x`uname`" = "xLinux" && alias grep='grep --color=auto'
+
+doIt()
+{
+    .tsd --silent @$_C_HOME/../tib/mon/montbs.sql
+}
+
+# doIt $1
+doIt $1 |grep -e ^ -e " 9[0-9]\."
